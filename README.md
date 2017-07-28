@@ -9,12 +9,10 @@
   <link rel="stylesheet" type="text/css" href=".\css\exocortex_style.css">
   <!-- External JavaScript! -->
   <script src=".\js\exocortex_script.js"></script>
-  <script src="d3.js" type="text/JavaScript"></script>
-  <!--<script src="http://d3js.org/d3.v3.min.js" type="text/JavaScript"></script>-->
-    <script src="d3.v3.min.js" type="text/JavaScript"></script>  <!-- local hosted -->
-    
-
-  <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
+  <!--<script src="d3.js" type="text/JavaScript"></script>-->
+  <script src="http://d3js.org/d3.v3.min.js" type="text/JavaScript"></script>-->
+  <!--  <script src="d3.v3.min.js" type="text/JavaScript"></script>  <!-- local hosted -->
+   <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
 <script>
 
     
