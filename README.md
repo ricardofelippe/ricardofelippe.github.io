@@ -59,8 +59,7 @@ circleTransition() ;
   <p>Click on the links inside the tabbed menu:</p>
   <ul class="tab">
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'UNB')">UNB</a></li>
-	
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'HTML')">HTML</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'HTML')">HTML</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">CSS</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'JavaScript')">JavaScript</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
