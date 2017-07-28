@@ -24,6 +24,7 @@
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'HTML')">HTML</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">CSS</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'R')">R</a></li>  
   </ul>
 
   <div id="UNB" class="tabcontent">
@@ -168,58 +169,6 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
         
     <h3>Ebook D3 in action</h3>
 
@@ -285,27 +234,25 @@
 		 
 	 </div> 
 	 </div>
- </div>
-
+ 
  
  <div id="R" class="tabcontent">
-<p> <img src="./images/Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
 <h3>R advanced</h3>
 
-<li><a href=".\R\content.html#R0">R Tips!</a></li>
-<li><a href=".\R\content.html#R1">R and its indices!</a></li>
-<li><a href=".\R\content.html#R2">R and its lists!</a></li>
-<li><a href=".\R\content.html#R3">Subsetting!</a></li>
-<li><a href=".\R\content.html#R4">R Graphics!</a></li>
-<li><a href=".\R\content.html#R5">R Data Products!</a></li>
-<li><a href=".\R\content.html#R6">R Colors!</a></li>
-<li><a href=".\R\content.html#R7">R ggplot!</a></li>
-<li><a href=".\R\content.html#R8">R Cleaning and Getting Data!</a></li>
-<li><a href=".\R\content.html#R9">R Functional programming!</a></li>
+<li><a href="r_content.html#R0">R Tips!</a></li>
+<li><a href="r_content.html#R1">R and its indices!</a></li>
+<li><a href="r_content.html#R2">R and its lists!</a></li>
+<li><a href="r_content.html#R3">Subsetting!</a></li>
+<li><a href="r_content.html#R4">R Graphics!</a></li>
+<li><a href="r_content.html#R5">R Data Products!</a></li>
+<li><a href="r_content.html#R6">R Colors!</a></li>
+<li><a href="r_content.html#R7">R ggplot!</a></li>
+<li><a href="r_content.html#R8">R Cleaning and Getting Data!</a></li>
+<li><a href="r_content.html#R9">R Functional programming!</a></li>
 
 
 <h3>R htmlWidgets</h3>
-<li><a href=".\R\htmlWidgets.html">Ebook:htmlWidgets!</a></li>
+<li><a href="htmlWidgets.html">Ebook:htmlWidgets!</a></li>
 
 <h3>R Data Carpentry</h3>
 <li><a href="https://bookdown.org/csgillespie/efficientR/data-carpentry.html" target="_blank">Carpentry!!</a></li>
