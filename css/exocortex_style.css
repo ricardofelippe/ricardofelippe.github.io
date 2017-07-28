@@ -1,0 +1,104 @@
+body {
+	font-family: "Lato", sans-serif;
+	background-image: url("./images/integral.png");
+    background-repeat: no-repeat;
+	background-color: lightblue;
+	background-position: right top;
+	background-attachment: fixed;
+	
+	}
+	
+	
+h3 {
+    background-color: green;
+    margin-left: 5px;
+	style="font-family:verdana;
+	border: 2px solid red;
+    border-radius: 5px;
+	margin-right: 50%;
+	margin-top: 10px;
+	margin-bottom: 30px;
+	padding: 9px 16px;
+    
+}
+	
+
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+	
+}
+
+p.dotted {border-style: dotted;}
+p.dashed {border-style: dashed;}
+p.solid {
+	border-style: solid;
+	border-color: green;}
+p.double {
+	border-style: double;
+	border-color: red green blue yellow}
+p.groove {border-style: groove;}
+p.ridge {border-style: ridge;}
+p.inset {border-style: inset;}
+p.outset {border-style: outset;}
+p.none {border-style: none;}
+p.hidden {border-style: hidden;}
+p.mix {border-style: dotted dashed solid double;}	
+
+
+
+.inactive, .tentative {
+ stroke: darkgray;
+ stroke-width: 2px;
+ stroke-dasharray: 5 5;
+}
+.tentative {
+ opacity: .5;
+}
+.active {
+ stroke: black;
+ stroke-width: 4px;
+ stroke-dasharray: 1;
+}
+circle {
+ fill: red;
+}
+rect {
+ fill: pink;
+
