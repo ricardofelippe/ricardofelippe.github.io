@@ -1,6 +1,3 @@
-# ricardofelippe.github.io
-
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -17,8 +14,7 @@
 
 <script>
 
-    
-var svg = d3.select("body")
+   var svg = d3.select("body")
         .append("svg")
         .attr("width", 960)
         .attr("height", 500);
