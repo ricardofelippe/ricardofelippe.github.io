@@ -12,75 +12,28 @@
   <!-- <script src="d3.v3.min.js" type="text/JavaScript"></script>  <!-- local hosted -->
   <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
 
-<script>
-
-  /* var svg = d3.select("body")
-        .append("svg")
-        .attr("width", 960)
-        .attr("height", 500);
-
-function circleTransition() { 
-
-    var timeCircle = svg.append("circle")
-        .attr("fill", "steelblue")
-        .attr("r", 20);
-    repeat();
-    
-    function repeat() {
-      timeCircle
-        .attr('cx', 40)      // position the circle at 40 on the x axis
-        .attr('cy', 250)     // position the circle at 250 on the y axis
-        .transition()        // apply a transition
-        .duration(2000)      // apply it over 2000 milliseconds
-        .attr('cx', 920)     // move the circle to 920 on the x axis
-        .transition()        // apply a transition
-        .duration(2000)      // apply it over 2000 milliseconds
-        .attr('cx', 40)      // return the circle to 40 on the x axis
-        .on("end", repeat);  // when the transition finishes start again
-    };
-circleTransition() ;
-}; */
-
-</script>
-  
+ 
   
 </head>
 
 <body>
 
 
-  <address>
-	Written by Ricardo Felippe Ramos.<br> 
-	Visit us at: Esplanade of Ministries<br>
-	<abbr title="Ministry of Industry, Foreign Trade and Services">MDIC<br>
-	Brasil
-  </address>
-
-  <p>Click on the links inside the tabbed menu:</p>
   <ul class="tab">
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'UNB')">UNB</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'HTML')">HTML</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">CSS</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'JavaScript')">JavaScript</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'SVG')">SVG</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Toolbox of Data Science')">Toolbox of Data Science</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'R')">R</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Morning Pages!')">Morning Pages!</a></li>
   </ul>
 
   <div id="UNB" class="tabcontent">
     <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
     <li><a href="unb_content.html#amostragem2">Técnicas de Amostragem (2º/2017)</a></li>   
  
-  
- </div>
+  </div>
       
    <div id="HTML" class="tabcontent">
   
-  <p> <img src="../images/Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
   <h3>HTML</h3>
-
 	<li><a href="html_content.html#H0">HTML Structure</a></li>
 	<li><a href="html_content.html#H0">HTML Headings</a></li>
 	<li><a href="html_content.html#H1">HTML Links</a></li>
@@ -97,22 +50,10 @@ circleTransition() ;
 
 <div id="CSS" class="tabcontent">
 	<h3>CSS</h3>
-	<h2 id="C2"></h2>
 	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
 </div>
 
 
-<div id="JavaScript" class="tabcontent">
-	<h3>JavaScript</h3>
-	  
-	<li><a href="java_content.html#J1">JavaScript Action</a></li>
-    <li><a href="java_content.html#J2">Grammar of JavaScript</a></li>
-    
-    
-    
-	
-<h3>JavaScript</h3>
- </div>
 
 <div id="D3" class="tabcontent">
 	<p>Show contents using a web Server!!!</p>
