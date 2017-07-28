@@ -162,9 +162,10 @@ circleTransition() ;
     
     
     
-	<h3>Leaflet</h3>
-	<li><a href="..\exocortex\d3\Leaflet\Leaflet.html">Leaflet Page</a></li>
-	<script> circleTransition() </script>; 
+	<h3>
+	</h3>
+	<!--<li><a href="..\exocortex\d3\Leaflet\Leaflet.html">Leaflet Page</a></li>-->
+	<!--<script> circleTransition() </script>; -->
 	
 	
 	<h3>Dashing D3: Online Course</h3>
