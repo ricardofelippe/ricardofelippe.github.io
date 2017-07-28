@@ -1,5 +1,6 @@
 # ricardofelippe.github.io
 
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -10,9 +11,10 @@
   <!-- External JavaScript! -->
   <script src=".\js\exocortex_script.js"></script>
   <!--<script src="d3.js" type="text/JavaScript"></script>-->
-  <script src="http://d3js.org/d3.v3.min.js" type="text/JavaScript"></script>-->
-  <!--  <script src="d3.v3.min.js" type="text/JavaScript"></script>  <!-- local hosted -->
-   <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
+  <!--<script src="http://d3js.org/d3.v3.min.js" type="text/JavaScript"></script>-->
+  <!-- <script src="d3.v3.min.js" type="text/JavaScript"></script>  <!-- local hosted -->
+  <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
+
 <script>
 
     
@@ -60,7 +62,9 @@ circleTransition() ;
 
   <p>Click on the links inside the tabbed menu:</p>
   <ul class="tab">
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'HTML')">HTML</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'UNB')">UNB</a></li>
+	
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'HTML')">HTML</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">CSS</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'JavaScript')">JavaScript</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
@@ -70,7 +74,12 @@ circleTransition() ;
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Morning Pages!')">Morning Pages!</a></li>
   </ul>
 
-  <div id="HTML" class="tabcontent">
+  <div id="UNB" class="tabcontent">
+    <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
+  
+ </div>
+      
+      <div id="HTML" class="tabcontent">
   
   <p> <img src="../images/Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
   <h3>HTML</h3>
@@ -408,3 +417,4 @@ circleTransition() ;
  
 </body>
 </html> 
+
