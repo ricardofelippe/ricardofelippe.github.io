@@ -14,7 +14,7 @@
 
 <script>
 
-   var svg = d3.select("body")
+  /* var svg = d3.select("body")
         .append("svg")
         .attr("width", 960)
         .attr("height", 500);
@@ -39,7 +39,7 @@ function circleTransition() {
         .on("end", repeat);  // when the transition finishes start again
     };
 circleTransition() ;
-};
+}; */
 
 </script>
   
@@ -76,7 +76,7 @@ circleTransition() ;
   
  </div>
       
-      <div id="HTML" class="tabcontent">
+   <div id="HTML" class="tabcontent">
   
   <p> <img src="../images/Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
   <h3>HTML</h3>
@@ -113,10 +113,8 @@ circleTransition() ;
     
     
 	
-	<h3>JavaScript</h3>
-	
-	
-  </div>
+<h3>JavaScript</h3>
+ </div>
 
 <div id="D3" class="tabcontent">
 	<p>Show contents using a web Server!!!</p>
