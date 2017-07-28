@@ -96,7 +96,6 @@ circleTransition() ;
 
 
 <div id="CSS" class="tabcontent">
-	<p> <img src=".\images\Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
 	<h3>CSS</h3>
 	<h2 id="C2"></h2>
 	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
@@ -104,7 +103,6 @@ circleTransition() ;
 
 
 <div id="JavaScript" class="tabcontent">
-	<p> <img src="..\images\Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
 	<h3>JavaScript</h3>
 	  
 	<li><a href="java_content.html#J1">JavaScript Action</a></li>
