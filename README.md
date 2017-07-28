@@ -1,1 +1,412 @@
 # ricardofelippe.github.io
+
+<html>
+
+<head>
+  <title>Exo-cortex</title>
+  <meta charset="UTF-8">
+  <!-- External CSS! -->
+  <link rel="stylesheet" type="text/css" href=".\css\exocortex_style.css">
+  <!-- External JavaScript! -->
+  <script src=".\js\exocortex_script.js"></script>
+  <script src="d3.js" type="text/JavaScript"></script>
+  <!--<script src="http://d3js.org/d3.v3.min.js" type="text/JavaScript"></script>-->
+    <script src="d3.v3.min.js" type="text/JavaScript"></script>  <!-- local hosted -->
+    
+
+  <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
+<script>
+
+    
+var svg = d3.select("body")
+        .append("svg")
+        .attr("width", 960)
+        .attr("height", 500);
+
+function circleTransition() { 
+
+    var timeCircle = svg.append("circle")
+        .attr("fill", "steelblue")
+        .attr("r", 20);
+    repeat();
+    
+    function repeat() {
+      timeCircle
+        .attr('cx', 40)      // position the circle at 40 on the x axis
+        .attr('cy', 250)     // position the circle at 250 on the y axis
+        .transition()        // apply a transition
+        .duration(2000)      // apply it over 2000 milliseconds
+        .attr('cx', 920)     // move the circle to 920 on the x axis
+        .transition()        // apply a transition
+        .duration(2000)      // apply it over 2000 milliseconds
+        .attr('cx', 40)      // return the circle to 40 on the x axis
+        .on("end", repeat);  // when the transition finishes start again
+    };
+circleTransition() ;
+};
+
+</script>
+  
+  
+</head>
+
+<body>
+
+
+  <address>
+	Written by Ricardo Felippe Ramos.<br> 
+	Visit us at: Esplanade of Ministries<br>
+	<abbr title="Ministry of Industry, Foreign Trade and Services">MDIC<br>
+	Brasil
+  </address>
+
+  <p>Click on the links inside the tabbed menu:</p>
+  <ul class="tab">
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'HTML')">HTML</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">CSS</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'JavaScript')">JavaScript</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'SVG')">SVG</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Toolbox of Data Science')">Toolbox of Data Science</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'R')">R</a></li>
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Morning Pages!')">Morning Pages!</a></li>
+  </ul>
+
+  <div id="HTML" class="tabcontent">
+  
+  <p> <img src="../images/Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
+  <h3>HTML</h3>
+
+	<li><a href="html_content.html#H0">HTML Structure</a></li>
+	<li><a href="html_content.html#H0">HTML Headings</a></li>
+	<li><a href="html_content.html#H1">HTML Links</a></li>
+	<li><a href="html_content.html#H2">HTML Quotation and Citation Elements</a></li>
+	<li><a href="html_content.html#H3">HTML Links- Syntax</a></li>
+	<li><a href="html_content.html#H4">HTML Images</a></li>
+	<li><a href="html_content.html#H5">HTML Attributes</a></li>
+	<li><a href="html_content.html#H6">HTML -head- Element</a></li>
+	<li><a href="html_content.html#H7">HTML Text Formatting</a></li>
+	<li><a href="html_content.html#H8">HTML -blockquote- for Quotations</a></li>
+
+  </div>
+
+
+<div id="CSS" class="tabcontent">
+	<p> <img src=".\images\Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
+	<h3>CSS</h3>
+	<h2 id="C2"></h2>
+	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
+</div>
+
+
+<div id="JavaScript" class="tabcontent">
+	<p> <img src="..\images\Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
+	<h3>JavaScript</h3>
+	  
+	<li><a href="java_content.html#J1">JavaScript Action</a></li>
+    <li><a href="java_content.html#J2">Grammar of JavaScript</a></li>
+    
+    
+    
+	
+	<h3>JavaScript</h3>
+	
+	
+  </div>
+
+<div id="D3" class="tabcontent">
+	<p>Show contents using a web Server!!!</p>
+	<p>Useful Tips! </p>
+	<li><a href="d3_content.html#d30">How Setup a Server with Python!</a></li>
+	<li><a href="https://bl.ocks.org/mbostock/3019563">Margin Convention!</a></li>
+	
+    
+    
+    <h3>Dimple</h3>
+    <li><a href="https://github.com/PMSI-AlignAlytics/dimple/wiki">Dimple Wiki!</a></li>
+    <li><a href="d3_content.html#dimple1">Dimple Examples: how to acces them!</a></li>
+    <li><a href="http://localhost:3000/examples/advanced_animated_multiple_pie_bubbles.html">advanced_animated_multiple_pie_bubbles!</a></li>
+    <li><a href="http://localhost:3000/examples/advanced_bar_labels.html">advanced_bar_labels!</a></li>
+    <li><a href="http://localhost:3000/examples/advanced_bars_sketchy.html">advanced_bars_sketchy!</a></li>
+    <li><a href="http://localhost:3000/examples/advanced_bullet.html">advanced_bullet!</a></li>
+    <li><a href="http://localhost:3000/examples/advanced_change_bubbles.html">advanced_change_bubbles!</a></li>
+    <li><a href="http://localhost:3000/examples/advanced_custom_styling.html">advanced_custom_styling!</a></li>
+    <li><a href="http://localhost:3000/examples/advanced_dynamic_line_color.html">advanced_dynamic_line_color!</a></li>
+    
+    <li><a href="http://localhost:3000/examples/advanced_grouped_mekko.html">advanced_grouped_mekko!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_interactive_legends.html">advanced_interactive_legends!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_lollipop_with_hover.html">advanced_lollipop_with_hover!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_matrix.html">advanced_matrix!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_pong.html">advanced_pong!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_price_range_lollipop.html">advanced_price_range_lollipop!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_price_range_lollipop.html">advanced_price_range_lollipop!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_responsive_sizing.html">advanced_responsive_sizing!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_storyboard_control.html">advanced_storyboard_control!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_time_axis.html">advanced_time_axis!</a></li>
+<li><a href="http://localhost:3000/examples/advanced_trellis_bar.html">advanced_trellis_bar!</a></li>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	<h3>Leaflet</h3>
+	<li><a href="..\exocortex\d3\Leaflet\Leaflet.html">Leaflet Page</a></li>
+	<script> circleTransition() </script>; 
+	
+	
+	<h3>Dashing D3: Online Course</h3>
+    <p>Introductory D3 Course </p>
+    
+    <li><a href="basic_page.html">Basic Page</a></li>
+    <li><a href="d3_content.html#lesson0">How Read Json: Patterns</a></li>
+    <li><a href="d3_content.html#lesson1">Introduction to HTML</a></li>
+    <li><a href="d3_content.html#lesson2">Introduction to CSS</a></li>
+    <li><a href="d3_content.html#lesson3">Introduction to JavaScript</a></li>
+    <li><a href="d3_content.html#lesson4">Getting Started with D3</a></li>
+    <li><a href="d3_content.html#lesson5">D3 selections</a></li>
+    <li><a href="d3_content.html#lesson6">D3 Arrays</a></li>
+    <li><a href="d3_content.html#lesson7">Adding a DOM Element</a></li>
+    <li><a href="d3_content.html#lesson8">Fundamentals of SVG</a></li>
+    <li><a href="d3_content.html#lesson9">Adding an SVG Element</a></li>
+    <li><a href="d3_content.html#lesson10">D3 Data Operator</a></li>
+    <li><a href="d3_content.html#lesson11">D3 Update Selection</a></li>
+    <li><a href="d3_content.html#lesson12">Binding Data to DOM Elements</a></li>
+    <li><a href="d3_content.html#lesson13">JavaScript Functions</a></li>
+    <li><a href="d3_content.html#lesson14">Using Data Bound to DOM Elements</a></li>
+    <li><a href="d3_content.html#lesson15">Creating SVG Elements from Data</a></li>
+    <li><a href="d3_content.html#lesson16">Using the SVG Coordinate Space</a></li>
+    <li><a href="d3_content.html#lesson17">JavaScript Data Types</a></li>
+    <li><a href="d3_content.html#lesson18">D3 and JSON</a></li>
+    <li><a href="d3_content.html#lesson19">D3 and SVG Basic Shapes</a></li>
+    <li><a href="d3_content.html#lesson20">D3 and SVG Paths</a></li>
+    <li><a href="d3_content.html#lesson21">Dynamic SVG Coordinate Space</a></li>
+    <li><a href="d3_content.html#lesson22">D3 Scales</a></li>
+    <li><a href="d3_content.html#lesson23">D3 Scales Part Two</a></li>
+    <li><a href="d3_content.html#lesson24">D3 Scales Part Three</a></li>
+    <li><a href="d3_content.html#lesson25">SVG Group Element</a></li>
+    <li><a href="d3_content.html#lesson26">D3 and the SVG Group Element</a></li>
+    <li><a href="d3_content.html#lesson27">SVG Text Elements</a></li>
+    <li><a href="d3_content.html#lesson28">Margin Convention</a></li>
+    <li><a href="d3_content.html#lesson29">D3 and JS Dates and Times</a></li>
+    <li><a href="d3_content.html#lesson30">D3 Time Scales</a></li>
+    <li><a href="d3_content.html#lesson31">D3 Axes</a></li>
+    <li><a href="d3_content.html#lesson32">D3 Axes Manipulation</a></li>
+    <li><a href="d3_content.html#lesson33">D3 Scales For Data</a></li>
+    <li><a href="d3_content.html#lesson34">Putting It All Together</a></li>
+    <li><a href="d3_content.html#lesson36">JavaScript Callback Functions</a></li>
+    <li><a href="d3_content.html#lesson37">D3 Requests</a></li>
+    <li><a href="d3_content.html#lesson38">Loading Data From Server</a></li>
+    <li><a href="d3_content.html#lesson39">Basic Chart - Line Chart</a></li>
+    <li><a href="d3_content.html#lesson40">D3 Ordinal Scales</a></li>
+    <li><a href="d3_content.html#lesson41">Basic Chart - Scatterplot</a></li>
+    <li><a href="d3_content.html#lesson42">Basic Chart - Bar Chart</a></li>
+    <li><a href="d3_content.html#lesson43">Basic Chart - Bar Chart With Negative Values</a></li>
+    <li><a href="d3_content.html#lesson44">Basic Chart - Area Chart</a></li>
+    <li><a href="d3_content.html#lesson45">Basic Chart - Grouped Bar Chart</a></li>
+    <li><a href="d3_content.html#lesson46">Basic Chart - Stacked Bar Chart</a></li>
+    <li><a href="d3_content.html#lesson47">Basic Chart - Multi-Series Line Chart</a></li>
+    <li><a href="d3_content.html#lesson48">Basic Chart - Pie Chart</a></li>
+    <li><a href="d3_content.html#lesson49">Basic Interaction - Data Tooltips</a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+        
+    <h3>Ebook D3 in action</h3>
+
+	<p>Chapter1 </p>
+	
+	<li><a href="d3_content.html#d31">Demonstrating the DOM</a></li>
+	<li><a href="d3_content.html#d32">Sample SVG elements</a></li>
+    
+    <li><a href="d3_content.html#d33">D3 is about selecting and binding</a></li>	
+
+	
+    
+    <p>Chapter3 </p>
+	
+	<li><a href="./d3_content/d3ia_2.html">Country_project!</a></li>
+
+	<h3>Interactive Data Visualization for the Web</h3>
+
+	<li><a href="./d3_content/InteractiveDataWeb.html">Data-Driven Shapes</a></li>
+	<li><a href="./d3_content/D3InAction_chap4_ChartComponents.html">Chart Components</a></li>
+	
+    <h3>Making-Dashboards-with-Dc-js</h3>
+
+	<li><a href="https://www.codeproject.com/Articles/693841/Making-Dashboards-with-Dc-js-Part-Using-Crossfil">Dc.js</a></li>
+	
+	<script src="https://gist.github.com/ricardofelippe/7efa860b4fe8dd80b50e401eb9a73b54.js"></script>
+
+	<h3>Ebook Getting_Started_with_D3!</h3>
+	<li><a href="./d3_content/Getting_Started_with_D3_pag.html">A simple web page demonstrating the DOM</a></li>
+	<script> circleTransition() </script>; 
+	
+	
+	
+	
+	
+
+
+<script src="https://gist.github.com/ricardofelippe/4cd0444285523176d96763c7c34e1432.js"></script>
+</div>
+
+<div id="SVG" class="tabcontent">
+	<input id="someCheckbox" type="checkbox" />
+	  
+	<svg width="400" height="180">
+	  <rect x="50%" y="20" width="150" height="150"
+	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
+	</svg>
+	 
+	  <div id="infovizDiv">
+	<svg style="width:500px;height:500px;border:1px lightgray solid;">
+			 <path d="M 10,60 40,30 50,50 60,30 70,80"
+			 style="fill:black;stroke:gray;stroke-width:4px;" />
+			 <polygon style="fill:gray;"
+			 points="80,400 120,400 160,440 120,480 60,460" />
+		 <g>
+			 <line x1="200" y1="100" x2="450" y2="225"
+			 style="stroke:black;stroke-width:2px;"/>
+			 <circle cy="100" cx="200" r="30"/>
+			 <rect x="410" y="200" width="100" height="50"
+			 style="fill:pink;stroke:black;stroke-width:1px;" />
+		 </g>
+	</svg>
+		 
+	 </div> 
+	 </div>
+ </div>
+
+ 
+ <div id="R" class="tabcontent">
+<p> <img src="./images/Matrix_Code.gif" alt="Matrix_Code" style="float:left;width:42px;height:40px;"> 
+<h3>R advanced</h3>
+
+<li><a href=".\R\content.html#R0">R Tips!</a></li>
+<li><a href=".\R\content.html#R1">R and its indices!</a></li>
+<li><a href=".\R\content.html#R2">R and its lists!</a></li>
+<li><a href=".\R\content.html#R3">Subsetting!</a></li>
+<li><a href=".\R\content.html#R4">R Graphics!</a></li>
+<li><a href=".\R\content.html#R5">R Data Products!</a></li>
+<li><a href=".\R\content.html#R6">R Colors!</a></li>
+<li><a href=".\R\content.html#R7">R ggplot!</a></li>
+<li><a href=".\R\content.html#R8">R Cleaning and Getting Data!</a></li>
+<li><a href=".\R\content.html#R9">R Functional programming!</a></li>
+
+
+<h3>R htmlWidgets</h3>
+<li><a href=".\R\htmlWidgets.html">Ebook:htmlWidgets!</a></li>
+
+<h3>R Data Carpentry</h3>
+<li><a href="https://bookdown.org/csgillespie/efficientR/data-carpentry.html" target="_blank">Carpentry!!</a></li>
+
+
+ 
+ </div>
+ 
+ 
+ <div id="Lybraries!" class="tabcontent">
+<li>Salvo Inicialmente em Bibliotecas no Computador do MDIC!</a></li>
+<h3>JavaScript</h3>
+<li><a href="http://dygraphs.com/download.html">DyGraph!</a></li>
+
+
+ 
+ 
+</div>
+ 
+  
+<div id="Toolbox of Data Science" class="tabcontent">
+ 
+<h3>Git</h3>
+ <li><a href="toolbox_content.html#T0">Command Line Interface!</a></li>
+ <li><a href="toolbox_content.html#T1">Git!</a></li>
+ <li><a href="toolbox_content.html#T2">Git Help!</a></li>
+ <li><a href="toolbox_content.html#T3">Git Basic Commands!</a></li>
+
+<h3>Gist</h3>
+ <li><a href="toolbox_content.html#gist1">Gist Basic!</a></li>
+ 
+ 
+ </div>
+ 
+<div id="Morning Pages!" class="tabcontent">
+ 
+ <li><a href="morning_pages_content.html#M0">Text 1!</a></li>
+ 
+ 
+ </div>
+
+
+ 
+
+ 
+</body>
+</html> 
