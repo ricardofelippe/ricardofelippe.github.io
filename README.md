@@ -26,7 +26,7 @@
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
     <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'R')">R</a></li> 
     <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Links')">Links</a></li>  
-  </
+ 
   </ul>
 
   <div id="UNB" class="tabcontent">
