@@ -96,11 +96,6 @@
     
     
     
-    
-    
-    
-    
-    
 	<h3>
 	</h3>
 	<!--<li><a href="..\exocortex\d3\Leaflet\Leaflet.html">Leaflet Page</a></li>-->
@@ -286,7 +281,7 @@
  <div id="Links" class="tabcontent">
     <li><a href="https://bl.ocks.org/ricardofelippel">Blocker!</a></li>
 
-    </div>
+   </div>
  
 <div id="Morning Pages!" class="tabcontent">
  
