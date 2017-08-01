@@ -37,6 +37,8 @@
   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
   HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001
   <h3>Curso Arduino</h3>
+  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
+    
 <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr/#ixzz4oWlG38vx">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
  
   </div>
