@@ -33,7 +33,9 @@
 
   <div id="Arduino" class="tabcontent">
     <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
-    <li><a href="unb_content.html#amostragem2">Técnicas de Amostragem (2º/2017)</a></li>   
+    <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>   
+  <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
+ 
  
   </div>
   
