@@ -26,9 +26,17 @@
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
     <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'R')">R</a></li> 
     <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Links')">Links</a></li>  
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Arduino')">Arduino</a></li>  
+ 
  
   </ul>
 
+  <div id="Arduino" class="tabcontent">
+    <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
+    <li><a href="unb_content.html#amostragem2">Técnicas de Amostragem (2º/2017)</a></li>   
+ 
+  </div>
+  
   <div id="UNB" class="tabcontent">
     <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
     <li><a href="unb_content.html#amostragem2">Técnicas de Amostragem (2º/2017)</a></li>   
