@@ -42,6 +42,11 @@
   <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
     
 <li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
+<h3>Coursera Robots-Arduino</h3>
+<li><a href=".\Arduino\Tut_Arduino.pdf">Week one </a></li>   
+  
+
+
 <h3>Curso Arduino</h3>
 <span> Projeto Alimentador Automático</span>
 <pre>
