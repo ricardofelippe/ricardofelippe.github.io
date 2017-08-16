@@ -62,7 +62,7 @@
   
   <div id="UNB" class="tabcontent">
   <h3>Inferência</h3>
-    <li><a href="unb_content.html#inferencia">Lista 01/a></li>   
+    <li><a href="unb_content.html#inferencia">Lista 01</a></li>   
     
 
   <h3>Amostragem</h3>
