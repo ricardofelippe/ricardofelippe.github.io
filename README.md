@@ -33,8 +33,8 @@
 
   <div id="Arduino" class="tabcontent">
    <h3>PDF Arduino</h3>
-   <li><a href=".\Arduino\ARDUINO BASICO.pdf">Arduino Básico</a></li>   
-    <li><a href=".\Arduino\Arduino by Example by Adith Jagadish Boloor (2015).pdf">Arduino by Example </a></li>   
+   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
     <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
     
     
