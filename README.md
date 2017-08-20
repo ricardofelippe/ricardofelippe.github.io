@@ -32,9 +32,16 @@
   </ul>
 
   <div id="Arduino" class="tabcontent">
-    <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
-    <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>   
-  <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
+   <h3>PDF Arduino</h3>
+   <li><a href=".\Arduino\ARDUINO BASICO.pdf">Arduino Básico</a></li>   
+    <li><a href=".\Arduino\Arduino by Example by Adith Jagadish Boloor (2015).pdf">Arduino by Example </a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
+    
+    
+   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
+   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
   
   <h3>Curso Arduino</h3>
   <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
