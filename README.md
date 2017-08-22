@@ -35,7 +35,7 @@
  
   </ul>
 
-  <div id="java" class="tabcontent">
+  <div id="Projetos" class="tabcontent">
    <li> Criar página web que filtra os dados contidos na página http://animateddata.co.uk/articles/crossfilter/ , utilizando o crossfilter </li>
    </div> 
   
