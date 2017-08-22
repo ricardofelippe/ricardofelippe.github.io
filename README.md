@@ -29,10 +29,15 @@
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">CSS</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">Java</a></li>	
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Links')">Links</a></li>  
+	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Projetos')">Ideias Projetos</a></li>  
+    
     
  
   </ul>
 
+  <div id="java" class="tabcontent">
+   <li> Criar página web que filtra os dados contidos na página http://animateddata.co.uk/articles/crossfilter/ , utilizando o crossfilter </li>
+   </div> 
   
     <div id="java" class="tabcontent">
         <h3>JavaScript</h3>
