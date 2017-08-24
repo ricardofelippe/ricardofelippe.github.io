@@ -88,12 +88,14 @@
   <h3>Editais/Informes</h3>  
    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6da70443db24b49aedc2bcefadd32ba&authkey=AWlU5wO5l3GZvPn_Nl8QXLI">Calendário 2º/2017</a></li> 
    <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
-   
-  
+    
   <h3>Inferência</h3>
     <li><a href="unb_content.html#inferencia">Lista 01</a></li>  
     <li><a href="unb_content.html#inferencia">Hald - A History of Parametric Statistical Inference from Bernoulli to Fisher, 1713 to 1935</a></li>  
     <li><a href="unb_content.html#inferencia">Farias, Laurencel - Introdução à Inferência Estatística</a></li>  
+    
+      <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6ba40af3e7c4fa4ae73ce76577fb1f2&authkey=Ac_Uy6c4KVZ6ggbTTG5alls
+  ">Máxima Verossimilhança</a></li> 
     
     
     
