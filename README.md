@@ -3,6 +3,7 @@
 <head>
   <title>Exo-cortex</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- External CSS! -->
   <link rel="stylesheet" type="text/css" href=".\css\exocortex_style.css">
   <!-- External JavaScript! -->
