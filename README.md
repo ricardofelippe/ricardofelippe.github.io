@@ -155,6 +155,10 @@
 
 <div id="D3" class="tabcontent">
 	
+	<h3>Best Sites</h3>
+		<li><a href="http://d3indepth.com/">Peter Cook</a></li>
+	
+	
        	<h3>Useful Tips! </h3>
 	<li><a href="d3_content.html#d30">How Setup a Server with Python!</a></li>
 	<li><a href="https://bl.ocks.org/mbostock/3019563">Margin Convention!</a></li>
