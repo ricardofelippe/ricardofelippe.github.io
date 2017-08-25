@@ -37,6 +37,12 @@
  
   </ul>
 
+   
+   <div id="Blo" class="tabcontent">
+    
+   </div>
+
+   
    <div id="Organizacao" class="tabcontent">
      <li>Programing Invest Plan: Disponível PC do MDIC </li>   
      
@@ -152,6 +158,11 @@
 </div>
 
 <div id="D3" class="tabcontent">
+	
+       <h3>Blocker & Gist</h3>
+      <li><a href="https://bl.ocks.org/ricardofelippe">Blocker!</a></li>
+      <li><a href="https://gist.github.com/">Gist!</a></li>
+
 	<p>Show contents using a web Server!!!</p>
 	<p>Useful Tips! </p>
 	<li><a href="d3_content.html#d30">How Setup a Server with Python!</a></li>
@@ -367,11 +378,7 @@
  
  </div>
  
- <div id="Links" class="tabcontent">
-    <li><a href="https://bl.ocks.org/ricardofelippe">Blocker!</a></li>
-
-   </div>
- 
+  
 <div id="Morning Pages!" class="tabcontent">
  
  <li><a href="morning_pages_content.html#M0">Text 1!</a></li>
