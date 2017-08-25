@@ -38,7 +38,7 @@
   </ul>
 
    <div id="Organizacao" class="tabcontent">
-     <li><>Programing Invest Plan: Disponível PC do MDIC </a></li>   
+     <li>Programing Invest Plan: Disponível PC do MDIC </li>   
      
      <li><a href="https://trello.com/">Trello </a></li>   
      
