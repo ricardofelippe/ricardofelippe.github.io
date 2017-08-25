@@ -38,10 +38,6 @@
   </ul>
 
    
-   <div id="Blo" class="tabcontent">
-    
-   </div>
-
    
    <div id="Organizacao" class="tabcontent">
      <li>Programing Invest Plan: Disponível PC do MDIC </li>   
@@ -159,16 +155,14 @@
 
 <div id="D3" class="tabcontent">
 	
-       <h3>Blocker & Gist</h3>
-      <li><a href="https://bl.ocks.org/ricardofelippe">Blocker!</a></li>
-      <li><a href="https://gist.github.com/">Gist!</a></li>
-
-	<p>Show contents using a web Server!!!</p>
-	<p>Useful Tips! </p>
+       	<h3>Useful Tips! </h3>
 	<li><a href="d3_content.html#d30">How Setup a Server with Python!</a></li>
 	<li><a href="https://bl.ocks.org/mbostock/3019563">Margin Convention!</a></li>
 	
-    
+    <h3>Blocker & Gist</h3>
+      <li><a href="https://bl.ocks.org/ricardofelippe">Blocker!</a></li>
+      <li><a href="https://gist.github.com/">Gist!</a></li>
+
     
     <h3>Dimple</h3>
     <li><a href="https://github.com/PMSI-AlignAlytics/dimple/wiki">Dimple Wiki!</a></li>
