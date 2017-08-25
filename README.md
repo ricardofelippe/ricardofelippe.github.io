@@ -21,7 +21,7 @@
 
 
   <ul class="tab">
-  	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Organização')">Organização</a></li>
+  	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Organizacao')">Organização</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'UNB')">UNB</a></li>
 	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Arduino')">Arduino</a></li>  
         <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
@@ -37,12 +37,12 @@
  
   </ul>
 
-   <div id="Organização" class="tabcontent">
+   <div id="Organizacao" class="tabcontent">
      <li><>Programing Invest Plan: Disponível PC do MDIC </a></li>   
      
      <li><a href="https://trello.com/">Trello </a></li>   
      
-   
+   </div>
   
 
   <div id="Projetos" class="tabcontent">
