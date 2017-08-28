@@ -1,103 +1,50 @@
 <html>
 
 <head>
-  <title>Exo-cortex</title>
+  <title>My Exo-cortex Bootstrap</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- External CSS! -->
-  <link rel="stylesheet" type="text/css" href=".\css\exocortex_style.css">
   <!-- External JavaScript! -->
   <script src=".\js\exocortex_script.js"></script>
-  <!--<script src="d3.js" type="text/JavaScript"></script>-->
-  <!--<script src="http://d3js.org/d3.v3.min.js" type="text/JavaScript"></script>-->
-  <!-- <script src="d3.v3.min.js" type="text/JavaScript"></script>  <!-- local hosted -->
-  <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  
   
 </head>
 
 <body>
 
-
-  <ul class="tab">
-  	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Organizacao')">Organização</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'UNB')">UNB</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Arduino')">Arduino</a></li>  
-        <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'D3')">D3</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'R')">R</a></li> 
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'HTML')">HTML</a></li>
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'java')">Java</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">CSS</a></li>
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'CSS')">Java</a></li>	
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Links')">Links</a></li>  
-	<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Projetos')">Ideias Projetos</a></li>  
-    
-    
- 
+<div class="container">
+  <h2>Exocórtex</h2>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#Organizacao">Organização</a></li>
+    <li><a data-toggle="tab" href="#UNB">UNB</a></li>
+    <li><a data-toggle="tab" href="#arduino">Arduino</a></li>
+    <li><a data-toggle="tab" href="#D3">D3</a></li>  
+    <li><a data-toggle="tab" href="#R">R</a></li>   
+    <li><a data-toggle="tab" href="#HTML">HTML</a></li>
+    <li><a data-toggle="tab" href="#CSS">CSS</a></li>
+    <li><a data-toggle="tab" href="#JAVA">CSS</a></li>
+    <li><a data-toggle="tab" href="#SVG">SVG</a></li>   
+    <li><a data-toggle="tab" href="#OUTROS">OUTROS</a></li>   
+      
+        
+      
   </ul>
 
-   
-   
-   <div id="Organizacao" class="tabcontent">
-     <li>Programing Invest Plan: Disponível PC do MDIC </li>   
-     
-     <li><a href="https://trello.com/">Trello </a></li>   
-     
-   </div>
-  
-
-  <div id="Projetos" class="tabcontent">
-   <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>  , utilizando o crossfilter </li>
-   </div> 
-  
-    <div id="java" class="tabcontent">
-        <h3>JavaScript</h3>
-  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1b879e807432643f8a090c8f4ed3c8464&authkey=Ad3_JtVHUtUmrJYCcTh2OEo">JavaScript & JQuery</a></li>   
-  
-        
-        
-    </div>    
-    <div id="Arduino" class="tabcontent">
-   <h3>PDF Arduino</h3>
-   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
+  <div class="tab-content">
+    <div id="Organizacao" class="tab-pane fade in active">
+    <h3>HOME</h3>
+      
+    <li>Programing Invest Plan: Disponível PC do MDIC </li>   
+    <li><a href="https://trello.com/">Trello </a></li>   
     
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=19e089c3fd4eb4d218c9c17d5d876f80b&authkey=AVTZO6PnPSO9b84-E3I-qXY">Kit Arduino Mega2560</a></li> 
+    </div>
     
-    
-   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
-   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
-   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
-   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
-  
-  <h3>Curso Arduino</h3>
-  <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
-  <li><a href="https://www.youtube.com/watch?v=0HXSXlFKxUc">Aprendendo Arduino sem tem um!-Youtube</a></li>
-  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
-    
-<li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
-<h3>Coursera Robots-Arduino</h3>
-<li><a href=".\Arduino\s1.4_traffic_light.ino">Week one: Traffic light </a></li>   
-  
-
-
-<h3>Curso Arduino</h3>
-<span> Projeto Alimentador Automático</span>
-<pre>
--Motor
--WIRELESS COM O WIFI SHIELD CC3000 KEYES
-
-</pre>
-
-
-
-
-  </div>
-  
-  <div id="UNB" class="tabcontent">
-  <h3>Editais/Informes</h3>  
+    <div id="UNB" class="tab-pane fade">
+      
+       <h3>Editais/Informes</h3>  
    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6da70443db24b49aedc2bcefadd32ba&authkey=AWlU5wO5l3GZvPn_Nl8QXLI">Calendário 2º/2017</a></li> 
    <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
     
@@ -130,13 +77,46 @@
   <h3>Amostragem</h3>
     <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
     <li><a href="unb_content.html#amostragem2">Técnicas de Amostragem (2º/2017)</a></li>   
- <li><a href="2016_TD_PRO_V_1.3.xlsm">Teste EXCEL</a></li>   
-    
-  </div>
+ <li><a href="2016_TD_PRO_V_1.3.xlsm">Teste EXCEL</a></li>
       
-   <div id="HTML" class="tabcontent">
+      </div>
+    <div id="arduino" class="tab-pane fade">
+      <h3>PDF Arduino</h3>
+   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
+    
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=19e089c3fd4eb4d218c9c17d5d876f80b&authkey=AVTZO6PnPSO9b84-E3I-qXY">Kit Arduino Mega2560</a></li> 
+    
+    
+   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
+   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
   
-  <h3>HTML</h3>
+  <h3>Curso Arduino</h3>
+  <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
+  <li><a href="https://www.youtube.com/watch?v=0HXSXlFKxUc">Aprendendo Arduino sem tem um!-Youtube</a></li>
+  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
+    
+<li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
+<h3>Coursera Robots-Arduino</h3>
+<li><a href=".\Arduino\s1.4_traffic_light.ino">Week one: Traffic light </a></li>   
+  
+
+
+<h3>Curso Arduino</h3>
+<span> Projeto Alimentador Automático</span>
+<pre>
+-Motor
+-WIRELESS COM O WIFI SHIELD CC3000 KEYES
+
+</pre>
+      
+      
+      </div>
+    <div id="HTML" class="tab-pane fade">
+      <h3>HTML</h3>
 	<li><a href="html_content.html#H0">HTML Structure</a></li>
 	<li><a href="html_content.html#H0">HTML Headings</a></li>
 	<li><a href="html_content.html#H1">HTML Links</a></li>
@@ -147,16 +127,43 @@
 	<li><a href="html_content.html#H6">HTML -head- Element</a></li>
 	<li><a href="html_content.html#H7">HTML Text Formatting</a></li>
 	<li><a href="html_content.html#H8">HTML -blockquote- for Quotations</a></li>
-
-  </div>
-
-<div id="CSS" class="tabcontent">
-	<h3>CSS</h3>
+      
+      </div>
+    <div id="CSS" class="tab-pane fade">
+      
+      <h3>CSS</h3>
 	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
-</div>
-
-<div id="D3" class="tabcontent">
-	
+      </div>
+    <div id="SVG" class="tab-pane fade">
+      
+      	<input id="someCheckbox" type="checkbox" />
+	  
+	<svg width="400" height="180">
+	  <rect x="50%" y="20" width="150" height="150"
+	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
+	</svg>
+	 
+	  <div id="infovizDiv">
+	<svg style="width:500px;height:500px;border:1px lightgray solid;">
+			 <path d="M 10,60 40,30 50,50 60,30 70,80"
+			 style="fill:black;stroke:gray;stroke-width:4px;" />
+			 <polygon style="fill:gray;"
+			 points="80,400 120,400 160,440 120,480 60,460" />
+		 <g>
+			 <line x1="200" y1="100" x2="450" y2="225"
+			 style="stroke:black;stroke-width:2px;"/>
+			 <circle cy="100" cx="200" r="30"/>
+			 <rect x="410" y="200" width="100" height="50"
+			 style="fill:pink;stroke:black;stroke-width:1px;" />
+		 </g>
+	</svg>
+		 
+	 </div> 
+      
+      
+      </div>
+    <div id="D3" class="tab-pane fade">
+      
 	<h3>Best Sites</h3>
 		<li><a href="http://d3indepth.com/">Peter Cook</a></li>
 	
@@ -301,36 +308,21 @@
 
 
 <script src="https://gist.github.com/ricardofelippe/4cd0444285523176d96763c7c34e1432.js"></script>
-</div>
 
-<div id="SVG" class="tabcontent">
-	<input id="someCheckbox" type="checkbox" />
-	  
-	<svg width="400" height="180">
-	  <rect x="50%" y="20" width="150" height="150"
-	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
-	</svg>
-	 
-	  <div id="infovizDiv">
-	<svg style="width:500px;height:500px;border:1px lightgray solid;">
-			 <path d="M 10,60 40,30 50,50 60,30 70,80"
-			 style="fill:black;stroke:gray;stroke-width:4px;" />
-			 <polygon style="fill:gray;"
-			 points="80,400 120,400 160,440 120,480 60,460" />
-		 <g>
-			 <line x1="200" y1="100" x2="450" y2="225"
-			 style="stroke:black;stroke-width:2px;"/>
-			 <circle cy="100" cx="200" r="30"/>
-			 <rect x="410" y="200" width="100" height="50"
-			 style="fill:pink;stroke:black;stroke-width:1px;" />
-		 </g>
-	</svg>
-		 
-	 </div> 
-	 </div>
-  
- <div id="R" class="tabcontent">
-<h3>R advanced</h3>
+          
+          
+      
+      
+      
+  </div>
+    <div id="JAVA" class="tab-pane fade">
+    
+<h3>JavaScript</h3>
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1b879e807432643f8a090c8f4ed3c8464&authkey=Ad3_JtVHUtUmrJYCcTh2OEo">JavaScript & JQuery</a></li>   
+
+    </div>
+    <div id="R" class="tab-pane fade">
+    <h3>R advanced</h3>
 
 <li><a href="r_content.html#R0">R Tips!</a></li>
 <li><a href="r_content.html#R1">R and its indices!</a></li>
@@ -349,12 +341,17 @@
 
 <h3>R Data Carpentry</h3>
 <li><a href="https://bookdown.org/csgillespie/efficientR/data-carpentry.html" target="_blank">Carpentry!!</a></li>
-
-
- 
- </div>
+    
+    </div>
+    <div id="OUTROS" class="tab-pane fade">
+        
+   <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>  , utilizando o crossfilter </li>
+   
+    
+    
+      
   
- <div id="Lybraries!" class="tabcontent">
+ 
 <li>Salvo Inicialmente em Bibliotecas no Computador do MDIC!</a></li>
 <h3>JavaScript</h3>
 <li><a href="http://dygraphs.com/download.html">DyGraph!</a></li>
@@ -362,11 +359,9 @@
 
  
  
-</div>
    
-<div id="Toolbox of Data Science" class="tabcontent">
  
-<h3>Git</h3>
+<h3>Toolbox of Data Science/GIT</h3>
  <li><a href="toolbox_content.html#T0">Command Line Interface!</a></li>
  <li><a href="toolbox_content.html#T1">Git!</a></li>
  <li><a href="toolbox_content.html#T2">Git Help!</a></li>
@@ -376,16 +371,13 @@
  <li><a href="toolbox_content.html#gist1">Gist Basic!</a></li>
  
  
- </div>
  
   
-<div id="Morning Pages!" class="tabcontent">
  
  <li><a href="morning_pages_content.html#M0">Text 1!</a></li>
  
  
- </div>
-
+    </div>
 
  
 
