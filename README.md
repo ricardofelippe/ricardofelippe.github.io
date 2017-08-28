@@ -25,7 +25,7 @@
     <li><a data-toggle="tab" href="#R">R</a></li>   
     <li><a data-toggle="tab" href="#HTML">HTML</a></li>
     <li><a data-toggle="tab" href="#CSS">CSS</a></li>
-    <li><a data-toggle="tab" href="#JAVA">CSS</a></li>
+    <li><a data-toggle="tab" href="#JAVA">Java</a></li>
     <li><a data-toggle="tab" href="#SVG">SVG</a></li>   
     <li><a data-toggle="tab" href="#OUTROS">OUTROS</a></li>   
       
