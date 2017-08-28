@@ -106,6 +106,9 @@
 
 
 <h3>Curso Arduino</h3>
+<li><a href="http://www.comofazerascoisas.com.br/robotica-eletronica-mecatronica/eletronica/arduino
+">Como Fazer as coisas: Arduino</a></li>   
+
 <span> Projeto Alimentador Automático</span>
 <pre>
 -Motor
