@@ -73,6 +73,10 @@
     <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=15eeecd377ae44f66bad8e2ad5929236e&authkey=ASTmSVOfatyt5UBVxEzpths
 ">Estatística & R</a></li>  
     
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fbcb21f219fa485a8e81e457adf6634b&authkey=ASUu-KdmW6jLwLczB-tHbGU">Estatísticas de Ordem</a></li>  
+
+
+    
     
   <h3>Amostragem</h3>
     <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
