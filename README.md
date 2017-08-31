@@ -272,6 +272,8 @@
     <li><a href="d3_content.html#lesson47">Basic Chart - Multi-Series Line Chart</a></li>
     <li><a href="d3_content.html#lesson48">Basic Chart - Pie Chart</a></li>
     <li><a href="d3_content.html#lesson49">Basic Interaction - Data Tooltips</a></li>
+    <li><a href="d3_content.html#lesson50">D3 Transition Basics</a></li>
+        
     
     
     
