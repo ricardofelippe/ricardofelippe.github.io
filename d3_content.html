@@ -32926,6 +32926,870 @@ And with that we have covered how D3 transitions work, as well as basic examples
     </div>
 
 
+<h3 id="lesson51">D3 SVG Transition Animations<h3>
+    <div>
+         <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>SVG Basic Shapes are Rectangle, Circle, Ellipse, Straight Line, Polyline, Polygon, and Path</li>
+<li>D3 allows for animation of SVG Basic Shape properties like shape, location / position, and appearance</li>
+<li>D3 Transitions can be delayed by a specified amount of time</li>
+<li>D3 Transitions can have a specific duration defined</li>
+<li>The D3 Transition delay and duration can be given a constant or a function that returns the specific value for each element</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/introduction-to-css">Introduction to CSS</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/fundamentals-of-svg">Fundamentals of SVG</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-and-svg-basic-shapes">D3 and SVG Basic Shapes</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-transition-basics">D3 Transition Basics</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 SVG Transition Animations
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+D3 and SVG Basic Shapes Revisited
+</strong>
+</p>
+<br>
+<p>
+SVG Basic Shapes
+</p>
+<p>
+<ul>
+<li>Rectangle</li>
+<li>Circle</li>
+<li>Ellipse</li>
+<li>Straight Line</li>
+<li>Polyline</li>
+<li>Polygon</li>
+<li>Path</li>
+</ul>
+</p>
+<p>
+The basic shapes that SVG provides are
+</p>
+<p>
+the rectangle
+</p>
+<p>
+the circle
+</p>
+<p>
+the ellipse
+</p>
+<p>
+the straight line
+</p>
+<p>
+and the polyline, polygon and path.
+</p>
+<p>
+For this video, we will ignore the polyline, polygon and path for now.
+</p>
+<br>
+<p>
+An SVG Rectangle
+</p>
+<p>
+<pre><code class="html">&lt;svg&gt;
+    &lt;rect x="0" y="0" width="5" height="100" /&gt;
+&lt;/svg&gt;</code></pre>
+</p>
+<p>
+The SVG rectangle takes in four main inputs.
+</p>
+<p>
+The x and y - which is where the rectangle is drawn from and the height and width.
+</p>
+<p>
+Remember - the SVG coordinate space starts at the top left and goes to the bottom right as x and y coordinates increase.
+</p>
+<p>
+So as the height increases, the rectangle will get longer down
+</p>
+<p>
+And as the width increases, the rectangle will get longer to the right.
+</p>
+<br>
+<p>
+An SVG Rectangle, Created with D3
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect").attr("x","25").attr("y","25").attr("width","50").attr("height","100");</code></pre>
+</p>
+<p>
+With D3, we can append an SVG container and then append the SVG rectangle basic shape.
+</p>
+<p>
+Then we can define the attributes of the rectangle to have it appear on the screen.
+</p>
+<p>
+As we will see shortly, transitions can be applied to each of these attributes.
+</p>
+<p>
+One other aspect of the rectangle that can be transitioned is the color fill.
+</p>
+<br>
+<p>
+An SVG Circle
+</p>
+<p>
+<pre><code class="html">&lt;svg&gt;
+    &lt;circle cx="25" cx="25" r="15" /&gt;
+&lt;/svg&gt;</code></pre>
+</p>
+<p>
+The SVG circle takes in three main inputs.
+</p>
+<p>
+The cx and cy - which is where the center of the circle is drawn from
+</p>
+<p>
+and the r which is the radius of the circle.
+</p>
+<br>
+<p>
+An SVG Circle, Created with D3
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("circle");
+
+d3.select("circle").attr("cx","25").attr("cy","25").attr("r","15");</code></pre>
+</p>
+<p>
+With D3, we can append an SVG container and then append the SVG circle basic shape.
+</p>
+<p>
+Then we can define the attributes of the circle to have it appear on the screen.
+</p>
+<p>
+As we will see shortly, each of these attributes can be transitioned as it is a number.
+</p>
+<p>
+One other aspect of the circle that can be transitioned is the color fill.
+</p>
+<br>
+<p>
+An SVG Ellipse 
+</p>
+<p>
+<pre><code class="html">&lt;svg&gt;
+    &lt;ellipse cx="65" cy="65" rx="10" ry="25" /&gt;
+&lt;/svg&gt;</code></pre>
+</p>
+<p>
+The SVG ellipse takes in four main inputs.
+</p>
+<p>
+The cx and cy - which is where the center of the ellipse is drawn from
+</p>
+<p>
+and the x radius of the ellipse and the y radius of the ellipse.
+</p>
+<br>
+<p>
+An SVG Ellipse, Created with D3
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("ellipse");
+
+d3.select("ellipse").attr("cx","65").attr("cy","65").attr("rx","10").attr("ry","25");</code></pre>
+</p>
+<p>
+With D3, we can append an SVG container and then append the SVG ellipse basic shape.
+</p>
+<p>
+Then we can define the attributes of the ellipse to have it appear on the screen.
+</p>
+<p>
+As we will see shortly, each of these attributes can be transitioned as it is a number.
+</p>
+<p>
+One other aspect of the ellipse that can be transitioned is the color fill.
+</p>
+<br>
+<p>
+An SVG Straight Line
+</p>
+<p>
+<pre><code class="html">&lt;svg&gt;
+    &lt;line x1="5" x1="5" x2="40" x2="40" stroke="gray" stroke-width="5"  /&gt;
+&lt;/svg&gt;</code></pre>
+</p>
+<p>
+The SVG Straight Line takes in six main inputs.
+</p>
+<p>
+The x1 and y1 - which is where the line starts
+</p>
+<p>
+The x2 and y2 - which is where the line ends
+</p>
+<p>
+and stroke and stroke-width which is the color of the line and the stroke width.
+</p>
+<p>
+The stroke and stroke-width are necessary because an SVG line is dimensionless.
+</p>
+<p>
+So by applying a stroke-width greater than zero, we can see the line.
+</p>
+<br>
+<p>
+An SVG Straight Line, Created with D3
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("line");
+
+d3.select("line").attr("x1","5").attr("y1","5").attr("x2","40").attr("y2","40").attr("stroke","gray").attr("stroke-width","5");</code></pre>
+</p>
+<p>
+With D3, we can append an SVG container and then append the SVG straight line basic shape.
+</p>
+<p>
+Then we can define the attributes of the straight line to have it appear on the screen.
+</p>
+<p>
+As we will see shortly, each of these attributes can be transitioned as it is a number.
+</p>
+<br>
+<p>
+Let's now take a look at a few SVG basic Shape D3 transition animations.
+</p>
+<br>
+<br>
+<p>
+<strong>
+D3 Transition Animations
+</strong>
+</p>
+<br>
+<p>
+SVG Basic Shapes
+</p>
+<p>
+<ul>
+<li>Rectangle</li>
+<li>Circle</li>
+<li>Ellipse</li>
+<li>Straight Line</li>
+</ul>
+</p>
+<p>
+For each SVG Basic shape, we will go through an example of animating 2 of the inputs of each shape.
+</p>
+<br>
+<p>
+Things To Animate
+</p>
+<p>
+<ul>
+<li>Shape</li>
+<li>Location / Position</li>
+<li>Appearance</li>
+</ul>
+</p>
+<p>
+When thinking about animations, it's helpful to think of the three types of things you can change for each shape.
+</p>
+<p>
+You can change it's shape - is it larger, smaller, wider, narrower, skewed in one direction or the other.
+</p>
+<p>
+You can change where it's drawn - is it near the origin or somewhere else in the x-y coordinate space.
+</p>
+<p>
+and You can change it's appearance - what color it is and what opacity it has.
+</p>
+<p>
+You can mix and match as you see fit to make some really interesting animations.
+</p>
+<p>
+For the examples, we will stick with mainly shape and location/position.
+</p>
+<p>
+The SVG Straight Line will work with appearance transition animations.
+</p>
+<br>
+<p>
+Rectangle Animation Example 1
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect").attr("x","25").attr("y","25").attr("width","50").attr("height","100");
+
+d3.select("rect").transition().attr("height","300");</code></pre>
+</p>
+<p>
+For this example, we will have the SVG Rectangle increase it's height from 100 to 300.
+</p>
+<p>
+This will elongate the rectangle along the Y-Axis.
+</p>
+<p>
+Because we do not specify a delay or duration, the animation will start immediately and take 250 milliseconds.
+</p>
+<br>
+<p>
+Rectangle Animation Example 2
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect").attr("x","25").attr("y","25").attr("width","50").attr("height","100");
+
+d3.select("rect").transition().attr("x","5");</code></pre>
+</p>
+<p>
+For this example, we will have the SVG Rectangle move it's starting "x" drawing point from 25 to 5.
+</p>
+<br>
+<p>
+Circle Animation Example 1
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("circle");
+
+d3.select("circle").attr("cx","25").attr("cy","25").attr("r","15");
+
+d3.select("circle").transition().attr("cy","250");</code></pre>
+</p>
+<p>
+For this example, we will have the SVG Circle move it's "cy" point from 25 to 250.
+</p>
+<p>
+This will move the circle from near the top of the window to the bottom of the window.
+</p>
+<br>
+<p>
+Circle Animation Example 2
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("circle");
+
+d3.select("circle").attr("cx","25").attr("cy","25").attr("r","15");
+
+d3.select("circle").transition().attr("r","45");</code></pre>
+</p>
+<p>
+For this example, we will have the SVG Circle increase it's radius from 15 to 45 units.
+</p>
+<p>
+Part of the circle falls outside of the SVG Viewport so it will appear to be cut off.
+</p>
+<p>
+Again, because we do not specify a delay or duration, the animation will start immediately and take 250 milliseconds.
+</p>
+<br>
+<p>
+Ellipse Animation Example 1
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("ellipse");
+
+d3.select("ellipse").attr("cx","65").attr("cy","65").attr("rx","10").attr("ry","25");
+
+d3.select("ellipse").transition().attr("ry","55");</code></pre>
+</p>
+<p>
+For this example, we will have the SVG Ellipse increase it's "ry" radius from 25 to 55.
+</p>
+<p>
+This will elongate the Ellipse along the Y-axis.
+</p>
+<br>
+<p>
+Ellipse Animation Example 2
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("ellipse");
+
+d3.select("ellipse").attr("cx","65").attr("cy","65").attr("rx","10").attr("ry","25");
+
+d3.select("ellipse").transition().attr("cy","205");</code></pre>
+</p>
+<p>
+For this example, we will have the SVG Ellipse increase it's "cx" point from 65 to 205.
+</p>
+<p>
+This will move the ellipse down our screen along the Y-axis.
+</p>
+<br>
+<p>
+Straight Line Animation Example 1
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("line");
+
+d3.select("line").attr("x1","5").attr("y1","5").attr("x2","40").attr("y2","40").attr("stroke","gray").attr("stroke-width","5");
+
+d3.select("line").transition().attr("stroke-width","20");</code></pre>
+</p>
+<p>
+We've already covered more than a few examples where we change the x and y coordinates, so this time we'll change the stroke-width.
+</p>
+<p>
+For this example, we will have the stroke-width increase from 5 to 20.
+</p>
+<p>
+This will give our line more weight and make it wider.
+</p>
+<br>
+<p>
+Straight Line Animation Example 2
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("line");
+
+d3.select("line").attr("x1","5").attr("y1","5").attr("x2","40").attr("y2","40").attr("stroke","gray").attr("stroke-width","5");
+
+d3.select("line").transition().attr("stroke","red");</code></pre>
+</p>
+<p>
+We've already covered more than a few examples where we change the x and y coordinates, so this time we'll change the stroke color.
+</p>
+<p>
+For this example, we will have the stroke color go from gray to red.
+</p>
+<p>
+This will change the color of the line from gray to red.
+</p>
+<br>
+<p>
+Alright, let's go to the JavaScript Console to see the transitions in action.
+</p>
+<br>
+<p>
+We start with a blank HTML document that has the D3 library hooked up from the D3js.org website.
+</p>
+<br>
+<p>
+For each example, we will reset the browser to get a clean slate.
+</p>
+<br>
+<p>
+Rectangle Animation Example 1
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect").attr("x","25").attr("y","25").attr("width","50").attr("height","100");
+
+d3.select("rect").transition().attr("height","300");</code></pre>
+</p>
+<p>
+Notice that the rectangle transition animation increased the height of the rectangle shape.
+</p>
+<br>
+<p>
+Rectangle Animation Example 2
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect").attr("x","25").attr("y","25").attr("width","50").attr("height","100");
+
+d3.select("rect").transition().attr("x","5");</code></pre>
+</p>
+<p>
+Notice that the rectangle transition animation moved the rectangle location/position to the left.
+</p>
+<br>
+<p>
+Circle Animation Example 1
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("circle");
+
+d3.select("circle").attr("cx","25").attr("cy","25").attr("r","15");
+
+d3.select("circle").transition().attr("cy","250");</code></pre>
+</p>
+<p>
+Notice that the circle transition animation moved the circle location/position down.
+</p>
+<br>
+<p>
+Circle Animation Example 2
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("circle");
+
+d3.select("circle").attr("cx","25").attr("cy","25").attr("r","15");
+
+d3.select("circle").transition().attr("r","45");</code></pre>
+</p>
+<p>
+Notice that the circle transition animation increased the size of the circle shape.
+</p>
+<p>
+Also notice that the circle appears to be cut off because parts of it are outside of the SVG Viewport.
+</p>
+<br>
+<p>
+Ellipse Animation Example 1
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("ellipse");
+
+d3.select("ellipse").attr("cx","65").attr("cy","65").attr("rx","10").attr("ry","25");
+
+d3.select("ellipse").transition().attr("ry","55");</code></pre>
+</p>
+<p>
+Notice that the ellipse transition animation increased the length of the ellipse shape along the Y-axis.
+</p>
+<br>
+<p>
+Ellipse Animation Example 2
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("ellipse");
+
+d3.select("ellipse").attr("cx","65").attr("cy","65").attr("rx","10").attr("ry","25");
+
+d3.select("ellipse").transition().attr("cy","205");</code></pre>
+</p>
+<p>
+Notice that the ellipse transition animation moved the ellipse position/location down along the Y-axis.
+</p>
+<br>
+<p>
+Straight Line Animation Example 1
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("line");
+
+d3.select("line")
+    .attr("x1","5")
+    .attr("y1","5")
+    .attr("x2","40")
+    .attr("y2","40")
+    .attr("stroke","gray")
+    .attr("stroke-width","5");
+
+d3.select("line").transition().attr("stroke-width","20");</code></pre>
+</p>
+<p>
+Notice that the straight line transition animation widened the line width appearance.
+</p>
+<br>
+<p>
+Straight Line Animation Example 2
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("line");
+
+d3.select("line")
+    .attr("x1","5")
+    .attr("y1","5")
+    .attr("x2","40")
+    .attr("y2","40")
+    .attr("stroke","gray")
+    .attr("stroke-width","5");
+
+d3.select("line").transition().attr("stroke","red");</code></pre>
+</p>
+<p>
+Notice that the straight line transition animation changed the line color appearance from gray to red.
+</p>
+<br>
+<p>
+Next, let's take a look at how we can apply delays and modified durations to transitions of SVG Elements.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Delaying and Modifying Durations of Animations
+</strong>
+</p>
+<br>
+<p>
+Two SVG Rectangles, Created with D3
+</p>
+<p>
+<pre><code class="javascript">var svgSelection = d3.select("body").append("svg");
+
+var rect1Selection = svgSelection.append("rect").attr("class", "rect1");
+
+var rect2Selection = svgSelection.append("rect").attr("class", "rect2");
+
+rect1Selection.attr("x","5").attr("y", "5").attr("width", "20").attr("height", "20").style("fill","red");
+
+rect2Selection.attr("x","25").attr("y","25").attr("width","50").attr("height","100").style("fill", "green");</code></pre>
+</p>
+<p>
+For this section, we will only use the SVG Rectangle basic shape and leave as an exercise to the viewer how it works with the other SVG basic shapes.
+</p>
+<p>
+The examples in the previous section showed how once you understand the basic methodology, it works the same way with all of the SVG basic shapes and elements.
+</p>
+<p>
+In this section, we will use two rectangles that are colored red and green.
+</p>
+<br>
+<p>
+Recall that you can specify how long to delay the transition before it starts.
+</p>
+<p>
+<pre><code class="javascript">d3.selection.transition.delay(delay)
+// delay = constant
+// delay = function
+
+d3.selection.transition.duration(duration)
+// duration = constant
+// duration = function</code></pre>
+</p>
+<p>
+Recall that you can also specify how long the duration of the transition should last once it starts.
+</p>
+<br>
+<p>
+This is an example of the delay functionality.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect").transition().attr("y", "105").delay(function(d,i){
+    if (i === 0) {
+        return 2000;
+    } else {
+        return 4000;
+    };
+});</code></pre>
+</p>
+<p>
+Here we will selectAll the rectangles on the page.
+</p>
+<p>
+Since there are two, this selection has both the red and green rectangles.
+</p>
+<p>
+Then a transition is applied to each rectangle.
+</p>
+<p>
+A delay to the start of the transition is defined.
+</p>
+<p>
+If the rectangle selection index is 0, then a location/position transition animation will occur after 2 seconds.
+</p>
+<p>
+If the rectangle selection index is something else, then a location/position transition animation will occur after 4 seconds.
+</p>
+<br>
+<p>
+This is an example of the duration functionality.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect").transition().attr("y", "5").duration(function(d,i){
+    if (i === 0) {
+        return 5000;
+    } else {
+        return 2000;
+    };
+});</code></pre>
+</p>
+<p>
+Here we will selectAll the rectangles on the page.
+</p>
+<p>
+Since there are two, this selection has both the red and green rectangles.
+</p>
+<p>
+Then a transition is applied to each rectangle.
+</p>
+<p>
+A duration of the transition is defined for each element in the selection.
+</p>
+<p>
+If the rectangle selection element index is 0, then a location/position transition animation will occur for a period of 5 seconds.
+</p>
+<p>
+If the rectangle selection element index is something else, then a location/position transition animation will occur for a period of 2 seconds.
+</p>
+<br>
+<p>
+This is an example of combining the duration and delaying functionality being applied to a location/position transition.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect").transition().attr("y", "105").delay(function(d,i){
+    if (i === 0) {
+        return 1000;
+    } else {
+        return 5000;
+    }})
+.duration(function(d,i){
+    if (i === 0) {
+        return 5000;
+    } else {
+        return 1000;
+    };
+});</code></pre>
+</p>
+<p>
+A delay and a modified duration transition are applied to each rectangle element.
+</p>
+<p>
+If the index is zero, the rectangle will wait 1 second before moving and take 5 seconds to complete the transition animation.
+</p>
+<p>
+If the index is not zero, the rectangle will wait 5 seconds before moving and then take 1 second to complete the transition animation.
+</p>
+<p>
+By combining the delay and transition, you can create some pretty inspiring effects.
+</p>
+<br>
+<p>
+Alright, let's go to the JavaScript Console to see the transitions in action.
+</p>
+<br>
+<p>
+We start with a blank HTML document that has the D3 library hooked up from the D3js.org website.
+</p>
+<br>
+<p>
+Let's create the two rectangles
+</p>
+<p>
+<pre><code class="javascript">var svgSelection = d3.select("body").append("svg");
+
+var rect1Selection = svgSelection.append("rect").attr("class", "rect1");
+
+var rect2Selection = svgSelection.append("rect").attr("class", "rect2");
+
+rect1Selection.attr("x","5").attr("y", "5").attr("width", "20").attr("height", "20").style("fill","red");
+
+rect2Selection.attr("x","25").attr("y","25").attr("width","50").attr("height","100").style("fill", "green");</code></pre>
+</p>
+<p>
+You can now see the two rectangles in the webpage.
+</p>
+<br>
+<p>
+Next, let's try the delay example:
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .transition()
+        .attr("y", "105")
+        .delay(function(d,i){
+            if (i === 0) {
+                return 2000;
+            } else {
+                return 4000;
+            };
+        });</code></pre>
+</p>
+<p>
+In this example, you saw the red rectangle transition it's location / position down after two seconds.
+</p>
+<p>
+Then, the green rectangle transitioned it's location / position down after four seconds.
+</p>
+<br>
+<p>
+Next, let's try the duration example:
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .transition()
+        .attr("y", "5")
+        .duration(function(d,i){
+            if (i === 0) {
+                return 5000;
+            } else {
+                return 2000;
+            };
+        });</code></pre>
+</p>
+<p>
+In this example, both rectangles start moving at the same time though the red one takes 5 seconds to complete the transition while the green one takes only 2 seconds.
+</p>
+<p>
+This gives the animation an illusion of the green one sliding past the red one until the red one catches up.
+</p>
+<br>
+<p>
+Finally, let's try the delay and duration example:
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .transition()
+        .attr("y", "105")
+        .delay(function(d,i){
+            if (i === 0) { return 1000; } else { return 5000; }})
+        .duration(function(d,i){
+            if (i === 0) { return 5000; } else { return 1000; }});</code></pre>
+</p>
+<p>
+In this example, the total time for the transition of both rectangles is the same - six seconds.
+</p>
+<p>
+However, the red rectangle waits 1 seconds before it start the movement and then takes 5 seconds to complete the movement.
+</p>
+<p>
+The green rectangle on the other hand waits 5 seconds before it starts the movement and then takes 1 second to complete the movement.
+</p>
+<p>
+Through putting together delays and durations on various elements, you can develop sophisticated animations.
+</p>
+<br>
+<p>
+And with that we have covered how D3 transitions work with SVG Elements, as well as basic examples of doing animation transitions of shape, location/position and appearance.
+</p>
+        </div>
+      </div>
+        
+    </div>
+
+
+
 
    
 
