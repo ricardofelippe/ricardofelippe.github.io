@@ -34624,6 +34624,754 @@ Which is where our next video will go - how to add events to D3 Data Visualizati
       </div>
 
 </div>
+     
+
+<h3 id="lesson53">D3 and DOM Events<h3>
+    <div>
+         <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>d3.selection.on(type[, listener[, capture]]) adds an event listener to each element in the current selection</li>
+<li>D3 invokes the listener in the same way it invokes other D3 operator functions - by passing the current datum "d", index "i", and the "this" context as the current DOM element</li>
+<li>Notice D3 allows you to take advantage of capture phase versus bubbling phase event triggers</li>
+<li>d3.event captures an event when it happens and stores it in the variable d3.event</li>
+<li>The d3.event variable is a global variable that can be used in the event listener callback function registrered with the d3.selection.on operator</li>
+<li>After the JavaScript callback function has finished running, the current d3.event variable is reset</li>
+<li>You can "delete" an event listener by passing the JavaScript null object as the function for the eventListener type</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/introduction-to-javascript">Introduction to JavaScript</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/javascript-callback-functions">JavaScript Callback Functions</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-transition-basics">D3 Transition Basics</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/dom-event-model-and-javascript">DOM Event Model and JavaScript</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 and DOM Events
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+D3 selection.on
+</strong>
+</p>
+<br>
+<p>
+Now that we have covered how to add an event listener to an HTML element using DOM Level 2 Event Listeners with JavaScript, let's cover how we can do the same with thing D3.
+</p>
+<p>
+<pre><code class="javascript">target.addEventListener(type, listener[, useCapture]);</code></pre>
+</p>
+<br>
+<p>
+The d3 selection dot on method adds an event listener to each element in the current selection.
+</p>
+<p>
+<pre><code class="javascript">target.addEventListener(type, listener[, useCapture]);
+
+d3.selection.on(type[, listener[, capture]])</code></pre>
+</p>
+<p>
+So we can use select for a 1 element selection or a selectAll for a multi-element selection.
+</p>
+<p>
+The type is a string of the event type that we want an event listener for.
+</p>
+<p>
+Examples could be mouse down, mouse up, mouse over, mouse out, etc.
+</p>
+<p>
+D3 invokes the listener in the same way it invokes other operator functions - by passing the current datum d and index i and the "this" context as the current DOM element.
+</p>
+<p>
+Note that we can still take advantage of capture phase vs bubbling phase event triggers in D3.
+</p>
+<br>
+<p>
+This example creates a selection of all the SVG Circle Elements.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("circle")
+    .on("mouseover", function(d,i) { alert("mouseover"); })
+    .on("mouseout",  function(d,i) { alert("mouseout");  });</code></pre>
+</p>
+<p>
+Then using the d3 selection dot on, it adds a mouse over event listener to each SVG circle element.
+</p>
+<p>
+When the mouse goes over one of the SVG Circle Elements, the anonymous function will be invoked.
+</p>
+<p>
+Currently, it will alert us with the string "mouseover"
+</p>
+<p>
+Then using the D3 selection dot on, it adds a mouse out event listener to each SVG circle element.
+</p>
+<p>
+When the mouse leaves one of the the SVG Circle Elements after having been on it, the anonymous function will be invoked.
+</p>
+<p>
+Currently it will alert us with the string "mouseout"
+</p>
+<p>
+Notice that we are adding two different types of event listeners to the same SVG Element.
+</p>
+<p>
+Also notice that every single element in the selection will receive the same event listeners.
+</p>
+<br>
+<p>
+As you can imagine, we can also use the index and the data object attached to each circle element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("circle")
+    .on("mouseover", function(d,i) { alert( d.value ); })
+    .on("mouseout",  function(d,i) { alert( d.value );  });</code></pre>
+</p>
+<p>
+In this example, if the data object had a key of "value", then this would return the value of the key,value pair.
+</p>
+<p>
+This is very powerful, because now we have some interaction with the mouse.
+</p>
+<p>
+This is one of the reasons that we have covered before, why it's very important to leave the data unchanged when attaching it to DOM elements.
+</p>
+<p>
+We can also use the element index as well as the "this" context of each element.
+</p>
+<br>
+<p>
+Because event interactions can get very complicated quickly with transitions and the duration of the transition, styling and other functionality, it's often easier to understand if you write named functions elsewhere in the code that the selection.on can reference.
+</p>
+<p>
+<pre><code class="javascript">function mouseover(d) { alert(d.value); }
+
+function mouseout (d) { alert(d.value); }
+
+d3.selectAll("circle")
+    .on("mouseover", mouseover)
+    .on("mouseout",  mouseout );</code></pre>
+</p>
+<p>
+In this way, your code will be very clear to read and be maintainable.
+</p>
+<br>
+<p>
+SVG DOM Element + Mouse Event
+</p>
+<p>
+So far so good, we are able to attach an event listener to the SVG Dom Element.
+</p>
+<p>
+We are also able to specify specific actions / calculations that must happen when the event is triggered through a JavaScript Function.
+</p>
+<p>
+Let's take a look at a few examples in the JavaScript Console.
+</p>
+<br>
+<p>
+Let's start simply by interacting with HTML Elements.
+</p>
+<br>
+<p>
+We create 3 paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("p").text("one").attr("id","p_1");
+
+d3.select("body").append("p").text("two").attr("id","p_2");
+
+d3.select("body").append("p").text("three").attr("id","p_3");</code></pre>
+</p>
+<p>
+You can see the three paragraphs in the browser window.
+</p>
+<p>
+You can see their id's in the Chrome Developer Tool's Elements Section.
+</p>
+<br>
+<p>
+Next, let's select the first paragraph and add a mouseover event to it.
+</p>
+<p>
+<pre><code class="javascript">d3.select("#p_1")
+    .on("mouseover", function(d, i) { alert("paragraph power!");});</code></pre>
+</p>
+<p>
+Before we move our mouse over the paragraph, notice that once the command was run nothing was added to the HTML of the page.
+</p>
+<br>
+<p>
+Now, let's move over the paragraph.
+</p>
+<p>
+BROWSER move over any / all the paragraphs, showing that only the first paragraph has a pop-up.
+</p>
+<p>
+BROWSER click okay on the pop-ups to close them.
+</p>
+<p>
+You should have seen the pop-up happen.
+</p>
+<p>
+That shows you how easy it is to add events to DOM elements, in this case HTML with D3.
+</p>
+<br>
+<p>
+Next, instead of selecting the first paragraph, let's create a selection of all the paragraphs and add the same on mouseover event functionality.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("p")
+    .on("mouseover", function(d, i) { alert("paragraph power!");});</code></pre>
+</p>
+<p>
+This will add a mouseover event listener to every paragraph element in the selection.
+</p>
+<p>
+For now every paragraph will exhibit the same behavior - have an alert pop up with the string "paragraph power!" when we mouseover the paragraph.
+</p>
+<br>
+<p>
+Let's move the mouse over the paragraphs.
+</p>
+<p>
+BROWSER move over any / all of the paragraphs.
+</p>
+<p>
+BROWSER click okay on the pop-ups to close them.
+</p>
+<p>
+You can see that our event trigger now happens for every paragraph element.
+</p>
+<p>
+You can also see that all the paragraphs exhibit the same behavior.
+</p>
+<br>
+<p>
+We reset the browser and this time we'll generate some paragraphs with data.
+</p>
+<p>
+BROWSER reset
+</p>
+<br>
+<p>
+Let's start with a simple array of 5 numbers.
+</p>
+<p>
+<pre><code class="javascript">var myData = [5, 4, 3, 2, 1];</code></pre>
+</p>
+<br>
+<p>
+Let's create paragraphs with them.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p").data(myData).enter().append("p");
+
+d3.selectAll("p").text(function(d, i) { return "paragraph " + i; });</code></pre>
+  </p>
+<p>
+Browser - Click into the ELEMENTS section and open the body / and first paragraph.
+  </p>
+<p>
+You can see the output, which is 5 paragraph elements with text inside of them.
+  </p>
+<p>
+D3 selections are 0-indexed, so the text of the paragraphs is paragraph 0 all the way to paragraph 4.
+</p>
+<br>
+<p>
+Let's check the first paragraph to see what datum was bound to it.
+</p>
+<p>
+<pre><code class="javascript">d3.select("p").data();</code></pre>
+  </p>
+<p>
+This tells us the datum attached to the first paragraph is 5.
+  </p>
+<p>
+This is what we expect.
+</p>
+<br>
+<p>
+Let's now add a mouseover function to each paragraph that tells us the datum that is attached to it.
+</p>
+<p>
+In order to do that, we'll have to add a D3 selection.on event.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("p")
+    .on("mouseover", function(d, i) { alert(d); });</code></pre>
+</p>
+<p>
+This will add an event listener to each paragraph element in the selection.
+</p>
+<p>
+When an element registers a mouseover event, it will run the anonymous function we defined.
+</p>
+<p>
+In this case, it will alert us to the datum bound to the element.
+</p>
+<p>
+Note - that since we did not set or use the capture flag, the events will be triggered during the bubbling phase.
+</p>
+<br>
+<p>
+Let's move the mouseover the paragraphs
+</p>
+<p>
+BROWSER move over the paragraphs from bottom to the top.
+</p>
+<p>
+BROWSER click okay on the pop-ups to close them.
+</p>
+<p>
+You can see that each paragraph has an event trigger that happens for every element.
+</p>
+<p>
+You can also see that the behavior is the same for all the paragraphs, though the results are different because we are using a function to access element specific data for each event.
+</p>
+<br>
+<p>
+Now, let's make the function that is triggered more complicated and move it outside of the selection.on definition.
+</p>
+<p>
+<pre><code class="javascript">function paragraphMouseOver(d, i) {
+    if (i % 2 === 0) { alert(i + " is an even index, datum: "+d); }
+    else { alert(i + " is an odd index, datum: "+d); };
+};</code></pre>
+</p>
+<p>
+This function will take in the d and i variables that are available from D3.
+</p>
+<p>
+It will then use the i to test to see if the element has an even or odd index.
+</p>
+<p>
+If it is even, then it will alert us with a string that tells us it is even and the datum attached to it.
+</p>
+<p>
+If if is odd, then it will alert us with a string that tells us it is odd and the datum attached to it.
+</p>
+<br>
+<p>
+Now, let's re-define the event listener.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("p")
+    .on("mouseover", paragraphMouseOver);</code></pre>
+</p>
+<p>
+Before we test out the new event listener, you may be wondering what is going to happen to the previous event listener that we defined.
+</p>
+<p>
+The D3 API tells us that if an event listener was already registered for the same type of event on the same selected elements, the existing listener is removed before the new listener is added.
+</p>
+<p>
+If we really want to have multiple event listeners for the same element event type, the type can be followed with an optional name space.
+</p>
+<p>
+We will leave that for later.
+</p>
+<br>
+<p>
+Alright, let's mouse over these paragraphs.
+</p>
+<p>
+BROWSER move over the paragraphs from bottom to the top
+</p>
+<p>
+BROWSER click okay on the pop-ups to close them.
+</p>
+<p>
+You can see that each paragraph element has a new event listener function.
+</p>
+<p>
+You can see that the behavior is the same for all the paragraphs based on the function paragraphMouseOver.
+</p>
+<p>
+However, you can see the paragraphs are displaying different results based on their data and index.
+</p>
+<br>
+<p>
+Let's turn our attention to SVG DOM Objects and giving them event power.
+</p>
+<br>
+<p>
+As you can imagine, it works the exact same way.
+</p>
+<br>
+<p>
+This is why it's helpful to think of D3 as more than a Data Visualization JavaScript library - because we can do some wonderful amazing things with regular HTML.
+</p>
+<br>
+<p>
+Next, let's create three SVG circle elements based on data.
+</p>
+<br>
+<p>
+This time, our data source will be more complicated than the 1 dimensional array of numbers, it will be an array of JSON objects.
+</p>
+<br>
+<p>
+We reset the browser.
+</p>
+<p>
+Then we define the three circles
+</p>
+<p>
+<pre><code class="javascript">
+var circleData = [ { "x": "050", "y": "050", "r": "30", "color": "yellow", "fruit": "banana"},
+                   { "x": "100", "y": "100", "r": "30", "color": "purple", "fruit": "grape" },
+                   { "x": "150", "y": "150", "r": "30", "color": "red",    "fruit": "apple" }
+];</code></pre>
+</p>
+<p>
+You can see that each JSON object has an x coordinate, a y coordinate, a radius, a color and a fruit type.
+</p>
+<p>
+We will use all of this data in our circles and events.
+</p>
+<br>
+<p>
+Next, we create the circles.
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("body").append("svg");
+
+var circles = svg.selectAll("circle").data(circleData).enter().append("circle");</code></pre>
+</p>
+<p>
+BROWSER - open the body and SVG element to show the three circles.
+</p>
+<p>
+First, we create the SVG Viewport that the SVG Circle elements will live in.
+</p>
+<p>
+Then we create the circles with data bound to them.
+</p>
+<p>
+The three circles now appear in the Chrome Developer Tool's Elements section.
+</p>
+<br>
+<p>
+Next, let's double check to make sure each circle got the right data.
+</p>
+<p>
+<pre><code class="javascript">circles.data();</code></pre>
+</p>
+<p>
+BROWSER - open all three array and objects
+</p>
+<p>
+As you can see, the circles have the JavaScript objects bound to them.
+</p>
+<br>
+<p>
+Next, let's add the attributes to the circles.
+</p>
+<p>
+<pre><code class="javascript">circles
+    .attr("cx",function(d,i) { return d.x; })
+    .attr("cy",function(d,i) { return d.y; })
+    .attr("r", function(d,i) { return d.r; })
+    .style("fill",function(d,i) { return d.color; });</code></pre>
+</p>
+<p>
+We add the attributes for the "cx", "cy" and "r" to construct the circles.
+</p>
+<p>
+Then we add a style fill to color the circles.
+</p>
+<p>
+You can now see the three circles based on their data.
+</p>
+<br>
+<p>
+Now, let's add an event to all the circles that tells us the type of fruit they represent.
+</p>
+<p>
+We will do it with an anonymous function within the D3 selection.on definition.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("circle")
+    .on("mouseover", function(d, i) { alert(d.fruit); });</code></pre>
+  </p>
+<p>
+This code will add an event listener to each circle and will alert us of the type of fruit the circle represents.
+    
+</p>
+<p>
+Let's run our mouse over the circles.
+</p>
+<p>
+BROWSER mouse over the circles.
+</p>
+<p>
+BROWSER click okay on the pop-ups to close them.
+</p>
+<p>
+You can see that the events are in fact attached to each circle element and each one has a mouseover event listener function.
+</p>
+<br>
+<p>
+Next, let's try adding another event listener, this time a mouseout event.
+</p>
+<br>
+<p>
+We try the mouseout event here, because these circles have a wide enough radius that it is easy to see that it will only trigger when the mouse is no longer over the circle.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("circle")
+    .on("mouseout", function(d, i) { alert("is tasty!"); });</code></pre>
+  </p>
+<p>
+We use the string "mouseout" as the event when the mouse is no longer over the element we have defined the event listener for.
+  </p>
+<p>
+Each time the mouseout event is triggered, each element will alert us with a string of "is tasty".
+</p>
+<br>
+<p>
+Let's try it out by mousing over and then moving the mouse away from the circles.
+</p>
+<p>
+BROWSER mouse over a circle
+</p>
+<p>
+BROWSER press enter.
+</p>
+<p>
+BROWSER mouse away from a circle
+</p>
+<p>
+BROWSER press enter.
+  </p>
+<p>
+As you watch the mouse go over the circle, you can see the alert pop up telling us the specific fruit the circle represents based on the data bound to the specific SVG Circle element.
+  </p>
+<p>
+We can move the mouse anywhere on the circle and no other event will trigger.
+  </p>
+<p>
+When we finally move the mouse away from the circle, a new event triggers which has the anonymous function alert us with the string "is tasty".
+  </p>
+<p>
+With these types of interactions, you can see how this can lead to very interactive data visualizations.
+</p>
+<br>
+<p>
+Now that we have worked through adding events listeners to various DOM elements, let's take a closer look at the actual event that is moving through the capture and bubbling phase.
+</p>
+<br>
+<br>
+<p>
+<strong>
+D3.event
+</strong>
+</p>
+<br>
+<p>
+DOM Event Properties
+</p>
+<p>
+The Document Object Model Event, when triggered, has a number of event properties that are helpful in different types of scenarios.
+</p>
+<p>
+Some of these properties include the following:
+</p>
+<p>
+A time stamp of when the event occurred
+</p>
+<p>
+The horizontal coordinate of the event relative to the whole document
+</p>
+<p>
+The vertical coordinate of the event relative to the whole document 
+</p>
+<p>
+And other properties that help answer questions like 
+</p>
+<p>
+What is the type of the event?
+</p>
+<p>
+Which DOM element is the target of the event?
+</p>
+<p>
+Which key was pressed during the event?
+</p>
+<p>
+Which mouse button was pressed during the event?
+</p>
+<p>
+and What was the mouse position during the event?
+</p>
+<br>
+<p>
+</p>
+<p>
+D3 captures an event when it happens and stores it in the variable d3.event.
+        - d3.event
+</p>
+<p>
+This is a global variable that can be used in the event listener callback function registered with the d3 selection dot on operator.
+</p>
+<p>
+After the JavaScript callback function has finished running, the current d3.event is reset.
+</p>
+<br>
+<p>
+ </p>
+<p>
+There are a variety of reasons you may want to capture event properties.
+</p>
+<p>
+<pre><code class="javascript">d3.event.pageX
+
+d3.event.pageY</code></pre>
+  </p>
+<p>
+One that comes up frequently is building tool tips.
+  </p>
+<p>
+In order to build a tool tip, we have to know the x and y over the event that happened, so that we can build the tool tip close to the DOM element.
+</p>
+<p>
+From the current event object we can extract the X and Y coordinates of the event.
+</p>
+<p>
+These X and Y coordinates are where the event happened, which means it is where the mouse currently is.
+</p>
+<p>
+This is useful when we are making a tool tip to show the data of a specific element.
+</p>
+<br>
+<p>
+D3 selection.on()
+</p>
+<p>
+<pre><code class="javascript">d3.event // <--- GLOBAL VARIABLE
+// d, i, this AND event</code></pre>
+</p>
+<p>
+Going back to the D3 selection.on method.
+</p>
+<p>
+It is important to emphasize that because the d3.event is a global variable, that we can use the event within the functions we define for when an event triggers. 
+</p>
+<br>
+<p>
+Continuing with our three circles, let's work on getting the pageX and pageY properties out of the event.
+</p>
+<p>
+First though - let's cover how we can "delete" an eventListener.
+</p>
+<p>
+That is, how can we use D3 to turn off an event we no longer want.
+</p>
+<p>
+In this case, we want to turn off the "mouseout" event.
+</p>
+<br>
+<p>
+The way to do this with D3 is to pass the null object as the function for the eventListener type.
+</p>
+<p>
+<pre><code class="javascript">circles
+    .on("mouseout",null);</code></pre>
+</p>
+<p>
+BROWSER - mouse over a circle
+</p>
+<p>
+BROWSER - press okay on the alert box
+</p>
+<p>
+BROWSER - mouse out of the circle
+</p>
+<p>
+BROWSER - repeat with each circle.
+</p>
+<p>
+You saw the event when we moved the mouse over the circle.
+</p>
+<p>
+However, when we moved the mouse away from the circle, nothing happened.
+</p>
+<p>
+So you can see that the way to "delete" or "turn off" an event is to redefine it with the null object.
+</p>
+<br>
+<p>
+Alright, now that we only have the mouseover event, let's extract an event property from it.
+</p>
+<br>
+<p>
+We will redefine the "mouseover" eventListener to alert us of the x and y coordinate the event occurred at.
+</p>
+<p>
+<pre><code class="javascript">circles
+    .on("mouseover", function(d, i) {
+        alert("event happened at x:"+ event.pageX + " y:"+ event.pageY);
+    });</code></pre>
+</p>
+<p>
+BROWSER - go in and out of the circles.
+</p>
+<p>
+You can see that every time we mouseover a circle, we get an alert as we did before.
+</p>
+<p>
+This time however, we are getting the x and y coordinates for where the event happened.
+</p>
+<br>
+<p>
+So you can see that not only can you define event listeners within the actual functions, we can use the event object as well.
+</p>
+        </div>
+      </div>
         
     </div>
 
