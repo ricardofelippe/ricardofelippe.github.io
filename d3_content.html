@@ -33788,6 +33788,846 @@ And with that we have covered how D3 transitions work with SVG Elements, as well
         
     </div>
 
+<h3 id="lesson52">DOM Event Model and JavaScript<h3>
+    <div>
+        <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>DOM (Document Object Model) Events have two main goals: a) event system for event listeners/handlers and event flow description and b) common subset of event systems for browsers</li>
+<li>DOM Event Drivers include: mouse events, touch events, keyboard events, HTML frame/object events, HTML form events, User Interface events, and many more</li>
+<li>The DOM Event Flow is set of steps taken for an Event to traverse the DOM tree from the top of the document to the exact DOM node that was interacted with</li>
+<li>There are three phases to the DOM Event Flow: Capture Phase, Target Phase, and Bubble Phase</li>
+<li>The DOM Event Flow Capture Phase describes the travel the event takes from the top of the DOM tree to the DOM node that was interacted with</li>
+<li>The DOM Event Flow Target Phase describes the event reaching the DOM node that was interacted with</li>
+<li>The DOM Event Flow Bubble Phase describes the travel the event takes from the DOM node that was interacted with back to the top of the DOM tree</li>
+<li>Capture Phase event listeners are executed before Target Phase event listeners which are executed before Bubbling Phase event listeners</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/introduction-to-javascript">Introduction to JavaScript</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/javascript-callback-functions">JavaScript Callback Functions</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-transition-basics">D3 Transition Basics</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            DOM Event Model and JavaScript
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+DOM Event Model
+</strong>
+</p>
+<br>
+<p>
+W3C - Document Object Model Events
+</p>
+<br>
+<p>
+DOM events have two main goals:
+<br>
+a) Event System for event listeners/handers and event flow description
+<br>
+b) Common subset of event systems for browsers.
+</p>
+<p>
+The W3C designed the Document Object Model system with two main goals.
+</p>
+<p>
+A) Event system for registration of event listeners and describing event flow through the DOM Tree Structure
+</p>
+<p>
+B) Provide a common subset of event systems used in DOM Level 0 browsers.
+</p>
+<p>
+These events and systems are implemented in all modern web browsers.
+</p>
+<p>
+Which lets us focus on event-driven programming.
+</p>
+<br>
+<p>
+DOM Event Model
+<br>
+a) DOM Event Flow
+<br>
+b) Interfaces
+</p>
+<p>
+The DOM Event Model covers how DOM Events flow through the tree-based DOM structure.
+</p>
+<p>
+The DOM Event Model also covers how to interact with a set of interfaces to access contextual information on events and how to register event listeners.
+</p>
+<br>
+<p>
+Document Object Model Event Drivers
+</p>
+<p>
+<ul>
+<li>Mouse events</li>
+<li>Touch events</li>
+<li>Keyboard events</li>
+<li>HTML frame/object events</li>
+<li>HTML form events</li>
+<li>User interface events</li>
+</ul>
+</p>
+</p>
+<p>
+Document Object Model Events come many in different shapes and sizes.
+</p>
+<p>
+They can be driven by the mouse, by a touch, by the key board and by a few other different types of specific actions.
+</p>
+<p>
+Because various web browsers had significant differences in implementation and what events they responded to, the Document Object Model Event Model was standardized by the W3C in DOM Level 2.
+</p>
+<p>
+When any kind of one of these events is triggered we can have our code perform one or many tasks.
+</p>
+<br>
+<p>
+DOM Event Drivers - Mouse Events
+</p>
+<p>
+<ul>
+<li>click</li>
+<li>double click</li>
+<li>mouse down</li>
+<li>mouse up</li>
+<li>mouse over</li>
+<li>mouse move</li>
+<li>mouse out</li>
+<li>context menu</li>
+<li>drag</li>
+<li>drag start</li>
+<li>drag enter</li>
+<li>drag over</li>
+<li>drag leave</li>
+<li>drag end</li>
+<li>drag drop</li>
+<li>drag gesture</li>
+<li>drag over</li>
+<li>select start</li>
+<li>DOM Mouse Scroll</li>
+</ul>
+</p>
+  </p>
+<p>
+If we focus only on DOM Mouse events for the moment, we can take a look at a few of the common ones.
+</p>
+<p>
+There are many DOM Mouse event Drivers that are considered Mouse Events.
+</p>
+<br>
+<p>
+DOM event Drivers - Mouse Events
+<li>click</li>
+<li>double click</li>
+<li>mouse down</li>
+<li>mouse up</li>
+<li>mouse over</li>
+<li>mouse move</li>
+<li>mouse out</li>
+</p>
+<p>
+The main ones are related to clicking and moving the mouse over something.
+</p>
+<p>
+Because browsers can respond to these events, we can write exactly what happens when one of these events occurs.
+</p>
+<p>
+Let's cover these main ones and how they are defined.
+</p>
+<br>
+<p>
+A mouse click event fires when the mouse button is clicked over an element.
+</p>
+<p>
+A click is defined as a mouse down and mouse up over the same screen location.
+</p>
+<br>
+<p>
+A mouse double click event fires when the mouse button is doubled clicked over an element.
+</p>
+<p>
+A click is defined as a mouse down and mouse up over the same screen location.
+</p>
+<br>
+<p>
+A mouse down event fires when the mouse button is pressed over an element.
+</p>
+<p>
+A mouse up event fires when the mouse button is released over an element.
+</p>
+<p>
+A mouse over event fires when the mouse cursor is moved onto an element.
+</p>
+<p>
+A mouse move event fires when the mouse cursor is moved while over an element.
+</p>
+<p>
+A mouse out event fires when the mouse cursor moves away from an element.
+</p>
+<p>
+Document Object Model Event Drivers
+</p>
+<p>
+<ul>
+<li>Mouse events</li>
+<li>Touch events</li>
+<li>Keyboard events</li>
+<li>HTML frame/object events</li>
+<li>HTML form events</li>
+<li>User interface events</li>
+</ul>
+</p>
+</p>
+<p>
+If we go back to the list of different types of Event Drivers, we can see that there are many ways that a user can interact with the webpage and thus trigger various events.
+</p>
+<p>
+The rest of this video will focus on how to capture these events and how they flow through the DOM tree.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Listening For DOM Events
+</strong>
+</p>
+<br>
+<p>
+DOM Level 0 Event Listener
+</p>
+<p>
+<pre><code class="html">&lt;a href="#" onclick="alert('clicked');"&gt;Click Me&lt;/a&gt;</code></pre>
+</p>
+<p>
+In this example, when the HTML link is clicked, an alert will pop up with the string "clicked".
+</p>
+<p>
+This is the simplest way to define an event handler/listener.
+</p>
+<p>
+This is called a DOM Level 0 Event Listener.
+</p>
+<p>
+While it is the simplest way, it is not recommended for a few reasons:
+</p>
+<p>
+One - the JavaScript is written as part of the HTML, which violates separation of concerns.
+</p>
+<p>
+Two - this type of code is very inflexible because every link will need to have it's own written handler, which means you cannot assign a handler to all links.
+</p>
+<p>
+Three - we can only define one type of handler for the link.
+
+</p>
+<br>
+<p>
+DOM Level 1 Event Listener
+</p>
+<p>
+<pre><code class="javascript">&lt;a href="#" id="myLink"&gt;Click Me&lt;/a&gt;
+
+&lt;script&gt;
+    document.getElementById("myLink").onclick = function(){ alert('vanilla'); }
+    document.getElementById("myLink").onclick = function(){ alert('cupcake'); }
+&lt;/script&gt;</code></pre>
+</p>
+<p>
+In this example, when the HTML link is clicked, an alert will pop up with the string "cupcake".
+</p>
+<p>
+This is called a DOM Level 1 Event Listener.
+</p>
+<p>
+This solves the separations of concerns issue.
+</p>
+<p>
+The HTML is written separately from the JavaScript Event Handler/Listener.
+</p>
+<p>
+This allows us to write a function for events and then we can attach it as many times as we like.
+</p>
+<p>
+It is a little more complicated than the previous example as we are setting a callback function as an attribute of the HTML element.
+</p>
+<p>
+Which means that if we define a new handler this way for the same element, it will overwrite that attribute.
+</p>
+<p>
+So in the example on the screen, when this link is clicked, the word "cupcake" will be the alert that comes up, not "vanilla".
+</p>
+<p>
+This is because the second time we define the event handler, it overwrites the original event handler.
+</p>
+<p>
+So the main downside to this approach is that we can only define one handler per element.
+
+</p>
+<br>
+<p>
+DOM Level 2 Event Listener
+</p>
+<p>
+<pre><code class="javascript">&lt;a href="#" id="myLink"&gt;Click Me&lt;/a&gt;
+
+&lt;script&gt;
+    var el = document.getElementById("myLink");
+
+    function sayVanilla () { alert('vanilla'); };
+    function sayCupcake () { alert('cupcake'); };
+
+    el.addEventListener('click', sayVanilla, false);
+    el.addEventListener('click', sayCupcake, false);
+&lt;/script&gt;</code></pre>
+</p>
+<p>
+In this example, when the HTML link is clicked, an alert will pop up with the string "vanilla".
+</p>
+<p>
+Then when you press okay to that alert, a second alert will pop up with the string "cupcake".
+</p>
+<p>
+This is called a DOM Level 2 Event Listener.
+</p>
+<p>
+This solves the separations of concerns issue.
+</p>
+<p>
+It allows us a great deal more flexibility than defining attributes of the HTML element.
+</p>
+<p>
+It also allows us to attach as many event listeners to a specific element as we want.
+</p>
+<p>
+In this example, we attached two event listeners, where we could have attached 1 or many more.
+
+</p>
+<br>
+<p>
+DOM Level 2 Event Listener
+</p>
+<p>
+<pre><code class="javascript">&lt;a href="#" id="myLink"&gt;Click Me&lt;/a&gt;
+
+&lt;script&gt;
+    var el = document.getElementById("myLink");
+    function sayCupcake () { alert('cupcake'); };
+    el.addEventListener('click', sayCupcake, false);
+&lt;/script&gt;</code></pre>
+</p>
+<p>
+Looking specifically at the code, let's break it down.
+</p>
+<p>
+First, we have the HTML code for a link.
+</p>
+<p>
+Then we have a section of JavaScript code.
+</p>
+<p>
+In this JavaScript code we first select the element that we are going to use.
+</p>
+<p>
+We do this by using the HTML element id.
+</p>
+<p>
+Then we define a function named "sayCupcake" that evaluates the alert function with the string "cupcake".
+</p>
+<p>
+This will cause an alert to pop-up in the browser when the sayCupcake function is called.
+</p>
+<p>
+Lastly, we use the "addEventListener" method to tell the element three things.
+</p>
+<p>
+One - what to listen to: In this case a "click" event.
+</p>
+<p>
+Two - what do do when the event is heard: In this case, call the function sayCupcake
+</p>
+<p>
+Three - we tell it false.
+</p>
+<p>
+This third parameter, is how we tell the event to trigger at a certain point in the flow of the event through the DOM Tree.
+</p>
+<p>
+In the next section we'll explore what "false" vs "true" do as the third element of the addEventListener.
+</p>
+<p>
+For now, know that this third parameter is used to tell the event whether the event handler is to be fired on the Capture or Bubble phase of the DOM Event Flow.
+</p>
+<br>
+<br>
+<p>
+<strong>
+DOM Event Flow
+</strong>
+</p>
+<br>
+<p>
+Looking at the previous example, we can look at the syntax for the addEventListener.
+</p>
+<p>
+<pre><code class="javascript">el.addEventListener('click', sayCupcake, false);
+
+target.addEventListener(type, listener[, useCapture]);</code></pre>
+</p>
+<p>
+The first part of the syntax is the target.
+</p>
+<p>
+This can be a DOM element in the document, the Document itself, a window or any other object that supports events.
+</p>
+<p>
+The "type" is a string representation of a specific event type to listen for.
+</p>
+<p>
+There are W3C specific events and then there are browser specific events, so you want to make sure you check carefully that the events you are listening for are supported by all browsers.
+</p>
+<p>
+The listener is the object or JavaScript function that receives a notification that the event of a specific type has occurred.
+</p>
+<p>
+Lastly, the useCapture tells the listener when the user wants to initiate the event trigger.
+</p>
+<br>
+<p>
+There and Back Again
+</p>
+<p>
+<ul>
+<li>Capture Phase</li>
+<li>Target Phase</li>
+<li>Bubble Phase</li>
+</ul>
+</p>
+</p>
+<p>
+Events Flow through the document in three phases.
+</p>
+<p>
+The first phase is the capture phase.
+</p>
+<p>
+The second phase is the target phase.
+</p>
+<p>
+and the third phase is the bubble phase.
+</p>
+<br>
+<p>
+Let's take a look at this example HTML code.
+</p>
+<p>
+<pre><code class="html">&lt;html&gt;
+    &lt;body&gt;
+        &lt;table&gt;
+            &lt;tbody&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Shady Grove&lt;/td&gt;
+                    &lt;td&gt;Aeolian&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Over the river, Charlie&lt;/td&gt;
+                    &lt;td&gt;Dorian&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</p>
+<p>
+This is an HTML document that contains a 2 by 2 table.
+</p>
+<p>
+There are two rows and each row has 2 columns.
+</p>
+<p>
+The td's are child elements of the tr's.
+</p>
+<p>
+The tr's are child elements of the tbody
+</p>
+<p>
+The tbody is a child element of the table.
+</p>
+<p>
+The table is a child element of the body
+</p>
+<p>
+and the body is a child element of the HTML.
+</p>
+<br>
+<p>
+This picture from the W3C Working Group perfectly illustrates the DOM tree and the event Flow.
+</p>
+<p>
+[ Image: W3C Event Flow Diagram ]
+</p>
+<p>
+When a td element is clicked, the click event "drills" down the document from the HTML tag to the element clicked and then makes it's way back up.
+</p>
+<p>
+The first part is the capture phase where it goes down the tree.
+</p>
+<p>
+The second part is when it interacts with the element that triggered the event.
+</p>
+<p>
+The third part is the bubbling phase where it goes back up the tree.
+</p>
+<br>
+<p>
+During the capture phase, the event is sent from the root of the tree to the parent of the target node.
+</p>
+<br>
+<p>
+3 Phases
+</p>
+<p>
+<ol>
+<li>Capture Phase</li>
+<li>Target Phase</li>
+<li>Bubbling Phase</li>
+</ol>
+</p>
+</p>
+<p>
+During the target phase, the event is sent to the target node
+</p>
+<p>
+During the bubbling phase, the event is sent from parent of the target node to the root of the tree.
+</p>
+<br>
+<p>
+Capture Phase 
+</p>
+<p>
+[ Image: W3C Event Flow Diagram ]
+</p>
+<p>
+When we click on the TD, the DOM calculates that Capture Phase path.
+</p>
+<p>
+At each element as the event sent is sent down, Capture Phase event handlers will fire in order.
+</p>
+<p>
+So a capture phase event handler will fire for the
+</p>
+<p>
+- document
+</p>
+<p>
+- html
+</p>
+<p>
+- body
+</p>
+<p>
+- table
+</p>
+<p>
+- tbody
+</p>
+<p>
+- and tr
+</p>
+<br>
+<p>
+Target Phase
+</p>
+<p>
+[ Image: W3C Event Flow Diagram ]
+</p>
+<p>
+After the Capture Phase has completed, the target phase starts.
+</p>
+<p>
+This is where the event handler for the element we interacted with will get the event object.
+</p>
+<br>
+<p>
+Bubbling Phase
+</p>
+<p>
+[ Image: W3C Event Flow Diagram ]
+</p>
+<p>
+<pre><code class="javascript">target.addEventListener(type, listener[, useCapture]);</code></pre>
+</p>
+<p>
+After the Capture phase and the Target phase are done, the bubbling phase will commence.
+</p>
+<p>
+At each element as the event is sent up, Bubbling Phase event handlers will fire in order.
+</p>
+<p>
+So a bubbling phase event handler will fire for the
+<br>
+- tr
+<br>
+- tbody
+<br>
+- table
+<br>
+- body
+<br>
+- html
+<br>
+- document
+</p>
+<p>
+As you can tell, it just does the Capture phase in reverse order.
+</p>
+<br>
+<p>
+Alright, so we now understand that when an event is triggered, it goes through the capture phase, target phase and bubbling phase.
+</p>
+<p>
+<pre><code class="html">&lt;table&gt;
+    &lt;tr id="tr_hello"&gt;
+        &lt;td id="td_hello"&gt;
+            &lt;a href="#"&gt;Vanilla Cupcake&lt;/a&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;script&gt;
+    var el_tr = document.getElementById("tr_hello");
+    var el_td = document.getElementById("td_hello");
+    
+    function sayVanilla() { alert('vanilla'); }
+    function sayCupcake() { alert('cupcake'); }
+    
+    el_tr.addEventListener('click', sayVanilla, false);
+    el_td.addEventListener('click', sayCupcake, false);
+&lt;/script&gt;</code></pre>
+</p>
+<p>
+Let's look at the example on the screen.
+</p>
+<p>
+We have an HTML table with one row and one column.
+</p>
+<p>
+The tr element has an id of tr underscore hello
+</p>
+<p>
+The td element has an id of td underscore hello
+</p>
+<p>
+We use JavaScript to attach event listeners to the tr element and the td element.
+</p>
+<p>
+We click on the "Vanilla Cupcake" Link.
+</p>
+<p>
+What happens next?
+</p>
+<p>
+And which alert will show up first, the "vanilla" alert or the "cupcake" alert?
+</p>
+<br>
+<p>
+What order the event listeners/handlers are fired depends on two things.
+</p>
+<p>
+<pre><code class="html">
+&lt;table&gt;
+    &lt;tr id="tr_hello"&gt;
+        &lt;td id="td_hello"&gt;
+            &lt;a href="#"&gt;Vanilla Cupcake&lt;/a&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;script&gt;
+    var el_tr = document.getElementById("tr_hello");
+    var el_td = document.getElementById("td_hello");
+    
+    function sayVanilla() { alert('vanilla'); }
+    function sayCupcake() { alert('cupcake'); }
+    
+    el_tr.addEventListener('click', sayVanilla, false);
+    el_td.addEventListener('click', sayCupcake, false);
+&lt;/script&gt;</code></pre>
+</p>
+<p>
+One - which element is the parent and which element is the child
+</p>
+<p>
+Two - which element is fired during the capture phase vs which element is fired in the bubbling phase.
+</p>
+<p>
+In this example, the td element will fire first because it neither addEventListener had the useCapture set to true.
+</p>
+<p>
+Which means that the events will be fired in the bubbling phase.
+</p>
+<p>
+Since the td is a child element of the tr, it will come first.
+</p>
+<br>
+<p>
+In this example, both addEventListeners have the useCapture toggled to true.
+</p>
+<p>
+<pre><code class="javascript">el_tr.addEventListener('click', sayVanilla, true);
+
+el_td.addEventListener('click', sayCupcake, true);</code></pre>
+</p>
+<p>
+Which means both events will be fired during the Capture Phase.
+</p>
+<p>
+Which means that since the tr is a parent of td, that the tr will fire first.
+</p>
+<p>
+In this example, the td element will fire first and then the tr element.
+</p>
+<p>
+<pre><code class="javascript">el_tr.addEventListener('click', sayVanilla, false);
+
+el_td.addEventListener('click', sayCupcake, true);</code></pre>
+</p>
+<p>
+Why is this?
+</p>
+<p>
+Because the useCapture is toggled to true for the td element while it is not for the tr element.
+</p>
+<br>
+<p>
+Lastly, let's explore this just a step further.
+</p>
+<p>
+<pre><code class="javascript">el.addEventListener("click", function(){alert(1)}, false);
+
+el.addEventListener("click", function(){alert(2)}, true);
+
+el.addEventListener("click", function(){alert(3)}, false);
+
+el.addEventListener("click", function(){alert(4)}, true);</code></pre>
+</p>
+<p>
+Given the code on the screen, what's going to be the order of the numbers that are alerted?
+</p>
+<p>
+BROWSER - wait 5 seconds
+</p>
+<p>
+The answer is 2, 4, 1 and then 3.
+</p>
+<p>
+The 2 shows up first because it is the first defined event listener that had true for it's useCapture option toggled.
+</p>
+<p>
+The 4 shows up second because it is the second defined event listener that had true for it's useCapture option toggled.
+</p>
+<p>
+The 1 shows up third because it is the first defined event listener that had false for it's useCapture option toggled.
+</p>
+<p>
+and the 3 shows up fourth (or last) because it is the second defined event listener that had false for it's useCapture option toggled.
+</p>
+<br>
+<p>
+Order Matters
+<br>
+Capture vs Bubbling Phase Matters
+<br>
+Capture + Order beats Bubbling + Order
+</p>
+<p>
+This tells us three big things:
+</p>
+<p>
+One - Event Listeners from the Capture Phase are executed before Event Listeners from the Bubbling Phase
+</p>
+<p>
+Two - Event Listeners are executed in order of definition
+</p>
+<p>
+Three - Capture Phase overrides definition order if there are Bubbling Phase Event Listeners defined earlier than the Capture Phase event listeners.
+</p>
+<br>
+<p>
+Document Object Model Event Drivers
+</p>
+<ul>
+<li>Mouse events</li>
+<li>Touch events</li>
+<li>Keyboard events</li>
+<li>HTML frame/object events</li>
+<li>HTML form events</li>
+<li>User interface events</li>
+</ul>
+</p>
+<br>
+<p>
+And with that we have covered the basics of how DOM Events Work, how we can add listeners to them and how we can make sure they execute at the right time.
+</p>
+<p>
+Since there are events that can be driven by the mouse, by a touch, by the key board and other input devices, it's good to read up on the particular event you are adding to your data visualization.
+</p>
+<p>
+Which is where our next video will go - how to add events to D3 Data Visualizations.
+</p>
+        </div>
+      </div>
+
+</div>
+        
+    </div>
+
+
 
 
 
