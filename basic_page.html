@@ -8,15 +8,37 @@
     </head>
     
     <body>
-        <a href="#" onclick="alert('clicked');">Click Me</a>
+        <a href="#" onclick="alert('clicked');">Click Me</a> <br>
         
-       <a href="#" id="myLink">Click Me</a>
+       <a href="#" id="myLink">Click Me</a><br>
+        
+       <table>
+    <tr id="tr_hello">
+        <td id="td_hello">
+            <a href="#">Vanilla Cupcake</a>
+        </td>
+    </tr>
+</table>
+
+        
 
     </body>
     <script>
     document.getElementById("myLink").onclick = function(){ alert('vanilla'); }
     document.getElementById("myLink").onclick = function(){ alert('cupcake'); }
     </script> 
+    
+    <script>
+    var el_tr = document.getElementById("tr_hello");
+    var el_td = document.getElementById("td_hello");
+    
+    function sayVanilla() { alert('vanilla'); }
+    function sayCupcake() { alert('cupcake'); }
+    
+    el_tr.addEventListener('click', sayVanilla, false);
+    el_td.addEventListener('click', sayCupcake, false);
+</script> 
+
 
         
 
