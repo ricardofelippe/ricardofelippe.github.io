@@ -9,7 +9,15 @@
     
     <body>
         <a href="#" onclick="alert('clicked');">Click Me</a>
+        
+       <a href="#" id="myLink">Click Me</a>
+
     </body>
+    <script>
+    document.getElementById("myLink").onclick = function(){ alert('vanilla'); }
+    document.getElementById("myLink").onclick = function(){ alert('cupcake'); }
+    </script> 
+
         
 
 </html>
