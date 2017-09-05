@@ -275,6 +275,7 @@
     <li><a href="d3_content.html#lesson50">D3 Transition Basics</a></li>
     <li><a href="d3_content.html#lesson51">D3 SVG Transition Animations</a></li>
     <li><a href="d3_content.html#lesson52">DOM Event Model and JavaScript</a></li>
+    <li><a href="d3_content.html#lesson53">D3 and DOM Events</a></li>
     
         
     
