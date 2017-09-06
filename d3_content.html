@@ -36163,6 +36163,1224 @@ And with that we have covered D3 transition chaining, how to use DOM events to t
         
     </div>
 
+<h3 id="lesson55">D3 Event Action At A Distance<h3>
+    <div>
+         <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>d3.selection.on(type[, listener[, capture]]) adds an event listener to each element in the current selection</li>
+<li>D3 invokes the listener in the same way it invokes other D3 operator functions - by passing the current datum "d", index "i", and the "this" context as the current DOM element</li>
+<li>In most cases, when this happens, you will want to trigger some type of functionality that is directly related to the element that received the event</li>
+<li>Since the JavaScript callback function allows you to run any code, you can also create new SVG DOM elements on the event trigger</li>
+<li>Finally, not only can you interact with the element that received the event, as well as create, modify, and remove new elements, you can also interact with any other element you already have in your data visualization (as long as you can create a D3 selection of it)</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/d3-transition-basics">D3 Transition Basics</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/dom-event-model-and-javascript">DOM Event Model and JavaScript</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-and-dom-events">D3 and DOM Events</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-transition-events">D3 Transition Events</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 Event Action At A Distance
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+Event Action For This Element
+</strong>
+</p>
+<br>
+<p>
+This defines an event listener in D3.
+</p>
+<p>
+<pre><code class="javascript">d3.selection
+    .on(....);</code></pre>
+</p>
+<p>
+Every element in the selection is given an event listener.
+</p>
+<p>
+In the event listener we can ask it to listen to a mouse on, mouse out, mouse over and other events.
+</p>
+<p>
+In most cases, when this happens, we will want to trigger some type of functionality that is directly related to the element that received the event.
+</p>
+<br>
+<p>
+Let's create four rectangles based on our data.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").attr("width", "300").attr("height", "300");
+
+var rectData = [{"x": 5, "y": 25,  "height": 50, "width": 50, "color": "#1f77b4"},
+                {"x": 5, "y": 100, "height": 50, "width": 50, "color": "#ff7f0e"},
+                {"x": 5, "y": 175, "height": 50, "width": 50, "color": "#2ca02c"},
+                {"x": 5, "y": 250, "height": 50, "width": 50, "color": "#d62728"}];
+
+var rects = d3.select("svg").selectAll("rect").data(rectData).enter().append("rect");
+
+rects
+    .attr("x",      function(d, i) { return d.x;      })
+    .attr("y",      function(d, i) { return d.y;      })
+    .attr("width",  function(d, i) { return d.width;  })
+    .attr("height", function(d, i) { return d.height; });</code></pre>
+</p>
+<p>
+We create the SVG Viewport with a height and width.
+</p>
+<p>
+Then we use the D3 pattern to bind data to the SVG rectangle elements.
+</p>
+<p>
+Then we use the bound data to define the attributes of the rectangles.
+</p>
+<p>
+For now, we ignore the color.
+</p>
+<br>
+<p>
+For each of these rectangles we add a mouse over event listener.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select(this)
+            .transition()
+                .attr("width", "300")
+                .transition()
+                .attr("width", "50")
+    });</code></pre>
+</p>
+<p>
+When we mouse over the rectangle, it will increase it's width to 300.
+</p>
+<p>
+Then with the use of a chained transition, it will then decrease it's width back to 50, which was where it started.
+</p>
+<br>
+<p>
+The code on the screen is how we select the element that we are currently on to be able to apply the transitions to it.
+</p>
+<p>
+<pre><code class="javascript">d3.select(this)</code></pre>
+</p>
+<p>
+This is how we are able to apply the transition we are using to only the element we are currently interacting with.
+</p>
+<br>
+<p>
+We can also change multiple attributes of an element during one transition and then with the transition chaining, do another set of multiple transitions.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select(this)
+            .transition()
+                .attr("width", "300")
+                .style("fill", "green")
+            .transition()
+                .attr("width", "50")
+                .style("fill", "black")
+    });</code></pre>
+</p>
+<p>
+In this case each rectangle when moused over, will increase it's width while changing it's color linearly from black to green.
+</p>
+<p>
+Then, when the first transition is done, it will decrease it's width while changing it's color linearly from green to black.
+</p>
+<br>
+<p>
+We can also transition attributes of the Element that are normally associated with CSS, like opacity.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect").on("mouseover", function(d, i) {
+    d3.select(this)
+        .transition()
+            .attr("width", "300")
+            .style("fill", "green")
+        .transition()
+            .attr("width", "50")
+            .style("fill", "black")
+        .transition()
+            .attr("opacity", "0")
+            .transition()
+            .attr("opacity", "1")
+});</code></pre>
+</p>
+<p>
+After the width and color have expanded and changed to green and then back to the black original rectangle, the opacity attribute will make it seem like the rectangle disappears and then reappears.
+</p>
+<br>
+<p>
+Let's run the examples in the JavaScript Console.
+</p>
+<br>
+<p>
+We start with a browser that has the D3.js library imported from d3js.org
+</p>
+<br>
+<p>
+We first define the SVG container
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("body").append("svg").attr("width", "300").attr("height", "300");</code></pre>
+</p>
+<br>
+<p>
+Then we define the data, which is an array of JavaScript object literals
+</p>
+<p>
+<pre><code class="javascript">var rectData = [{"x": 5, "y": 25,  "height": 50, "width": 50, "color": "#1f77b4"},
+                {"x": 5, "y": 100, "height": 50, "width": 50, "color": "#ff7f0e"},
+                {"x": 5, "y": 175, "height": 50, "width": 50, "color": "#2ca02c"},
+                {"x": 5, "y": 250, "height": 50, "width": 50, "color": "#d62728"}];</code></pre>
+</p>
+<br>
+<p>
+Then we create the SVG rectangles
+</p>
+<p>
+<pre><code class="javascript">var rects = svg.selectAll("rect").data(rectData).enter().append("rect");</code></pre>
+</p>
+<br>
+<p>
+Finally, we define the attributes of the SVG rectangles based on the data that was bound to each one.
+</p>
+<p>
+<pre><code class="javascript">rects
+    .attr("x",      function(d, i) { return d.x;      })
+    .attr("y",      function(d, i) { return d.y;      })
+    .attr("width",  function(d, i) { return d.width;  })
+    .attr("height", function(d, i) { return d.height; });</code></pre>
+</p>
+<p>
+BROWSER - open up the elements section to see the rectangles.
+</p>
+<p>
+You can now see each rectangle on the webpage and in the Chrome Developer Tools Elements Section.
+</p>
+<br>
+<p>
+Now, let's define the first mouse over function which increases and decreases the width of each rectangle when it is moused over.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select(this)
+            .transition()
+                .attr("width", "300")
+                .transition()
+                .attr("width", "50")
+    });</code></pre>
+</p>
+<p>
+BROWSER - mouse over the rectangles once up and once down.
+</p>
+<p>
+When I mouse over the rectangles you can see their width increase and their width decrease.
+</p>
+<p>
+Each rectangle experiences a change only when I have the mouse over it.
+</p>
+<p>
+None of the other rectangles experience a change.
+</p>
+<br>
+<p>
+Next, let's define the second mouse over function which increases and decreases the width of each rectangle while also changing the fill color from black to green when it is moused over.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select(this)
+            .transition()
+                .attr("width", "300")
+                .style("fill", "green")
+            .transition()
+                .attr("width", "50")
+                .style("fill", "black")
+    });</code></pre>
+</p>
+<p>
+BROWSER - mouse over the rectangles once up and once down.
+</p>
+<p>
+Remember that when we define a new mouseover event listener that it overwrites the old event listener.
+</p>
+<p>
+When I mouse over the rectangles you can see their width and color change.
+</p>
+<p>
+Each rectangle experiences a change only when I have the mouse over it.
+</p>
+<p>
+None of the other rectangles experience a change.
+</p>
+<br>
+<p>
+Finally, let's define the third mouse over function which increases and decreases the width of each rectangle while also changing the fill color from black to green and then changes its opacity after it's done changing the width.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select(this)
+            .transition()
+                .attr("width", "300")
+                .style("fill", "green")
+            .transition()
+                .attr("width", "50")
+                .style("fill", "black")
+            .transition()
+                .attr("opacity", "0")
+                .transition()
+                .attr("opacity", "1")
+    });</code></pre>
+</p>
+<p>
+BROWSER - mouse over the rectangles once up and once down slow and then fast.
+</p>
+<p>
+When I mouse over the rectangles you can see their width, color and opacity change.
+</p>
+<p>
+Each rectangle experiences a change only when I have the mouse over it.
+</p>
+<p>
+None of the other rectangles experience a change.
+</p>
+<br>
+<p>
+Which is great - through the use of the mouseover event we are able to change different attributes of the rectangle.
+</p>
+<br>
+<p>
+In addition to changing attributes of the rectangle, we can also use event listeners to create new svg elements.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Event Creates New SVG Element
+</strong>
+</p>
+<br>
+<p>
+Using the same four rectangles and data as before, this time we'll create a new rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").attr("width", "300").attr("height", "300");
+
+var rectData = [{"x": 5, "y": 25,  "height": 50, "width": 50, "color": "#1f77b4"},
+                {"x": 5, "y": 100, "height": 50, "width": 50, "color": "#ff7f0e"},
+                {"x": 5, "y": 175, "height": 50, "width": 50, "color": "#2ca02c"},
+                {"x": 5, "y": 250, "height": 50, "width": 50, "color": "#d62728"}];
+
+var rects = d3.select("svg").selectAll("rect").data(rectData).enter().append("rect");
+
+rects
+    .attr("x",      function(d, i) { return d.x;      })
+    .attr("y",      function(d, i) { return d.y;      })
+    .attr("width",  function(d, i) { return d.width;  })
+    .attr("height", function(d, i) { return d.height; });</code></pre>
+</p>
+<br>
+<p>
+We already know how to create a rectangle on the screen.
+</p>
+<p>
+<pre><code class="javascript">d3.select("svg").append("rect")
+    .attr("x",...)
+    .attr("y",...)
+    .attr("width",...)
+    .attr("height",...);</code></pre>
+</p>
+<p>
+We select the SVG container or the SVG Group element where we want the rectangle to live in and append the SVG Rectangle keyword.
+</p>
+<p>
+Then when we define the attributes, the rectangle will appear on the screen.
+</p>
+<br>
+<p>
+What we want to do now is to create a new rectangle element when a mouseover event is triggered.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        // create a rectangle
+    });</code></pre>
+</p>
+<br>
+<p>
+Putting the two pieces of code together, we can create a new SVG rectangle when the mouse over event happens.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select("svg").append("rect")
+            .attr("x", 80)
+            .attr("y", 25)
+            .attr("width", 50)
+            .attr("height", 50);
+    });</code></pre>
+</p>
+<p>
+Which is fantastic - we are able to influence another SVG element by interacting with the current one.
+</p>
+<p>
+However, as we shall see shortly in the JavaScript console, this function will create a new rectangle in the exact same place for each mouseover trigger regardless of which rectangle is triggered.
+</p>
+<br>
+<p>
+In order to create a rectangle next to the rectangle we are mousing over, we can use the current data bound to the element to figure out the X and Y coordinates.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {   
+        var currentElementX = d.x;
+        var currentElementY = d.y;
+        d3.select("svg").append("rect")
+            .attr("x",function(d, i) { return currentElementX + 50 + 25; }) // ** Highlight **
+            .attr("y",function(d, i) { return currentElementY; })           // ** Highlight **
+            .attr("width", 50)
+            .attr("height", 50);
+    });</code></pre>
+</p>
+<p>
+Then, when we create the new rectangles, they will be created next to the rectangle we just moused over.
+</p>
+<p>
+The X attribute of the newly created rectangle is defined by using the moused over element's X and the addition of 50 units for the width of the moused over rectangle and 25 to provide spacing.
+</p>
+<p>
+The Y attribute of the newly create rectangle is defined using the moused over element's Y.
+</p>
+<p>
+This ensures that the rectangle is right next to the rectangle we moused over.
+</p>
+<p>
+However, as we shall see shortly in the JavaScript Console, this function will create a new rectangle over and over again right next to the moused over rectangle leaving us with a bunch of rectangles all spaced right on top of each other.
+</p>
+<p>
+If we continue mousing over the four rectangles that have the mouseover listener, we will continue to pile up rectangles.
+</p>
+<br>
+<p>
+The D3 API provides a .remove operator.
+</p>
+<p>
+<pre><code class="javascript">d3.remove()</code></pre>
+</p>
+<p>
+It removes the elements in the current selection from the current document.
+</p>
+<p>
+So much like we added an element when we moused over it, we can remove an element when the mouse leaves the element we just moused over.
+</p>
+<br>
+<p>
+Which brings up the question of how do we know which element to remove?
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect");
+
+d3.selectAll("rect");
+
+d3.select("#id");
+
+d3.select(".class");</code></pre>
+</p>
+<p>
+D3.select selects the first element.
+</p>
+<p>
+D3.selectAll selects all the elements.
+</p>
+<p>
+What we can do is use the CSS3 selectors provided to us by D3.
+</p>
+<p>
+This will allow us to create an element with a specific id.
+</p>
+<p>
+Then, we can later use this id to remove the element.
+</p>
+<br>
+<p>
+We update the mouseover function and add an attribute called id and a value of "removeMe".
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {   
+        var currentElementX = d.x;
+        var currentElementY = d.y;
+        d3.select("svg").append("rect")
+            .attr("x",function(d, i) { return currentElementX + 50 + 25; }) // ** Highlight **
+            .attr("y",function(d, i) { return currentElementY; })           // ** Highlight **
+            .attr("width", 50)
+            .attr("height", 50)
+            .attr("id", "removeMe");
+    });</code></pre>
+</p>
+<p>
+Now, when we mouse over a rectangle, it will create a new rectangle right next to it on the right and it will have the id of removeMe.
+</p>
+<br>
+<p>
+We now create the mouseout function.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i){
+        d3.select("#removeMe")
+            .remove();
+    });</code></pre>
+</p>
+<p>
+When the mouseout event is triggered, we instruct D3 to select the element with an id of "removeMe".
+</p>
+<p>
+Then we use the D3 remove operator to remove the actual element.
+</p>
+<p>
+Because this is a mouse out event listener, as long as we hover over the rectangle the new element will exist.
+</p>
+<p>
+As soon as we mouse out of the rectangle, the new element will be removed.
+</p>
+<br>
+<p>
+As an example the universality of adding and removing elements, let's add and remove an SVG Text Element from the screen instead of another rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {   
+        var currentElementX = d.x;
+        var currentElementY = d.y;
+        d3.select("svg").append("text")
+            .attr("x",function(d, i) { return currentElementX + 50 + 25; })
+            .attr("y",function(d, i) { return currentElementY + 10; })          
+            .text(d.color)
+            .attr("id", "removeMe");
+    });</code></pre>
+</p>
+<p>
+In this case we are going to use the name,value pair from the data object bound to each rectangle element.
+</p>
+<p>
+The process is the same, except that instead of appending a rectangle and it's attributes, we append an SVG text element and it's attributes.
+</p>
+<p>
+We can leave the mouseout functionality the same, as we are still using the id "removeMe" for the element that we are adding and removing.
+</p>
+<br>
+<p>
+As a final example, we show that we can do two things at once.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select(this)
+            .style("fill", d.color);
+
+        var currentElementX = d.x;
+        var currentElementY = d.y;
+        d3.select("svg").append("text")
+            .attr("x",function(d, i) { return currentElementX + 50 + 25; })
+            .attr("y",function(d, i) { return currentElementY + 10; })          
+            .text(d.color)
+            .attr("id", "removeMe");
+    });</code></pre>
+</p>
+<p>
+In this code, we change the color of the rectangle element we are mousing over.
+</p>
+<p>
+As well as creating a new element to the side of it that tells us the color name.
+</p>
+<br>
+<p>
+We also update the mouseout functionality to do two things as well.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i){  
+        d3.select(this)
+            .style("fill", "black");
+
+        d3.select("#removeMe")
+            .remove();
+    });</code></pre>
+</p>
+<p>
+One - it will change the rectangle color back to black.
+</p>
+<p>
+Two - it will remove the text element.
+</p>
+<p>
+By going through these examples, you can see that we can make very complicated behavior happen, not only to the element we are interacting with, but also creating and modifying new elements at the same time.
+</p>
+<br>
+<p>
+Let's run the examples in the JavaScript Console.
+</p>
+<br>
+<p>
+We start with a browser that has the D3.js library imported from d3js.org
+</p>
+<br>
+<p>
+We first define the SVG container
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("body").append("svg").attr("width", "300").attr("height", "300");</code></pre>
+</p>
+<br>
+<p>
+Then we define the data, which is an array of JavaScript object literals
+</p>
+<p>
+<pre><code class="javascript">var rectData = [{"x": 5, "y": 25,  "height": 50, "width": 50, "color": "#1f77b4"},
+                {"x": 5, "y": 100, "height": 50, "width": 50, "color": "#ff7f0e"},
+                {"x": 5, "y": 175, "height": 50, "width": 50, "color": "#2ca02c"},
+                {"x": 5, "y": 250, "height": 50, "width": 50, "color": "#d62728"}];</code></pre>
+</p>
+<br>
+<p>
+Then we create the SVG rectangles
+</p>
+<p>
+<pre><code class="javascript">var rects = svg.selectAll("rect").data(rectData).enter().append("rect");</code></pre>
+</p>
+<p>
+BROWSER - open up the elements section to see the rectangles.
+</p>
+<br>
+<p>
+Finally, we define the attributes of the SVG rectangles based on the data that was bound to each one.
+</p>
+<p>
+<pre><code class="javascript">rects
+    .attr("x",      function(d, i) { return d.x;      })
+    .attr("y",      function(d, i) { return d.y;      })
+    .attr("width",  function(d, i) { return d.width;  })
+    .attr("height", function(d, i) { return d.height; });</code></pre>
+</p>
+<p>
+You can now see each rectangle on the webpage and in the Chrome Developer Tools Elements Section.
+</p>
+<br>
+<p>
+Let's define the first mouse over function which will create a new rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select("svg").append("rect")
+            .attr("x", 80)
+            .attr("y", 25)
+            .attr("width", 50)
+            .attr("height", 50);
+    });</code></pre>
+</p>
+<p>
+BROWSER - Mouse over the four rectangles.
+</p>
+<p>
+BROWSER - Move mouse over to the Elements section
+</p>
+<p>
+As I moused over the first rectangle you saw a new rectangle appear to the right of the top rectangle.
+</p>
+<p>
+Then when I moused over the rest of the rectangles you did not see any new rectangles being created in the page, though you did see them appear in the Chrome Developer Tools Elements Section.
+</p>
+<p>
+You can see that they are all the same rectangle.
+</p>
+<p>
+Because we moused over four rectangles, we see four rectangles in the screen.
+</p>
+<br>
+<p>
+Let's mouse over the new rectangles
+</p>
+<p>
+BROWSER mouse over the new rectangles
+</p>
+<p>
+Notice that no new rectangles appear.
+</p>
+<p>
+This is because when we define the mouseover event, we are defining the event listener on the selection at that point in time.
+</p>
+<p>
+Because we have added a new rectangle, it will not have been part of the old selection.
+</p>
+<p>
+This is why the new rectangle does not have a mouse over event listener that causes new rectangles to appear.
+</p>
+<br>
+<p>
+Let's clear the document of the four new rectangles.
+</p>
+<p>
+Browser - delete four rectangles
+</p>
+<p>
+In Chrome Developer Tools, you are able to click on an element and press the delete key.
+</p>
+<p>
+This deletes it from the webpage.
+</p>
+<br>
+<p>
+Let's now define the mouse over function that will cause a rectangle to appear next to the rectangle we are mousing over.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {   
+        var currentElementX = d.x;
+        var currentElementY = d.y;
+        d3.select("svg").append("rect")
+            .attr("x",function(d, i) { return currentElementX + 50 + 25; })
+            .attr("y",function(d, i) { return currentElementY; })          
+            .attr("width", 50)
+            .attr("height", 50);
+    });</code></pre>
+</p>
+<p>
+BROWSER - Mouse over the four rectangles twice
+</p>
+<p>
+BROWSER - Move mouse over to the Elements section
+</p>
+<p>
+This time, you can see that the four rectangles were created right next to the rectangles we are mousing over.
+</p>
+<p>
+You also saw that because we twice moused over a rectangle with an event listener attached,we now have 8 new rectangles on the webpage.
+</p>
+<br>
+<p>
+Let's clear the document of the eight new rectangles.
+</p>
+<p>
+Browser - delete eight rectangles
+</p>
+<br>
+<p>
+Let's now define the mouse over function that will add an id of "removeMe" to the newly created rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {   
+        var currentElementX = d.x;
+        var currentElementY = d.y;
+        d3.select("svg").append("rect")
+            .attr("x",function(d, i) { return currentElementX + 50 + 25; })
+            .attr("y",function(d, i) { return currentElementY; })           
+            .attr("width", 50)
+            .attr("height", 50)
+            .attr("id", "removeMe");
+    });</code></pre>
+</p>
+<p>
+Then we define the mouse out function that will remove the element with the id of "removeMe".
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i){
+        d3.select("#removeMe")
+        .remove();
+    });</code></pre>
+</p>
+<p>
+BROWSER - Mouse over the four rectangles twice
+</p>
+<p>
+This time, you can see that when we mouse over a rectangle that a new rectangle appears with the id of "removeMe".
+</p>
+<p>
+We can see this in the Elements Section of the Developer Tools.
+</p>
+<p>
+As long as the mouse is over the element, the new rectangle exists.
+</p>
+<p>
+When we mouse out of the element, the new rectangle ceases to exist.
+</p>
+<p>
+This is how we can use an event to create and destroy a new SVG element.
+</p>
+<br>
+<p>
+We don't have to clear the page of rectangles again because the mouseout functionality is doing it for us.
+</p>
+<br>
+<p>
+Next, let's show the universality of what we are doing by creating a text element with the color attached to our data objects.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {   
+        var currentElementX = d.x;
+        var currentElementY = d.y;
+        d3.select("svg").append("text")
+            .attr("x",function(d, i) { return currentElementX + 50 + 25; })
+            .attr("y",function(d, i) { return currentElementY + 10; })          
+            .text(d.color)
+            .attr("id", "removeMe");
+    });</code></pre>
+</p>
+<p>
+BROWSER - Mouse over the four rectangles twice
+</p>
+<p>
+You can see that it works exactly the same way.
+</p>
+<p>
+Remember - we didn't have to change the mouseout functionality because it is removing an element with the id of "removeMe".
+</p>
+<p>
+And since the rectangle example and the text example both create an SVG element with the id of "removeMe", we don't have to change the functionality of the mouseout listener.
+</p>
+<br>
+<p>
+We also don't have to clear the page of SVG text elements because the mouseout functionality is doing it for us.
+</p>
+<br>
+<p>
+Next, let's show that we can do two things at once.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select(this)
+            .style("fill",d.color);
+
+      var currentElementX = d.x;
+      var currentElementY = d.y;
+      d3.select("svg").append("text")
+            .attr("x",function(d, i) { return currentElementX + 50 + 25; })
+            .attr("y",function(d, i) { return currentElementY + 10; })          
+            .text(d.color)
+            .attr("id", "removeMe");
+    });</code></pre>
+</p>
+<p>
+In this code, we change the color of the rectangle element we are mousing over.
+</p>
+<p>
+As well as creating a new element to the side of it that tells us the color name.
+</p>
+<br>
+<p>
+We also update the mouse out functionality to change the rectangle back to the color black as well as remove the text element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i){  
+        d3.select(this)
+            .style("fill", "black");
+    
+        d3.select("#removeMe")
+            .remove();
+    });</code></pre>
+</p>
+<p>
+BROWSER - Mouse over the four rectangles twice
+</p>
+<p>
+You can see that when we mouse over the rectangle that it creates the text elements and switches the color of the rectangle to the color dictated by the data bound to the element.
+</p>
+<p>
+Then you can see that when we mouse out of the rectangle that the text element is destroyed and the rectangle switches back to the color of black.
+</p>
+<br>
+<p>
+So far so good, we can use events to affect the element we are interacting with as well as elements that we create.
+</p>
+<br>
+<p>
+Next, let's cover how we can affect other elements that exist in the document through the interaction with one element.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Event Affects Other SVG Elements
+</strong>
+</p>
+<br>
+<p>
+Using the same four rectangles and data as before, this time we'll change the properties of other rectangles when we interact with one rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").attr("width", "300").attr("height", "300");
+
+var rectData = [{"x": 5, "y": 25,  "height": 50, "width": 50, "color": "#1f77b4"},
+                {"x": 5, "y": 100, "height": 50, "width": 50, "color": "#ff7f0e"},
+                {"x": 5, "y": 175, "height": 50, "width": 50, "color": "#2ca02c"},
+                {"x": 5, "y": 250, "height": 50, "width": 50, "color": "#d62728"}];
+
+var rects = d3.select("svg").selectAll("rect").data(rectData).enter().append("rect");
+
+rects
+    .attr("x",      function(d, i) { return d.x;       })
+    .attr("y",      function(d, i) { return d.y;       })
+    .attr("width",  function(d, i) { return d.width;   })
+    .attr("height", function(d, i) { return d.height;  })
+    .attr("id",     function(d, i) { return "rect-"+i; });  // ** HIGHLIGHT **</code></pre>
+</p>
+<p>
+Notice that this time, we are going to give each of the rectangles an id that belongs to them and only them.
+</p>
+<p>
+We will use the id to select the rectangles.
+</p>
+<p>
+First we'll cover changing one rectangle, then we'll cover changing all the rectangles.
+</p>
+<br>
+<p>
+First, we want to change only one rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+      // change one other rectangles
+      // select rectangle with id "rect-0"
+      // change an attribute
+    });</code></pre>
+</p>
+<p>
+For this example, we'll want to select the first rectangle, which is the one at the top left.
+</p>
+<p>
+So we'll have to define an event listener mouse over functionality to do this.
+</p>
+<br>
+<p>
+In the mouse over function, we select the rectangle with id "rect-0" using a CSS3 selector and style it according to the data that was bound to it.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select("#rect-0") // ** HIGHLIGHT **
+            .style("fill",function(d, i) { return d.color; });
+    });</code></pre>
+</p>
+<p>
+Notice that the d dot color is referencing the d of the "#rect-0" selection and not the element we are mousing over.
+</p>
+<p>
+By selecting the rectangle by it's ID, we are able to use an event to modify another element.
+</p>
+<br>
+<p>
+We also define a mouse out function to make sure that when we move the mouse away from the rectangle element we are mousing over, that the first rectangle will go back to the color black.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i) {
+        d3.select("#rect-0")
+            .style("fill", "black");
+    });</code></pre>
+</p>
+<br>
+<p>
+Using the D3 CSS3 selectors we could conceivably select any of the other rectangles as well with any type of CSS3 selector definition.
+</p>
+<p>
+<pre><code class="javascript">d3.select("#rect-0")</code></pre>
+</p>
+<br>
+<p>
+We can also select all the rectangles and change one of their attributes when any one of the rectangles receives the mouse over event.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.selectAll("rect")
+            .style("fill",function(d, i) { return d.color; }); // ** HIGHLIGHT **
+    });
+
+d3.selectAll("rect")
+    .on("mouseout", function(d, i) {
+        d3.selectAll("rect")
+            .style("fill", "black");
+    });</code></pre>
+</p>
+<p>
+We would have to change the mouse out event listener functionality as well to change the rectangles back.
+</p>
+<br>
+<p>
+In this example, we decrease the opacity of every rectangle using the selectAll.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.selectAll("rect")
+            .attr("opacity", "0.25");
+      
+        d3.select(this)
+            .attr("opacity", "1")
+            .style("fill", function(d, i) { return d.color; });
+    });</code></pre>
+</p>
+<p>
+Then we increase the opacity back to 1 for the element we are mousing over and change the fill color to the color found in the bound data.
+</p>
+<p>
+In building this mouseover functionality like this, the event on one element is able affect the attributes of all the elements of the type we select.    
+</p>
+<br>
+<p>
+We also update the mouseout functionality so that it changes the opacity back to 1 for every rectangle as well as changing the fill back to black for every rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i) {
+        d3.selectAll("rect")
+            .style("fill", "black")
+            .attr("opacity", "1");
+    });</code></pre>
+</p>
+<p>
+Same as with the mouseover functionality, in building this mouseout functionality like this, the event on one element is able affect the attributes of all the elements of the type we select.
+</p>
+<br>
+<p>
+Let's run the examples in the JavaScript Console.
+</p>
+<br>
+<p>
+We start with a browser that has the D3.js library imported from d3js.org
+</p>
+<br>
+<p>
+We first define the SVG container
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("body").append("svg").attr("width", "300").attr("height", "300");</code></pre>
+</p>
+<br>
+<p>
+Then we define the data, which is an array of JavaScript object literals
+</p>
+<p>
+<pre><code class="javascript">var rectData = [{"x": 5, "y": 25,  "height": 50, "width": 50, "color": "#1f77b4"},
+                {"x": 5, "y": 100, "height": 50, "width": 50, "color": "#ff7f0e"},
+                {"x": 5, "y": 175, "height": 50, "width": 50, "color": "#2ca02c"},
+                {"x": 5, "y": 250, "height": 50, "width": 50, "color": "#d62728"}];</code></pre>
+</p>
+<br>
+<p>
+Then we create the SVG rectangles
+</p>
+<p>
+<pre><code class="javascript">var rects = svg.selectAll("rect").data(rectData).enter().append("rect");</code></pre>
+</p>
+<p>
+BROWSER - open up the elements section to see the rectangles.
+</p>
+<br>
+<p>
+Finally, we define the attributes of the SVG rectangles based on the data that was bound to each one.
+</p>
+<p>
+<pre><code class="javascript">rects
+    .attr("x",      function(d, i) { return d.x;         })
+    .attr("y",      function(d, i) { return d.y;         })
+    .attr("width",  function(d, i) { return d.width;     })
+    .attr("height", function(d, i) { return d.height;    })
+    .attr("id",     function(d, i) { return "rect-" + i; });</code></pre>
+</p>
+<p>
+You can now see each rectangle on the webpage and in the Chrome Developer Tools Elements Section.
+</p>
+<p>
+Note that this time we created the rectangles with an individual id for each one.
+</p>
+<br>
+<p>
+Let's start with the mouseover functionality that changes the color of the top rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.select("#rect-0")
+            .style("fill", function(d, i) { return d.color; });
+    });</code></pre>
+</p>
+<p>
+Note that we will be selecting the rectangle by it's id.
+</p>
+<br>
+<p>
+We also define the mouseout functionality that changes the color of the top rectangle back to black when the mouseout it triggered.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i) {
+        d3.select("#rect-0")
+            .style("fill", "black");
+    });</code></pre>
+</p>
+<p>
+BROWSER - Mouse over the four rectangles twice
+</p>
+<p>
+You can see the top rectangle change color as we mouseover and mouseout of any one of the four rectangles on the page.
+</p>
+<p>
+While we are only showing the selection of one element by it's id, you can create all kinds of different effects with more complicated JavaScript functions.
+</p>
+<br>
+<p>
+Next, let's look at the example of having one event from one element trigger a change in attributes in all the elements.
+</p>
+<br>
+<p>
+We define the mouseover functionality that will change the color of all the rectangles on the screen to the respective colors as defined by the data bound to each of them.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.selectAll("rect")
+            .style("fill",function(d, i) { return d.color; });
+    });</code></pre>
+</p>
+<br>
+<p>
+And, we define the mouseout functionality that will change the color of all the rectangles on the screen back to black.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i) {
+        d3.selectAll("rect")
+            .style("fill", "black");
+    });</code></pre>
+</p>
+<p>
+BROWSER - Mouse over the four rectangles twice
+</p>
+<p>
+You can see that all the rectangles change color as we mouseover and mouseout of any one of the four rectangles on the web page.
+</p>
+<p>
+Just like with the specific single element selection, you can create all kinds of different effects with more complicated JavaScript functions.
+</p>
+<br>
+<p>
+Lastly, let's look at the example of having one event from one element trigger a change in attributes in all the elements as well as a change in attribute of the element receiving the event.
+</p>
+<br>
+<p>
+We define the mouse over functionality that will decrease the opacity of every rectangle while changing the color and opacity of the element that received the mouseover event.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseover", function(d, i) {
+        d3.selectAll("rect")
+            .attr("opacity", "0.25");
+
+        d3.select(this)
+            .attr("opacity", "1")
+            .style("fill", function(d, i) { return d.color; });
+    });</code></pre>
+</p>
+<br>
+<p>
+And, we define the mouseout functionality that will change the opacity back to 1 for all the elements as well as change the color of all the elements back to black.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("rect")
+    .on("mouseout", function(d, i) {
+        d3.selectAll("rect")
+            .style("fill", "black")
+            .attr("opacity", "1");
+    });</code></pre>
+</p>
+<p>
+BROWSER - Mouse over the four rectangles twice
+</p>
+<p>
+You can see that all the rectangles change opacity as we mouseover and mouseout of any one of the four rectangles on the web page.
+</p>
+<p>
+Also, notice how much more the element we are interacting with stands out, when all of the other elements have a reduced opacity.
+</p>
+<p>
+Though we will cover this later in the data visualization theory section, this is one of the important pre-attentive properties.
+</p>
+<p>
+When all but one element have the same type of transparency, the one element that has the different transparency will stand out.
+</p>
+<p>
+This is very useful to communicate importance to your audience.
+</p>
+<p>
+In building this mouseover functionality like this, the event on one element is able affect the attributes of itself as well as all of the other elements in web page.  
+</p>
+<br>
+<p>
+And with that we have covered how we can use D3 and DOM events to trigger element creation, destruction, attribute changes both for the element itself and other elements.
+</p>
+<p>
+Additionally, we covered how an event on one element can affect 1 or more other elements on the same page. 
+</p>
+        </div>
+      </div>
+    </div>
+
 
 
 
