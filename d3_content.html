@@ -36162,7 +36162,7 @@ And with that we have covered D3 transition chaining, how to use DOM events to t
         
         
     </div>
-
+<hr>
 <h3 id="lesson55">D3 Event Action At A Distance<h3>
     <div>
          <!-- DashingD3js.com Lesson Takeaways
@@ -37380,8 +37380,969 @@ Additionally, we covered how an event on one element can affect 1 or more other 
         </div>
       </div>
     </div>
+<hr>
+<h3 id="lesson56">D3 and HTML Forms<h3>
+    <div>
+    <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>An HTML form is creating using the &lt;form&gt; tag with opening and closing tag</li>
+<li>Common attribute value pairs for an HTML form tag are the id, action, and method</li>
+<li>Almost all HTML forms will have an input element with an attribute value pair of type="submit"</li>
+<li>Using D3, you can create a selection of different parts of HTML Form Elements</li>
+<li>Once you have the D3 selection, you can add event listeners to each element of the selection just like you have with the SVG event listeners</li>
+<li>For instance, the HTML Form radio input button element has the event "change" which can be listened to</li>
+<li>You can then use the HTML Form events to trigger changes to a D3 Data Visualization using D3 Transitions</li>
+</ul>
+</p>
+        </div>
+      </div>
 
 
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/introduction-to-html">Introduction to HTML</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/dom-event-model-and-javascript">DOM Event Model and JavaScript</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-and-dom-events">D3 and DOM Events</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-transition-events">D3 Transition Events</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-event-action-at-a-distance">D3 Event Action At A Distance</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 and HTML Forms
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+HTML Form Basics
+</strong>
+</p>
+<br>
+<p>
+You are probably familiar with this famous web form.
+</p>
+<p>
+[ Image: Google Search Form ]
+</p>
+<p>
+This is Google's search web form.
+</p>
+<p>
+Type in anything you want and Google will conduct a search of web documents for you.
+</p>
+<p>
+It's simplicity and functionality have been widely covered.
+</p>
+<p>
+It consists of a text field input and two buttons.
+</p>
+<p>
+A Google search button.
+</p>
+<p>
+And an I'm feeling Lucky Button.
+</p>
+<p>
+If you are watching this video, chances are that you are an expert at using slash filling out forms and may have even created your own forms in the past.
+</p>
+<p>
+Because of this, we'll keep the basics brief.
+</p>
+<p>
+For the purposes of this video, we'll cover the basic HTML form and radio buttons.
+</p>
+<br>
+<p>
+An HTML form is created using the form tag.
+</p>
+<p>
+<pre><code class="html">&lt;form attribute="value" attribute="value" ...&gt;
+    ...
+&lt;/form&gt;</code></pre>
+</p>
+<p>
+There is an opening and closing tag.
+</p>
+<p>
+And just like any other HTML tag, we can add attribute value pairs to further define the form.
+</p>
+<br>
+<p>
+Some common attributes for a form are the id, action and method.
+</p>
+<p>
+<pre><code class="html">&lt;form id="contact-form" action="/contact/" method="post"&gt;
+    ...
+&lt;/form&gt;</code></pre>
+</p>
+<p>
+The id specifies a unique identifier for the particular form.
+</p>
+<p>
+The action attribute, value pair is used if you are submitting data.
+</p>
+<p>
+It tells the form where to submit slash send the data to so that it can be processed.
+</p>
+<p>
+The method attribute tells the data how to travel.
+</p>
+<p>
+Two request methods you may be familiar with are GET and POST.
+</p>
+<p>
+The GET method requests data from a specified resource.
+</p>
+<p>
+The POST method submits data to be processed to a specified resource.
+</p>
+<p>
+This is why almost all web forms you encounter will have the attribute, value pair of method equals POST.
+</p>
+<br>
+<p>
+Inside of the form we can have various form elements.
+</p>
+<p>
+<ul>
+<li>Text Boxes</li>
+<li>Text Areas</li>
+<li>Option Buttons</li>
+<li>Radio Buttons</li>
+<li>Check Boxes</li>
+<li>Drop down List/Fixed Lists</li>
+<li>Password Boxes</li>
+<li>Command Buttons</li>
+<li>Submit Buttons</li>
+<li>Reset Buttons</li>
+<li>Labels</li>
+<li>Image Command Buttons</li>
+<li>Hidden Form Values</li>
+<li>Placeholder (HTML5)</li>
+<li>Email (HTML5)</li>
+<li>Url (HTML5)</li>
+<li>Number (HTML5)</li>
+<li>Range (HTML5)</li>
+<li>Date/Time (HTML5)</li>
+<li>Search (HTML5)</li>
+<li>Color (HTML5)  </li>
+</ul>
+</p>
+<p>
+You can see the new ones added by HTML5.
+</p>
+<p>
+We can have as many elements as we want in any form and can mix and match as we please.
+</p>
+<br>
+<p>
+Last but not least, almost all forms will have an input element with the attribute type and value of submit.
+</p>
+<p>
+<pre><code class="html">&lt;form ...&gt;
+    ...
+    &lt;input type="submit"&gt;
+&lt;/form&gt;</code></pre>
+</p>
+<p>
+Instead of rendering an input element, this HTML element will render a button, that, when clicked, submits the form to whichever action was specified by the method specified.
+</p>
+<br>
+<p>
+That's pretty much the basics of the forms.
+</p>
+<p>
+<pre><code class="html">&lt;form ...&gt;
+    ...
+&lt;/form&gt;</code></pre>
+</p>
+<p>
+The bigger picture of a form is that it allows for further interaction between a user and the web page.
+</p>
+<p>
+It is within this big picture thinking of a form that we will use it with D3.
+</p>
+<br>
+<p>
+More specifically, we will focus not on submitting information to a server, but the actual checking of a radio button.
+</p>
+<p>
+<pre><code class="html">&lt;form ...&gt;
+    &lt;input type="radio" ....&gt;
+    &lt;input type="radio" ....&gt;    
+&lt;/form&gt;</code></pre>
+</p>
+<p>
+The radio button has a "change" event that we can listen to, so it's easy to get started this way.
+</p>
+<p>
+Check boxes and other form input types need a bit more hand-holding with JavaScript, so we'll leave those for later.
+</p>
+<p>
+Radio buttons are a good starting point because of the way that they makes it easy for us to capture both their change as well as their value.
+</p>
+<p>
+When a user clicks on a radio-button, it becomes selected, and all other radio-buttons with an equal name become unselected.
+</p>
+<br>
+<p>
+Let's take a look at what we are going to be building in this video.
+</p>
+<br>
+<p>
+On the screen you can see two radio buttons - one with the label Width and one with the label Height.
+</p>
+<p>
+When I click on Width radio button, you can see the width of each rectangle expand and then contract.
+</p>
+<p>
+When I click on Height radio button, you can see the height of each rectangle expand and then contract.
+</p>
+<p>
+This can be very useful when toggling between data sets, showing different features of one data set or showing two different types of visualization of the same data set.
+</p>
+<p>
+Notice that in this form we are not submitting anything, we are just using the change event of the HTML Form Radio Buttons to cause D3 to transition either the width or height of each Rectangle Element.
+</p>
+<br>
+<p>
+Let's now dive into the code to see how we are going to build this.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Listening For HTML Form Events  
+</strong>
+</p>
+<br>
+<p>
+Let's start with the HTML form that we are going to use.
+</p>
+<p>
+<pre><code class="html">&lt;form&gt;
+      &lt;label&gt;
+          &lt;input type="radio" name="radio_b" value="width" /&gt;
+          Width
+      &lt;/label&gt;
+      &lt;br&gt;
+      &lt;label&gt;
+          &lt;input type="radio" name="radio_b" value="height" /&gt;
+          Height
+      &lt;/label&gt;
+  &lt;/form&gt;</code></pre>
+</p>
+<p>
+There are two labels for the form.
+</p>
+<p>
+One for the Width
+</p>
+<p>
+And one for the Height.
+</p>
+<p>
+There are two radio input buttons.
+</p>
+<p>
+These radio input buttons are created with the HTML tag "input".
+</p>
+<p>
+We specify the type attribute to be equal to "radio".
+</p>
+<p>
+Each button has attributes of type, name and value.
+</p>
+<p>
+The type is what defines the buttons as radio buttons.
+</p>
+<p>
+The name is what is used to link the two buttons together.
+</p>
+<p>
+The value is the value of the radio button.
+</p>
+<p>
+Additionally, the labels provide a text that we can read next to the radio buttons.
+</p>
+<br>
+<p>
+If we look at the two radio buttons, we can see their similarities and differences clearly.
+</p>
+<p>
+<pre><code class="html">&lt;input type="radio" name="radio_b" value="width" /&gt;
+
+&lt;input type="radio" name="radio_b" value="height" /&gt;</code></pre>
+</p>
+<p>
+The similarity that we are going to focus on is the fact that both use the same tag of "input".
+</p>
+<p>
+D3 gives us the ability to create a selection based on HTML tags, so we will be using the "input" tag to create a selection of these two HTML Form Elements.
+</p>
+<p>
+Note - we can use input because the example web page we are going to be working with, only has two input elements.
+</p>
+<p>
+If we were working as part of a larger project where the web page might have more than two input elements, we would use a class attribute for each input relevant to the visualization in order to create a D3 selection of the correct elements.
+</p>
+<br>
+<p>
+Similar to when we select rectangles, circles or any other type of DOM element, we can create a selection using the D3 selectAll functionality.
+</p>
+<p>
+<pre><code class="html">&lt;input type="radio" name="radio_b" value="width" /&gt;
+&lt;input type="radio" name="radio_b" value="height" /&gt;
+
+var inputElems = d3.selectAll("input");</code></pre>
+</p>
+<p>
+Just like with any other type of selections, we can add any attribute, value pair that we want to every element in this selection.
+</p>
+<p>
+This is where D3 really shines through for me - not only are we able to affect SVG elements, we can also affect HTML elements in the same code.
+</p>
+<br>
+<p>
+Once we have this selection, we can add an event listener to each element in the selection.
+</p>
+<p>
+<pre><code class="html">&lt;input type="radio" name="radio_b" value="width" /&gt;
+&lt;input type="radio" name="radio_b" value="height" /&gt;
+
+var inputElems = d3.selectAll("input");
+
+inputElems.on(event, function(...) {...});</code></pre>
+</p>
+<p>
+Event listeners on HTML elements work exactly the same way as event listeners on SVG elements.
+</p>
+<p>
+This is because the event listeners are DOM event listeners and HTML and SVG elements are both DOM elements.
+</p>
+<br>
+<p>
+The radio button input element event that we can listen to is "change".
+</p>
+<p>
+<pre><code class="javascript">inputElems.on("change", function(d, i) {   // ** Highlight Change **
+     // do something here
+});</code></pre>
+</p>
+<p>
+When the radio button is clicked, it will emit a "change" event.
+</p>
+<p>
+When we use D3 to listen for the "change" event, we are able to specify what JavaScript function should be run.
+</p>
+<p>
+Because we use D3, the d variable, i variable and this variable are available to us for use inside of the function.
+</p>
+<p>
+We can either use an anonymous function as shown or we can defined a named function elsewhere and put the name of the function as the second argument of the D3 on event listener.
+</p>
+<br>
+<p>
+This will be the first example we run in the Javascript Console.
+</p>
+<p>
+<pre><code class="javascript">&lt;input type="radio" name="radio_b" value="width" /&gt;
+&lt;input type="radio" name="radio_b" value="height" /&gt;
+
+  var inputElems = d3.selectAll("input");
+
+  function inputChange() {
+      alert(this.value);   // ** Highlight this.value **
+  }
+  
+  inputElems.on("change", inputChange);</code></pre>
+</p>
+<p>
+A few things to note:
+</p>
+<p>
+First - the HTML Form will be hard coded into the HTML document.
+</p>
+<p>
+So it will be something that we add slash edit in a text editor.
+</p>
+<p>
+Second - we are using this dot value in the function even though we aren't passing it in.
+</p>
+<p>
+Without getting too deep into JavaScript function scope, closures and nested functions, know that if a variable is available in a function, then it will be available in a function inside of that function.
+</p>
+<p>
+This is how we can use the this variable without actually passing it in.
+</p>
+<p>
+Third - this dot value will give us the value of the radio button that was clicked.
+</p>
+<p>
+In our specific case, this will either be the string "width" or the string "height".
+</p>
+<br>
+<p>
+Let's run the example in the JavaScript Console.
+</p>
+<br>
+<p>
+First, we add in the HTML form into the web page document using a text editor.
+</p>
+<p>
+Note that we put the label, radio input and text in one line for ease of using the Chrome Developer tools.
+</p>
+<p>
+Otherwise the labels interpret the empty spaces before and after the text as actual spaces and jumble up the code.
+</p>
+<p>
+We save this file down and open up the web browser.
+</p>
+<br>
+<p>
+This web page has the D3.js library imported from the d3js.org website.  
+</p>
+<p>
+Let's take a look at the Chrome Developer Tools
+</p>
+<p>
+BROWSER - click into the form, labels and inputs.
+</p>
+<p>
+We can see the form, the two labels and the two input elements.
+</p>
+<br>
+<p>
+First, we define the input element selection.
+</p>
+<p>
+<pre><code class="javascript">var inputElems = d3.selectAll("input");
+
+inputElems;</code></pre>
+</p>
+<p>
+We can see that the selection looks like any other D3 selection.
+</p>
+<p>
+We can also see there are two input elements in the selection.
+</p>
+<br>
+<p>
+Second, we define the inputChange named function which will alert us when a radio button is selected.
+</p>
+<p>
+<pre><code class="javascript">function inputChange() {
+    alert(this.value);
+}</code></pre>
+</p>
+<br>
+<p>
+Lastly, we define add an event listener for every element in the inputElems selection.
+</p>
+<p>
+<pre><code class="javascript">inputElems.on("change", inputChange);</code></pre>
+</p>
+<p>
+BROWSER click on the width and height input elements.
+</p>
+<p>
+You can see that as I click on either one of the input elements, that an alert pops up telling us that the event listener has been triggered.
+</p>
+<p>
+This shows us that we can use D3 to listen to HTML Form Events and specify what functionality we want to happen when the event is triggered.
+</p>
+<br>
+<p>
+We will use this in the next section to trigger SVG element transitions whenever one of the input elements is selected.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Form Event Triggers D3 Transitions
+</strong>
+</p>
+<br>
+<p>
+Now that we have an HTML form that has inputs that have D3 event listeners attached to them, let's work on the SVG part.
+</p>
+<p>
+<pre><code class="html">&lt;div id="visualization"&gt;
+&lt;/div&gt;</code></pre>
+</p>
+<p>
+Previously, we have just been appending the SVG element to the Body element.
+</p>
+<p>
+Once we start doing more complicated visualizations, it's helpful to separate different parts so that it's clear what is going on where.
+</p>
+<p>
+To this end, we will add an HTML div tag with an id of "visualization".
+</p>
+<p>
+Inside this HTML div tag is where we will add the SVG Container and construct the SVG Rectangle elements.
+</p>
+<br>
+<p>
+This code selects the HTML div and appends an SVG element to it as the last child element.
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("#visualization")
+    .append("svg")
+    .attr("width", "300")
+    .attr("height", "300");</code></pre>
+</p>
+<p>
+Then we define the width and height of the SVG Viewport.
+</p>
+<br>
+<p>
+This code defines three different rectangles.
+</p>
+<p>
+<pre><code class="javascript">var rectData = [{"x": 5,   "y": 25,  "height": 50, "width": 50},
+                {"x": 85,  "y": 105, "height": 50, "width": 50},
+                {"x": 165, "y": 185, "height": 50, "width": 50}];
+
+var rects = svg.selectAll("rect").data(rectData).enter().append("rect");</code></pre>
+</p>
+<p>
+Each data object has an x, y, height and width.
+</p>
+<p>
+Then we use the D3 pattern to bound the rectData array of JavaScript object literals to SVG Rectangle elements.
+</p>
+<br>
+<p>
+Once the data is bound to the SVG rectangle elements, we use the bound data to create the attributes necessary for the rectangles to be displayed.
+</p>
+<p>
+<pre><code class="javascript">rects
+    .attr("x",      function(d, i) { return d.x;         })
+    .attr("y",      function(d, i) { return d.y;         })
+    .attr("width",  function(d, i) { return d.width;     })
+    .attr("height", function(d, i) { return d.height;    })
+    .attr("id",     function(d, i) { return "rect-" + i; });</code></pre>
+</p>
+<p>
+Note that we add an id attribute to the rectangle.
+</p>
+<p>
+Though it's not necessary for this example, it's good to always name the elements you create, as it helps with debugging the code.
+</p>
+<br>
+<p>
+Next, we define a function that when evaluated triggers a transition of the rectangles' width.
+</p>
+<p>
+<pre><code class="javascript">function changeWidth() {
+    rects
+        .transition()
+            .duration(3000)
+            .attr("width", "300")
+        .transition()
+            .duration(3000)
+            .attr("width", "50");
+};</code></pre>
+</p>
+<p>
+We will call this function changeWidth.
+</p>
+<p>
+It uses the rectangles selection and applies two transitions to each element of the selection.
+</p>
+<p>
+First, it increases the width of the rectangle to 300 units over a span of 3 seconds.
+</p>
+<p>
+Then, once the first transition is done, it decreases the width of the rectangle back to 50 units over a span of 3 seconds.
+</p>
+<br>
+<p>
+Next, we define a function that when evaluated triggers a transition of the rectangles' height.
+</p>
+<p>
+<pre><code class="javascript">function changeHeight() {
+    rects
+        .transition()
+            .duration(3000)
+            .attr("height", "300")
+        .transition()
+            .duration(3000)
+            .attr("height", "50");
+}</code></pre>
+</p>
+<p>
+We will call this function changeHeight.
+</p>
+<p>
+It uses the rectangles selection and applies two transitions to each element of the selection.
+</p>
+<p>
+First, it increases the height of the rectangle to 300 units over a span of 3 seconds.
+</p>
+<p>
+Then, once the first transition is done, it decreases the height of the rectangle back to 50 units over a span of 3 seconds.
+</p>
+<br>
+<p>
+We now have two functions that will cause a transformation of the SVG rectangles.
+</p>
+<p>
+<pre><code class="javascript">changeWidth();
+
+changeHeight();</code></pre>
+</p>
+<p>
+While we could have written these functions as anonymous functions within the event listener, this way of writing functions is easier to follow and debug.
+</p>
+<br>
+<p>
+Going back to our event listener and inputChange function, we have to do two things in order to get this to work correctly.
+</p>
+<p>
+<pre><code class="javascript">function inputChange() {
+    alert(this.value);
+}
+  
+inputElems.on("change", inputChange);</code></pre>
+</p>
+<p>
+One - we have to be able to differentiate between the width radio button being clicked and the height radio button being clicked.
+</p>
+<p>
+Two - once we know which button was clicked, we have to call the right function.
+</p>
+<br>
+<p>
+We can use the "this dot value" to get the value of the radio button that was clicked.
+</p>
+<p>
+<pre><code class="javascript">function inputChange() {
+    var inputValue = this.value;
+
+    if      (inputValue === "width" ) { changeWidth();  }
+    else if (inputValue === "height") { changeHeight(); };
+}</code></pre>
+</p>
+<p>
+Once we have the value, this solves issue number one - how to differentiate between the two radio buttons that were clicked.
+</p>
+<p>
+Then, we can use an if else conditional expression to cause either the changeWidth or changeHeight functions to be evaluated.
+</p>
+<p>
+This solves issue two.
+</p>
+<p>
+Now, when the event listener receives a "change" event, it will figure out what the value of the input element is and then evaluate one of the two functions that causes a D3 transformation.
+</p>
+<br>
+<p>
+Lastly, we always have to remember to bind the event listener to elements.
+</p>
+<p>
+<pre><code class="javascript">inputElems.on("change", inputChange);</code></pre>
+</p>
+<p>
+Because we are working in the JavaScript console, this will always be the last thing we do.
+</p>
+<p>
+If you are looking at someone else's code, often times this will come before the definitions of the JavaScript functions.
+</p>
+<p>
+This is due to JavaScript Function Hoisting.
+</p>
+<p>
+Which is something for another time and place.
+</p>
+<p>
+Let's concentrate on the example we are creating.
+</p>
+<br>
+<p>
+Let's run the example in the JavaScript Console.
+</p>
+<br>
+<p>
+First, we add in the HTML DIV to the web page document that contains our form using a text editor.
+</p>
+<p>
+Note that we put it after the form to ensure that the form element is above the SVG element.
+</p>
+<br>
+<p>
+We save this file down and open up the web browser.
+</p>
+<p>
+This web page has the D3.js library imported from the d3js.org website.
+</p>
+<br>
+<p>
+Let's take a look at the Chrome Developer Tools
+</p>
+<p>
+BROWSER - click into the form, labels, inputs and DIV.
+</p>
+<p>
+We can see the form, the two labels, the two input elements and the Visualization DIV.
+</p>
+<br>
+<p>
+Before we start building the visualization, we create a D3 selection of the HTML Form Radio Button Input Elements.
+</p>
+<p>
+<pre><code class="javascript">var inputElems = d3.selectAll("input");</code></pre>
+</p>
+<p>
+This selection will be used when we want to attach event listeners to the input elements.
+</p>
+<br>
+<p>
+Now, to create the visualization, let's first create the SVG Viewport in the HTML Div with the id of "visualization"
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("#visualization")
+    .append("svg")
+    .attr("width", "300")
+    .attr("height", "300");</code></pre>
+</p>
+<p>
+BROWSER - open up the DIV in the Chrome Developer Tools Elements Section
+</p>
+<br>
+<p>
+Next, let's define the rectangle data that we will be using.
+</p>
+<p>
+<pre><code class="javascript">var rectData = [{"x": 5,   "y": 25,  "height": 50, "width": 50},
+                {"x": 85,  "y": 105, "height": 50, "width": 50},
+                {"x": 165, "y": 185, "height": 50, "width": 50}];</code></pre>
+</p>
+<p>
+This data is an array of JavaScript Object Literals.
+</p>
+<br>
+<p>
+Next, using the D3 pattern, we bind the data to SVG rectangle elements.
+</p>
+<p>
+<pre><code class="javascript">var rects = svg.selectAll("rect").data(rectData).enter().append("rect");</code></pre>
+</p>
+<p>
+BROWSER - open up the SVG to see the rectangle elements
+</p>
+<p>
+You can see the rectangle elements in the Chrome Developer Tools Elements Section.
+</p>
+<br>
+<p>
+Finally, we define the rectangle attributes so that they will appear on the screen.
+</p>
+<p>
+<pre><code class="javascript">rects
+    .attr("x",      function(d, i) { return d.x;         })
+    .attr("y",      function(d, i) { return d.y;         })
+    .attr("width",  function(d, i) { return d.width;     })
+    .attr("height", function(d, i) { return d.height;    })
+    .attr("id",     function(d, i) { return "rect-" + i; });</code></pre>
+</p>
+<p>
+And with that we now have the rectangles that will experience transformations each time the HTML Form Radio Buttons are clicked.
+</p>
+<br>
+<p>
+Next, we define the width transformation function called changeWidth.
+</p>
+<p>
+<pre><code class="javascript">function changeWidth() {
+    rects
+        .transition()
+            .duration(3000)
+            .attr("width", "300")
+        .transition()
+            .duration(3000)
+            .attr("width", "50");
+};</code></pre>
+</p>
+<p>
+Recall that this function expands the width and then contracts the width of every rectangle in the "rects" selection.
+</p>
+<br>
+<p>
+Now, we define the height transformation function called changeHeight.
+</p>
+<p>
+<pre><code class="javascript">function changeHeight() {
+    rects
+        .transition()
+            .duration(3000)
+            .attr("height", "300")
+        .transition()
+            .duration(3000)
+            .attr("height", "50");
+};</code></pre>
+</p>
+<p>
+Recall that this function expands the height and then contracts the height of every rectangle in the "rects" selection.
+</p>
+<br>
+<p>
+Let's test the changeWidth function.
+</p>
+<p>
+<pre><code class="javascript">changeWidth();</code></pre>
+</p>
+<p>
+You can see that it works correctly.
+</p>
+<p>
+Each rectangle has it's width go from 50 to 300 and then back down to 50.
+</p>
+<p>
+One question that may have come up is why do all the rectangle's right edges seemingly end up at the same place?
+</p>
+<p>
+That is, if the rectangles are at a slant then we would expect that when their widths increase by the same amount, that the right edges would still be at a slant.
+</p>
+<p>
+The issue is that the rectangles go beyond the 300 by 300 SVG container so the extra parts of the rectangles disappear.
+</p>
+<p>
+This is very helpful to encounter and think about when you are making data visualizations with D3.
+</p>
+<p>
+Remember - if it's out of the SVG container dimensions, it will not be visible on your screen.
+</p>
+<br>
+<p>
+Let's test the changeHeight function.
+</p>
+<p>
+<pre><code class="javascript">changeHeight();</code></pre>
+</p>
+<p>
+You can see that it works correctly.
+</p>
+<p>
+Each rectangle has it's height go from 50 to 300 and then back down to 50.
+</p>
+<p>
+Similarly to the changeWidth function, the rectangle's bottom edges seemingly all end up at the same place.
+</p>
+<p>
+This is the same issue as with the width.
+</p>
+<p>
+The SVG Viewport is 300 by 300 so a good portion of the rectangle's new height is hidden away from us.
+</p>
+<p>
+So remember - if it's out of the SVG container dimensions, it will not be visible on your screen.
+</p>
+<p>
+Alright, so both transformation functions work correctly.
+</p>
+<br>
+<p>
+Next we define the inputChange function which is what will drive the functionality.
+</p>
+<p>
+<pre><code class="javascript">function inputChange() {
+    var inputValue = this.value;
+
+    if      (inputValue === "width" ) { changeWidth();  }
+    else if (inputValue === "height") { changeHeight(); };
+};</code></pre>
+</p>
+<p>
+Note that this function is difficult to test from the JavaScript Console command line because we need a this object to get the value from in order to use the Conditional Expression.
+</p>
+<br>
+<p>
+Finally - we attach an event listener to each element in the inputElems selection.
+</p>
+<p>
+<pre><code class="javascript">inputElems.on("change", inputChange);</code></pre>
+</p>
+<p>
+BROWSER - click on the HTML Form Radio Buttons slowly and wait for them to finish.
+</p>
+<p>
+You can see on the screen that we were able to replicate the example at the beginning of this video.
+</p>
+<p>
+The full description of what is happening is the following:
+</p>
+<p>
+Each HTML Form input element is now listening to the "change" event.
+</p>
+<p>
+When it receives this event it will call the inputChange function.
+</p>
+<p>
+The inputChange function will then figure out the value of the button that was pressed.
+</p>
+<p>
+Then, using this value, it calls either the changeWidth function or the changeHeight function.
+</p>
+<p>
+If the changeWidth function is called, it will increase and then decrease the width of all of the rectangles.
+</p>
+<p>
+If the changeHeight function is called, it will increase and then decrease the height of all of the rectangles.
+</p>
+<p>
+Somewhat complicated, correct?
+</p>
+<p>
+This is why we use named functions rather than anonymous functions.
+</p>
+<p>
+Though it is entirely possible to write all of this functionality as a series of nested anonymous functions, it is better to use named functions.
+</p>
+<br>
+<p>
+And with that we have covered how we can use the HTML Form basics to build HTML Forms whose input elements have event listeners attached to them that when triggered cause D3 transitions on SVG elements.
+</p>
+        </div>
+      </div>
+    
+</div>
 
 
 
