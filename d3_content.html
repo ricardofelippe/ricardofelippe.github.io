@@ -3881,10 +3881,7 @@ And that is the basics of the D3 Enter Selection
       </div>
 
 </div>
-    
-    
   
-    
 <hr>
 
 <h3 id="lesson12">Binding Data to DOM Elements<h3> 
@@ -31144,7 +31141,7 @@ Once we have this array of objects with an inner array of objects inside each of
     </div>
     
 
-    <hr>
+ <hr>
 <h3 id="lesson49">Basic Interaction - Data Tooltips<h3>
     <div>
     
@@ -31811,7 +31808,7 @@ Though we have barely scratched the surface of the DOM Events, D3 event bindings
       </div>
 
 </div>
-
+<hr>
 <h3 id="lesson50">D3 Transition Basics<h3>
     <div>
         
@@ -32925,7 +32922,7 @@ And with that we have covered how D3 transitions work, as well as basic examples
         
     </div>
 
-
+<hr>
 <h3 id="lesson51">D3 SVG Transition Animations<h3>
     <div>
          <!-- DashingD3js.com Lesson Takeaways
@@ -33787,7 +33784,7 @@ And with that we have covered how D3 transitions work with SVG Elements, as well
       </div>
         
     </div>
-
+<hr>
 <h3 id="lesson52">DOM Event Model and JavaScript<h3>
     <div>
         <!-- DashingD3js.com Lesson Takeaways
@@ -34625,7 +34622,7 @@ Which is where our next video will go - how to add events to D3 Data Visualizati
 
 </div>
      
-
+<hr>
 <h3 id="lesson53">D3 and DOM Events<h3>
     <div>
          <!-- DashingD3js.com Lesson Takeaways
@@ -35374,6 +35371,798 @@ So you can see that not only can you define event listeners within the actual fu
       </div>
         
     </div>
+
+<hr>
+<h3 id="lesson54">D3 Transition Events<h3>
+    <div>
+
+        <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li> d3.selection.on(type[, listener[, capture]]) adds an event listener to each element in the current selection</li>
+<li> D3 invokes the listener in the same way it invokes other D3 operator functions - by passing the current datum "d", index "i", and the "this" context as the current DOM element</li>
+<li>When a new D3 transition starts, it cancels any prior transitions, even those that were scheduled but have not yet been run</li>
+<li>D3 allows you to construct multi-stage transitions through the use of the chain syntax</li>
+<li>As long as D3 transitions are chained to another D3 transition on the same JavaScript command, D3 does the hard work of tie-ing the transitions together so they will be seen as one multiple-stage transitionexecuting one right after another</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/introduction-to-javascript">Introduction to JavaScript</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/javascript-callback-functions">JavaScript Callback Functions</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-transition-basics">D3 Transition Basics</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/dom-event-model-and-javascript">DOM Event Model and JavaScript</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-and-dom-events">D3 and DOM Events</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 Transition Events
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+Transition End Event
+</strong>
+</p>
+<br>
+<p>
+For this example, we will have the SVG Rectangle increase it's height from 100 to 300.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect")
+    .attr("x", "25")
+    .attr("y", "25")
+    .attr("width", "50")
+    .attr("height", "100");
+
+d3.select("rect").transition().attr("height","300");</code></pre>
+</p>
+<p>
+This will elongate the rectangle along the Y-Axis.
+</p>
+<p>
+Because we do not specify a delay or duration, the animation will start immediately and take 250 milliseconds.
+</p>
+<br>
+<p>
+Rectangle Animation Example - Increase Height and Width
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect")
+    .attr("x","25")
+    .attr("y","25")
+    .attr("width","50")
+    .attr("height","100");
+
+d3.select("rect")
+    .transition()
+    .attr("width", "300")
+    .duration(3000);</code></pre>
+</p>
+<p>
+For this example, we will have the SVG Rectangle increase it's width from 50 to 300.
+</p>
+<p>
+This will elongate the rectangle along the X-Axis.
+</p>
+<p>
+We also add a transition duration to slow down the transition so that we can take a look at it.
+</p>
+<br>
+<p>
+We start with a blank document with the D3.js library loaded into it
+</p>
+<br>
+<p>
+First, we create the SVG Viewport and add the SVG Rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");</code></pre>
+</p>
+<p>
+BROWSER - Click into the body / svg element and highlight the rectangle.
+</p>
+<p>
+You can see the rectangle in the Chrome Developer Tools Section
+</p>
+<br>
+<p>
+Next, we add the attribute, value pairs to the rectangle to have the webpage show the SVG rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .attr("x","25")
+    .attr("y","25")
+    .attr("width","50")
+    .attr("height","100");</code></pre>
+</p>
+<p>
+BROWSER - Click into the body / svg element and highlight the rectangle.
+</p>
+<p>
+You can see the actual rectangle in the webpage as well as the Chrome Developer Tools Section.
+</p>
+<br>
+<p>
+Lastly, we apply the rectangle animation transition where the width and height increase.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height", "300")
+        .attr("width", "300")
+        .duration(3000);</code></pre>
+</p>
+<p>
+You saw the rectangle transition from being a small rectangle to a large square.
+</p>
+<p>
+This has been a big step forward towards making data visualizations interactive.
+</p>
+<p>
+This one transition is able to modify two properties of the rectangle at the same time.
+</p>
+<p>
+What if we want to modify one property first and then a second property after that?
+</p>
+<br>
+<p>
+Only one transition per element may be active at any given time.
+</p>
+<p>
+D3 is built so that only one transition per element may be active at any given time.
+</p>
+<br>
+<p>
+Not only that, if a newer transition runs on a given element, it cancels any prior transitions.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height", "300")
+        .attr("width", "300")
+        .duration(3000);
+
+d3.select("rect")
+    .transition()
+        .attr("height", "40")
+        .attr("width", "40")
+        .duration(3000);</code></pre>
+</p>
+<p>
+Even those that were scheduled but have not yet run.
+</p>
+<p>
+Which means that in the example on the screen, the expansion transition will be canceled.
+</p>
+<br>
+<p>
+Let's reset the browser and do the two transitions to see how one cancels the second one.
+</p>
+<br>
+<p>
+First we create the svg rectangle and define it's attribute/value pairs.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect")
+    .attr("x","25")
+    .attr("y","25")
+    .attr("width","50")
+    .attr("height","100");</code></pre>
+</p>
+<br>
+<p>
+Next, we will start the first transition.
+</p>
+<br>
+<p>
+Then during the transition we will quickly start the second transition before the first transition has ended.
+</p>
+<br>
+<p>
+What this should do is cancel the first transition and run the second transition from wherever the first transition currently is.
+</p>
+<br>
+<p>
+Let's start the first transition
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height","300")
+        .attr("width", "300")
+        .duration(3000);</code></pre>
+</p>
+<br>
+<p>
+Now, quickly the second
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height", "40")
+        .attr("width", "40")
+        .duration(3000);</code></pre>
+</p>
+<p>
+What you should have seen is the rectangle slowly expanding outward and then as soon as we started the second transition, the expansion should have stopped and then suddenly the rectangle should have shrunk.
+</p>
+<p>
+This is how D3 behaves when you try to create two transitions on the same element one right after another
+</p>
+<p>
+How then can we have two transitions on the same element?
+</p>
+<p>
+To the case earlier how do we alter the height first and then alter the width second of the rectangle?
+</p>
+<p>
+Or in this case, how do we get the rectangle to expand fully and then contract afterwards.
+</p>
+<br>
+<p>
+In order to stage the order of transitions we go back to the D3 Transition Life-cycle.
+</p>
+<br>
+<p>
+d3.selection.transition
+</p>
+<ul>
+<li>Transition Scheduled</li>
+<li>Transition Starts</li>
+<li>Transition Runs</li>
+<li>Transition Ends</li>
+</ul>
+</p>
+<p>
+The life cycle of a D3 transition is broken down into four separate phases.
+</p>
+<p>
+Because transitions happen over time, there is a sequence of recurring callbacks.
+</p>
+<p>
+Each phase starts when the previous phase has ended.
+</p>
+<p>
+During the transition end of the life-cycle, D3 invokes an end event.
+</p>
+<p>
+It is this end event that can allow us to build multi-stage transitions.
+</p>
+<br>
+<p>
+The D3 selection dot on method adds an event listener to each element in the current selection.
+</p>
+<p>
+<pre><code class="javascript">target.addEventListener(type, listener[, useCapture]);
+
+d3.selection.on(type[, listener[, capture]])</code></pre>
+</p>
+<p>
+In the case of transitions, we can have D3 listener for the "end event" of a transition.
+</p>
+<br>
+<p>
+In this example, we create the SVG rectangle and define it's attribute, value pairs.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height", "300")
+        .attr("width", "300")
+        .duration(3000)
+        .each("end", function() {           // ### HIGHLIGHT ###
+            d3.select(this)                 // ### HIGHLIGHT ###
+                .transition()               // ### HIGHLIGHT ###
+                    .attr("height", "40")   // ### HIGHLIGHT ###
+                    .attr("width", "40")    // ### HIGHLIGHT ###
+                    .duration(3000);        // ### HIGHLIGHT ###
+        });</code></pre>
+</p>
+<p>
+Then we define the same transition we have been using all along - basically that the rectangle will expand.
+</p>
+<p>
+What is new this time, is the .each section that is highlighted.
+</p>
+<p>
+Here, for each element in the selection, we are going to listen to the "end" event from the transition.
+</p>
+<p>
+Once this happens, we will run the callback function we are defining here.
+</p>
+<p>
+Let's take a closer look
+</p>
+<br>
+<p>
+The first line is the each method that will apply a function to each element in the selection.
+</p>
+<p>
+<pre><code class="javascript">.each("end", function() {           // ### HIGHLIGHT ###
+    d3.select(this)                 // ### HIGHLIGHT ###
+        .transition()               // ### HIGHLIGHT ###
+            .attr("height", "40")   // ### HIGHLIGHT ###
+            .attr("width", "40")    // ### HIGHLIGHT ###
+            .duration(3000);        // ### HIGHLIGHT ###
+});</code></pre>
+</p>
+<p>
+The second line creates a new D3 selection using the "this" variable.
+</p>
+<p>
+Recall that in D3 methods, the three variables that are available to us are the "d" for the datum attached to the element, the "i" for the index of the element in the selection and the "this" JavaScript variable for the actual DOM element.
+</p>
+<p>
+Using this new selection, we define a transition to shrink the rectangle SVG shape over the period of 3 seconds to a smaller shape.
+</p>
+<br>
+<p>
+Using a reset browser, let's take a look at the effect.
+</p>
+<br>
+<p>
+First we create the svg rectangle and define it's attribute/value pairs.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect")
+    .attr("x","25")
+    .attr("y","25")
+    .attr("width","50")
+    .attr("height","100");</code></pre>
+</p>
+<br>
+<p>
+Next, we start the first transition which, when it is done will trigger the second transition.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height", "300")
+        .attr("width", "300")
+        .duration(3000)
+        .each("end", function() {       
+            d3.select(this)             
+                .transition()             
+                    .attr("height", "40")    
+                    .attr("width", "40")     
+                    .duration(3000);        
+        });</code></pre>
+</p>
+<p>
+And with that command you should have seen the first transition occur fully, then the second transition occur fully right after the first transition.
+</p>
+<p>
+Which works well and is exactly what we wanted.
+</p>
+<p>
+The only new thing that we had to add was listening to the "end" event of the transition and using the "this" variable inside of the D3 each method to create a new D3 selection for the second transition.
+</p>
+<br>
+<p>
+What if we want to add another transition after these two transitions?
+</p>
+<br>
+<p>
+To add another transition after the two transitions, we would just add an event listener to the second transition that listen for the "end" event for the second transition.
+</p>
+<p>
+<pre><code class="javascript">.each("end", function() {
+    d3.select(this)
+        .transition()
+            .attr("height", "40")
+            .attr("width", "40")
+            .duration(3000)
+            .each("end",......);
+});</code></pre>
+</p>
+<p>
+To add a fourth transition, we would just have to do the same thing.
+</p>
+<p>
+As you can imagine, this would quickly become unreadable due to the nested nature of inserting transitions in each of the dot each methods.
+</p>
+<p>
+Luckily for us, D3 allows us to approach the issue of multi-stage transitions another way.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Transition Animation Chains
+</strong>
+</p>
+<br>
+<p>
+With this code we define a rectangle.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect")
+    .attr("x","25")
+    .attr("y","25")
+    .attr("width","50")
+    .attr("height","100");
+
+d3.select("rect")
+    .transition()
+        .attr("height","300")
+        .attr("width", "300")
+        .duration(3000);</code></pre>
+</p>
+<p>
+Then the height and width are transitioned at the same time.
+</p>
+<p>
+In the previous section we covered how if we wanted to do one transition first and then another, we would have to attach an event listener to each element of the selection.
+</p>
+<p>
+This event listener would listen for the event "end" after which it would then start the new transition.
+</p>
+<br>
+<p>
+When D3 version 3.0 came out, transition chaining supplanted creating a new transition inside of the "end" event listener.
+</p>
+<p>
+d3.v3 => transition chaining
+</p>
+<br>
+<p>
+This is a simple example of transition chaining.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height","300")
+        .duration(3000)
+    .transition()
+        .attr("width", "300")
+        .duration(3000);</code></pre>
+   </p>
+<p>
+As long as the transition is chained to another transition on the same JavaScript command, D3 does the hard work of tie-ing the transitions together so that they will be seen as one multiple transition.
+</p>
+<br>
+<p>
+This more complicated example does 4 transitions in a row one after another.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height","300")
+        .duration(3000)
+    .transition()
+        .attr("width", "300")
+        .duration(3000)
+    .transition()
+        .attr("height", "40")
+        .duration(3000)
+    .transition()
+        .attr("width", "40")
+        .duration(3000);</code></pre>
+</p>
+<p>
+By doing this we stay away from the jumble that "end" event listeners would have created.
+</p>
+<br>
+<p>
+This example does 2 transitions in a row one after another.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height","300")
+        .attr("fill", "green")
+        .duration(3000)
+    .transition()
+        .attr("width", "300")
+        .attr("fill", "red")
+        .duration(3000);</code></pre>
+</p>
+<p>
+What is different about this example is that each transition changes two attributes at the same time.
+</p>
+<p>
+So the first transition changes the height of the rectangle and the color at the same time.
+</p>
+<p>
+While the second transition changes the width of the rectangle as well as the color at the same time.
+</p>
+<p>
+This should show you that you can make each individual transition as complicated as possible.
+</p>
+<p>
+And still be able to chain the transitions.  
+</p>
+<br>
+<p>
+This example shows you that you can use functions within the transitions just like we have before.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height", function(d, i) { return i + 150; })
+        .duration(3000)
+    .transition()
+        .attr("width", function(d, i) { return i + 150; })
+        .duration(3000);</code></pre>
+</p>
+<p>
+Here we use the i index, though we could have used the d datum inside of the function if the elements had data bound to them.
+</p>
+<p>
+The transition will change the height first and then the width.
+</p>
+<p>
+In each case, it will add the index number (which is zero) to 150.  
+</p>
+<br>
+<p>
+Let's take a look at these examples in the JavaScript Console.
+</p>
+<br>
+<p>
+For the first example, we create the SVG Rectangle
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg").append("rect");
+
+d3.select("rect")
+    .attr("x", "25")
+    .attr("y", "25")
+    .attr("width", "50")
+    .attr("height", "100");</code></pre>
+</p>
+<br>
+<p>
+Next we run the simple transition:
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height","300")
+        .duration(3000)
+    .transition()
+        .attr("width", "300")
+        .duration(3000);</code></pre>
+</p>
+<p>
+We see the rectangle height increase first over the span of 3 seconds.
+</p>
+<p>
+Then we see the width increase over the span of 3 seconds once the rectangle height has stopped increasing.
+</p>
+<br>
+<p>
+Next, let's run the more complicated example that has 4 different transitions.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .attr("x","25")
+    .attr("y","25")
+    .attr("width","50")
+    .attr("height","100");  
+
+d3.select("rect")
+    .transition()
+        .attr("height","300")
+        .duration(3000)
+    .transition()
+        .attr("width", "300")
+        .duration(3000)
+    .transition()
+        .attr("height", "40")
+        .duration(3000)
+    .transition()
+        .attr("width", "40")
+        .duration(3000);</code></pre>
+</p>
+<p>
+We see the rectangle height increase first over the span of 3 seconds.
+</p>
+<p>
+We then see the rectangle width increase over the span of 3 seconds.
+</p>
+<p>
+We then see the rectangle height decrease over the span of 3 seconds.
+</p>
+<p>
+And lastly, we then see the rectangle width decrease over the span of 3 seconds.
+</p>
+<br>
+<p>
+Next, let's run the transition example that changes two attributes per each transition:
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .transition()
+        .attr("height", "300")
+        .attr("fill", "green")
+        .duration(3000)
+    .transition()
+        .attr("width", "300")
+        .attr("fill", "red")
+        .duration(3000);</code></pre>
+</p>
+<p>
+We see the rectangle height and color fill change at the same time over a span of 3 seconds.
+</p>
+<p>
+We then see the rectangle width and color fill change at the same time over the span of 3 seconds right after the first transition is done.
+</p>
+<br>
+<p>
+Finally, we run the transition example that uses formulas in the attribute method for each chained transition.
+</p>
+<p>
+<pre><code class="javascript">d3.select("rect")
+    .attr("x", "25")
+    .attr("y", "25")
+    .attr("width", "50")
+    .attr("height", "100")
+    .attr("fill", "black");
+
+d3.select("rect")
+    .transition()
+        .attr("height", function(d, i) { return i + 150; })
+        .duration(3000)
+    .transition()
+        .attr("width", function(d, i) { return i + 150; })
+        .duration(3000);</code></pre> 
+</p>
+<p>
+We see the height change over the span of 3 seconds.
+</p>
+<p>
+We then see the width change over the span of 3 seconds.
+</p>
+<p>
+Noticing of course, the height defined and the width defined were the result of an anonymous function in the attribute definition section of the transition.
+</p>
+<br>
+<p>
+Which is fantastic because we now know how to chain multiple transitions so that they execute one right after another and know that we can create complicated transitions easily.
+</p>
+<br>
+<p>
+Let's go through one final example to show you many chained transitions based on data.
+</p>
+<br>
+<p>
+First we create the data
+</p>
+<p>
+<pre><code class="javascript">var circleData = [ {"cx": "25", "cy": "25", "r": "5"},
+                   {"cx": "50", "cy": "50", "r": "5"},
+                   {"cx": "75", "cy": "75", "r": "5"}];</code></pre>
+</p>
+<br>
+<p>
+Then we create the SVG Viewport
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("svg");</code></pre>
+</p>
+<br>
+<p>
+Then we create the circle elements
+</p>
+<p>
+<pre><code class="javascript">d3.select("svg")
+    .selectAll("circle")
+    .data(circleData)
+  .enter()
+    .append("circle");</code></pre>
+</p>
+<br>
+<p>
+Then we define the attributes for the circle elements
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("circle")
+    .attr("cx", function(d, i) { return (i * 25) + 25; })
+    .attr("cy", function(d, i) { return (i * 25) + 25; })
+    .attr("r",  function(d, i) { return 5 });</code></pre>
+</p>
+<br>
+<p>
+Then we define a crazy function:
+</p>
+<p>
+<pre><code class="javascript">function crazyFunction(d, i) { 
+    d3.select(this)
+        .transition().attr("r", "25").attr("fill", "yellow")      
+        .transition().attr("r", "5").attr("fill", "black")
+        .transition().attr("cx", "100")
+        .transition().attr("cy", "100")
+        .transition()
+            .attr("cx", function(d, i) { return d.cx })
+            .attr("cy", function(d, i) { return d.cy })
+            .attr("fill", "blue")
+        .transition()
+            .attr("stroke-width", "2")
+            .attr("stroke","red");
+}</code></pre>
+</p>
+<p>
+This will be our function that details all of our transitions
+</p>
+<p>
+Note that this changes the radius, the cx, the cy, the fill, the stroke and the stroke width of the circle.
+</p>
+<br>
+<p>
+Lastly, combining this video with the last video, we will trigger the transition when the circle gets a mouse over event.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("circle").on("mouseover", crazyFunction);</code></pre>
+</p>
+<br>
+<p>
+Now, when we mouse over each circle, we get to see the series of transitions in action!
+</p>
+<p>
+BROWSER - mouse over the circles a few times.
+</p>
+<br>
+<p>
+And with that we have covered D3 transition chaining, how to use DOM events to trigger transitions and shown how we can add many transitions together while having varying attributes of an element all transition at the same time as well.
+</p>
+        </div>
+      </div>
+        
+        
+        
+    </div>
+
 
 
 
