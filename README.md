@@ -280,6 +280,9 @@
     <li><a href="d3_content.html#lesson55">D3 Event Action At A Distance</a></li>
     <li><a href="d3_content.html#lesson56">D3 and HTML Forms</a></li>
     <li><a href="d3_content2.html#lesson57">D3 Layout - Stack Layout</a></li>
+    <li><a href="d3_content2.html#lesson58">D3 Basic General Update Pattern</a></li>
+    
+    
     
     
     
