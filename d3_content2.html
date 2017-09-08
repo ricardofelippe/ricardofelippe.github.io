@@ -1674,3 +1674,1551 @@ We have also gone through the complete step by step process of building a stacke
 </div>    
     </div>    
 
+<h3 id="lesson58">D3 Basic General Update Pattern <h3>
+<div>
+    <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>The D3 Data Join Pattern is a way to bind data to DOM Elements</li>
+<li>The D3 Data Operator produces three virtual selections - Enter, Update, and Exit</li>
+<li>The Enter selection contains placeholder elements for any data that did not get bound to DOM elements</li>
+<li>The Update selection contains all of the existing DOM elements that had their __data__ attributes updated</li>
+<li>The Exit selection contains all of the existing DOM elements which did not have their __data__ attributes updated</li>
+<li>When a D3 Data Join is done, there are only three possible scenarios: More Data Than DOM elements, Less Data Than DOM elements, or the same number of Data and DOM elements</li>
+<li>The D3 General Update Pattern describes the process of using the enter, update, and exit selections in a certain way that makes it possible to cover all possible Data / DOM element scenarios regardless of what less than, greater than, or equal to</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/d3-data-operator">D3 Data Operator</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-update-selection">D3 Update Selection</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/binding-data-to-dom-elements">Binding Data to DOM Elements</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/using-data-bound-to-dom-elements">Using Data Bound to DOM Elements</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 Basic General Update Pattern
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+D3 Data Joins Revisited
+</strong>
+</p>
+<br>
+<p>
+This is the much repeated D3 pattern:
+</p>
+<p>
+<pre><code class="javascript">var circles = svg.selectAll("circle")
+    .data(data)
+  .enter().append("circle");</code></pre>
+</p>
+<p>
+When creating a new data visualization on the webpage, this is how we bind our data to SVG elements to create them and place them on the screen.
+</p>
+<p>
+The selectAll("circle") creates an empty selection as there are no DOM elements with the selector of circle.
+</p>
+<p>
+The data method binds the data to elements.
+</p>
+<p>
+Each element in the data array gets bound to a new DOM element.
+</p>
+<br>
+<p>
+The data method produces three virtual selections
+</p>
+<p>
+<pre><code class="javascript">var circles = svg.selectAll("circle")
+    .data(data)
+  .enter().append("circle");
+
+// update => circles;
+// enter  => circles.enter();
+// exit   => circles.exit();</code></pre>
+</p>
+<p>
+The enter selection - which contains placeholder elements for any new elements.
+</p>
+<p>
+The update selection - which contains existing elements that have had their __data__ attributes updated.
+</p>
+<p>
+and the exit selection - which are the remaining elements that have not had their __data__ attributes updated.
+</p>
+<br>
+<p>
+Since the initial selectAll("circle") selection created an empty selection, the update and exit virtual selections will be empty.
+</p>
+<p>
+<pre><code class="javascript">var circles = svg.selectAll("circle")
+    .data(data)
+  .enter().append("circle");</code></pre>
+</p>
+<p>
+The enter selection contains all of the placeholder elements.
+</p>
+<p>
+The missing elements are then added to the SVG container by the append("circle") command.
+</p>
+<br>
+<p>
+This Venn Diagram illustrates the idea of the Data Join.
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+On the left, in purple, we have the data that belongs to the DOM elements.
+</p>
+<p>
+On the right, in blue, we have the data that belongs to the data set being bounded.
+</p>
+<p>
+In the middle, we have the data that belongs to both sets, that we have updated.
+</p>
+<p>
+If we want the data slash DOM elements for which no new data was added, then we choose the exit selection.
+</p>
+<p>
+If we want the data slash DOM elements for which data was updated, then we choose the update selection.
+</p>
+<p>
+If we want the data slash DOM elements for which new data was bound to new elements, then we choose the enter selection.
+</p>
+<p>
+So far so good, relatively straight forward and it's something we've been doing since the beginning.
+</p>
+<p>
+Next up, let's talk about the Exit Selection as it's not something we've covered before.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Exit Selection
+</strong>
+</p>
+<br>
+<p>
+This is how we access the exit selection.
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...).exit()</code></pre>
+</p>
+<p>
+This selection is only defined on the selection returned by the data operator.
+</p>
+<p>
+The Exit selection is the selection of existing DOM elements in the current selection for which no new data element was found.
+</p>
+<p>
+So if there were five DOM elements in the selection and we only provided 4 data points, the exit selection would contain the fifth DOM element.
+</p>
+<br>
+<p>
+What often occurs is that we will want to get rid of the elements for which there was no data.
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...).exit().remove()</code></pre>
+</p>
+<p>
+This is done through the remove operator.
+</p>
+<p>
+This will delete the DOM elements from the web page.
+</p>
+<br>
+<p>
+Let's take a look some JavaScript Examples to see how the exit
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...).exit()</code></pre>
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+Let's add 5 HTML paragraph elements to the body of this web page.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("p").attr("id", "p_1");
+
+d3.select("body").append("p").attr("id", "p_2");
+
+d3.select("body").append("p").attr("id", "p_3");
+
+d3.select("body").append("p").attr("id", "p_4");
+
+d3.select("body").append("p").attr("id", "p_5");</code></pre>
+</p>
+<p>
+BROWSER Click on the body element to show paragraphs.
+</p>
+<p>
+We use the D3 append functionality and give each paragraph element it's own unique id.
+</p>
+<br>
+<p>
+Next, let's bind an array of four numbers to the selection of the four paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4]);</code></pre>
+</p>
+<p>
+This will go through DOM elements and bind the data to them.
+</p>
+<p>
+The first data element will be bound to the first paragraph element in the selection.
+</p>
+<p>
+The second data element will be bound to the second paragraph element in the selection.
+</p>
+<p>
+The third data element will be bound to the third paragraph element in the selection.
+</p>
+<p>
+The fourth data element will be bound to the fourth paragraph element in the selection.
+</p>
+<p>
+There is no fifth data element, so the fifth paragraph element does not get any data bound to it.
+</p>
+<br>
+<p>
+It is this fifth paragraph element that gets assigned to the d3 exit selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit();</code></pre>
+</p>
+<p>
+BROWSER click into the array 
+</p>
+<p>
+If we go into the array, you can see that it is an array of five elements.
+</p>
+<p>
+Though the only element that shows up is the paragraph with the html id of P underscore 5.
+</p>
+<br>
+<p>
+If we take a look at the interior array, we can see that the order of the selection was preserved.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit()[0];</code></pre>
+</p>
+<p>
+This tells us that the first four elements of the array are undefined and that the last element of the array is the paragraph element with an id of p underscore 5.
+</p>
+<br>
+<p>
+Let's take a look at the data attribute of each of the 5 paragraphs:
+</p>
+<br>
+<p>
+We look at the first paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_1").data();</code></pre>
+</p>
+<p>
+This returns the number 1 - which is what we expect as the first data element was bound to the first paragraph element.
+</p>
+<br>
+<p>
+We look at the second paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_2").data();</code></pre>
+</p>
+<p>
+This returns the number 2 - which is what we expect as the second data element was bound to the second paragraph element.
+</p>
+<br>
+<p>
+We look at the third paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_3").data();</code></pre>
+</p>
+<p>
+This returns the number 3 - which is what we expect as the third data element was bound to the third paragraph element.  
+</p>
+<br>
+<p>
+We look at the fourth paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_4").data();</code></pre>
+</p>
+<p>
+This returns the number 4 - which is what we expect as the fourth data element was bound to the fourth paragraph element.  
+</p>
+<br>
+<p>
+Finally, we look at the fifth paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_5").data();</code></pre>
+</p>
+<p>
+This returns JavaScript Data Type of undefined - which is what we expect as there was no fifth data element to be bound to the fifth paragraph element.  
+</p>
+<br>
+<p>
+Let's now explore how to use the remove operator on an exit selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit().remove();</code></pre>
+</p>
+<p>
+BROWSER: in Elements section, click on id="p_4"
+</p>
+<p>
+As soon as we press enter D3 deletes slash removes all of the elements in the exit selection.
+</p>
+<br>
+<p>
+Let's do this again with the 5 paragraphs and only 1 data element.
+</p>
+<br>
+<p>
+We reset the browser
+</p>
+<br>
+<p>
+We add the 5 paragraphs
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("p").attr("id", "p_1");
+
+d3.select("body").append("p").attr("id", "p_2");
+
+d3.select("body").append("p").attr("id", "p_3");
+
+d3.select("body").append("p").attr("id", "p_4");
+
+d3.select("body").append("p").attr("id", "p_5");</code></pre>
+</p>
+<p>
+BROWSER: click into the body tag
+</p>
+<br>
+<p>
+Next, let's bind an array of 1 number to the selection of all the paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1]);</code></pre>
+</p>
+<p>
+This will go through all of the DOM elements and bind the data to them.
+</p>
+<p>
+The first data element will be bound to the first paragraph element in the selection.
+</p>
+<p>
+There is no second, third, fourth or fifth data element, so the second, third, fourth and fifth paragraph elements do not get any data bound to them.
+</p>
+<br>
+<p>
+It is these second, third, fourth and fifth paragraph elements that get assigned to the d3 exit selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit();</code></pre>
+</p>
+<p>
+BROWSER click into the array 
+</p>
+<p>
+If we go into the array you can see that it is an array of five elements.
+</p>
+<p>
+Though the only element that does not show up is the paragraph with the html id of P underscore 1.
+</p>
+<p>
+All of the other paragraph elements show up.
+</p>
+<br>
+<p>
+If we take a look at the interior array, we can see that the order of the selection was preserved.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit()[0];</code></pre>
+</p>
+<p>
+This tells us that the first element of the array is undefined and that the 2nd, 3rd, 4th and 5th elements of the array are the paragraph elements with an id of p underscore 2, p underscore 3, p underscore 4 and p underscore 5.
+</p>
+<br>
+<p>
+Let's take a look at the data attribute of each of the 5 paragraphs:
+</p>
+<br>
+<p>
+We look at the first paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_1").data();</code></pre>
+</p>
+<p>
+This returns the number 1 - which is what we expect as the first data element was bound to the first paragraph element.
+</p>
+<br>
+<p>
+Next, we look at the second paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_2").data();</code></pre>
+</p>
+<p>
+This returns JavaScript Data Type of undefined - which is what we expect as there was no second data element to be bound to the second paragraph element.
+</p>
+<br>
+<p>
+This is what will happen to all of the other paragraphs in the exit selection.
+</p>
+<br>
+<p>
+Let's now explore again how to use the the remove operator on an exit selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit().remove();</code></pre>
+</p>
+<p>
+BROWSER: in Elements section, click on id="p_1"
+</p>
+<p>
+As soon as we press enter, D3 deletes slash removes all of the elements in the exit selection.
+</p>
+<p>
+Which means that D3 removed all of the paragraphs other than the paragraph with id of p underscore 1
+</p>
+<br>
+<p>
+Very good - the exit selection allows us to select the DOM elements for which no new data was added when we did the bounding of the data.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Enter Selection
+</strong>
+</p>
+<br>
+<p>
+This is how we access the enter selection:
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...).enter()</code></pre>
+</p>
+<p>
+This selection is only defined on the selection returned by the data operator.
+</p>
+<p>
+The Enter selection is the selection of placeholder elements in the current selection for any new elements.
+</p>
+<p>
+This is the common D3 pattern we have seen before.
+</p>
+<p>
+So if there are zero DOM elements and we bind 4 data points using the selectAll, data, enter selection, the enter selection will contain 4 placeholder elements.
+</p>
+<br>
+<p>
+The top piece of code is the D3 pattern we have seen before:
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });
+
+var dataSelection = d3.select("body")
+    .selectAll("p")
+    .data([1, 2, 3, 4, 5]);
+
+dataSelection.enter();</code></pre>
+</p>
+<p>
+The bottom piece of code selectAlls the paragraph elements and binds 5 pieces of data to them.
+</p>
+<p>
+Since the top piece of code generated 4 paragraph elements, we will have 1 more piece of data than we have paragraph elements.
+</p>
+<p>
+When we select the enter selection, we get the place holder element for the data element number 5.
+</p>
+<br>
+<p>
+When you use the chain syntax after selecting the enter selection to append an element, it will create the new elements as needed.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });</code></pre>
+</p>
+<p>
+This means that the placeholder elements get merged with the paragraph DOM element in this case.
+</p>
+<p>
+We'll take a look at this in the JavaScript console.  
+</p>
+<br>
+<p>
+Let's take a look some JavaScript Examples to see how the enter selection works.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+Let's add 4 HTML paragraph elements to the body of this web page using the D3 pattern.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });</code></pre>
+</p>
+<p>
+BROWSER Lick on the body element to show paragraphs.
+</p>
+<p>
+This should be very familiar and straight forward to you now.
+</p>
+<p>
+We selectAll non-existent paragraph elements.
+</p>
+<p>
+Then we bind data to them which creates placeholder elements as there are no elements in the selectAll selection.
+</p>
+<p>
+The enter selection creates a selection of these placeholder elements.
+</p>
+<p>
+We append a paragraph element for each placeholder element in the enter selection.
+</p>
+<br>
+<p>
+Next, let's bind an array of 5 numbers to the selection of all the paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4, 5]);
+
+dataSelection;</code></pre>
+</p>
+<p>
+The first thing we see is that the dataSelection now has 5 elements as opposed to the 4 it had before.
+</p>
+<p>
+This makes sense as we just bound 5 data elements to the selection of all the paragraph elements in the document.
+</p>
+<br>
+<p>
+Let's open up the array to see what is inside.
+</p>
+<p>
+BROWSER click on the array.
+</p>
+<p>
+When we look at the array we can see 4 elements.
+</p>
+<p>
+These four elements are the elements that were already in existence.
+</p>
+<p>
+These four elements encompass the update selection which we will cover in the next section.
+</p>
+<p>
+For now, let's focus on the fact that one element is not represented.
+</p>
+<p>
+This element is the element that lives in the enter selection.
+</p>
+<br>
+<p>
+If we select the dataSelection enter selection, we will find this element.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter();</code></pre>
+</p>
+<p>
+BROWSER click into object
+</p>
+<p>
+When we click into the object we can see that it has a data attribute.
+</p>
+<p>
+This data attribute has the number 5 element from the data array.
+</p>
+<p>
+You can see that it doesn't have any other defining features or attributes, it's as pure an Object as you can get.
+</p>
+<br>
+<p>
+If we get the array inside of the selection array, we can see that the enter selection is an array of 4 undefined objects and 1 defined object.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter()[0];</code></pre>
+</p>
+<p>
+BROWSER: click into object
+</p>
+<p>
+D3 does this in order to preserve order in selections.
+</p>
+<p>
+In the next video we will cover how to get around this with key functions.
+</p>
+<br>
+<p>
+Let's redefine the dataSelection variable, this time with an array of 9 numbers.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+dataSelection;</code></pre>
+</p>
+<p>
+We selectAll the paragraph elements in the document, which is still 4 and bind 9 pieces of data to them.
+</p>
+<p>
+Each data is one of the numbers in the array.
+</p>
+<br>
+<p>
+If we open up the array to see what's inside, we find the four paragraph elements that already existed.
+</p>
+<p>
+BROWSER click on the array.
+</p>
+<p>
+This is just like before.
+</p>
+<br>
+<p>
+When we select the dataSelection enter selection, we find the 5 missing elements.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter();</code></pre>
+</p>
+<p>
+BROWSER click into the array
+</p>
+<p>
+We find the missing objects, note that their index number starts at 4 and goes through 8.
+</p>
+<p>
+This is expected as the selections are 0 index based, so these are the last 5 place holder elements.
+</p>
+<br>
+<p>
+If we get the array inside of the selection array, we can see that the enter selection is an array of 4 undefined objects and 5 defined objects.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter()[0];</code></pre>
+</p>
+<p>
+Again - D3 does this to preserve order in selections.
+</p>
+<br>
+<p>
+Now, let's append a paragraph element for each data placeholder object in the enter selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter().append("p")
+    .attr("id", function(d) { return "enter_p_"+d; });</code></pre>
+</p>
+<p>
+BROWSER: click on paragraph elements added.
+</p>
+<p>
+You can see how we can use the append to create the paragraph elements that were missing.
+</p>
+<br>
+<p>
+From these examples we have seen that the enter selection is the selection of placeholder elements in the current selection for any new elements.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Update Selection
+</strong>
+</p>
+<br>
+<p>
+This is how we access the update selection.
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...)</code></pre>
+</p>
+<p>
+Note that the data operator returns the update selection.
+</p>
+<p>
+So instead of having to select the virtual selection like we did with enter and exit, we don't have to do anything.
+</p>
+<p>
+The update selection is the selection which contains existing elements that have had their __data__ attribute updated.
+</p>
+<p>
+So if there are 4 existing DOM elements with data attributes and we bind 4 data points to these existing elements, the update selection will contain these 4 DOM elements. 
+</p>
+<br>
+<p>
+The top piece of code is the D3 pattern we have seen before:
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });
+
+var dataSelection = d3.select("body").selectAll("p").data([5, 6, 7, 8]);
+
+dataSelection;</code></pre>
+</p>
+<p>
+The bottom piece of code selectAlls the paragraph elements and binds 4 pieces of data to them.
+</p>
+<p>
+Since the top piece of code generated 4 paragraph elements and we bound 4 pieces of data to those 4 paragraph elements, there won't be any extra DOM elements or extra pieces of Data.
+</p>
+<p>
+If we then select the update selection, we get the 4 elements which have had their data attribute updated.
+</p>
+<br>
+<p>
+The other important place the update selection shows up in D3, is when we run the code on the screen.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });
+
+var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+dataSelection.enter().append("p").attr("id", function(d) { return "enter_p_"+d; });
+
+dataSelection;</code></pre>
+</p>
+<p>
+We do the D3 pattern.
+</p>
+<p>
+Then we bind more data points than we have elements for.
+</p>
+<p>
+The update selection will contain the first four paragraphs.
+</p>
+<p>
+The enter selection will contain the last five paragraphs.
+</p>
+<p>
+Then, we use the append() operator on the enter selection.
+</p>
+<p>
+As soon as the append operator is run on the enter selection, the update selection expands to include the entering elements.
+</p>
+<p>
+So in this case, the update selection will now contain all 9 paragraph elements.
+</p>
+<p>
+We'll see this example in the JavaScript console shortly.
+</p>
+<br>
+<p>
+Let's take a look some JavaScript Examples to see how the update selection works.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+Let's add 4 HTML paragraph elements to the body of this web page using the D3 pattern.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_" + d; });</code></pre>
+</p>
+<p>
+BROWSER Lick on the body element to show paragraphs.
+</p>
+<p>
+This should be very familiar and straight forward to you now.
+</p>
+<p>
+We selectAll non-existent paragraph elements.
+</p>
+<p>
+Then we bind data to them which creates placeholder elements as there are no elements in the selectAll selection.
+</p>
+<p>
+The enter selection creates a selection of these placeholder elements.
+</p>
+<p>
+We append a paragraph element for each placeholder element in the enter selection.
+</p>
+<br>
+<p>
+We can checkout what data is bound to each of the four paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("p").data();</code></pre>
+</p>
+<p>
+We can see the array of data we passed into the data operator earlier.
+</p>
+<br>
+<p>
+Next, let's bind an array of 4 numbers to the selection of all the paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([5, 6, 7, 8]);
+
+dataSelection;</code></pre>
+</p>
+<p>
+The first thing we see is that the dataSelection has 4 elements.
+</p>
+<p>
+This makes sense as there were 4 data elements being bound to the 4 already existing DOM elements.
+</p>
+<br>
+<p>
+Let's open up the array to see what is inside.
+</p>
+<p>
+BROWSER click on the array.
+</p>
+<p>
+When we look at the array we can see 4 elements.
+</p>
+<p>
+These four elements are the elements that were already in existence.
+</p>
+<p>
+These four elements encompass the update selection.
+</p>
+<p>
+Note that there are no missing elements as we bound 4 data points to 4 pre-existing DOM elements.
+</p>
+<br>
+<p>
+If we look at the dataSelection enter selection, we find no new elements.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter()[0];</code></pre>
+</p>
+<p>
+Note, that there is still an order, it's just that all the elements in the selection are the undefined data type.
+</p>
+<br>
+<p>
+If we look at the dataSelection exit selection, we find no elements that did not receive data.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit()[0];</code></pre>
+</p>
+<p>
+Note, that there is still an order, it's just that all the elements in the selection are the undefined data type.
+</p>
+<p>
+So because we have the exact number of data elements as DOM elements in the selection, the binding happened 1 for 1 and we are just left with the update selection.
+</p>
+<br>
+<p>
+Let's look at the data that is now attached to the paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.data();
+
+d3.selectAll("p").data();</code></pre>
+</p>
+<p>
+You can see that in either command, we are looking at the 4 existing paragraph elements in the Document.
+</p>
+<p>
+Both commands return the array of updated data.
+</p>
+<p>
+This tells us that the data was bound correctly and each paragraph element __data__ attribute was updated.
+</p>
+<br>
+<p>
+Let's reset the browser and explore how using the append operator on the enter selection causes the update selection to include the entering elements.
+</p>
+<p>
+BROWSER reset the browser
+</p>
+<br>
+<p>
+First we do the D3 pattern.  
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_" + d; });</code></pre>
+</p>
+<br>
+<p>
+Then we bind the new data.  
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4, 5, 6, 7, 8, 9]);</code></pre>
+</p>
+<p>
+This will cause place holder elements to be created.
+</p>
+<br>
+<p>
+Let's look at the update selection first.
+</p>
+<p>
+<pre><code class="javascript">dataSelection;</code></pre>
+</p>
+<p>
+BROWSER click into the array of array.
+</p>
+<p>
+You can see that the update selection contains the first four paragraphs which were the ones that had their data attributes updated.
+</p>
+<br>
+<p>
+Let's look at the enter selection next.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter();</code></pre>
+</p>
+<p>
+BROWSER click into the array of array
+</p>
+<p>
+You can see that the enter selection contains five DOM elements which are the placeholder objects created.
+</p>
+<br>
+<p>
+Now, let's use the chain syntax to call the append() operator on the enter selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter().append("p").attr("id", function(d) { return "enter_p_" + d; });</code></pre>
+</p>
+<p>
+BROWSER: show all Ps in elements section.
+</p>
+<p>
+This creates paragraph elements for the 5 place holder elements at the end.
+</p>
+<br>
+<p>
+Now, let's look at the update selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection;</code></pre>
+</p>
+<p>
+BROWSER click into the array of array.
+</p>
+<p>
+When we look at the update selection, you can see that once an append operator is used on an enter selection, that the update selection expands to include the newly created elements.
+</p>
+<p>
+Which means that when we do operations on the update selection, that they will be done on both the enter and update selections.
+</p>
+<br>
+<p>
+From these examples we have seen that the update selection is the selection which contains existing elements that have had their __data__ attributes updated.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Basic General Update Pattern
+</strong>
+</p>
+<br>
+<p>
+Mike Bostock created a great example of the General Update Pattern in D3.js.
+</p>
+<p>
+[ Image: Mike Bostock's D3 General Update Pattern ]
+</p>
+<p>
+It covers the enter, update and exit selections.
+</p>
+<p>
+This Block does not use key functions for the data-join, so the elements are always added to the end.
+</p>
+<p>
+We are going to use some of the structure of his example, to construct a manual example in the JavaScript Console.
+</p>
+<br>
+<p>
+We are going to be using three variables:
+</p>
+<p>
+<pre><code class="javascript">var cupcake  = "cupcake".split("");
+
+var flamingo = "flamingo".split("");
+
+var icecream = "icecream".split("");</code></pre>
+</p>
+<p>
+Each variable will be the array of individual letters that make up the string.
+</p>
+<p>
+For example, the variable cupcake will be an array of the letters C, U, P, C, A, K, E
+</p>
+<p>
+There are two different string lengths.
+</p>
+<p>
+The flamingo and icecream variables will have the same length.
+</p>
+<p>
+Using these three variables we will construct and add a set of text elements to an SVG container.
+</p>
+<p>
+One letter per one text element.
+</p>
+<br>
+<p>
+For each selection example, we will update the class of the SVG Text Element to really understand how the enter, exit and update selections work when we are updating data.
+</p>
+<p>
+<pre><code class="javascript">[cupcake, flamingo, icecream]
+// class = XXXXX_enter
+// class = XXXXX_exit
+// class = XXXXX_update</code></pre>
+</p>
+<br>
+<p>
+Let's take a look the JavaScript Console for the Examples
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+We start with the definition of the SVG container the text will live in.
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("body").append("svg")
+    .attr("height", "300")
+    .attr("width", "600")
+  .append("g")
+    .attr("transform", "translate(12, 150)");</code></pre>
+</p>
+<br>
+<p>
+Then we create the D3 pattern.
+</p>
+<p>
+<pre><code class="javascript">var textSelection = svg.selectAll("text")
+    .data("datadrivendocuments".split(""));</code></pre>
+</p>
+<br>
+<p>
+We check the exit selection.
+</p>
+<p>
+<pre><code class="javascript">textSelection.exit()[0];</code></pre>
+</p>
+<p>
+Nothing here as there are no elements yet, so there weren't any elements that didn't receive data.
+</p>
+<br>
+<p>
+We check the update selection.
+</p>
+<p>
+<pre><code class="javascript">textSelection[0];</code></pre>
+</p>
+<p>
+Nothing here as there are no elements yet, so no elements got their __data__ attribute updated.
+</p>
+<br>
+<p>
+We check the enter selection.
+</p>
+<p>
+<pre><code class="javascript">textSelection.enter()[0];</code></pre>
+</p>
+<p>
+BROWSER click into the array and the first object.
+</p>
+<p>
+Here we can see the 19 placeholder objects.
+</p>
+<p>
+We can see the letter "D" attached to the __data__ attribute of the first object.
+</p>
+<br>
+<p>
+We now create the new elements using the enter selection and the append operator.
+</p>
+<p>
+<pre><code class="javascript">textSelection.enter().append("text")
+    .attr("class", "initial")
+    .attr("x",  function(d, i) { return i * 24; })
+    .attr("dy", ".35em");</code></pre>
+</p>
+<br>
+<p>
+Next, we add the actual text, thus completing the full cycle of the D3 pattern.
+</p>
+<p>
+<pre><code class="javascript">textSelection.text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can now see the full text data on the screen.
+</p>
+<br>
+<p>
+And just to drill this point home, let's look at the update selection.
+</p>
+<p>
+<pre><code class="javascript">textSelection;</code></pre>
+</p>
+<p>
+BROWSER: expand array
+</p>
+<p>
+When the append operator is run on the enter selection, the update selection expands to include the enter selection.
+</p>
+<br>
+<p>
+Alright - so far so good, we explored a bit more deeply than before, the D3 pattern.
+</p>
+<br>
+<p>
+Next, lets create the array variables from the three different strings.
+</p>
+<p>
+<pre><code class="javascript">var cupcake  = "cupcake".split("");
+
+cupcake;
+
+var flamingo = "flamingo".split("");
+
+flamingo;
+
+var icecream = "icecream".split("");
+
+icecream;</code></pre>
+</p>
+<br>
+<p>
+Let's now bind the cupcake data to the text elements.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(cupcake);</code></pre>
+</p>
+<p>
+The string cupcake has 7 letters, so we are selecting many more elements than there are data points.
+</p>
+<br>
+<p>
+Let's update the class of the elements in the D3 update selection.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "cupcake_update");</code></pre>
+</p>
+<p>
+BROWSER go to elements and scroll up so you can see the elements that were updated.
+</p>
+<p>
+You can see that the first seven elements receive a new class.
+</p>
+<p>
+The rest of the elements did not get their class updated.
+</p>
+<p>
+Also notice that the actual text has not changed, this is because we haven't re-written it.
+</p>
+<br>
+<p>
+Let's check the exit selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.exit();</code></pre>
+</p>
+<p>
+BROWSER: click into array
+</p>
+<p>
+We can see all of the other elements which did not receive an updated data point.
+</p>
+<br>
+<p>
+Let's update the class of the elements in the D3 exit selection.
+</p>
+<p>
+<pre><code class="javascript">text.exit().attr("class", "cupcake_exit");</code></pre>
+</p>
+<p>
+BROWSER: click into elements and on the first class="cupcake_exit"
+</p>
+<p>
+You can see that the rest of the elements now have the cupcake underscore exit class.
+</p>
+<br>
+<p>
+Let's check the enter selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.enter()[0];</code></pre>
+</p>
+<p>
+We see no elements in this selection.
+</p>
+<p>
+This is as we expected - no new placeholder elements were created, so no enter selection elements should exist.
+</p>
+<br>
+<p>
+Let's update the actual text of the SVG elements.
+</p>
+<p>
+<pre><code class="javascript">text.text(function(d) { return d; });</code></pre>
+</p>
+<p>
+BROWSER: highlight cupcake
+</p>
+<p>
+Now you can see in the webpage, that we have updated the actual letter of each SVG text element.
+</p>
+<br>
+<p>
+Lastly, let's remove the exit selection elements
+</p>
+<p>
+<pre><code class="javascript">text.exit().remove();</code></pre>
+</p>
+<p>
+When we remove the exit selection, we are now left with just the cupcake SVG text elements.
+</p>
+<br>
+<p>
+Next, let's bind the data from the flamingo string.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(flamingo);</code></pre>
+</p>
+<p>
+Flamingo has 8 letters, so we are selecting 7 DOM elements and binding 8 data elements.
+</p>
+<p>
+This means that D3 is going to have to create a placeholder element for the last element.
+</p>
+<br>
+<p>
+Let's update the class of the elements in the D3 update selection.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "flamingo_update");</code></pre>
+</p>
+<p>
+BROWSER: Elements section
+</p>
+<p>
+Notice that all of the elements had their class changed.
+</p>
+<p>
+This is because there are more data points than elements, so every single paragraph element that exists had it's data </p>
+<br>
+<p>
+Let's check the exit selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.exit()[0];</code></pre>
+</p>
+<p>
+We see no elements in this selection.
+</p>
+<p>
+This is as we expected - as there were more data points than DOM elements, there were no DOM elements that did not get their data updated.
+</p>
+<p>
+So no exit selection elements to view and/or remove.
+</p>
+<br>
+<p>
+Let's check the enter selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.enter()[0];</code></pre>
+</p>
+<p>
+BROWSER click into last element.
+</p>
+<p>
+We see the placeholder element containing the last letter of the string flamingo - which is an "o".
+</p>
+<p>
+This makes sense as D3 is keeping order for us, so we see 7 undefined data types, and then the placeholder object.
+</p>
+<br>
+<p>
+Next, let's add this placeholder object to the web page
+</p>
+<p>
+<pre><code class="javascript">text.enter().append("text")
+    .attr("class", "flamingo_enter")
+    .attr("x", function(d, i) { return i * 24; })
+    .attr("dy", ".35em");</code></pre>
+</p>
+<p>
+BROWSER: look at elements
+</p>
+<p>
+You can see that the last SVG text element now has a class of "flamingo" underscore enter.
+</p>
+<p>
+This is the element that we just added.
+</p>
+<br>
+<p>
+Next, let's set the text of each SVG text element based on the data that is bound to it.
+</p>
+<p>
+<pre><code class="javascript">text.text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can see that the word flamingo is now spelled out.
+</p>
+<p>
+Remember, after we use the append operator on the enter selection, the update selection expands to include the enter selection.
+</p>
+<p>
+This is how we can use the text operator on the update selection to update the letter of each SVG text element.
+</p>
+<br>
+<p>
+There are no elements in the exit selection to remove, so let's once again update the data.
+</p>
+<br>
+<p>
+This time, we update the data with a string of the same length which should mean no exit and no enter selections, just the update selection.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(icecream);</code></pre>
+</p>
+<br>
+<p>
+Let's update the class of the elements in the D3 update selection.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "icecream_update");</code></pre>
+</p>
+<p>
+BROWSER: ELements section
+</p>
+<p>
+Notice that all of the elements had their class changed.
+</p>
+<p>
+This is because there are an equal amount of data points as there are DOM elements.
+</p>
+<p>
+So each DOM element had it's __data__ attribute updated and is included in the update selection.
+</p>
+<br>
+<p>
+Let's check the enter selection to see if there is any thing there.
+</p>
+<p>
+<pre><code class="javascript">text.enter()[0];</code></pre>
+</p>
+<p>
+We see no elements in this selection.
+</p>
+<p>
+This is because there was the same number of data elements as DOM elements, so no placeholder elements needed to be created.
+</p>
+<p>
+Because there were no placeholder elements in the enter selection, we do not need to do the D3 pattern to create the new DOM elements.
+</p>
+<br>
+<p>
+Let's check the exit selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.exit()[0];</code></pre>
+</p>
+<p>
+We see no elements in this selection.
+</p>
+<p>
+This is because there was the same number of data elements as DOM elements, so no DOM elements were left over.
+</p>
+<br>
+<p>
+Next, let's set the text of each SVG text element based on the data that is bound to it.
+</p>
+<p>
+<pre><code class="javascript">text.text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can see that the word ice cream is now spelled out.
+</p>
+<br>
+<p>
+Lastly, let's change the data back to the cupcake dataset.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(cupcake);</code></pre>
+</p>
+<br>
+<p>
+We check the enter selection:
+</p>
+<p>
+<pre><code class="javascript">text.enter()[0];</code></pre>
+</p>
+<p>
+The string cupcake has one less letter than icecream, so we don't see any new placeholder elements created.
+</p>
+<br>
+<p>
+We check the exit selection:
+</p>
+<p>
+<pre><code class="javascript">text.exit()[0];</code></pre>
+</p>
+<p>
+BROWSER: click into array and into object
+</p>
+<p>
+Since the string cupcake has one less letter than icecream, we expect the last letter to be included in the exit selection.
+</p>
+<br>
+<p>
+We change the class of the exit selection elements.
+</p>
+<p>
+<pre><code class="javascript">text.exit().attr("class", "cupcake_exit");</code></pre>
+</p>
+<p>
+BROWSER: click on cupcake_exit element.
+</p>
+<p>
+You can see that the class changed.
+</p>
+<br>
+<p>
+We check on the update selection elements and update their class attribute.
+</p>
+<p>
+<pre><code class="javascript">text[0];
+
+text.attr("class", "cupcake_update");</code></pre>
+</p>
+<br>
+<p>
+Then we remove the exit elements.
+</p>
+<p>
+<pre><code class="javascript">text.exit().remove();</code></pre>
+</p>
+<p>
+BROWSER click on last text element in element section.
+</p>
+<br>
+<p>
+And lastly, we update the actual text of the text elements.
+</p>
+<p>
+<pre><code class="javascript">text.text(function(d){ return d; });</code></pre>
+</p>
+<br>
+<p>
+And with that we have covered how the exit, update and enter selections work at a deeper level in D3 through the use of the JavaScript Console, SVG Text elements and their class attributes.
+</p>
+<br>
+<p>
+Through the understanding generated, we have started exploring the general update pattern that we can use in D3 as we have data that is being updated.
+</p>
+        </div>
+      </div>
+
+</div>
+
+    </div>
+
