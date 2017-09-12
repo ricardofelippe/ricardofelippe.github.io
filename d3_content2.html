@@ -4196,4 +4196,815 @@ Through the understanding generated, we have continued exploring the general upd
         
         
     </div>
+
+<hr>
+<h3 id="lesson59">D3 Update Pattern With Key Functions <h3>
+<div>
+     <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>The D3 General Update Pattern is as follows: 1) do a data join with the new data, 2) update the old elements as needed, 3) create new elements as needed, 4) if the step 3 appened new elements to the enter selection, the update selection expands to include both the enter and update selections so do something to both selection, and 5) remove old elements as needed</li>
+<li>With dynamic data, whether being generated on the server-side or client-side, it's important to go through the full D3 General Update Pattern each time new data arrives to be processed by the D3 Data Join</li>
+<li>You can (and should) encapsulate the D3 General Update Pattern within a JavaScrip function that takes in a data set as an argument, that way you only have to code the D3 General Update Pattern once and can use it at will when new data comes in</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/d3-data-operator">D3 Data Operator</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-basic-general-update-pattern">D3 Basic General Update Pattern</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-update-pattern-with-key-functions">D3 Update Pattern With Key Functions</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            Dynamic Data and Update Data Function
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+Dynamic Data
+</strong>
+</p>
+<br>
+<p>
+Thus far, we have been looking at and using static data.
+</p>
+<p>
+<pre><code class="javascript">dataSetAll = [{"name":"Shanghai",         "population":18, "rank": 1},
+              {"name":"Guangzhou"       , "population":11, "rank":10},
+              {"name":"Dongguan"        , "population": 8, "rank":20},
+              {"name":"Cairo"           , "population": 7, "rank":30},
+              {"name":"Saint Petersburg", "population": 5, "rank":40},
+              {"name":"New Taipei"      , "population": 4, "rank":50}];</code></pre>
+</p>
+<p>
+The data set on the screen is an Array of JSON objects where each object represents a city and it's respective attributes.
+</p>
+<p>
+This is useful if you are feeding in data from the server once or if you are using static data.
+</p>
+<br>
+<p>
+As we saw in the last two videos, we can use the D3 General Update Pattern to update data bound to DOM elements.
+</p>
+<p>
+[ Image: General Update Pattern ]
+</p>
+<p>
+We can do it either by-index as the default or by using a key function.
+</p>
+<p>
+Though there are myriad ways to get and send changing data from the server, we will start slowly.
+</p>
+<p>
+For now, we will focus on using JavaScript to generate changing data.
+</p>
+<br>
+<p>
+We will use the JavaScript Date object to generate data.
+</p>
+<p>
+<pre><code class="javascript">currentTime = Date();
+
+currentTime.getDay();
+
+currentTime.getHour();
+
+currentTime.getMinute();
+
+currentTime.getSecond();</code></pre>
+</p>
+<p>
+This is pretty simple to use and you should be very familiar with how hours, minutes, seconds and days work.
+</p>
+<p>
+The JavaScript Date object has many methods for getting specific information.
+</p>
+<p>
+Here the list shows that we can get the day, the hour, the minute and the second the Date Object was created.
+</p>
+<br>
+<p>
+For this video we will focus on the Minutes and Seconds.
+</p>
+<p>
+<pre><code class="javascript">currentTime = Date();
+
+currentTime.getMinute();
+
+currentTime.getSecond();</code></pre>
+</p>
+<p>
+This is because these change fast enough for us to view it as dynamic data.
+</p>
+<br>
+<p>
+We write the following function named updateData.
+</p>
+<p>
+<pre><code class="javascript">function updateData() {
+
+    var currentTime = new Date();
+
+    return [{ "time_unit": "minute", "time_data": currentTime.getMinutes() }, 
+            { "time_unit": "second", "time_data": currentTime.getSeconds() }];
+
+}</code></pre>
+</p>
+<p>
+This function, when called, creates a new JavaScript Date object and assigns it to the current time variable.
+</p>
+<p>
+The function then returns an array of JavaScript Object Literals.
+</p>
+<p>
+As the keys have quotes around them making them strings, we can refer to them as JSON objects.
+</p>
+<p>
+Each JSON object has a key of "time_unit" and "time_data".
+</p>
+<p>
+The first JSON object has a time_unit of "minute" and will get the current time's minutes.
+</p>
+<p>
+The second JSON object as a time_unit of "second" and will get the current time's seconds.
+</p>
+<br>
+<p>
+We can use the JavaScript Window setInterval() method to have the function run every 1000 milliseconds.
+</p>
+<p>
+<pre><code class="javascript">setInterval(function() { 
+    console.log(updateData());
+}, 1000);</code></pre>
+</p>
+<p>
+Every one second, this code will call the updateData function which will then return the array of JSON objects.
+</p>
+<p>
+We write the returned value to the JavaScript Console using the console.log functionality.
+</p>
+<br>
+<p>
+Before we show the JavaScript example, a quick tip on working with setInterval in JavaScript.
+</p>
+<p>
+<pre><code class="javascript">setInterval(...) // returns an id
+
+clearInterval(id);</code></pre>
+</p>
+<p>
+When you execute the setInterval command, it will return an ID number.
+</p>
+<p>
+This is the internally assigned ID for this setInterval process.
+</p>
+<p>
+To stop a particular setInterval process, you have to use the clearInterval command with the ID of the process you want to stop.
+</p>
+<p>
+We'll show this in the JavaScript Example.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+Before we write the function, let's explore the JavaScript Date Object.
+</p>
+<p>
+<pre><code class="javascript">var currentTime = new Date();</code></pre>
+</p>
+<br>
+<p>
+When we define the variable, we get the current date and time.
+</p>
+<p>
+<pre><code class="javascript">currentTime;</code></pre>
+</p>
+<br>
+<p>
+If we use the getMinutes method, we get the minutes of the date and time from the currentTime variable.
+</p>
+<p>
+<pre><code class="javascript">currentTime.getMinutes();</code></pre>
+</p>
+<br>
+<p>
+If we use the getSeconds method, we get the seconds of the date and time from the currentTime variable.
+</p>
+<p>
+<pre><code class="javascript">currentTime.getSeconds();</code></pre>
+</p>
+<br>
+<p>
+It is important to remember that the currentTime Date object was created once, so if we run the getSeconds method again, it will continue to show the same number.
+</p>
+<p>
+<pre><code class="javascript">currentTime.getSeconds();</code></pre>
+</p>
+<p>
+We can see that it is the same number.
+</p>
+<br>
+<p>
+Alright, let's now build out the function.
+</p>
+<p>
+<pre><code class="javascript">function updateData() {
+
+    var currentTime = new Date();
+  
+    return [{ "time_unit": "minute", "time_data": currentTime.getMinutes() }, 
+            { "time_unit": "second", "time_data": currentTime.getSeconds() }];
+
+}</code></pre>
+</p>
+<br>
+<p>
+Let's run the function and assign it to a variable named data.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData();</code></pre>
+</p>
+<br>
+<p>
+Let's see what it returned.
+</p>
+<p>
+<pre><code class="javascript">data;</code></pre>
+</p>
+<p>
+BROWSER - click into the two objects.
+</p>
+<p>
+We can see that we have an array of two JavaScript objects.
+</p>
+<p>
+Each has a key of time_data and a key of time_unit.
+</p>
+<br>
+<p>
+If we run slash assign the variable again, we should get something different.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData();
+
+data;</code></pre>
+</p>
+<p>
+BROWSER - click into the two objects
+</p>
+<p>
+You can see that we have a different minute number and a different second number.
+</p>
+<br>
+<p>
+Next, to make it dynamic, let's use the setInterval command to update the data once every second.
+</p>
+<p>
+<pre><code class="javascript">setInterval(function() { console.log(updateData()); }, 1000);</code></pre>
+</p>
+<p>
+First, notice the process ID of 1.
+</p>
+<p>
+Next, notice that an array of objects keeps appearing in the JavaScript Console every 1 second.
+</p>
+<p>
+BROWSER - click into the objects of two consecutive arrays.
+</p>
+<p>
+When we click into two consecutive arrays, you can see that the numbers are being updated properly.
+</p>
+<p>
+So we now have dynamic data being generated.
+</p>
+<br>
+<p>
+Let's stop this data using the clearInterval command so we can move on to the next section.
+</p>
+<p>
+<pre><code class="javascript">clearInterval(1);</code></pre>
+</p>
+<p>
+Note that no more arrays of objects are being written to the Console.
+</p>
+<br>
+<p>
+Now that we have a way of generating dynamic data using JavaScript, let's next explore how we will deal with this dynamic data when updating a bar chart using D3.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Update Data Function
+</strong>
+</p>
+<br>
+<p>
+When we do a data join on a selection that already contains existing elements, we have three scenarios.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 1 - Element # = Data #
+// Scenario 2 - Element # > Data #
+// Scenario 3 - Element # < Data #</code></pre>
+</p>
+<p>
+In scenario one, we have an equal number of existing elements and data elements to be bound.
+</p>
+<p>
+In scenario two, we have more existing elements than we have data elements to be bound.
+</p>
+<p>
+In scenario three, we have less existing elements than we have data elements to be bound.
+</p>
+<p>
+In this video, we will always have an equal number of existing elements and data elements to be bound.
+</p>
+<p>
+So we will be in scenario 1.
+</p>
+<br>
+<p>
+The D3 Update Pattern is as follows:
+</p>
+<p>
+[ Image: General Update Pattern ]
+</p>
+<p>
+First - do a data join with the new data.
+</p>
+<p>
+Second - update the old elements as needed.
+</p>
+<p>
+Third - create new elements as needed.
+</p>
+<p>
+Fourth - If the third step appended elements to the enter selection, the update selection expands to include the enter selection so you can operate on enter and update selections at the same time.
+</p>
+<p>
+Fifth and final step, remove old elements as needed.
+</p>
+<p>
+Because we have the same number of existing elements as data elements to be bound, we won't have to deal with the enter and exit selections.
+</p>
+<p>
+So we will focus on the data join and updating attributes of elements based on the new data.
+</p>
+<br>
+<p>
+We are going to build a simple bar chart clock.
+</p>
+<p>
+[ Image: Bar Chart Clock ]
+</p>
+<p>
+It will ignore the day and hour and only display the minutes and seconds.
+</p>
+<p>
+This is a basic bar chart with x and y axis, x and y scales and SVG rectangles.
+</p>
+<p>
+The data will be generated by the updateData function to return minutes and seconds from a JavaScript Date Object.
+</p>
+<p>
+A data join will be performed and the updated data bound to the SVG Rectangle elements will be used to redraw the rectangles.
+</p>
+<br>
+<p>
+The way we do this is with a JavaScript function called redraw.
+</p>
+<p>
+<pre><code class="javascript">function redraw() {
+  
+    // Recompute Data
+  
+    // Do data join
+  
+    // Update SVG elements based on newly bound data
+
+}</code></pre>
+</p>
+<p>
+Within this function we will do a recomputing of the data.
+</p>
+<p>
+Then once we have the new data, we do a data join using a key function.
+</p>
+<p>
+Lastly, we update the SVG element attributes based on the newly bound data.
+</p>
+<br>
+<p>
+The recomputing of the data is the easy part.
+</p>
+<p>
+<pre><code class="javascript">// Recompute Data</code></pre>
+  var data = updateData();
+</p>
+<p>
+This is done by calling the updateData function.
+</p>
+<p>
+The array of JSON objects returned is the newly created data we will use for the data join.
+</p>
+<br>
+<p>
+The data join is done using a key function to make sure that the minute bar gets the minute data and that the second bar gets the second data.
+</p>
+<p>
+<pre><code class="javascript">// Do data join
+innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })</code></pre>
+  </p>
+<p>
+Because we are doing a data join where the number of existing elements and data elements to be bound are the same, we don't have to worry about the enter and exit selections.
+</p>
+<br>
+<p>
+As we are just updating the attributes of the elements that are already there, we can use the same functionality that we used to create the bar chart in the first place.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })
+        .attr("class", "bar")
+        .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+        .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+        .attr("width", xAxisScale.rangeBand())
+        .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+});</code></pre>
+</p>
+<p>
+We update the X and Y values to be the time unit and time data as scaled through the respective scaling functions.
+</p>
+<p>
+The width is still the x axis ordinal scale range band.
+</p>
+<p>
+The height is the height minus the y scaled function of the time data to ensure the rectangle starts from the 0 point as shown on the chart.
+</p>
+<br>
+<p>
+To make it more fun and to show what we can do, we will have the redraw function use a D3 transition over the 1 second.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })
+        .transition()              // ## HIGHLIGHT ##
+            .duration(1000)        // ## HIGHLIGHT ##
+            .attr("class", "bar")
+            .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+            .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+            .attr("width", xAxisScale.rangeBand())
+            .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+            .style("fill", function(d, i) {                        // ## HIGHLIGHT ##
+              if (d.time_data % 2 === 0) { return "steelblue";}    // ## HIGHLIGHT ##
+              else { return "green" }                              // ## HIGHLIGHT ##
+            });</code></pre>
+</p>
+<p>
+This transformation will make the rectangle movement more smooth.
+</p>
+<p>
+It will also make the fill of the rectangles alternate between green and steelblue depending on whether the minute or second is even or odd.
+</p>
+<br>
+<p>
+After we define this, we will then use the setInterval command to have new data generated, do a data join and update the SVG rectangle attributes once a second.
+function redraw() {
+  
+    // Recompute Data
+  
+    // Do data join
+  
+    // Update SVG elements based on newly bound data
+}
+
+setInterval(function() { redraw(); }, 1000);  // ## HIGHLIGHT ##</code></pre>
+</p>
+<br>
+<p>
+In doing this, we will show a very basic example of how we can use D3 with Dynamic Data and an Update Data Function.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+First, we define the updateData function that will create a new date object and provide us with an array of JSON objects detailing the minute and second it was run.
+</p>
+<p>
+<pre><code class="javascript">function updateData() {
+
+    var currentTime = new Date();
+  
+    return [{ "time_unit": "minute", "time_data": currentTime.getMinutes() }, 
+            { "time_unit": "second", "time_data": currentTime.getSeconds() }];
+
+}</code></pre>
+</p>
+<br>
+<p>
+To construct the bar chart we start with the definition of the SVG container the bar chart will live in.
+</p>
+<p>
+<pre><code class="javascript">var svgViewport = d3.select("body")
+  .append("svg")
+    .attr("width",300)
+    .attr("height",300);</code></pre>
+</p>
+<p>
+BROWSER - Open up the elements section and click on the SVG tag.
+</p>
+<br>
+<p>
+Then, we define the D3 Margin Convention Parameters:
+</p>
+<p>
+<pre><code class="javascript">var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width  = 300 - margin.left - margin.right,           
+    height = 300 - margin.top  - margin.bottom;</code></pre>
+</p>
+<br>
+<p>
+Using the D3 margin convention and SVG Viewport, we define the Inner Drawing Space:
+</p>
+<p>
+<pre><code class="javascript">var innerSpace = svgViewport.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");</code></pre>
+</p>
+<br>
+<p>
+Next, we define the Ordinal X Scaling function to help scale the x axis of the bar chart.
+</p>
+<p>
+<pre><code class="javascript">var xAxisScale = d3.scale.ordinal()
+    .domain(["minute", "second"])
+    .rangeRoundBands([0, width], .1);</code></pre>
+  </p>
+<p>
+Note that the domain is comprised of the string "minute" and the string "second".
+</p>
+<br>
+<p>
+Then, we define the Linear Y Scaling function to help scale the minutes and seconds.
+</p>
+<p>
+<pre><code class="javascript">var yAxisScale = d3.scale.linear()
+    .domain([0, 60])
+    .range([height, 0]);</code></pre>
+</p>
+<p>
+Note that since minutes and seconds both go to 60, we can show them both in the same chart with the same scale.
+</p>
+<p>
+Also - as always, remember that the SVG coordinate space is inverted across the Y axis, so we need the range to go from height to 0.
+</p>
+<br>
+<p>
+Now that we have the X Scaling function, we create the X axis and give it an orientation.
+</p>
+<p>
+<pre><code class="javascript">var myXAxis = d3.svg.axis().scale(xAxisScale).orient("bottom");</code></pre>
+</p>
+<br>
+<p>
+We also create the Y axis and give it an orientation.
+</p>
+<p>
+<pre><code class="javascript">var myYAxis = d3.svg.axis().scale(yAxisScale).orient("left");</code></pre>
+</p>
+<br>
+<p>
+We then call the X axis function to place it inside of the Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var AxisXGroup = innerSpace.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(myXAxis);</code></pre>
+</p>
+<p>
+Note - that we have to transform translate the SVG Group Element to make sure the X axis is at the bottom of the chart.
+</p>
+<br>
+<p>
+We also call the Y Axis function to place it inside of the Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var axisyGroup = innerSpace.append("g")
+    .attr("class", "y axis")
+    .call(myYAxis);</code></pre>
+</p>
+<br>
+<p>
+And with that, we have our coordinate system to draw our data in.
+</p>
+<br>
+<p>
+Now we run the updateData function to generate the data for the first time.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData();</code></pre>
+</p>
+<br>
+<p>
+Let's look to see what data was generated
+</p>
+<p>
+<pre><code class="javascript">data;</code></pre>
+</p>
+<p>
+BROWSER - click into it.
+</p>
+<p>
+We can see the time data for both the minutes and seconds.
+</p>
+<br>
+<p>
+Next, let's use the D3 pattern to generate the SVG Rectangles.
+</p>
+<p>
+<pre><code class="javascript">var rectangles = innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })
+  .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+    .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+    .attr("width", xAxisScale.rangeBand())
+    .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+    .style("fill", "steelblue");</code></pre>
+</p>
+<p>
+We do the normal selectAll non-existing elements, do a data join, choose the enter selection, append SVG rectangles and then define their attributes and styles.
+</p>
+<br>
+<p>
+And there we go, we have our bar chart clock showing us the minute and seconds.
+</p>
+<br>
+<p>
+Next, we do a manual updating of the data.
+</p>
+<br>
+<p>
+First, we calculate a new data set.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData();
+
+data;</code></pre>
+</p>
+<p>
+BROWSER - click into the objects
+</p>
+<p>
+We can see that this is a new data set with new time data for both the minute object and the second object.
+</p>
+<br>
+<p>
+Next, we do a data join and attribute update remembering that we just use the update selection as we have the same number of elements as new data points to be joined.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })
+        .attr("class", "bar")
+        .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+        .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+        .attr("width", xAxisScale.rangeBand())
+        .attr("height", function(d, i) { return height - yAxisScale(d.time_data); });</code></pre>
+</p>
+<p>
+It worked, we saw both the minute bar and the second bar jump up with the new data.
+</p>
+<p>
+The key function in the data join worked correctly and the chart worked.
+</p>
+<p>
+Let's now code up the full Update Data Function.
+</p>
+<br>
+<p>
+In the redraw function, remember that we are adding in a transition so that the bars move smoothly and change color according to whether the number they represent is odd or even.
+</p>
+<p>
+<pre><code class="javascript">function redraw() {
+
+    var data = updateData();
+  
+    innerSpace.selectAll(".bar")
+        .data(data, function(d, i) { return d.time_unit; })
+            .transition()
+                .duration(1000)
+                .attr("class", "bar")
+                .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+                .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+                .attr("width", xAxisScale.rangeBand())
+                .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+                .style("fill", function(d, i) {
+                    if(d.time_data % 2 === 0) { return "steelblue";}
+                    else { return "green" }
+                });
+
+}</code></pre>
+</p>
+<p>
+Note that nothing happens.
+</p>
+<p>
+This because we have just defined the function.
+</p>
+<p>
+We will have to run it in order for it to take effect.
+</p>
+<br>
+<p>
+We run it once.
+</p>
+<p>
+<pre><code class="javascript">redraw();</code></pre>
+</p>
+<br>
+<p>
+We wait a few seconds and then run it again.
+</p>
+<p>
+<pre><code class="javascript">redraw();</code></pre>
+</p>
+<p>
+We can see how it is transitioning bar size for both the minute and second bars as well as changing color.
+</p>
+<br>
+<p>
+Finally, let's use the setInterval command to automate the redrawing so that it functions like a clock.
+</p>
+<p>
+<pre><code class="javascript">setInterval(function() { redraw(); }, 1000);</code></pre>
+</p>
+<p>
+You can see the second bar slowly and smoothly moving upwards as the seconds tick by.
+</p>
+<br>
+<p>
+And with that we have covered the basics of thinking about and generating basic Dynamic Data in JavaScript.
+</p>
+<br>
+<p>
+We have also shown how we can construct an Update Data Function that generates new data, does a data join with a key function and then uses part of the D3 General Update Pattern to construct a dynamic data visualization.
+</p>
+        </div>
+      </div>
+
+    
+    ☺</div>
    
