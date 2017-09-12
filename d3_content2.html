@@ -1672,8 +1672,8 @@ We have also gone through the complete step by step process of building a stacke
       </div>
 
 </div>    
-    </div>    
-
+    
+<hr>
 <h3 id="lesson58">D3 Basic General Update Pattern <h3>
 <div>
     <!-- DashingD3js.com Lesson Takeaways
@@ -3220,5 +3220,980 @@ Through the understanding generated, we have started exploring the general updat
 
 </div>
 
-    </div>
+<hr>
+<h3 id="lesson59">D3 Update Pattern With Key Functions <h3>
+    <div>
+        <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>The D3 Data Operator produces three virtual selections - Enter, Update, and Exit</li>
+<li>The Enter selection contains placeholder elements for any data that did not get bound to DOM elements</li>
+<li>The Update selection contains all of the existing DOM elements that had their __data__ attributes updated</li>
+<li>The Exit selection contains all of the existing DOM elements which did not have their __data__ attributes updated</li>
+<li>When a D3 Data Join is done, there are only three possible scenarios: More Data Than DOM elements, Less Data Than DOM elements, or the same number of Data and DOM elements</li>
+<li>The D3 Data Operator joins data and DOM elements from left to right, unless otherwise specified</li>
+<li>The D3 Data Operator Key Function replaces the default by-index behavior of the data join, with a function of your choosing</li>
+<li>To properly use the D3 Data Join Key Function, you need to have each DOM element and data point return a string that uniquely identifies it from all other elements</li>
+<li>This way, D3 can match up the DOM elements that need to match up to the data points - this is why there needs to be uniqueness on the DOM element side and the Data side</li>
+<li>Object constancy in D3 refers to how graphical elements that represent data can be tracked visually so that as the underlying data changes, the object can be tracked visually through the transition from the old data to the new data</li>
+</ul>
+</p>
+        </div>
+      </div>
 
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/d3-data-operator">D3 Data Operator</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-update-selection">D3 Update Selection</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/binding-data-to-dom-elements">Binding Data to DOM Elements</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/using-data-bound-to-dom-elements">Using Data Bound to DOM Elements</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-basic-general-update-pattern">D3 Basic General Update Pattern</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 Update Pattern With Key Functions
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+D3 Update Pattern Revisited
+</strong>
+</p>
+<br>
+<p>
+When D3 computes a data join using the Data Operator, three virtual selections are created.
+</p>
+<p>
+<pre><code class="javascript">// update => d3.selection.data(...);
+// enter  => d3.selection.data(...).enter();
+// exit   => d3.selection.data(...).exit();</code></pre>
+</p>
+<p>
+The update, enter and exit selections.
+</p>
+<p>
+The enter selection - contains placeholder elements for any new elements.
+</p>
+<p>
+The update selection - contains existing elements that have had their __data__ attributes updated.
+</p>
+<p>
+and the exit selection - contains the existing elements that have not had their __data__ attributes updated.
+</p>
+<br>
+<p>
+The Data operator joins a specified array of data with the current selection.
+</p>
+<p>
+[ Image: Image of the D3 Data Join ]
+</p>
+<p>
+If there current selection is empty, then we don't have to worry about the D3 Update pattern.
+</p>
+<p>
+This is because we are using the normal D3 pattern.
+</p>
+<p>
+However, if the current selection is not empty, then we have to use the D3 Update Pattern.
+</p>
+<br>
+<p>
+When we do a data join on a selection that already contains existing elements, we have three scenarios.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 1 - Element # = Data #
+// Scenario 2 - Element # > Data #
+// Scenario 3 - Element # < Data #</code></pre>
+</p>
+<p>
+In scenario one, we have an equal number of existing elements and data elements to be bound.
+</p>
+<p>
+In scenario two, we have more existing elements than we have data elements to be bound.
+</p>
+<p>
+In scenario three, we have less existing elements than we have data elements to be bound.
+</p>
+<br>
+<p>
+In scenario one, we have an equal number of existing elements and data elements to be bound.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 1 - Element # = Data # => Update, Exit empty, Enter empty</code></pre>
+</p>
+<p>
+In this case, the update selection will contain elements.
+</p>
+<p>
+The exit selection will be empty.
+</p>
+<p>
+And the enter selection will be empty.
+</p>
+<br>
+<p>
+In scenario two, we have more existing elements than we have data elements to be bound.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 2 - Element # > Data # => Update, Exit non-empty, Enter empty</code></pre>
+</p>
+<p>
+In this case, the update selection will contain elements.
+</p>
+<p>
+The exit selection will be non-empty as there are more existing elements than data elements to be bound.
+</p>
+<p>
+And the enter selection will be empty.
+</p>
+<br>
+<p>
+In scenario three, we have less existing elements than we have data elements to be bound.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 3 - Element # < Data #</code></pre>
+</p>
+<p>
+In this case, the update selection will contain elements.
+</p>
+<p>
+The exit selection will be empty.
+</p>
+<p>
+And the enter selection will be non-empty as there are less existing elements than data elements to be bound.
+</p>
+<br>
+<p>
+Every time we update data and bind it to our elements, we will run into one of the three scenarios.
+</p>
+<p>
+[ Image: D3 General Update Pattern ]
+</p>
+<p>
+To keep it straight in our heads and in the code, we use the D3 update pattern.
+</p>
+<p>
+This pattern behaves in a way that regardless of what scenarios we are in, the necessary steps are run in order to ensure we are using the correct data.
+</p>
+<p>
+The D3 Update Pattern is as follows:
+</p>
+<p>
+First - do a data join with the new data.
+</p>
+<p>
+Second - update the old elements as needed.
+</p>
+<p>
+Third - create new elements as needed.
+</p>
+<p>
+Fourth - If third step appended elements to enter selection, the update selection expands to include the enter selection so you can operate on enter and update selections at the same time.
+</p>
+<p>
+Fifth and final step, remove old elements as needed.
+</p>
+<p>
+This way, our code will be easily understandable both by us and others.  
+</p>
+<br>
+<p>
+Using these three strings as data sets, we'll walk through an example in the JavaScript Console.
+</p>
+<p>
+<pre><code class="javascript">var cupcake  = "cupcake".split("");
+
+var flamingo = "flamingo".split("");
+
+var pony     = "pony".split("");</code></pre>
+</p>
+<p>
+First, we'll use the D3 pattern to create SVG text elements where each letter of the string cupcake is an individual text element.
+</p>
+<p>
+Then we'll use the D3 general update pattern to bind the flamingo data.
+</p>
+<p>
+Then we'll use the D3 general update pattern to bind the pony data.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+We start with the definition of the SVG container the text will live in.
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("body").append("svg")
+    .attr("height", "300")
+    .attr("width", "600")
+  .append("g")
+    .attr("transform", "translate(12, 150)");</code></pre>
+</p>
+<br>
+<p>
+Next, we define the three datasets that we will be using:
+</p>
+<p>
+<pre><code class="javascript">var cupcake  = "cupcake".split("");
+
+cupcake;
+
+var flamingo = "flamingo".split("");
+
+flamingo;
+
+var pony = "pony".split("");
+
+pony;</code></pre>
+</p>
+<p>
+JavaScript is used to split each string into an array of individual letters.
+</p>
+<p>
+We will use these arrays of letters as the data set with D3.
+</p>
+<br>
+<p>
+First, we create the SVG text elements using the D3 pattern and the cupcake variable.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text")
+    .data(cupcake)
+  .enter().append("text")
+    .attr("class", "cupcake_enter")
+    .attr("dy", ".35em")
+    .attr("x", function(d, i) { return i * 24; })
+    .text(function(d) { return d; });</code></pre>
+</p>
+<p>
+We have used the cupcake array of letters to create SVG text elements.
+</p>
+<p>
+Each element has a class of cupcake_enter.
+</p>
+<p>
+Each letter is spaced from left to right according to the index number of the element in the data array.
+</p>
+<br>
+<p>
+Next, let's do a data update and use the flamingo data set.
+</p>
+<br>
+<p>
+Remembering the D3 General Update Pattern, we will do a data join, an update, an enter, an enter and update and then an exit.
+</p>
+<br>
+<p>
+First, the data join
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(flamingo);</code></pre>
+</p>
+<br>
+<p>
+Then, we update the class of the old elements.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "flamingo_update");</code></pre>
+</p>
+<p>
+We can see that all of the DOM elements got their class updated - this is because there are more data elements in the flamingo data set than there were SVG text elements.
+</p>
+<br>
+<p>
+Next, we create new elements using the enter selection.
+</p>
+<p>
+<pre><code class="javascript">text
+  .enter().append("text")
+    .attr("class", "flamingo_enter")
+    .attr("x", function(d, i) { return i * 24; })
+    .attr("dy", ".35em");</code></pre>
+</p>
+<p>
+BROWSER - highlight flamingo enter class in elements.
+</p>
+<p>
+Because the word flamingo has one more letter than cupcake, we will have 1 element in the enter selection.
+</p>
+<p>
+Remember, once we use the append operator on the enter selection, the update selection expands to include the enter and update selection.
+</p>
+<br>
+<p>
+Since the update selection has now expanded, we can update the actual text of each SVG text element.
+</p>
+<p>
+<pre><code class="javascript">text
+    .text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can now see that the text has been updated.
+</p>
+<br>
+<p>
+To complete the D3 general update pattern, we remove any old elements that did not receive new data.
+</p>
+<p>
+<pre><code class="javascript">text.exit().remove();</code></pre>
+</p>
+<p>
+Since there were no elements left over, the exit selection was empty, so no elements were removed.
+</p>
+<p>
+And that completes the D3 General Update Pattern.
+</p>
+<br>
+<p>
+Let's run the D3 General Update Pattern again, only this time with the pony data set.
+</p>
+<br>
+<p>
+First, we do the data join
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(pony);</code></pre>
+</p>
+<br>
+<p>
+Then, we update the class of old elements.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "pony_update");</code></pre>
+</p>
+<p>
+BROWSER - highlight the pony_update class
+</p>
+<p>
+We see the first four elements have their class updated to pony underscore update.
+</p>
+<p>
+Note that it was the first four elements that had their data updated.
+</p>
+<p>
+In D3, unless you specify a key function (which we are going to cover later in this video), the elements are bound first come first serve style.
+</p>
+<br>
+<p>
+Next, we create new elements using the enter selection.
+</p>
+<p>
+<pre><code class="javascript">text
+  .enter().append("text")
+    .attr("class", "pony_enter")
+    .attr("x", function(d, i) { return i * 24; })
+    .attr("dy", ".35em");</code></pre>
+</p>
+<p>
+Notice that no new elements were created.
+</p>
+<p>
+This is because pony has less letters than flamingo, so no new data elements had to be created.
+</p>
+<p>
+D3 just doesn't create any new elements in this case.
+</p>
+<p>
+Remember, once we use the append operator on the enter selection, the update selection expands to include the enter and update selection.
+</p>
+<br>
+<p>
+Since the update selection has now expanded, we can update the actual text of each SVG text element.
+</p>
+<p>
+<pre><code class="javascript">text
+    .text(function(d) { return d; });</code></pre>
+</p>
+<p>
+BROWSER - highlight pony in the webpage section.
+</p>
+<p>
+You can now see that the text has been updated.
+</p>
+<p>
+The first four letters are p o n y and the rest of the letters still belong to flamingo.
+</p>
+<br>
+<p>
+To complete the D3 general update pattern, we remove any old elements that did not receive new data.
+</p>
+<p>
+<pre><code class="javascript">text.exit().remove();</code></pre>
+</p>
+<p>
+You can see that the letters that were after pony were removed.
+</p>
+<br>
+<p>
+We have now seen the D3 general update pattern when we have more data elements than existing elements in the selection.
+</p>
+<br>
+<p>
+We have also seen the D3 general update pattern when we have less data elements than existing elements in the selection.
+</p>
+<p>
+In both cases, the data was bound to DOM elements in a first come, first serve type of way.
+</p>
+<p>
+That is, the first data element was bound to the first DOM element, the second data element was bound to the second DOM element and so on and so forth.
+</p>
+<br>
+<p>
+If we specify a key function in the data join, then the data is bound according to the key function.    
+</p>
+<br>
+<br>
+<p>
+<strong>
+Data Join with Key Function
+</strong>
+</p>
+<br>
+<p>
+The first line is the data operator.
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(x)
+
+d3.selection.data(x, function(d, i) { ... });</code></pre>
+</p>
+<p>
+The second line is the data operator with a key function.
+</p>
+<p>
+The key function replaces the default by-index behavior of the data join.
+</p>
+<p>
+The key to key functions are that they are used to achieve object constancy.
+</p>
+<p>
+Though they can also be used to improve performance, we will look at them now through the idea of object constancy.
+</p>
+<br>
+<p>
+Object constancy in D3 refers to how a graphical element that represents data can be tracked visually.
+</p>
+<p>
+Object Constancy
+</p>
+<p>
+This visual tracking refers to any type of transition and / or data joins we can apply to an object.
+</p>
+<p>
+As an object representing data changes, we want to make sure we and our audience can follow the transition from a previous data set to a new data set.
+</p>
+<p>
+This makes it easier to understand what is happening and what changed and what didn't change.
+</p>
+<br>
+<p>
+We now take a look at a famous example of Object Constancy.
+</p>
+<p>
+This comes from Hans Roslings 200 countries, 200 Years, 4 Minutes - The Joy of Stats from BBC Four as seen on YouTube (http://www.youtube.com/watch?v=jbkSRLYSojo).
+</p>
+<p>
+We start the YouTube Video at 1 minute and 31 seconds and will watch to 1 minute and 57 seconds.
+</p>
+<p>
+Each circle you will see represents 1 country.
+</p>
+<p>
+While watching this video make sure to follow one of the circles representing 1 country..
+</p>
+<br>
+<p>
+PLAY VIDEO
+</p>
+<br>
+<p>
+As you were watching the video and following one of the circles, new data was being added to the Scatterplot chart.
+</p>
+<p>
+Though new data was being added, you were able to follow one circle all the way through because of the color hue and location.
+</p>
+<p>
+This is what we refer to as object constancy.
+</p>
+<br>
+<p>
+You were able to visually track a graphical element as it's underlying data changed.
+</p>
+<br>
+<p>
+Okay - so we want to achieve object constancy, how do we do that with a key function?
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(x, function(d, i) { ... });</code></pre>
+</p>
+<p>
+The way we do that is to have the key function returns a string to uniquely identify the data point.
+</p>
+<p>
+It is really important to make sure that the string returned will uniquely identify the data point.
+</p>
+<p>
+This way, we can identify which element in the current selection will be getting which data element from the data set we are using in the data join.
+</p>
+<br>
+<p>
+This data set comes from Wikipedia and is a list of Cities, their population in millions and their rank according to Wikipedia.
+</p>
+<p>
+<pre><code class="javascript">dataSetAll = [{"name": "Shanghai"        , "population": 18, "rank":  1},
+              {"name": "Guangzhou"       , "population": 11, "rank": 10},
+              {"name": "Dongguan"        , "population":  8, "rank": 20},
+              {"name": "Cairo"           , "population":  7, "rank": 30},
+              {"name": "Saint Petersburg", "population":  5, "rank": 40},
+              {"name": "New Taipei"      , "population":  4, "rank": 50}];
+
+dataSetAsiaHalved = [{"name": "Shanghai"  , "population": 9, "rank":  1},
+                     {"name": "Guangzhou" , "population": 5, "rank": 10},
+                     {"name": "Dongguan"  , "population": 4, "rank": 20},
+                     {"name": "New Taipei", "population": 2, "rank": 50}];</code></pre>
+</p>
+<p>
+Shanghai is the largest city and New Taipei is the 50th largest city.
+</p>
+<p>
+The first data set, dataSetAll, has the 6 cities.
+</p>
+<p>
+The second data set, dataSetAsiaHalved, has 4 cities where the population of each city has been cut in half.
+</p>
+<p>
+If we use the by-index default behavior of a data join, the 4th element in the DOM would get the New Taipei population, name and rank.
+</p>
+<p>
+What we would rather have happen is that each city gets the relevant data update.
+</p>
+<br>
+<p>
+By returning the name of each JSON object, we can identify the DOM element that has New Taipei as it's name as well as the data element in the data set that also has New Taipei as it's name.
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(x, function(d, i) { return d.name; });</code></pre>
+</p>
+<p>
+Once we have identified both, we can do the data join across these two elements.
+</p>
+<p>
+This is why it's very important that the key function returns a unique identifier.
+</p>
+<br>
+<p>
+Using these two data sets, we are going to create a Scatterplot.
+</p>
+<p>
+[ Image: Image of a Scatterplot ]
+</p>
+<p>
+Then we will update the data using a key-function.
+</p>
+<p>
+This will help us understand key-function data joins better.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+We start by defining the two data sets.
+</p>
+<br>
+<p>
+First, we define the data set with all six cities:
+</p>
+<p>
+<pre><code class="javascript">dataSetAll = [{"name": "Shanghai"        , "population": 18, "rank":  1},
+              {"name": "Guangzhou"       , "population": 11, "rank": 10},
+              {"name": "Dongguan"        , "population":  8, "rank": 20},
+              {"name": "Cairo"           , "population":  7, "rank": 30},
+              {"name": "Saint Petersburg", "population":  5, "rank": 40},
+              {"name": "New Taipei"      , "population":  4, "rank": 50}];</code></pre>
+</p>
+<br>
+<p>
+Then, we define the data set with all the cities from Asia:
+</p>
+<p>
+<pre><code class="javascript">dataSetAsiaHalved = [{"name": "Shanghai"  , "population": 9, "rank":  1},
+                     {"name": "Guangzhou" , "population": 5, "rank": 10},
+                     {"name": "Dongguan"  , "population": 4, "rank": 20},
+                     {"name": "New Taipei", "population": 2, "rank": 50}];</code></pre>
+</p>
+<br>
+<p>
+Next, we define the SVG Viewport:
+</p>
+<p>
+<pre><code class="javascript">var svgViewport = d3.select("body")
+  .append("svg")
+    .attr("width",300)
+    .attr("height",300);</code></pre>
+</p>
+<p>
+BROWSER - Open up the elements section and click on the SVG tag.
+</p>
+<br>
+<p>
+Then, we define the D3 Margin Convention Parameters:
+</p>
+<p>
+<pre><code class="javascript">var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width  = 300 - margin.left - margin.right,           
+    height = 300 - margin.top  - margin.bottom;</code></pre>
+</p>
+<br>
+<p>
+Using the D3 margin convention and SVG Viewport, we define the Inner Drawing Space:
+</p>
+<p>
+<pre><code class="javascript">var innerSpace = svgViewport.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");</code></pre>
+</p>
+<br>
+<p>
+Next, we define the X scaling function to help scale the population of the cities.
+</p>
+<p>
+<pre><code class="javascript">var xAxisScale = d3.scale.linear().domain([0,20]).range([0,width]);</code></pre>
+</p>
+<br>
+<p>
+Then, we define the Y scaling functions to help scale the rank of the cities.
+</p>
+<p>
+<pre><code class="javascript">var yAxisScale = d3.scale.linear().domain([0,50]).range([0,height]);</code></pre>
+</p>
+<br>
+<p>
+Now that we have the X Scaling function, we create the X axis and give it an orientation.
+</p>
+<p>
+<pre><code class="javascript">var myXAxis = d3.svg.axis().scale(xAxisScale).orient("top");</code></pre>
+</p>
+<br>
+<p>
+We also create the Y axis and give it an orientation.
+</p>
+<p>
+<pre><code class="javascript">var myYAxis = d3.svg.axis().scale(yAxisScale).orient("left");</code></pre>
+</p>
+<br>
+<p>
+We then call the X axis function to place it inside of the Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var axisXGroup = innerSpace.append("g").call( myXAxis ).attr("class", "x axis");</code></pre>
+</p>
+<br>
+<p>
+We also call the Y Axis function to place it inside of the Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var axisyGroup = innerSpace.append("g").call( myYAxis ).attr("class", "y axis");</code></pre>
+</p>
+<br>
+<p>
+And with that we have our coordinate system to draw our data in.
+</p>
+<br>
+<p>
+Now, we create the circles based on the dataSetAll data set inside of an SVG Group element with class of circles.
+</p>
+<p>
+<pre><code class="javascript">var circles = innerSpace
+  .append("g")
+    .attr("class", "circles")
+    .selectAll("circle")
+    .data(dataSetAll)
+  .enter().append("circle");</code></pre>
+</p>
+<br>
+<p>
+Then we define the attributes of the circles:
+</p>
+<p>
+<pre><code class="javascript">var circleAttributes = circles
+    .attr("cx", function(d,i) { return xAxisScale(d.population); })
+    .attr("cy", function(d,i) { return yAxisScale(d.rank      ); })
+    .attr("r",5);</code></pre>
+</p>
+<p>
+We can now see the circle elements.
+</p>
+<br>
+<p>
+Next, let's add text to designate which circle represents which city.
+</p>
+<br>
+<p>
+First we create the SVG text elements based on the data:
+</p>
+<p>
+<pre><code class="javascript">var text = innerSpace.append("g")
+    .attr("class", "city-names")
+    .selectAll("text")
+    .data(dataSetAll)
+  .enter().append("text");</code></pre>
+</p>
+<br>
+<p>
+Then we add the attributes to the SVG text Elements.
+</p>
+<p>
+<pre><code class="javascript">var textAttributes = text
+    .attr("x", function(d,i) { return xAxisScale(d.population) + 10; })
+    .attr("y", function(d,i) { return yAxisScale(d.rank)       + 10; })
+    .text(function(d,i) { return d.name; })
+    .style("fill", "red");</code></pre>
+</p>
+<br>
+<p>
+Fantastic - we now have the city data plotted on a scatter plot.
+</p>
+<br>
+<p>
+Now, let's update the data using the dataSetAsiaHalved
+</p>
+<br>
+<p>
+First, we do a data join where the key function will return the string of the name of the city.
+</p>
+<p>
+<pre><code class="javascript">var circles = innerSpace.selectAll("circle")
+    .data(dataSetAsiaHalved, function(d, i) { return d.name;});</code></pre>
+</p>
+<br>
+<p>
+Let's check the virtual selections.
+</p>
+<br>
+<p>
+First we check the enter selection.
+</p>
+<p>
+<pre><code class="javascript">circles.enter()[0];</code></pre>
+</p>
+<p>
+This returns an array that is filled with undefined.
+</p>
+<p>
+This is expected as the data we just joined had fewer elements than were already in the existing selection.
+</p>
+<br>
+<p>
+Next, we check the update selection.
+</p>
+<p>
+<pre><code class="javascript">circles[0];</code></pre>
+</p>
+<p>
+BROWSER - hover over each one slowly
+</p>
+<p>
+The update selection contains four elements.
+</p>
+<p>
+As we hover over them, you can see that they represent the four cities in Asia.
+</p>
+<br>
+<p>
+Lastly, we check the exit selection.
+</p>
+<p>
+<pre><code class="javascript">circles.exit()[0];</code></pre>
+</p>
+<p>
+BROWSER - hover over each one slowly
+</p>
+<p>
+The exit selection has 6 elements.
+</p>
+<p>
+The first three are undefined, then we have the 2 non-Asia cities and then a last undefined element.
+</p>
+<p>
+This is completely different from what we have seen before.
+</p>
+<p>
+Since we used a key-function, the exit elements are found in the middle of the array, rather than at the end like they have been before.
+</p>
+<br>
+<p>
+Let's now remove the exit selection elements.
+</p>
+<p>
+<pre><code class="javascript">circles.exit().remove();</code></pre>
+</p>
+<br>
+<p>
+Now - let's update the attributes of the circles based on the data we just joined using the key function.
+</p>
+<p>
+<pre><code class="javascript">var circleAttributes = circles
+    .attr("cx", function(d,i) { return xAxisScale(d.population); })
+    .attr("cy", function(d,i) { return yAxisScale(d.rank      ); })
+    .attr("r",5);</code></pre>
+</p>
+<p>
+You can see that each circle in the update selection, had it's cx, cy and r attributes updated.
+</p>
+<p>
+Since we only changed the population in the Asia dataset, the circles moved to the left.
+</p>
+<br>
+<p>
+Finally, let's do a data join with the original data set.
+</p>
+<p>
+<pre><code class="javascript">var circles = innerSpace.selectAll("circle")
+    .data(dataSetAll, function(d, i) { return d.name;});</code></pre>
+</p>
+<br>
+<p>
+Let's check the virtual selections.
+</p>
+<br>
+<p>
+First, we check the enter selection.
+</p>
+<p>
+<pre><code class="javascript">circles.enter()[0];</code></pre>
+</p>
+<p>
+BROWSER - open objects
+</p>
+<p>
+We find 2 data elements that did not match DOM elements, so they were added to the selection as place holder objects.
+</p>
+<p>
+Note that they were filled in using the by-index behavior.
+</p>
+<p>
+This is because the key-function did not return anything for existing elements, so they were added as they came in.
+</p>
+<br>
+<p>
+Next, let's check the update selection.
+</p>
+<p>
+<pre><code class="javascript">circles[0];</code></pre>
+</p>
+<p>
+BROWSER - hover over the elements.
+</p>
+<p>
+Here we see that the elements in the selection had their data updated.
+</p>
+<p>
+However, we see an undefined x 2.
+</p>
+<p>
+This represents the two elements in the enter selection.
+</p>
+<br>
+<p>
+Next, let's check the exit selection.
+</p>
+<p>
+<pre><code class="javascript">circles.exit()[0];</code></pre>
+</p>
+<p>
+Since there were more data points than DOM elements in the selection, the exit selection is empty.
+</p>
+<br>
+<p>
+Let's add in the elements from the enter selection.
+</p>
+<p>
+<pre><code class="javascript">circles.enter().append("circle")
+    .attr("cx", function(d,i) { return xAxisScale(d.population); })
+    .attr("cy", function(d,i) { return yAxisScale(d.rank      ); })
+    .attr("r",5);</code></pre>
+</p>
+<p>
+We choose the enter selection, append an SVG circle for each element in the enter selection and define the attributes of each circle.
+</p>
+<p>
+Note that the circles for Cairo and Saint Petersburg showed up.
+</p>
+<br>
+<p>
+Lastly, let's update the attributes for all of the circles.
+</p>
+<p>
+<pre><code class="javascript">var circleAttributes = circles
+    .attr("cx", function(d,i) { return xAxisScale(d.population); })
+    .attr("cy", function(d,i) { return yAxisScale(d.rank      ); })
+    .attr("r",5);</code></pre>
+</p>
+<p>
+And there we go, now all of our circles have updated their data and are located where they should be.
+</p>
+<p>
+Each circle had it's data updated correctly because we used the key-function.
+</p>
+<br>
+<p>
+And with that we have recovered how the D3 Update Pattern works as well as covered how to think and do a data join in D3 using a key-function.
+</p>
+<br>
+<p>
+Through the understanding generated, we have continued exploring the general update pattern that we can use in D3 when we are using data that will be updated.
+</p>
+        </div>
+      </div>
+
+        
+        
+    </div>
+   
