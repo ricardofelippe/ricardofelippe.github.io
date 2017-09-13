@@ -283,6 +283,9 @@
     <li><a href="d3_content2.html#lesson58">D3 Basic General Update Pattern</a></li>
     <li><a href="d3_content2.html#lesson59">D3 Update Pattern With Key Functions</a></li>
     <li><a href="d3_content2.html#lesson60">Dynamic Data and Update Data Function</a></li>
+    <li><a href="d3_content2.html#lesson61">Making Dynamic Scales and Axes</a></li>
+    
+    
     
     
     
