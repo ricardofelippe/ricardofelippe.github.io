@@ -1,4 +1,6185 @@
-<!-- DashingD3js.com Lesson Takeaways
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+
+<body>
+
+<h3 id="lesson57">Introduction to HTML <h3>
+    <div>
+     <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>D3 provides a variety of Layout helpers so you don't have to do complicate math or algorithmic computation</li>
+<li>The D3 Layout - Stack Layout calculates, given a data set, the coordinates for each layer of the stack</li>
+<li>To pass data into the D3 Layout Stack Layout, you have to pass in an array of arrays where each internal array represents a layer and every layer will have an array of objects that have the x and y key value pair defined for the x-position and y-thickness of the layer</li>
+<li>Because you have to construct the data structure to pass into the D3 Layout Stack Layout, it's important to understand how to build nested data structures using .forEach, .map, and how to construct arrays of objects on the fly</li>
+<li>When constructing the data structure to pass into the D3 Layout Stack Layout, it's important to keep data out of the keys of the key value pairs of the objects</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/basic-chart-bar-chart">Basic Chart - Bar Chart</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/basic-chart-grouped-bar-chart">Basic Chart - Grouped Bar Chart</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/basic-chart-stacked-bar-chart">Basic Chart - Stacked Bar Chart</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/basic-chart-pie-chart">Basic Chart - Pie Chart</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 Layout - Stack Layout
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+D3 Layout - Stack Layout
+</strong>
+</p>
+<br>
+<p>
+D3 provides the various Layout helpers you can see on the screen.
+</p>
+<p>
+[ Image: Image of D3 Layouts on the D3 API page ]
+</p>
+<p>
+D3 Layout Helpers help do the calculations to make specific types of Graphs.
+</p>
+<p>
+For instance - for the pie chart, rather than having to calculate the start and end angles of the arcs, you can pass data to this helper and it will figure it out for you.
+</p>
+<p>
+The D3 layout helpers basically help do the heavy math lifting for you in the background, so you don't need to worry about doing the math.
+</p>
+<p>
+This video is going to cover the D3 Layout Stack Layout.
+</p>
+<p>
+We will walk through some example code to get a feel for how it works and then we will build a simple example of a Stacked Bar Chart using the Stack Layout.
+</p>
+<br>
+<p>
+On the Screen is the stacked bar chart we will be working towards.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit across four seasons ]
+</p>
+<p>
+On the Y axis you can see the numbers 0 to 7 representing the total number of fruits eaten.
+</p>
+<p>
+On the X axis you can see the four seasons of the year - spring, summer, fall and winter.
+</p>
+<p>
+The three types of fruits are grapes, kiwis and apples.
+</p>
+<br>
+<p>
+We focus in on the fall bar.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit for only the Fall ]
+</p>
+<p>
+We can see that the red rectangle is at the bottom.
+</p>
+<p>
+Then the green rectangle is in the middle.
+</p>
+<p>
+And lastly, the purple rectangle is at the top.
+</p>
+<br>
+<p>
+On the screen we have 3 coordinate points for the 3 colored rectangles.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit for only the Fall ]
+</p>
+<p>
+SCREEN - Add coordinates to top left corners for each rectangle (Xa, Ya) , (Xk, Yk) , (Xg, Yg)
+</p>
+<p>
+Recall that SVG rectangles are drawn from the top-left coordinate.
+</p>
+<p>
+The purple rectangle has a top-left coordinate of Xg and Yg.
+</p>
+<p>
+The green rectangle has a top-left coordinate of Xk and Yk.
+</p>
+<p>
+The red rectangle has a top-left coordinate of Xa and Ya.
+</p>
+<br>
+<p>
+Looking at only the fall stacked bar, we examine the X coordinates.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit for only the Fall ]
+</p>
+<p>
+SCREEN - Add coordinates to top left corners for each rectangle (Xa, Ya) , (Xk, Yk) , (Xg, Yg)
+</p>
+<p>
+SCREEN - Add Equations for X's (Xg = Xk = Xa)
+</p>
+<p>
+The X coordinates for all three rectangles are the same.
+</p>
+<p>
+This makes sense
+</p>
+<p>
+If they are stacked on top of each other, then the X coordinates need to be the same.
+</p>
+<br>
+<p>
+Looking at only the fall stacked bar, we examine the Y coordinates.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit for only the Fall ]
+</p>
+<p>
+SCREEN - Add coordinates to top left corners for each rectangle (Xa, Ya) , (Xk, Yk) , (Xg, Yg)
+</p>
+<p>
+SCREEN - Add Equations for Y's
+        Ya = height of Red Rectangle
+        Yk = height of Red Rectangle +
+             height of Green Rectangle
+        Yg = height of Red Rectangle +
+             height of Green Rectangle +
+             height of Purple Rectangle             
+</p>
+<p>
+The Y coordinates are more complicated.
+</p>
+<p>
+This is because we are stacking the rectangles on top of each other.
+</p>
+<p>
+There are two things we need to pay attention to:
+</p>
+<p>
+One - Where the rectangle below ended.
+</p>
+<p>
+Two - What the height is of the current rectangle.
+</p>
+<p>
+On the screen you can see the equations that will give us the correct Y coordinates.
+</p>
+<p>
+The height of the Red Rectangle gives us the Ya.
+</p>
+<p>
+The height of the green and red rectangles give us the Yk.
+</p>
+<p>
+The height of the purple, green and red rectangles give us the Yg.
+</p>
+<br>
+<p>
+We can even simplify the equations so that all equations have 1 or 2 terms.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit for only the Fall ]
+</p>
+<p>
+SCREEN - Add coordinates to top left corners for each rectangle (Xa, Ya) , (Xk, Yk) , (Xg, Yg)
+</p>
+<p>
+SCREEN - Add Equations for Y's
+<br>
+Ya = height of Red Rectangle
+<br>
+Yk = Ya + height of Green Rectangle
+<br>
+Yg = Yk + height of Purple Rectangle
+</p>
+<p>
+This makes it easier to think about as well as easier to calculate.
+</p>
+<p>
+If we were going to build a stacked bar chart we would have to do these types of calculations manually.
+</p>
+<p>
+As we shall cover shortly, the D3 Layout - Stack Layout will do this for us.
+</p>
+<br>
+<p>
+Let's look at the goal again.
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit for all seasons ]
+</p>
+<p>
+We just covered the perspective of looking at the stacked bars as individual bars that are stacked.
+</p>
+<p>
+Another way to look at the stacked bar chart on the screen is to look at the chart as a series of layers that sit on top of each other.
+</p>
+<p>
+The first layer is the red layer at the bottom.
+</p>
+<p>
+The second layer is the green layer in the middle.
+</p>
+<p>
+and the third layer is the purple layer on the top.
+</p>
+<br>
+<p>
+Continuing to think in this new perspective about layers, let's take a look at the kiwi layer.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit for only one type of fruit (Kiwi) ]
+</p>
+<p>
+SCREEN - Add coordinates to top left corners for one rectangle (X, Y)
+</p>
+<p>
+SCREEN - Add coordinates to bottom left corners for one rectangle (X, Y0)
+</p>
+<p>
+When we think about how to place the rectangles now - we have to think about how to place them in space.
+</p>
+<p>
+We have to think about the top-left corner coordinates as well as the bottom-left coordinates.
+</p>
+<p>
+The bottom-left coordinates describe the base-line of the rectangle.
+</p>
+<p>
+The top-left coordinates describes how far up from the base-line the layer has propagated.
+</p>
+<br>
+<p>
+When we think about the layers like this, we are starting to think in terms of the Stack Layout.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit for only one type of fruit (Kiwi) ]
+</p>
+<p>
+SCREEN - Draw arrow to bottom of last with a single word - Base-line.
+</p>
+<p>
+SCREEN - Drawn arrow to top of last rectangles with phrase - Propagation Distance from Base-line
+</p>
+<p>
+Once we are thinking how to stack layers on top of layers, we can stack layers vertically, horizontally or even radially.
+</p>
+<br>
+<p>
+D3 dot layout dot stack constructs a new stack layout.
+</p>
+<p>
+<pre><code class="javascript">d3.layout.stack()</code></pre>
+</p>
+<p>
+This new construct is both an object and a function.
+</p>
+<p>
+We can call the layout like a function.
+</p>
+<p>
+As well as use methods to change the behavior of the layout.
+</p>
+<br>
+<p>
+To pass data into the stack layout, we have to pass in an array of arrays.
+</p>
+<p>
+<pre><code class="javascript">d3.layout.stack()(layers[, index])
+
+// layers = [ [...], [...], [...] ]
+
+// layer = [ {...}, {...}, {...}, {...} ]
+
+// object = { "x":..., "y":..., ... }</code></pre>
+</p>
+<p>
+Each internal array will represent a layer.
+</p>
+<p>
+Each layer will be an array of objects.
+</p>
+<p>
+Each object should have an x and y key,value pair to define the x-position and the y-thickness of the layer.
+</p>
+<br>
+<p>
+What the D3 layout helper does is compute a y0 for each object which is the base-line of the layer given the previous layers in the data.
+</p>
+<p>
+<pre><code class="javascript">d3.layout.stack()(layers[, index])
+
+// layers = [ [...], [...], [...] ]
+
+// layer = [ {...}, {...}, {...}, {...} ]
+
+// object = { "x":..., "y":..., "y0":..., .... }</code></pre>
+</p>
+<br>
+<p>
+This is an example of two layers.
+</p>
+<p>
+<pre><code class="javascript">layer_one = [{"x": 1, "y": 2}, {"x": 4, "y": 8}];
+
+layer_two = [{"x": 1, "y": 4}, {"x": 4, "y": 15}];</code></pre>
+</p>
+<p>
+The numbers are not related to our final goal - they were generated to show this example.
+</p>
+<p>
+Each layer array is an array that contains two JavaScript Literal Objects.
+</p>
+<p>
+Each object has an X key and a Y key.
+</p>
+<p>
+Remember that Y is defined as the thickness of the layer of this object.
+</p>
+<br>
+<p>
+We define the variable layers as an array of individual layers.
+</p>
+<p>
+<pre><code class="javascript">layer_one = [{"x": 1, "y": 2}, {"x": 4, "y": 8}];     // ** DIM **
+
+layer_two = [{"x": 1, "y": 4}, {"x": 4, "y": 15}];    // ** DIM **
+
+layers = [layer_one, layer_two];
+
+d3.layout.stack()(layers);</code></pre>
+</p>
+<p>
+When we pass in this layers data, the D3 layout helper will compute a Y0 for each object and add it to the object.
+</p>
+<p>
+This Y0 is the baseline we will use when drawing the rectangles later.
+</p>
+<p>
+Let's take a look at the JavaScript console to make this less abstract.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+First we type in the two data layers.
+</p>
+<p>
+<pre><code class="javascript">layer_one = [{"x": 1, "y": 2}, {"x": 4, "y": 8}];
+
+layer_two = [{"x": 1, "y": 4}, {"x": 4, "y": 15}];</code></pre>
+</p>
+<br>
+<p>
+Then we combine the two layers into an array of layers.
+</p>
+<p>
+<pre><code class="javascript">layers = [layer_one, layer_two];</code></pre>
+</p>
+<br>
+<p>
+Let's expand the array to see the data
+</p>
+<p>
+BROWSER - click into each array and all the objects.
+</p>
+<p>
+We can see that the first array and first object has an x of 1 and a y of 2.
+</p>
+<p>
+We can see that the second array and first object has an x of 1 and y of 4.
+</p>
+<p>
+Because they have the same X, we know that these two objects would be stacked on top of each other.
+</p>
+<p>
+Rather than doing the math and figuring out where the new baseline will be.
+</p>
+<p>
+Let's get the D3 Stack Layout to help us.
+</p>
+<br>
+<p>
+We construct the D3 Stack Layout.
+</p>
+<p>
+<pre><code class="javascript">var stack = d3.layout.stack();</code></pre>
+</p>
+<p>
+We assign the result to the variable stack.
+</p>
+<p>
+The variable stack is now an object and a function.
+</p>
+<br>
+<p>
+Let's use it as function and pass in the layers data.
+</p>
+<p>
+<pre><code class="javascript">stack(layers);</code></pre>
+</p>
+<p>
+The D3 Stack Layout modifies the arrays and objects in place.
+</p>
+<p>
+Which means that we do not need to assign the result to a new variable. 
+</p>
+<br>
+<p>
+Let's open up the layers array of arrays now and take a look at the data in each object.
+</p>
+<p>
+BROWSER - open the result
+</p>
+<p>
+You can see that the two arrays are still there.
+</p>
+<p>
+You can also see that each array contains two objects.
+</p>
+<p>
+What is new is that in each object we now have a key,value pair for the key of y0.
+</p>
+<p>
+Let's look at the first array.
+</p>
+<p>
+The Y0 is 0 for both objects.
+</p>
+<p>
+This is because the baseline for this layer will be 0 since it is the first layer.
+</p>
+<p>
+Let's look at the second array now.
+</p>
+<p>
+The Y0 is not 0 for either object.
+</p>
+<p>
+In fact it's different numbers for each object in the second array.
+</p>
+<p>
+This is because this is the second layer so it will start where the first layer ended.
+</p>
+<p>
+We can verify this by looking at the Y of the first object in the first array and the Y0 of the first object in the second array.
+</p>
+<p>
+We can see that the y0 of the first object in the second array is 2 - which is the same as the Y of the first object in the first array.
+</p>
+<p>
+The same pattern applies to the second objects in each array.
+</p>
+<p>
+The Y0 of the second object in the second array is 8, which is the Y of the second object in the first array.
+</p>
+<p>
+The D3 Stack Layout kept internal track of where the last layer ended and updated the new layer to make sure it knew where the last layer ended.
+</p>
+<p>
+We will use this when we construct our stacked bar chart.
+</p>
+<p>
+The last thing to note is that we did not have to specify anywhere the number of layers we were passing in or the number of objects per layer.
+</p>
+<p>
+This is powerful because we could pass in a large number of layers and a large number of objects to the layout and it would do all of the math for us.
+</p>
+<br>
+<p>
+Let's now build step by step the goal of a stacked bar chart using the D3 Stack Layout.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Stacked Bar Chart using Stack Layout 
+</strong>
+</p>
+<br>
+<p>
+On the Screen is the stacked bar chart we will be working towards.
+</p>
+<p>
+[ Image: Image of Stacked Bar Chart of Fruits Consumed per type of fruit across four seasons ]
+</p>
+<p>
+When working on real life projects, this should be a wire frame drawing that you would be working against.
+</p>
+<p>
+When making data visualizations, I highly recommend drawing out the goal on paper before you start coding.
+</p>
+<p>
+Then, when you have your idea on paper, make a small example dataset from a real data set to build the first coded version.
+</p>
+<p>
+From this picture, we can see that will want to know the following things:
+</p>
+<p>
+The total count of fruit per season to get the y-axis max point.
+</p>
+<p>
+The names of the seasons.
+</p>
+<p>
+The count of each fruit consumed.
+</p>
+<p>
+An x-axis and y-axis.
+</p>
+<p>
+An SVG Container.
+</p>
+<p>
+An x scaling function and y scaling function to be able to map our values to the SVG Container.
+</p>
+<p>
+and Individual layers for each fruit type since we are using the D3 Stack Layout.    
+</p>
+<br>
+<p>
+We start with the data set. 
+</p>
+<p>
+<pre><code class="javascript">var fruitConsumption = [ {"season": "spring", "apple": 1, "kiwi": 4, "grape": 1},
+                         {"season": "summer", "apple": 2, "kiwi": 1, "grape": 2},
+                         {"season": "fall",   "apple": 3, "kiwi": 3, "grape": 1},
+                         {"season": "winter", "apple": 2, "kiwi": 2, "grape": 2}];</code></pre>
+</p>
+<p>
+We will use a hard coded variable, rather than serving a CSV or TSV from the server.
+</p>
+<p>
+This is so that we can see the data clearly as the first step.
+</p>
+<p>
+Our data set is comprised of four JavaScript Literal Objects in an array.
+</p>
+<p>
+Each object has four key,value pairs.
+</p>
+<p>
+The keys are season, apple, kiwi and grape.
+</p>
+<p>
+The values for the season keys cover the four seasons - spring, summer, fall and winter.
+</p>
+<p>
+The values for the individual fruit names vary from 1 to 4.
+</p>
+<p>
+Note that we do not have a total fruit consumed key,value pair for any season.
+</p>
+<p>
+Also note that we have data in our keys.
+</p>
+<p>
+This should make you wince.
+</p>
+<p>
+One very important idea when using data with D3 is that your keys should be as generic as possible and never contain any data.
+</p>
+<p>
+The reason this dataset was constructed in this way was to make you aware of this issue.
+</p>
+<br>
+<p>
+First - figure out the season names from the data set.
+</p>
+<p>
+<pre><code class="javascript">var seasonNames = fruitConsumption.map( function(d) { 
+    return d.season;
+});</code></pre>
+</p>
+<p>
+For every object in the fruitConsumption data, we apply a function that returns the season of that object.
+</p>
+<p>
+This creates a new array that we assign to the variable name seasonNames.
+</p>
+<p>
+SCREEN - highlight .map
+</p>
+<p>
+The .map functionality is an iteration method that JavaScript Arrays comes with for array manipulation.
+</p>
+<p>
+It creates a new array with the result of a function that has been applied to every element in the array that it is being called upon.
+</p>
+<p>
+Remember - D3's canonical way of representing any type of data is an array.
+</p>
+<br>
+<p>
+Next - figure out the names of the fruits from the data set.
+</p>
+<p>
+<pre><code class="javascript">var fruitNames = d3.keys(fruitConsumption[0]).filter(function(key) { return key !== "season"; });</code></pre>
+</p>
+<p>
+This code looks at the first object in the fruitConsumption array of objects.
+</p>
+<p>
+SCREEN - highlight d3.keys
+</p>
+<p>
+We use d3.keys to extract all the keys from the all the key,value pairs in this first object.
+</p>
+<p>
+SCREEN - highlight .filter
+</p>
+<p>
+Then, using this list of keys, we use the array.filter JavaScript method to create a new array with only the elements for which the conditional statement of the key not being equal to the string "season" is true.
+</p>
+<p>
+Because we know that each object has the keys: season, apple, kiwi and grape - this filtering will return an array of the fruit names.
+</p>
+<br>
+<p>
+Next, we put right to wrong the two things we noticed about our data set earlier.
+</p>
+<p>
+<pre><code class="javascript">fruitConsumption.forEach(function(d) {
+
+    d.fruitsConsumed = fruitNames.map(function(name) {
+        return {
+            "fruitName": name,
+            "consumedCount": d[name]
+        };
+    });
+
+    d.totalFruit = d3.sum( d.fruitsConsumed, function(d) {
+        return d.consumedCount;
+    });        
+});</code></pre>
+</p>
+<p>
+One - that the keys contained data.
+</p>
+<p>
+and Two - that we did not have a total fruit consumption count per season.
+</p>
+<br>
+<p>
+Let's look at how we fix the issue of the keys containing data.
+</p>
+<p>
+<pre><code class="javascript">fruitConsumption.forEach(function(d) {
+
+    d.fruitsConsumed = fruitNames.map(function(name) {  // ** HIGHLIGHT **
+        return {                                        // ** HIGHLIGHT **
+            "fruitName": name,                          // ** HIGHLIGHT **
+            "consumedCount": d[name]                    // ** HIGHLIGHT **
+        };                                              // ** HIGHLIGHT **
+    });
+
+    d.totalFruit = d3.sum( d.fruitsConsumed, function(d) {
+        return d.consumedCount;
+    });        
+});</code></pre>
+</p>
+<p>
+SCREEN - dim everything except highlighted bit.
+</p>
+<p>
+SCREEN - color the fruitsConsumed word
+</p>
+<p>
+To do that we want to create a new key,value pair inside of the fruitConsumption object.
+</p>
+<p>
+This new key,value pair will have the key name of "fruitsConsumed"
+</p>
+<p>
+The value for this key will be an array of objects.
+</p>
+<p>
+Each of these objects will have two key,value pairs.
+</p>
+<p>
+SCREEN - color fruitName and consumedCount
+</p>
+<p>
+The keys will be fruitName and consumedCount.
+</p>
+<p>
+Now, instead of having the actual fruitName be a key, it will have a generic key of fruitName.
+</p>
+<p>
+SCREEN - color fruitNames
+</p>
+<p>
+To actually construct this, we take the fruitNames we calculated earlier and an Array map method.
+</p>
+<p>
+For each fruit name we return an object where the fruitName key receives the fruit name value.
+</p>
+<p>
+And where the consumed count is returned from the object we are currently looking at from the forEach array method.
+</p>
+<br>
+<p>
+We shall see this shortly when we build the chart in the JavaScript Console.
+</p>
+<p>
+[ Image: Image of JavaScript Console fruitConsumption data array including all the data objects ]
+</p>
+<p>
+For now, let's look at the updated object.
+</p>
+<p>
+We see the key,value pair of "apple" and 1.
+</p>
+<p>
+Right below it we see the new key,value pair of fruitsConsumed.
+</p>
+<p>
+You can see that the we have basically moved the name of the fruit from being a key to being a value.
+</p>
+<p>
+This is helpful if we have an iteration method with an accessor function that is looking for the name of the fruit and/or consumedCount.
+</p>
+<br>
+<p>
+Going back to our code, let's now take a look at how we solve the issue of not having a total fruit count per season.
+</p>
+<p>
+<pre><code class="javascript">fruitConsumption.forEach(function(d) {
+
+    d.fruitsConsumed = fruitNames.map(function(name) {     
+        return {                                            
+            "fruitName": name,                                 
+            "consumedCount": d[name]};                         
+    });
+
+    d.totalFruit = d3.sum( d.fruitsConsumed, function(d) {  // ** HIGHLIGHT **
+        return d.consumedCount;                             // ** HIGHLIGHT **
+    });                                                     // ** HIGHLIGHT ** 
+});</code></pre>
+</p>
+<p>
+SCREEN - color d3.sum
+</p>
+<p>
+While in the Array forEach iteration method, the code uses d3.sum on the newly created key,value pair of fruitsConsumed.
+</p>
+<p>
+Using the accessor function we define, which gets and returns the consumedCount, the d3.sum method returns the sum of the given array of consumedCount for each season.
+</p>
+<p>
+This sum will be the sum of all the fruits.
+</p>
+<br>
+<p>
+We shall see this shortly when we build the chart in the JavaScript Console.
+</p>
+<p>
+[ Image: Image of JavaScript Console showing array of objects that shows how much fruit was consumed for each type of fruit ]
+</p>
+<p>
+For now, let's look at how this works.
+</p>
+<p>
+We take the first object of fruitConsumption.
+</p>
+<p>
+Then we get the value for the key "fruitsConsumed".
+</p>
+<p>
+When we open each object in the array, you can see the new objects we created.
+</p>
+<p>
+Each object has the keys of fruitName and consumedCount.
+</p>
+<p>
+We can pass this array into the d3.sum() operator which returns the sum of the array while using the accessor function.
+</p>
+<p>
+You can see that if we add 1 apple plus 4 kiwi plus 1 grape from the fruitsConsumed array of objects that we get six fruits.
+</p>
+<p>
+Which is what d3.sum() returns.
+</p>
+<br>
+<p>
+So when we use the array.forEach iterator, we are going to get the total fruits for each season.
+</p>
+<p>
+<pre><code class="javascript">fruitConsumption.forEach(function(d) {
+
+    d.fruitsConsumed = fruitNames.map(function(name) {     
+        return {                                            
+            "fruitName": name,                                 
+            "consumedCount": d[name]};                         
+    });
+
+    d.totalFruit = d3.sum( d.fruitsConsumed, function(d) {  // ** HIGHLIGHT **
+        return d.consumedCount;                             // ** HIGHLIGHT **
+    });                                                     // ** HIGHLIGHT ** 
+});</code></pre>
+</p>
+<br>
+<p>
+Next, we will define the SVG Viewport and the inner drawing space.
+</p>
+<p>
+<pre><code class="javascript">
+var margin = {top: 80, right: 30, bottom: 30, left: 30},     // ** Highlight var name **
+    width = 300 - margin.left - margin.right,                // ** Highlight var name **
+    height = 300 - margin.top - margin.bottom;               // ** Highlight var name **</code></pre>
+</p>
+<p>
+We use the D3 margin convention.
+</p>
+<p>
+We leave extra room at the top, for the chart legend which will detail which color belongs to which fruit.
+</p>
+<br>
+<p>
+Next, we define the x scale as a D3 Ordinal Scale.
+</p>
+<p>
+<pre><code class="javascript">var x = d3.scale.ordinal()
+    .domain(seasonNames)
+    .rangeRoundBands([0, width], 0.1);</code></pre>
+</p>
+<p>
+SCREEN - color domain( )
+</p>
+<p>
+The domain is the array of 4 season names.
+</p>
+<p>
+SCREEN - color domain( )
+</p>
+<p>
+The range is the width of the inner drawing space.
+</p>
+<p>
+This scale will convert a season into a number on the x-axis that corresponds to the range round bands.
+</p>
+<br>
+<p>
+Next, we define the y scale as a D3 Linear Scale.
+</p>
+<p>
+<pre><code class="javascript">var y = d3.scale.linear()
+    .domain([0, d3.max(fruitConsumption, function(d) { return d.totalFruit; })])
+    .range([height, 0]);</code></pre>
+</p>
+<p>
+SCREEN - color domain( )
+</p>
+<p>
+The domain goes from 0 to the max number of fruits consumed per a season.
+</p>
+<p>
+We use the d3.max operator to return the max total fruit consumption per season using the accessor function we define.
+</p>
+<p>
+SCREEN - color range( )
+</p>
+<p>
+The range of the domain is defined backwards as the SVG Coordinate space has it's origin coordinate at the top left and the y-axis coordinates get bigger towards the bottom of the screen.
+</p>
+<br>
+<p>
+Next, we define the color ordinal scale we will use.
+</p>
+<p>
+<pre><code class="javascript">var color = d3.scale.ordinal()
+    .domain(fruitNames)
+    .range(["#d62728", "#2ca02c", "#9467bd"]);</code></pre>
+</p>
+<p>
+SCREEN - color domain( ) 
+</p>
+<p>
+The domain of this ordinal scale is the name of the fruits.
+</p>
+<p>
+SCREEN - color range( )
+</p>
+<p>
+The range is an array of 3 hard-coded HTML colors.
+</p>
+<br>
+<p>
+Next, we define the X Axis and Y Axis.
+</p>
+<p>
+<pre><code class="javascript">var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");</code></pre>
+</p>
+<p>
+We set the scale each axis should use as well as the orientation.
+</p>
+<br>
+<p>
+Then we define the SVG Viewport and Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var svgViewport = d3.select("#visualization")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");</code></pre>
+</p>
+<p>
+This is the normal way to define the Viewport if you are using the D3 margin convention.
+</p>
+<br>
+<p>
+Then we add the X axis to the chart making sure to transform translate the SVG Group element so that it appears on the bottom of the screen.
+</p>
+<p>
+<pre><code class="javascript">svgViewport.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);</code></pre>
+</p>
+<br>
+<p>
+Then we add the Y axis to the chart.
+</p>
+<p>
+<pre><code class="javascript">svgViewport.append("g")
+    .attr("class", "y axis")
+    .call(yAxis);</code></pre>
+</p>
+<br>
+<p>
+Now we get to the code where we construct the layers.
+var layers = fruitNames.map(function(fruitName) {
+    return fruitConsumption.map(function(d) {
+        return {
+            "x": x(d.season),
+            "y": d[fruitName],
+            "fruitName":fruitName};
+        });       
+    });</code></pre>
+</p>
+<p>
+We want to construct three layers - where each layer represents a fruit.
+</p>
+<p>
+SCREEN - color fruitNames and map
+</p>
+<p>
+So the code starts with the fruit names and does an array map.
+</p>
+<p>
+This first array map takes a fruit name and uses it within a function.
+</p>
+<p>
+SCREEN - color fruitConsumption and map
+</p>
+<p>
+This function will return an array where we take the fruitConsumption array of objects and do a second array map.
+</p>
+<p>
+This second array map takes one of the data objects and uses it within a function.
+</p>
+<p>
+This function returns an object with three keys.
+</p>
+<p>
+The keys are "x", "y" and "fruitName".
+</p>
+<p>
+The values of these keys are important.
+</p>
+<p>
+The fruitName is just the fruit name from the first array map function.
+</p>
+<p>
+The Y is the number of fruits eaten with the fruit name during this season.
+</p>
+<p>
+The X is the season name passed to the X ordinal scaling function.
+</p>
+<p>
+Remember - the X Ordinal scale takes in a string of a season name and returns a number on the range between 0 and the width of the inner drawing space.
+</p>
+<br>
+<p>
+In simpler language - We will iterate through the three fruit names.
+</p>
+<p>
+[ Image: Image of JavaScript console showing the array of arrays that contain the data objects for each fruit and x and y coordinates]
+</p>
+<p>
+For each fruit name, we will iterate through the four season objects.
+</p>
+<p>
+This means we will do a total of 12 iterations.
+</p>
+<p>
+During the inside iteration we will construct a new JavaScript Object Literal.
+</p>
+<p>
+The key of fruit name will have the fruit name from the outside iteration.
+</p>
+<p>
+The key of "y" will have the count of fruit that was eaten for this particular fruit for this particular season.
+</p>
+<p>
+The key of "x" will have the season name scaled through the x ordinal scale to get a number on the number line.
+</p>
+<p>
+You can see on the screen that we have three arrays of four elements.
+</p>
+<p>
+Each array represents one type of fruit.
+</p>
+<p>
+Each of the four elements inside of the array represents a different season.
+</p>
+<br>
+<p>
+Next we will create the D3 Stack Layout.
+</p>
+<p>
+<pre><code class="javascript">var stack = d3.layout.stack();</code></pre>
+
+stack(layers);</code></pre>
+</p>
+<p>
+Now we pass in our layers data into the D3 Stack Layout.
+</p>
+<p>
+The D3 Stack Layout will then do the math in the background for us.
+</p>
+<br>
+<p>
+We run this in the JavaScript console so that you can see it now.
+</p>
+<p>
+[ Image: Image of JavaScript console showing the array of arrays that contain the data objects for each fruit and x and y coordinates now that it has been run through the d3.layout.stack()]
+</p>
+<p>
+We open up the fourth object in each array so that you can compare it to the layers array of arrays we had before.
+</p>
+<p>
+You can see that the objects now have a y0 key,value pair.
+</p>
+<p>
+If we look across the three layers at the bottom of the screen, we can see that the Y0 goes from 0 to 2 and then to 4.
+</p>
+<p>
+Which is what we would expect given the Y variable for each of the objects.
+</p>
+<br>
+<p>
+Next, we use the D3 pattern to bind the arrays in the layers array to individual SVG Group Elements.
+</p>
+<p>
+<pre><code class="javascript">var svgLayer = svgViewport.selectAll(".layer")
+    .data(layers)
+  .enter().append("g")
+    .attr("class", "layer");</code></pre>
+</p>
+<p>
+Each SVG Group Element we create receives the class of layer.
+</p>
+<p>
+That is - we are binding each layer array to an SVG Group Element as it's data attribute.
+</p>
+<br>
+<p>
+We will talk about this code in two stages: the first stage is how we create the rectangles and the second stage will be how we define the specific attributes for the rectangles.
+</p>
+<p>
+<pre><code class="javascript">var rect = svgLayer.selectAll("rect")    // ** HIGHLIGHT **
+    .data(function(d) { return d; })     // ** HIGHLIGHT **
+  .enter().append("rect")                // ** HIGHLIGHT **
+    .attr("x", function(d) { return d.x; })
+    .attr("y", function(d) { return y(d.y + d.y0); })
+    .attr("width", x.rangeBand())
+    .attr("height", function(d, i) { return height - y(d.y); })
+    .style("fill", function(d, i) { return color(d.fruitName); });</code></pre>
+</p>
+<p>
+SCREEN - color svgLayer
+</p>
+<p>
+We take the svgLayer selection variable from the previous set of code.
+</p>
+<p>
+We then use the D3 pattern to selectAll non-existent elements.
+</p>
+<p>
+Then we use the data operator to take the data bound to each SVG Group Element in the svgLayers selection and bind it to a temporary selection.
+</p>
+<p>
+We then select the enter selection and append an SVG Rectangle shape to merge the temporary selection with a selection of SVG Rectangle elements.
+</p>
+<p>
+The only slightly out of the ordinary thing here is the nested .data calls.
+</p>
+<p>
+In the previous code, we bound each layer array to an SVG Group Element as it's data attribute.
+</p>
+<p>
+In this code, we are binding each interior object of each layer array into a rectangle element.
+</p>
+<br>
+<p>
+Now, let's talk about how we define the specific attributes for the rectangles.
+</p>
+<p>
+<pre><code class="javascript">var rect = svgLayer.selectAll("rect")      
+    .data(function(d) { return d; })       
+  .enter().append("rect")                          
+    .attr("x", function(d) { return d.x; })                         // ** HIGHLIGHT **
+    .attr("y", function(d) { return y(d.y + d.y0); })               // ** HIGHLIGHT **
+    .attr("width", x.rangeBand())                                   // ** HIGHLIGHT **
+    .attr("height", function(d, i) { return height - y(d.y); })     // ** HIGHLIGHT **
+    .style("fill", function(d, i) { return color(d.fruitName); });  // ** HIGHLIGHT **</code></pre>
+</p>
+<p>
+The "x" attribute is just the value from the "x" key from the objects we created in the layers.
+</p>
+<p>
+The "y" attribute is the sum of the y key value and y0 key value from the objects we created in the layers scaled through the Y scale.
+</p>
+<p>
+Why the addition of Y and Y0?
+</p>
+<p>
+Remember that Y0 is the baseline element and Y is the number of fruits consumed.
+</p>
+<p>
+To get the top left corner, we need the base line number of fruits plus the fruits consumed for this particular fruit.
+</p>
+<p>
+We scale it through the Y Scale function, so that it fits correctly in our SVG Viewport.
+</p>
+<p>
+The "width" attribute is the rangeBand of the x scaling function.
+</p>
+<p>
+The "height" attribute is the height of the inner drawing space minus the "y" key value scaled through the Y Scale.
+</p>
+<p>
+Why is it the height minus the scaled number of fruits for this particular fruit?
+</p>
+<p>
+Because the SVG Coordinate space is inverted - so to get an accurate representation of the height of a number of fruits, we need to get take the full height and subtract from it the Y scale of fruits consumed.
+</p>
+<p>
+Since the Y Scale of fruits is inverted, the more fruits there are, the lower the number it will return.
+</p>
+<p>
+Lastly, the "style fill" attribute is defined as the fruit name from the object we created in the layers passed through the color ordinal scale function.
+</p>
+<p>
+The color ordinal scale function will take in a string of a fruit and return one of the HTML Color strings.
+</p>
+<br>
+<p>
+The last bit of code we create is a legend like the one in the D3js.org Website Basic Scatterplot Example.
+</p>
+<p>
+<pre><code class="javascript">var legend = d3.select("svg").selectAll(".legend")
+    .data(color.domain().slice().reverse())
+  .enter().append("g")
+    .attr("class", "legend")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });</code></pre>
+</p>
+<p>
+We use the D3 pattern to append the color names to SVG Group Elements.
+</p>
+<p>
+Note that we select the SVG element and not the SVG Viewport to make sure the legend is created above the Inner Drawing Space.
+</p>
+<p>
+This will ensure that if all seasons have a maximum fruit consumption, that we will still be able to see the legend.
+</p>
+<br>
+<p>
+Then, we create rectangles using the SVG Group Element selection and the Color Ordinal Scale.
+</p>
+<p>
+<pre><code class="javascript">legend.append("rect")
+    .attr("x", width + margin.left - 18)
+    .attr("width", 18)
+    .attr("height", 18)
+    .style("fill", color);</code></pre>
+</p>
+<br>
+<p>
+Finally, we add the text to designate what each colored box stands for.
+</p>
+<p>
+<pre><code class="javascript">legend.append("text")
+    .attr("x", width + margin.left - 24)
+    .attr("y", 9)
+    .attr("dy", ".35em")
+    .style("text-anchor", "end")
+    .text(function(d) { return d; });</code></pre>
+</p>
+<br>
+<p>
+Alright, we've been through the code once, let's now create it in the JavaScript Console.
+</p>
+<br>
+<p>
+We start with a document loading the D3 library from the d3js.org website.
+</p>
+<br>
+<p>
+We add in a sentence at the top of the page, some HTML new line breaks and a div with the id of "visualization".
+</p>
+<p>
+<pre><code class="html">Fruits Consumed Per Season in 2012
+&lt;br&gt;
+&lt;br&gt;
+&lt;div id="visualization"&gt;&lt;/div&gt;
+&lt;br&gt;</code></pre>
+</p>
+<p>
+The div is where we will add the SVG element and build the visualization.
+</p>
+<p>
+We save down the file and open it in the web browser.
+</p>
+<br>
+<p>
+We open to the web browser and reload the file.
+</p>
+<p>
+BROWSER reload the web page
+</p>
+<p>
+We have opened the Chrome Developer Tools and have the JavaScript console up.
+</p>
+<p>
+We can see the sentence at the top of the page.
+</p>
+<br>
+<p>
+Next, we define our Fruit Consumption Data Set.
+</p>
+<p>
+<pre><code class="javascript">var fruitConsumption = [ {"season": "spring", "apple": 1, "kiwi": 4, "grape": 1},
+                         {"season": "summer", "apple": 2, "kiwi": 1, "grape": 2},
+                         {"season": "fall",   "apple": 3, "kiwi": 3, "grape": 1},
+                         {"season": "winter", "apple": 2, "kiwi": 2, "grape": 2}];</code></pre>
+</p>
+<br>
+<p>
+Next, we get the season names
+</p>
+<p>
+<pre><code class="javascript">var seasonNames = fruitConsumption.map(function(d) { return d.season; });
+
+seasonNames;</code></pre>
+</p>
+<p>
+You can see that we were able to extract the four different season names using the array map functionality.
+</p>
+<br>
+<p>
+Next, we get the fruit names
+</p>
+<p>
+<pre><code class="javascript">var fruitNames = d3.keys(fruitConsumption[0])
+    .filter(function(key) { return key !== "season"; });
+
+fruitNames;</code></pre>
+</p>
+<p>
+You can see that we were able to extract the three different types of fruits using the array filter functionality.
+</p>
+<br>
+<p>
+Next, we iterate through our fruitConsumption data set and add two new key,value pairs to each object.
+</p>
+<p>
+<pre><code class="javascript">fruitConsumption.forEach(function(d) {  
+    d.fruitsConsumed = fruitNames.map(function(name) {
+        return {
+            "fruitName": name,
+            "consumedCount": d[name]
+        };
+    });
+
+    d.totalFruit = d3.sum(d.fruitsConsumed, function(d) { return d.consumedCount; });        
+});
+
+fruitConsumption;</code></pre>
+</p>
+<p>
+BROWSER - expand fruitConsumption, the first object, the array and the first object.
+</p>
+<p>
+I expand the first two objects in the fruitConsumption array.
+</p>
+<p>
+You can see that each object now has a key,value pair of totalFruit.
+</p>
+<p>
+You can also see the new key,value pair for the fruitsConsumed.
+</p>
+<br>
+<p>
+Next, we start defining chart variables.
+</p>
+<p>
+<pre><code class="javascript">var margin = {top: 80, right: 30, bottom: 30, left: 30},
+    width  = 300 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;</code></pre>
+</p>
+<p>
+We will use these variable to define the SVG Viewport and inner drawing space.
+</p>
+<br>
+<p>
+Next, we define the X Ordinal Scale.
+</p>
+<p>
+<pre><code class="javascript">var x = d3.scale.ordinal()
+    .domain(seasonNames)
+    .rangeRoundBands([0, width], 0.1);</code></pre>
+
+x.domain();
+
+x.rangeBand();</code></pre>
+</p>
+<p>
+The domain of the x ordinal scale is the season names, which we can see on the screen.
+</p>
+<p>
+The rangeBand of the x ordinal scale is 52 units.
+</p>
+<br>
+<p>
+Next, we define the Y Linear Scale
+</p>
+<p>
+<pre><code class="javascript">var y = d3.scale.linear()
+    .domain([0, d3.max(fruitConsumption, function(d) { return d.totalFruit; })])
+    .range([height, 0]);
+
+y.domain();
+
+y.range();</code></pre>
+</p>
+<p>
+The domain of the Y linear scale goes from 0 to the max number of fruits consumed in any one season.
+</p>
+<p>
+We can see that this calculation yields the Y linear scale going from 0 to 7.
+</p>
+<p>
+We can also see that the range of the Y linear scale is 190 to 0.
+</p>
+<p>
+Remember, this range is defined backwards because the Y Axis in the SVG Coordinate Space is inverted.
+</p>
+<br>
+<p>
+Next, we define the Color Ordinal Scale.
+</p>
+<p>
+<pre><code class="javascript">var color = d3.scale.ordinal()
+    .domain(fruitNames)
+    .range(["#d62728", "#2ca02c", "#9467bd"]);
+
+color.domain();
+
+color.range();</code></pre>
+</p>
+<p>
+The domain of the color scale is the three fruit names.
+</p>
+<p>
+The range of the color scale is the three HTML colors.
+</p>
+<br>
+<p>
+Next, we define the X Axis.
+</p>
+<p>
+<pre><code class="javascript">var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");</code></pre>
+</p>
+<br>
+<p>
+Next, we define the Y Axis.
+</p>
+<p>
+<pre><code class="javascript">var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");</code></pre>
+</p>
+<br>
+<p>
+Next, we define the SVG Viewport and inner drawing space.
+</p>
+<p>
+<pre><code class="javascript">var svgViewport = d3.select("#visualization").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");</code></pre>
+</p>
+<p>
+BROWSER - click into the Visualization div, svg and into the G element.
+</p>
+<p>
+Here we can finally see that we have added something to the webpage.
+</p>
+<br>
+<p>
+Next, we add in the X Axis to the graph.
+</p>
+<p>
+<pre><code class="javascript">svgViewport.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);</code></pre>
+</p>
+<p>
+BROWSER - click into the transform to see the x axis.
+</p>
+<p>
+Remember that we have to transform translate the x axis to the bottom.
+</p>
+<br>
+<p>
+Next, we add in the Y Axis to the graph
+</p>
+<p>
+<pre><code class="javascript">svgViewport.append("g")
+    .attr("class", "y axis")
+    .call(yAxis);</code></pre>
+</p>
+<p>
+BROWSER - click on the y axis
+</p>
+<br>
+<p>
+Now, we go back to our data and create the layers of data that we want to pass to the D3 Stack Layout.
+</p>
+<p>
+<pre><code class="javascript">var layers = fruitNames.map(function(fruitName) {
+    return fruitConsumption.map(function(d) {
+        return {"x": x(d.season), "y": d[fruitName], "fruitName":fruitName};
+    });       
+});
+
+layers;</code></pre>
+</p>
+<p>
+BROWSER - click into the array and open the fourth object for each array.
+</p>
+<p>
+You can see that this creates an array of 3 arrays.
+</p>
+<p>
+And inside each interior array are four objects.
+</p>
+<p>
+Each of these objects have a fruitName key, x key and y key.
+</p>
+<br>
+<p>
+Now, let's create the D3 Stack Layout and pass the layers data to it.
+</p>
+<p>
+<pre><code class="javascript">var stack = d3.layout.stack();
+
+stack(layers);</code></pre>
+</p>
+<p>
+BROWSER - click into array and open the fourth object for each array.
+</p>
+<p>
+You can see that in each object we now have a y0 key,value pair.
+</p>
+<br>
+<p>
+Next, let's use the D3 pattern to attach each layer to an SVG Group Element
+</p>
+<p>
+<pre><code class="javascript">var svgLayer = svgViewport.selectAll(".layer")
+    .data(layers)
+  .enter().append("g")
+    .attr("class", "layer");
+
+d3.select(".layer");</code></pre>
+</p>
+<p>
+BROWSER - In the elements section click on the three layers
+</p>
+<p>
+BROWSER - Then click into the array, g object, then the data array and then the 4th object.
+</p>
+<p>
+You can see the three SVG Group elements that were added into the web document.
+</p>
+<p>
+If we select the first element with class of layer, we can open it up to see it's data attribute.
+</p>
+<p>
+Here you can see that it is indeed the first layer that was attached.
+</p>
+<p>
+This layer contains 4 objects.
+</p>
+<p>
+These four objects are what we will bind to SVG Rectangles in the next code section.
+</p>
+<p>
+BROWSER - Close array.
+</p>
+<br>
+<p>
+Next, we add an SVG rectangle for each object in each layer.
+</p>
+<p>
+<pre><code class="javascript">var rect = svgLayer.selectAll("rect")
+    .data(function(d) { return d; })
+  .enter().append("rect")
+    .attr("x", function(d) { return d.x; })
+    .attr("y", function(d) { return y(d.y + d.y0); })
+    .attr("width", x.rangeBand())
+    .attr("height", function(d, i) { return height - y(d.y); })
+    .style("fill",  function(d, i) { return color(d.fruitName); });</code></pre>
+</p>
+<p>
+BROWSER - Open 1st layer and hover over each rectangle element.
+</p>
+<p>
+When we open one layer and hover over each rectangle element, you can see that it is indeed a layer of rectangles.
+</p>
+<p>
+We now have our rectangles drawn.
+</p>
+<br>
+<p>
+The last thing we'll need to do is to add a legend.
+</p>
+<p>
+<pre><code class="javascript">var legend = d3.select("svg").selectAll(".legend")
+    .data(color.domain().slice().reverse())
+  .enter().append("g")
+    .attr("class", "legend")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });</code></pre>
+</p>
+<p>
+BROWSER - Close layer and click on first legend element.
+</p>
+<p>
+This has created and positioned the SVG Group elements inside of which we'll create the rectangles and text.
+</p>
+<br>
+<p>
+Next, we create the boxes for each type of fruit and color it in.
+</p>
+<p>
+<pre><code class="javascript">legend.append("rect")
+    .attr("x", width + margin.left - 18)
+    .attr("width", 18)
+    .attr("height", 18)
+    .style("fill", color);</code></pre>
+</p>
+<p>
+You can now see the colored boxes.
+</p>
+<br>
+<p>
+Finally, we write out the text to designate what kind of fruit each colored box stands for.
+</p>
+<p>
+<pre><code class="javascript">legend.append("text")
+    .attr("x", width + margin.left - 24)
+    .attr("y", 9)
+    .attr("dy", ".35em")
+    .style("text-anchor", "end")
+    .text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can now see the text designating the fruit next to each colored box.
+</p>
+<br>
+<p>
+And with that we have covered the D3 Stack Layout, how it works, what it does and how we can use it.
+</p>
+<p>
+We have also gone through the complete step by step process of building a stacked bar chart using the D3 Stack Layout.
+</p>
+        </div>
+      </div>
+
+</div>    
+    
+<hr>
+<h3 id="lesson58">D3 Basic General Update Pattern <h3>
+<div>
+    <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>The D3 Data Join Pattern is a way to bind data to DOM Elements</li>
+<li>The D3 Data Operator produces three virtual selections - Enter, Update, and Exit</li>
+<li>The Enter selection contains placeholder elements for any data that did not get bound to DOM elements</li>
+<li>The Update selection contains all of the existing DOM elements that had their __data__ attributes updated</li>
+<li>The Exit selection contains all of the existing DOM elements which did not have their __data__ attributes updated</li>
+<li>When a D3 Data Join is done, there are only three possible scenarios: More Data Than DOM elements, Less Data Than DOM elements, or the same number of Data and DOM elements</li>
+<li>The D3 General Update Pattern describes the process of using the enter, update, and exit selections in a certain way that makes it possible to cover all possible Data / DOM element scenarios regardless of what less than, greater than, or equal to</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/d3-data-operator">D3 Data Operator</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-update-selection">D3 Update Selection</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/binding-data-to-dom-elements">Binding Data to DOM Elements</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/using-data-bound-to-dom-elements">Using Data Bound to DOM Elements</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 Basic General Update Pattern
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+D3 Data Joins Revisited
+</strong>
+</p>
+<br>
+<p>
+This is the much repeated D3 pattern:
+</p>
+<p>
+<pre><code class="javascript">var circles = svg.selectAll("circle")
+    .data(data)
+  .enter().append("circle");</code></pre>
+</p>
+<p>
+When creating a new data visualization on the webpage, this is how we bind our data to SVG elements to create them and place them on the screen.
+</p>
+<p>
+The selectAll("circle") creates an empty selection as there are no DOM elements with the selector of circle.
+</p>
+<p>
+The data method binds the data to elements.
+</p>
+<p>
+Each element in the data array gets bound to a new DOM element.
+</p>
+<br>
+<p>
+The data method produces three virtual selections
+</p>
+<p>
+<pre><code class="javascript">var circles = svg.selectAll("circle")
+    .data(data)
+  .enter().append("circle");
+
+// update => circles;
+// enter  => circles.enter();
+// exit   => circles.exit();</code></pre>
+</p>
+<p>
+The enter selection - which contains placeholder elements for any new elements.
+</p>
+<p>
+The update selection - which contains existing elements that have had their __data__ attributes updated.
+</p>
+<p>
+and the exit selection - which are the remaining elements that have not had their __data__ attributes updated.
+</p>
+<br>
+<p>
+Since the initial selectAll("circle") selection created an empty selection, the update and exit virtual selections will be empty.
+</p>
+<p>
+<pre><code class="javascript">var circles = svg.selectAll("circle")
+    .data(data)
+  .enter().append("circle");</code></pre>
+</p>
+<p>
+The enter selection contains all of the placeholder elements.
+</p>
+<p>
+The missing elements are then added to the SVG container by the append("circle") command.
+</p>
+<br>
+<p>
+This Venn Diagram illustrates the idea of the Data Join.
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+On the left, in purple, we have the data that belongs to the DOM elements.
+</p>
+<p>
+On the right, in blue, we have the data that belongs to the data set being bounded.
+</p>
+<p>
+In the middle, we have the data that belongs to both sets, that we have updated.
+</p>
+<p>
+If we want the data slash DOM elements for which no new data was added, then we choose the exit selection.
+</p>
+<p>
+If we want the data slash DOM elements for which data was updated, then we choose the update selection.
+</p>
+<p>
+If we want the data slash DOM elements for which new data was bound to new elements, then we choose the enter selection.
+</p>
+<p>
+So far so good, relatively straight forward and it's something we've been doing since the beginning.
+</p>
+<p>
+Next up, let's talk about the Exit Selection as it's not something we've covered before.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Exit Selection
+</strong>
+</p>
+<br>
+<p>
+This is how we access the exit selection.
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...).exit()</code></pre>
+</p>
+<p>
+This selection is only defined on the selection returned by the data operator.
+</p>
+<p>
+The Exit selection is the selection of existing DOM elements in the current selection for which no new data element was found.
+</p>
+<p>
+So if there were five DOM elements in the selection and we only provided 4 data points, the exit selection would contain the fifth DOM element.
+</p>
+<br>
+<p>
+What often occurs is that we will want to get rid of the elements for which there was no data.
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...).exit().remove()</code></pre>
+</p>
+<p>
+This is done through the remove operator.
+</p>
+<p>
+This will delete the DOM elements from the web page.
+</p>
+<br>
+<p>
+Let's take a look some JavaScript Examples to see how the exit
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...).exit()</code></pre>
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+Let's add 5 HTML paragraph elements to the body of this web page.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("p").attr("id", "p_1");
+
+d3.select("body").append("p").attr("id", "p_2");
+
+d3.select("body").append("p").attr("id", "p_3");
+
+d3.select("body").append("p").attr("id", "p_4");
+
+d3.select("body").append("p").attr("id", "p_5");</code></pre>
+</p>
+<p>
+BROWSER Click on the body element to show paragraphs.
+</p>
+<p>
+We use the D3 append functionality and give each paragraph element it's own unique id.
+</p>
+<br>
+<p>
+Next, let's bind an array of four numbers to the selection of the four paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4]);</code></pre>
+</p>
+<p>
+This will go through DOM elements and bind the data to them.
+</p>
+<p>
+The first data element will be bound to the first paragraph element in the selection.
+</p>
+<p>
+The second data element will be bound to the second paragraph element in the selection.
+</p>
+<p>
+The third data element will be bound to the third paragraph element in the selection.
+</p>
+<p>
+The fourth data element will be bound to the fourth paragraph element in the selection.
+</p>
+<p>
+There is no fifth data element, so the fifth paragraph element does not get any data bound to it.
+</p>
+<br>
+<p>
+It is this fifth paragraph element that gets assigned to the d3 exit selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit();</code></pre>
+</p>
+<p>
+BROWSER click into the array 
+</p>
+<p>
+If we go into the array, you can see that it is an array of five elements.
+</p>
+<p>
+Though the only element that shows up is the paragraph with the html id of P underscore 5.
+</p>
+<br>
+<p>
+If we take a look at the interior array, we can see that the order of the selection was preserved.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit()[0];</code></pre>
+</p>
+<p>
+This tells us that the first four elements of the array are undefined and that the last element of the array is the paragraph element with an id of p underscore 5.
+</p>
+<br>
+<p>
+Let's take a look at the data attribute of each of the 5 paragraphs:
+</p>
+<br>
+<p>
+We look at the first paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_1").data();</code></pre>
+</p>
+<p>
+This returns the number 1 - which is what we expect as the first data element was bound to the first paragraph element.
+</p>
+<br>
+<p>
+We look at the second paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_2").data();</code></pre>
+</p>
+<p>
+This returns the number 2 - which is what we expect as the second data element was bound to the second paragraph element.
+</p>
+<br>
+<p>
+We look at the third paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_3").data();</code></pre>
+</p>
+<p>
+This returns the number 3 - which is what we expect as the third data element was bound to the third paragraph element.  
+</p>
+<br>
+<p>
+We look at the fourth paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_4").data();</code></pre>
+</p>
+<p>
+This returns the number 4 - which is what we expect as the fourth data element was bound to the fourth paragraph element.  
+</p>
+<br>
+<p>
+Finally, we look at the fifth paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_5").data();</code></pre>
+</p>
+<p>
+This returns JavaScript Data Type of undefined - which is what we expect as there was no fifth data element to be bound to the fifth paragraph element.  
+</p>
+<br>
+<p>
+Let's now explore how to use the remove operator on an exit selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit().remove();</code></pre>
+</p>
+<p>
+BROWSER: in Elements section, click on id="p_4"
+</p>
+<p>
+As soon as we press enter D3 deletes slash removes all of the elements in the exit selection.
+</p>
+<br>
+<p>
+Let's do this again with the 5 paragraphs and only 1 data element.
+</p>
+<br>
+<p>
+We reset the browser
+</p>
+<br>
+<p>
+We add the 5 paragraphs
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("p").attr("id", "p_1");
+
+d3.select("body").append("p").attr("id", "p_2");
+
+d3.select("body").append("p").attr("id", "p_3");
+
+d3.select("body").append("p").attr("id", "p_4");
+
+d3.select("body").append("p").attr("id", "p_5");</code></pre>
+</p>
+<p>
+BROWSER: click into the body tag
+</p>
+<br>
+<p>
+Next, let's bind an array of 1 number to the selection of all the paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1]);</code></pre>
+</p>
+<p>
+This will go through all of the DOM elements and bind the data to them.
+</p>
+<p>
+The first data element will be bound to the first paragraph element in the selection.
+</p>
+<p>
+There is no second, third, fourth or fifth data element, so the second, third, fourth and fifth paragraph elements do not get any data bound to them.
+</p>
+<br>
+<p>
+It is these second, third, fourth and fifth paragraph elements that get assigned to the d3 exit selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit();</code></pre>
+</p>
+<p>
+BROWSER click into the array 
+</p>
+<p>
+If we go into the array you can see that it is an array of five elements.
+</p>
+<p>
+Though the only element that does not show up is the paragraph with the html id of P underscore 1.
+</p>
+<p>
+All of the other paragraph elements show up.
+</p>
+<br>
+<p>
+If we take a look at the interior array, we can see that the order of the selection was preserved.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit()[0];</code></pre>
+</p>
+<p>
+This tells us that the first element of the array is undefined and that the 2nd, 3rd, 4th and 5th elements of the array are the paragraph elements with an id of p underscore 2, p underscore 3, p underscore 4 and p underscore 5.
+</p>
+<br>
+<p>
+Let's take a look at the data attribute of each of the 5 paragraphs:
+</p>
+<br>
+<p>
+We look at the first paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_1").data();</code></pre>
+</p>
+<p>
+This returns the number 1 - which is what we expect as the first data element was bound to the first paragraph element.
+</p>
+<br>
+<p>
+Next, we look at the second paragraph element.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("#p_2").data();</code></pre>
+</p>
+<p>
+This returns JavaScript Data Type of undefined - which is what we expect as there was no second data element to be bound to the second paragraph element.
+</p>
+<br>
+<p>
+This is what will happen to all of the other paragraphs in the exit selection.
+</p>
+<br>
+<p>
+Let's now explore again how to use the the remove operator on an exit selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit().remove();</code></pre>
+</p>
+<p>
+BROWSER: in Elements section, click on id="p_1"
+</p>
+<p>
+As soon as we press enter, D3 deletes slash removes all of the elements in the exit selection.
+</p>
+<p>
+Which means that D3 removed all of the paragraphs other than the paragraph with id of p underscore 1
+</p>
+<br>
+<p>
+Very good - the exit selection allows us to select the DOM elements for which no new data was added when we did the bounding of the data.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Enter Selection
+</strong>
+</p>
+<br>
+<p>
+This is how we access the enter selection:
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...).enter()</code></pre>
+</p>
+<p>
+This selection is only defined on the selection returned by the data operator.
+</p>
+<p>
+The Enter selection is the selection of placeholder elements in the current selection for any new elements.
+</p>
+<p>
+This is the common D3 pattern we have seen before.
+</p>
+<p>
+So if there are zero DOM elements and we bind 4 data points using the selectAll, data, enter selection, the enter selection will contain 4 placeholder elements.
+</p>
+<br>
+<p>
+The top piece of code is the D3 pattern we have seen before:
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });
+
+var dataSelection = d3.select("body")
+    .selectAll("p")
+    .data([1, 2, 3, 4, 5]);
+
+dataSelection.enter();</code></pre>
+</p>
+<p>
+The bottom piece of code selectAlls the paragraph elements and binds 5 pieces of data to them.
+</p>
+<p>
+Since the top piece of code generated 4 paragraph elements, we will have 1 more piece of data than we have paragraph elements.
+</p>
+<p>
+When we select the enter selection, we get the place holder element for the data element number 5.
+</p>
+<br>
+<p>
+When you use the chain syntax after selecting the enter selection to append an element, it will create the new elements as needed.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });</code></pre>
+</p>
+<p>
+This means that the placeholder elements get merged with the paragraph DOM element in this case.
+</p>
+<p>
+We'll take a look at this in the JavaScript console.  
+</p>
+<br>
+<p>
+Let's take a look some JavaScript Examples to see how the enter selection works.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+Let's add 4 HTML paragraph elements to the body of this web page using the D3 pattern.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });</code></pre>
+</p>
+<p>
+BROWSER Lick on the body element to show paragraphs.
+</p>
+<p>
+This should be very familiar and straight forward to you now.
+</p>
+<p>
+We selectAll non-existent paragraph elements.
+</p>
+<p>
+Then we bind data to them which creates placeholder elements as there are no elements in the selectAll selection.
+</p>
+<p>
+The enter selection creates a selection of these placeholder elements.
+</p>
+<p>
+We append a paragraph element for each placeholder element in the enter selection.
+</p>
+<br>
+<p>
+Next, let's bind an array of 5 numbers to the selection of all the paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4, 5]);
+
+dataSelection;</code></pre>
+</p>
+<p>
+The first thing we see is that the dataSelection now has 5 elements as opposed to the 4 it had before.
+</p>
+<p>
+This makes sense as we just bound 5 data elements to the selection of all the paragraph elements in the document.
+</p>
+<br>
+<p>
+Let's open up the array to see what is inside.
+</p>
+<p>
+BROWSER click on the array.
+</p>
+<p>
+When we look at the array we can see 4 elements.
+</p>
+<p>
+These four elements are the elements that were already in existence.
+</p>
+<p>
+These four elements encompass the update selection which we will cover in the next section.
+</p>
+<p>
+For now, let's focus on the fact that one element is not represented.
+</p>
+<p>
+This element is the element that lives in the enter selection.
+</p>
+<br>
+<p>
+If we select the dataSelection enter selection, we will find this element.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter();</code></pre>
+</p>
+<p>
+BROWSER click into object
+</p>
+<p>
+When we click into the object we can see that it has a data attribute.
+</p>
+<p>
+This data attribute has the number 5 element from the data array.
+</p>
+<p>
+You can see that it doesn't have any other defining features or attributes, it's as pure an Object as you can get.
+</p>
+<br>
+<p>
+If we get the array inside of the selection array, we can see that the enter selection is an array of 4 undefined objects and 1 defined object.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter()[0];</code></pre>
+</p>
+<p>
+BROWSER: click into object
+</p>
+<p>
+D3 does this in order to preserve order in selections.
+</p>
+<p>
+In the next video we will cover how to get around this with key functions.
+</p>
+<br>
+<p>
+Let's redefine the dataSelection variable, this time with an array of 9 numbers.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+dataSelection;</code></pre>
+</p>
+<p>
+We selectAll the paragraph elements in the document, which is still 4 and bind 9 pieces of data to them.
+</p>
+<p>
+Each data is one of the numbers in the array.
+</p>
+<br>
+<p>
+If we open up the array to see what's inside, we find the four paragraph elements that already existed.
+</p>
+<p>
+BROWSER click on the array.
+</p>
+<p>
+This is just like before.
+</p>
+<br>
+<p>
+When we select the dataSelection enter selection, we find the 5 missing elements.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter();</code></pre>
+</p>
+<p>
+BROWSER click into the array
+</p>
+<p>
+We find the missing objects, note that their index number starts at 4 and goes through 8.
+</p>
+<p>
+This is expected as the selections are 0 index based, so these are the last 5 place holder elements.
+</p>
+<br>
+<p>
+If we get the array inside of the selection array, we can see that the enter selection is an array of 4 undefined objects and 5 defined objects.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter()[0];</code></pre>
+</p>
+<p>
+Again - D3 does this to preserve order in selections.
+</p>
+<br>
+<p>
+Now, let's append a paragraph element for each data placeholder object in the enter selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter().append("p")
+    .attr("id", function(d) { return "enter_p_"+d; });</code></pre>
+</p>
+<p>
+BROWSER: click on paragraph elements added.
+</p>
+<p>
+You can see how we can use the append to create the paragraph elements that were missing.
+</p>
+<br>
+<p>
+From these examples we have seen that the enter selection is the selection of placeholder elements in the current selection for any new elements.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Update Selection
+</strong>
+</p>
+<br>
+<p>
+This is how we access the update selection.
+</p>
+<p>
+[ Image: Image of Venn Diagram of D3 Data Join ]
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(...)</code></pre>
+</p>
+<p>
+Note that the data operator returns the update selection.
+</p>
+<p>
+So instead of having to select the virtual selection like we did with enter and exit, we don't have to do anything.
+</p>
+<p>
+The update selection is the selection which contains existing elements that have had their __data__ attribute updated.
+</p>
+<p>
+So if there are 4 existing DOM elements with data attributes and we bind 4 data points to these existing elements, the update selection will contain these 4 DOM elements. 
+</p>
+<br>
+<p>
+The top piece of code is the D3 pattern we have seen before:
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });
+
+var dataSelection = d3.select("body").selectAll("p").data([5, 6, 7, 8]);
+
+dataSelection;</code></pre>
+</p>
+<p>
+The bottom piece of code selectAlls the paragraph elements and binds 4 pieces of data to them.
+</p>
+<p>
+Since the top piece of code generated 4 paragraph elements and we bound 4 pieces of data to those 4 paragraph elements, there won't be any extra DOM elements or extra pieces of Data.
+</p>
+<p>
+If we then select the update selection, we get the 4 elements which have had their data attribute updated.
+</p>
+<br>
+<p>
+The other important place the update selection shows up in D3, is when we run the code on the screen.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_"+d; });
+
+var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+dataSelection.enter().append("p").attr("id", function(d) { return "enter_p_"+d; });
+
+dataSelection;</code></pre>
+</p>
+<p>
+We do the D3 pattern.
+</p>
+<p>
+Then we bind more data points than we have elements for.
+</p>
+<p>
+The update selection will contain the first four paragraphs.
+</p>
+<p>
+The enter selection will contain the last five paragraphs.
+</p>
+<p>
+Then, we use the append() operator on the enter selection.
+</p>
+<p>
+As soon as the append operator is run on the enter selection, the update selection expands to include the entering elements.
+</p>
+<p>
+So in this case, the update selection will now contain all 9 paragraph elements.
+</p>
+<p>
+We'll see this example in the JavaScript console shortly.
+</p>
+<br>
+<p>
+Let's take a look some JavaScript Examples to see how the update selection works.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+Let's add 4 HTML paragraph elements to the body of this web page using the D3 pattern.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_" + d; });</code></pre>
+</p>
+<p>
+BROWSER Lick on the body element to show paragraphs.
+</p>
+<p>
+This should be very familiar and straight forward to you now.
+</p>
+<p>
+We selectAll non-existent paragraph elements.
+</p>
+<p>
+Then we bind data to them which creates placeholder elements as there are no elements in the selectAll selection.
+</p>
+<p>
+The enter selection creates a selection of these placeholder elements.
+</p>
+<p>
+We append a paragraph element for each placeholder element in the enter selection.
+</p>
+<br>
+<p>
+We can checkout what data is bound to each of the four paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">d3.selectAll("p").data();</code></pre>
+</p>
+<p>
+We can see the array of data we passed into the data operator earlier.
+</p>
+<br>
+<p>
+Next, let's bind an array of 4 numbers to the selection of all the paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([5, 6, 7, 8]);
+
+dataSelection;</code></pre>
+</p>
+<p>
+The first thing we see is that the dataSelection has 4 elements.
+</p>
+<p>
+This makes sense as there were 4 data elements being bound to the 4 already existing DOM elements.
+</p>
+<br>
+<p>
+Let's open up the array to see what is inside.
+</p>
+<p>
+BROWSER click on the array.
+</p>
+<p>
+When we look at the array we can see 4 elements.
+</p>
+<p>
+These four elements are the elements that were already in existence.
+</p>
+<p>
+These four elements encompass the update selection.
+</p>
+<p>
+Note that there are no missing elements as we bound 4 data points to 4 pre-existing DOM elements.
+</p>
+<br>
+<p>
+If we look at the dataSelection enter selection, we find no new elements.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter()[0];</code></pre>
+</p>
+<p>
+Note, that there is still an order, it's just that all the elements in the selection are the undefined data type.
+</p>
+<br>
+<p>
+If we look at the dataSelection exit selection, we find no elements that did not receive data.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.exit()[0];</code></pre>
+</p>
+<p>
+Note, that there is still an order, it's just that all the elements in the selection are the undefined data type.
+</p>
+<p>
+So because we have the exact number of data elements as DOM elements in the selection, the binding happened 1 for 1 and we are just left with the update selection.
+</p>
+<br>
+<p>
+Let's look at the data that is now attached to the paragraph elements.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.data();
+
+d3.selectAll("p").data();</code></pre>
+</p>
+<p>
+You can see that in either command, we are looking at the 4 existing paragraph elements in the Document.
+</p>
+<p>
+Both commands return the array of updated data.
+</p>
+<p>
+This tells us that the data was bound correctly and each paragraph element __data__ attribute was updated.
+</p>
+<br>
+<p>
+Let's reset the browser and explore how using the append operator on the enter selection causes the update selection to include the entering elements.
+</p>
+<p>
+BROWSER reset the browser
+</p>
+<br>
+<p>
+First we do the D3 pattern.  
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").selectAll("p")
+    .data([1, 2, 3, 4])
+  .enter().append("p")
+    .attr("id", function(d) { return "p_" + d; });</code></pre>
+</p>
+<br>
+<p>
+Then we bind the new data.  
+</p>
+<p>
+<pre><code class="javascript">var dataSelection = d3.select("body").selectAll("p").data([1, 2, 3, 4, 5, 6, 7, 8, 9]);</code></pre>
+</p>
+<p>
+This will cause place holder elements to be created.
+</p>
+<br>
+<p>
+Let's look at the update selection first.
+</p>
+<p>
+<pre><code class="javascript">dataSelection;</code></pre>
+</p>
+<p>
+BROWSER click into the array of array.
+</p>
+<p>
+You can see that the update selection contains the first four paragraphs which were the ones that had their data attributes updated.
+</p>
+<br>
+<p>
+Let's look at the enter selection next.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter();</code></pre>
+</p>
+<p>
+BROWSER click into the array of array
+</p>
+<p>
+You can see that the enter selection contains five DOM elements which are the placeholder objects created.
+</p>
+<br>
+<p>
+Now, let's use the chain syntax to call the append() operator on the enter selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection.enter().append("p").attr("id", function(d) { return "enter_p_" + d; });</code></pre>
+</p>
+<p>
+BROWSER: show all Ps in elements section.
+</p>
+<p>
+This creates paragraph elements for the 5 place holder elements at the end.
+</p>
+<br>
+<p>
+Now, let's look at the update selection.
+</p>
+<p>
+<pre><code class="javascript">dataSelection;</code></pre>
+</p>
+<p>
+BROWSER click into the array of array.
+</p>
+<p>
+When we look at the update selection, you can see that once an append operator is used on an enter selection, that the update selection expands to include the newly created elements.
+</p>
+<p>
+Which means that when we do operations on the update selection, that they will be done on both the enter and update selections.
+</p>
+<br>
+<p>
+From these examples we have seen that the update selection is the selection which contains existing elements that have had their __data__ attributes updated.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Basic General Update Pattern
+</strong>
+</p>
+<br>
+<p>
+Mike Bostock created a great example of the General Update Pattern in D3.js.
+</p>
+<p>
+[ Image: Mike Bostock's D3 General Update Pattern ]
+</p>
+<p>
+It covers the enter, update and exit selections.
+</p>
+<p>
+This Block does not use key functions for the data-join, so the elements are always added to the end.
+</p>
+<p>
+We are going to use some of the structure of his example, to construct a manual example in the JavaScript Console.
+</p>
+<br>
+<p>
+We are going to be using three variables:
+</p>
+<p>
+<pre><code class="javascript">var cupcake  = "cupcake".split("");
+
+var flamingo = "flamingo".split("");
+
+var icecream = "icecream".split("");</code></pre>
+</p>
+<p>
+Each variable will be the array of individual letters that make up the string.
+</p>
+<p>
+For example, the variable cupcake will be an array of the letters C, U, P, C, A, K, E
+</p>
+<p>
+There are two different string lengths.
+</p>
+<p>
+The flamingo and icecream variables will have the same length.
+</p>
+<p>
+Using these three variables we will construct and add a set of text elements to an SVG container.
+</p>
+<p>
+One letter per one text element.
+</p>
+<br>
+<p>
+For each selection example, we will update the class of the SVG Text Element to really understand how the enter, exit and update selections work when we are updating data.
+</p>
+<p>
+<pre><code class="javascript">[cupcake, flamingo, icecream]
+// class = XXXXX_enter
+// class = XXXXX_exit
+// class = XXXXX_update</code></pre>
+</p>
+<br>
+<p>
+Let's take a look the JavaScript Console for the Examples
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+We start with the definition of the SVG container the text will live in.
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("body").append("svg")
+    .attr("height", "300")
+    .attr("width", "600")
+  .append("g")
+    .attr("transform", "translate(12, 150)");</code></pre>
+</p>
+<br>
+<p>
+Then we create the D3 pattern.
+</p>
+<p>
+<pre><code class="javascript">var textSelection = svg.selectAll("text")
+    .data("datadrivendocuments".split(""));</code></pre>
+</p>
+<br>
+<p>
+We check the exit selection.
+</p>
+<p>
+<pre><code class="javascript">textSelection.exit()[0];</code></pre>
+</p>
+<p>
+Nothing here as there are no elements yet, so there weren't any elements that didn't receive data.
+</p>
+<br>
+<p>
+We check the update selection.
+</p>
+<p>
+<pre><code class="javascript">textSelection[0];</code></pre>
+</p>
+<p>
+Nothing here as there are no elements yet, so no elements got their __data__ attribute updated.
+</p>
+<br>
+<p>
+We check the enter selection.
+</p>
+<p>
+<pre><code class="javascript">textSelection.enter()[0];</code></pre>
+</p>
+<p>
+BROWSER click into the array and the first object.
+</p>
+<p>
+Here we can see the 19 placeholder objects.
+</p>
+<p>
+We can see the letter "D" attached to the __data__ attribute of the first object.
+</p>
+<br>
+<p>
+We now create the new elements using the enter selection and the append operator.
+</p>
+<p>
+<pre><code class="javascript">textSelection.enter().append("text")
+    .attr("class", "initial")
+    .attr("x",  function(d, i) { return i * 24; })
+    .attr("dy", ".35em");</code></pre>
+</p>
+<br>
+<p>
+Next, we add the actual text, thus completing the full cycle of the D3 pattern.
+</p>
+<p>
+<pre><code class="javascript">textSelection.text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can now see the full text data on the screen.
+</p>
+<br>
+<p>
+And just to drill this point home, let's look at the update selection.
+</p>
+<p>
+<pre><code class="javascript">textSelection;</code></pre>
+</p>
+<p>
+BROWSER: expand array
+</p>
+<p>
+When the append operator is run on the enter selection, the update selection expands to include the enter selection.
+</p>
+<br>
+<p>
+Alright - so far so good, we explored a bit more deeply than before, the D3 pattern.
+</p>
+<br>
+<p>
+Next, lets create the array variables from the three different strings.
+</p>
+<p>
+<pre><code class="javascript">var cupcake  = "cupcake".split("");
+
+cupcake;
+
+var flamingo = "flamingo".split("");
+
+flamingo;
+
+var icecream = "icecream".split("");
+
+icecream;</code></pre>
+</p>
+<br>
+<p>
+Let's now bind the cupcake data to the text elements.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(cupcake);</code></pre>
+</p>
+<p>
+The string cupcake has 7 letters, so we are selecting many more elements than there are data points.
+</p>
+<br>
+<p>
+Let's update the class of the elements in the D3 update selection.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "cupcake_update");</code></pre>
+</p>
+<p>
+BROWSER go to elements and scroll up so you can see the elements that were updated.
+</p>
+<p>
+You can see that the first seven elements receive a new class.
+</p>
+<p>
+The rest of the elements did not get their class updated.
+</p>
+<p>
+Also notice that the actual text has not changed, this is because we haven't re-written it.
+</p>
+<br>
+<p>
+Let's check the exit selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.exit();</code></pre>
+</p>
+<p>
+BROWSER: click into array
+</p>
+<p>
+We can see all of the other elements which did not receive an updated data point.
+</p>
+<br>
+<p>
+Let's update the class of the elements in the D3 exit selection.
+</p>
+<p>
+<pre><code class="javascript">text.exit().attr("class", "cupcake_exit");</code></pre>
+</p>
+<p>
+BROWSER: click into elements and on the first class="cupcake_exit"
+</p>
+<p>
+You can see that the rest of the elements now have the cupcake underscore exit class.
+</p>
+<br>
+<p>
+Let's check the enter selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.enter()[0];</code></pre>
+</p>
+<p>
+We see no elements in this selection.
+</p>
+<p>
+This is as we expected - no new placeholder elements were created, so no enter selection elements should exist.
+</p>
+<br>
+<p>
+Let's update the actual text of the SVG elements.
+</p>
+<p>
+<pre><code class="javascript">text.text(function(d) { return d; });</code></pre>
+</p>
+<p>
+BROWSER: highlight cupcake
+</p>
+<p>
+Now you can see in the webpage, that we have updated the actual letter of each SVG text element.
+</p>
+<br>
+<p>
+Lastly, let's remove the exit selection elements
+</p>
+<p>
+<pre><code class="javascript">text.exit().remove();</code></pre>
+</p>
+<p>
+When we remove the exit selection, we are now left with just the cupcake SVG text elements.
+</p>
+<br>
+<p>
+Next, let's bind the data from the flamingo string.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(flamingo);</code></pre>
+</p>
+<p>
+Flamingo has 8 letters, so we are selecting 7 DOM elements and binding 8 data elements.
+</p>
+<p>
+This means that D3 is going to have to create a placeholder element for the last element.
+</p>
+<br>
+<p>
+Let's update the class of the elements in the D3 update selection.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "flamingo_update");</code></pre>
+</p>
+<p>
+BROWSER: Elements section
+</p>
+<p>
+Notice that all of the elements had their class changed.
+</p>
+<p>
+This is because there are more data points than elements, so every single paragraph element that exists had it's data </p>
+<br>
+<p>
+Let's check the exit selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.exit()[0];</code></pre>
+</p>
+<p>
+We see no elements in this selection.
+</p>
+<p>
+This is as we expected - as there were more data points than DOM elements, there were no DOM elements that did not get their data updated.
+</p>
+<p>
+So no exit selection elements to view and/or remove.
+</p>
+<br>
+<p>
+Let's check the enter selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.enter()[0];</code></pre>
+</p>
+<p>
+BROWSER click into last element.
+</p>
+<p>
+We see the placeholder element containing the last letter of the string flamingo - which is an "o".
+</p>
+<p>
+This makes sense as D3 is keeping order for us, so we see 7 undefined data types, and then the placeholder object.
+</p>
+<br>
+<p>
+Next, let's add this placeholder object to the web page
+</p>
+<p>
+<pre><code class="javascript">text.enter().append("text")
+    .attr("class", "flamingo_enter")
+    .attr("x", function(d, i) { return i * 24; })
+    .attr("dy", ".35em");</code></pre>
+</p>
+<p>
+BROWSER: look at elements
+</p>
+<p>
+You can see that the last SVG text element now has a class of "flamingo" underscore enter.
+</p>
+<p>
+This is the element that we just added.
+</p>
+<br>
+<p>
+Next, let's set the text of each SVG text element based on the data that is bound to it.
+</p>
+<p>
+<pre><code class="javascript">text.text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can see that the word flamingo is now spelled out.
+</p>
+<p>
+Remember, after we use the append operator on the enter selection, the update selection expands to include the enter selection.
+</p>
+<p>
+This is how we can use the text operator on the update selection to update the letter of each SVG text element.
+</p>
+<br>
+<p>
+There are no elements in the exit selection to remove, so let's once again update the data.
+</p>
+<br>
+<p>
+This time, we update the data with a string of the same length which should mean no exit and no enter selections, just the update selection.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(icecream);</code></pre>
+</p>
+<br>
+<p>
+Let's update the class of the elements in the D3 update selection.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "icecream_update");</code></pre>
+</p>
+<p>
+BROWSER: ELements section
+</p>
+<p>
+Notice that all of the elements had their class changed.
+</p>
+<p>
+This is because there are an equal amount of data points as there are DOM elements.
+</p>
+<p>
+So each DOM element had it's __data__ attribute updated and is included in the update selection.
+</p>
+<br>
+<p>
+Let's check the enter selection to see if there is any thing there.
+</p>
+<p>
+<pre><code class="javascript">text.enter()[0];</code></pre>
+</p>
+<p>
+We see no elements in this selection.
+</p>
+<p>
+This is because there was the same number of data elements as DOM elements, so no placeholder elements needed to be created.
+</p>
+<p>
+Because there were no placeholder elements in the enter selection, we do not need to do the D3 pattern to create the new DOM elements.
+</p>
+<br>
+<p>
+Let's check the exit selection to see if there is anything there.
+</p>
+<p>
+<pre><code class="javascript">text.exit()[0];</code></pre>
+</p>
+<p>
+We see no elements in this selection.
+</p>
+<p>
+This is because there was the same number of data elements as DOM elements, so no DOM elements were left over.
+</p>
+<br>
+<p>
+Next, let's set the text of each SVG text element based on the data that is bound to it.
+</p>
+<p>
+<pre><code class="javascript">text.text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can see that the word ice cream is now spelled out.
+</p>
+<br>
+<p>
+Lastly, let's change the data back to the cupcake dataset.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(cupcake);</code></pre>
+</p>
+<br>
+<p>
+We check the enter selection:
+</p>
+<p>
+<pre><code class="javascript">text.enter()[0];</code></pre>
+</p>
+<p>
+The string cupcake has one less letter than icecream, so we don't see any new placeholder elements created.
+</p>
+<br>
+<p>
+We check the exit selection:
+</p>
+<p>
+<pre><code class="javascript">text.exit()[0];</code></pre>
+</p>
+<p>
+BROWSER: click into array and into object
+</p>
+<p>
+Since the string cupcake has one less letter than icecream, we expect the last letter to be included in the exit selection.
+</p>
+<br>
+<p>
+We change the class of the exit selection elements.
+</p>
+<p>
+<pre><code class="javascript">text.exit().attr("class", "cupcake_exit");</code></pre>
+</p>
+<p>
+BROWSER: click on cupcake_exit element.
+</p>
+<p>
+You can see that the class changed.
+</p>
+<br>
+<p>
+We check on the update selection elements and update their class attribute.
+</p>
+<p>
+<pre><code class="javascript">text[0];
+
+text.attr("class", "cupcake_update");</code></pre>
+</p>
+<br>
+<p>
+Then we remove the exit elements.
+</p>
+<p>
+<pre><code class="javascript">text.exit().remove();</code></pre>
+</p>
+<p>
+BROWSER click on last text element in element section.
+</p>
+<br>
+<p>
+And lastly, we update the actual text of the text elements.
+</p>
+<p>
+<pre><code class="javascript">text.text(function(d){ return d; });</code></pre>
+</p>
+<br>
+<p>
+And with that we have covered how the exit, update and enter selections work at a deeper level in D3 through the use of the JavaScript Console, SVG Text elements and their class attributes.
+</p>
+<br>
+<p>
+Through the understanding generated, we have started exploring the general update pattern that we can use in D3 as we have data that is being updated.
+</p>
+        </div>
+      </div>
+
+</div>
+
+<hr>
+<h3 id="lesson59">D3 Update Pattern With Key Functions <h3>
+<div>
+     <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>The D3 General Update Pattern is as follows: 1) do a data join with the new data, 2) update the old elements as needed, 3) create new elements as needed, 4) if the step 3 appened new elements to the enter selection, the update selection expands to include both the enter and update selections so do something to both selection, and 5) remove old elements as needed</li>
+<li>With dynamic data, whether being generated on the server-side or client-side, it's important to go through the full D3 General Update Pattern each time new data arrives to be processed by the D3 Data Join</li>
+<li>You can (and should) encapsulate the D3 General Update Pattern within a JavaScrip function that takes in a data set as an argument, that way you only have to code the D3 General Update Pattern once and can use it at will when new data comes in</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/d3-data-operator">D3 Data Operator</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-basic-general-update-pattern">D3 Basic General Update Pattern</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-update-pattern-with-key-functions">D3 Update Pattern With Key Functions</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            Dynamic Data and Update Data Function
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+Dynamic Data
+</strong>
+</p>
+<br>
+<p>
+Thus far, we have been looking at and using static data.
+</p>
+<p>
+<pre><code class="javascript">dataSetAll = [{"name":"Shanghai",         "population":18, "rank": 1},
+              {"name":"Guangzhou"       , "population":11, "rank":10},
+              {"name":"Dongguan"        , "population": 8, "rank":20},
+              {"name":"Cairo"           , "population": 7, "rank":30},
+              {"name":"Saint Petersburg", "population": 5, "rank":40},
+              {"name":"New Taipei"      , "population": 4, "rank":50}];</code></pre>
+</p>
+<p>
+The data set on the screen is an Array of JSON objects where each object represents a city and it's respective attributes.
+</p>
+<p>
+This is useful if you are feeding in data from the server once or if you are using static data.
+</p>
+<br>
+<p>
+As we saw in the last two videos, we can use the D3 General Update Pattern to update data bound to DOM elements.
+</p>
+<p>
+[ Image: General Update Pattern ]
+</p>
+<p>
+We can do it either by-index as the default or by using a key function.
+</p>
+<p>
+Though there are myriad ways to get and send changing data from the server, we will start slowly.
+</p>
+<p>
+For now, we will focus on using JavaScript to generate changing data.
+</p>
+<br>
+<p>
+We will use the JavaScript Date object to generate data.
+</p>
+<p>
+<pre><code class="javascript">currentTime = Date();
+
+currentTime.getDay();
+
+currentTime.getHour();
+
+currentTime.getMinute();
+
+currentTime.getSecond();</code></pre>
+</p>
+<p>
+This is pretty simple to use and you should be very familiar with how hours, minutes, seconds and days work.
+</p>
+<p>
+The JavaScript Date object has many methods for getting specific information.
+</p>
+<p>
+Here the list shows that we can get the day, the hour, the minute and the second the Date Object was created.
+</p>
+<br>
+<p>
+For this video we will focus on the Minutes and Seconds.
+</p>
+<p>
+<pre><code class="javascript">currentTime = Date();
+
+currentTime.getMinute();
+
+currentTime.getSecond();</code></pre>
+</p>
+<p>
+This is because these change fast enough for us to view it as dynamic data.
+</p>
+<br>
+<p>
+We write the following function named updateData.
+</p>
+<p>
+<pre><code class="javascript">function updateData() {
+
+    var currentTime = new Date();
+
+    return [{ "time_unit": "minute", "time_data": currentTime.getMinutes() }, 
+            { "time_unit": "second", "time_data": currentTime.getSeconds() }];
+
+}</code></pre>
+</p>
+<p>
+This function, when called, creates a new JavaScript Date object and assigns it to the current time variable.
+</p>
+<p>
+The function then returns an array of JavaScript Object Literals.
+</p>
+<p>
+As the keys have quotes around them making them strings, we can refer to them as JSON objects.
+</p>
+<p>
+Each JSON object has a key of "time_unit" and "time_data".
+</p>
+<p>
+The first JSON object has a time_unit of "minute" and will get the current time's minutes.
+</p>
+<p>
+The second JSON object as a time_unit of "second" and will get the current time's seconds.
+</p>
+<br>
+<p>
+We can use the JavaScript Window setInterval() method to have the function run every 1000 milliseconds.
+</p>
+<p>
+<pre><code class="javascript">setInterval(function() { 
+    console.log(updateData());
+}, 1000);</code></pre>
+</p>
+<p>
+Every one second, this code will call the updateData function which will then return the array of JSON objects.
+</p>
+<p>
+We write the returned value to the JavaScript Console using the console.log functionality.
+</p>
+<br>
+<p>
+Before we show the JavaScript example, a quick tip on working with setInterval in JavaScript.
+</p>
+<p>
+<pre><code class="javascript">setInterval(...) // returns an id
+
+clearInterval(id);</code></pre>
+</p>
+<p>
+When you execute the setInterval command, it will return an ID number.
+</p>
+<p>
+This is the internally assigned ID for this setInterval process.
+</p>
+<p>
+To stop a particular setInterval process, you have to use the clearInterval command with the ID of the process you want to stop.
+</p>
+<p>
+We'll show this in the JavaScript Example.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+Before we write the function, let's explore the JavaScript Date Object.
+</p>
+<p>
+<pre><code class="javascript">var currentTime = new Date();</code></pre>
+</p>
+<br>
+<p>
+When we define the variable, we get the current date and time.
+</p>
+<p>
+<pre><code class="javascript">currentTime;</code></pre>
+</p>
+<br>
+<p>
+If we use the getMinutes method, we get the minutes of the date and time from the currentTime variable.
+</p>
+<p>
+<pre><code class="javascript">currentTime.getMinutes();</code></pre>
+</p>
+<br>
+<p>
+If we use the getSeconds method, we get the seconds of the date and time from the currentTime variable.
+</p>
+<p>
+<pre><code class="javascript">currentTime.getSeconds();</code></pre>
+</p>
+<br>
+<p>
+It is important to remember that the currentTime Date object was created once, so if we run the getSeconds method again, it will continue to show the same number.
+</p>
+<p>
+<pre><code class="javascript">currentTime.getSeconds();</code></pre>
+</p>
+<p>
+We can see that it is the same number.
+</p>
+<br>
+<p>
+Alright, let's now build out the function.
+</p>
+<p>
+<pre><code class="javascript">function updateData() {
+
+    var currentTime = new Date();
+  
+    return [{ "time_unit": "minute", "time_data": currentTime.getMinutes() }, 
+            { "time_unit": "second", "time_data": currentTime.getSeconds() }];
+
+}</code></pre>
+</p>
+<br>
+<p>
+Let's run the function and assign it to a variable named data.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData();</code></pre>
+</p>
+<br>
+<p>
+Let's see what it returned.
+</p>
+<p>
+<pre><code class="javascript">data;</code></pre>
+</p>
+<p>
+BROWSER - click into the two objects.
+</p>
+<p>
+We can see that we have an array of two JavaScript objects.
+</p>
+<p>
+Each has a key of time_data and a key of time_unit.
+</p>
+<br>
+<p>
+If we run slash assign the variable again, we should get something different.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData();
+
+data;</code></pre>
+</p>
+<p>
+BROWSER - click into the two objects
+</p>
+<p>
+You can see that we have a different minute number and a different second number.
+</p>
+<br>
+<p>
+Next, to make it dynamic, let's use the setInterval command to update the data once every second.
+</p>
+<p>
+<pre><code class="javascript">setInterval(function() { console.log(updateData()); }, 1000);</code></pre>
+</p>
+<p>
+First, notice the process ID of 1.
+</p>
+<p>
+Next, notice that an array of objects keeps appearing in the JavaScript Console every 1 second.
+</p>
+<p>
+BROWSER - click into the objects of two consecutive arrays.
+</p>
+<p>
+When we click into two consecutive arrays, you can see that the numbers are being updated properly.
+</p>
+<p>
+So we now have dynamic data being generated.
+</p>
+<br>
+<p>
+Let's stop this data using the clearInterval command so we can move on to the next section.
+</p>
+<p>
+<pre><code class="javascript">clearInterval(1);</code></pre>
+</p>
+<p>
+Note that no more arrays of objects are being written to the Console.
+</p>
+<br>
+<p>
+Now that we have a way of generating dynamic data using JavaScript, let's next explore how we will deal with this dynamic data when updating a bar chart using D3.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Update Data Function
+</strong>
+</p>
+<br>
+<p>
+When we do a data join on a selection that already contains existing elements, we have three scenarios.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 1 - Element # = Data #
+// Scenario 2 - Element # > Data #
+// Scenario 3 - Element # < Data #</code></pre>
+</p>
+<p>
+In scenario one, we have an equal number of existing elements and data elements to be bound.
+</p>
+<p>
+In scenario two, we have more existing elements than we have data elements to be bound.
+</p>
+<p>
+In scenario three, we have less existing elements than we have data elements to be bound.
+</p>
+<p>
+In this video, we will always have an equal number of existing elements and data elements to be bound.
+</p>
+<p>
+So we will be in scenario 1.
+</p>
+<br>
+<p>
+The D3 Update Pattern is as follows:
+</p>
+<p>
+[ Image: General Update Pattern ]
+</p>
+<p>
+First - do a data join with the new data.
+</p>
+<p>
+Second - update the old elements as needed.
+</p>
+<p>
+Third - create new elements as needed.
+</p>
+<p>
+Fourth - If the third step appended elements to the enter selection, the update selection expands to include the enter selection so you can operate on enter and update selections at the same time.
+</p>
+<p>
+Fifth and final step, remove old elements as needed.
+</p>
+<p>
+Because we have the same number of existing elements as data elements to be bound, we won't have to deal with the enter and exit selections.
+</p>
+<p>
+So we will focus on the data join and updating attributes of elements based on the new data.
+</p>
+<br>
+<p>
+We are going to build a simple bar chart clock.
+</p>
+<p>
+[ Image: Bar Chart Clock ]
+</p>
+<p>
+It will ignore the day and hour and only display the minutes and seconds.
+</p>
+<p>
+This is a basic bar chart with x and y axis, x and y scales and SVG rectangles.
+</p>
+<p>
+The data will be generated by the updateData function to return minutes and seconds from a JavaScript Date Object.
+</p>
+<p>
+A data join will be performed and the updated data bound to the SVG Rectangle elements will be used to redraw the rectangles.
+</p>
+<br>
+<p>
+The way we do this is with a JavaScript function called redraw.
+</p>
+<p>
+<pre><code class="javascript">function redraw() {
+  
+    // Recompute Data
+  
+    // Do data join
+  
+    // Update SVG elements based on newly bound data
+
+}</code></pre>
+</p>
+<p>
+Within this function we will do a recomputing of the data.
+</p>
+<p>
+Then once we have the new data, we do a data join using a key function.
+</p>
+<p>
+Lastly, we update the SVG element attributes based on the newly bound data.
+</p>
+<br>
+<p>
+The recomputing of the data is the easy part.
+</p>
+<p>
+<pre><code class="javascript">// Recompute Data</code></pre>
+  var data = updateData();
+</p>
+<p>
+This is done by calling the updateData function.
+</p>
+<p>
+The array of JSON objects returned is the newly created data we will use for the data join.
+</p>
+<br>
+<p>
+The data join is done using a key function to make sure that the minute bar gets the minute data and that the second bar gets the second data.
+</p>
+<p>
+<pre><code class="javascript">// Do data join
+innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })</code></pre>
+  </p>
+<p>
+Because we are doing a data join where the number of existing elements and data elements to be bound are the same, we don't have to worry about the enter and exit selections.
+</p>
+<br>
+<p>
+As we are just updating the attributes of the elements that are already there, we can use the same functionality that we used to create the bar chart in the first place.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })
+        .attr("class", "bar")
+        .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+        .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+        .attr("width", xAxisScale.rangeBand())
+        .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+});</code></pre>
+</p>
+<p>
+We update the X and Y values to be the time unit and time data as scaled through the respective scaling functions.
+</p>
+<p>
+The width is still the x axis ordinal scale range band.
+</p>
+<p>
+The height is the height minus the y scaled function of the time data to ensure the rectangle starts from the 0 point as shown on the chart.
+</p>
+<br>
+<p>
+To make it more fun and to show what we can do, we will have the redraw function use a D3 transition over the 1 second.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })
+        .transition()              // ## HIGHLIGHT ##
+            .duration(1000)        // ## HIGHLIGHT ##
+            .attr("class", "bar")
+            .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+            .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+            .attr("width", xAxisScale.rangeBand())
+            .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+            .style("fill", function(d, i) {                        // ## HIGHLIGHT ##
+              if (d.time_data % 2 === 0) { return "steelblue";}    // ## HIGHLIGHT ##
+              else { return "green" }                              // ## HIGHLIGHT ##
+            });</code></pre>
+</p>
+<p>
+This transformation will make the rectangle movement more smooth.
+</p>
+<p>
+It will also make the fill of the rectangles alternate between green and steelblue depending on whether the minute or second is even or odd.
+</p>
+<br>
+<p>
+After we define this, we will then use the setInterval command to have new data generated, do a data join and update the SVG rectangle attributes once a second.
+function redraw() {
+  
+    // Recompute Data
+  
+    // Do data join
+  
+    // Update SVG elements based on newly bound data
+}
+
+setInterval(function() { redraw(); }, 1000);  // ## HIGHLIGHT ##</code></pre>
+</p>
+<br>
+<p>
+In doing this, we will show a very basic example of how we can use D3 with Dynamic Data and an Update Data Function.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+First, we define the updateData function that will create a new date object and provide us with an array of JSON objects detailing the minute and second it was run.
+</p>
+<p>
+<pre><code class="javascript">function updateData() {
+
+    var currentTime = new Date();
+  
+    return [{ "time_unit": "minute", "time_data": currentTime.getMinutes() }, 
+            { "time_unit": "second", "time_data": currentTime.getSeconds() }];
+
+}</code></pre>
+</p>
+<br>
+<p>
+To construct the bar chart we start with the definition of the SVG container the bar chart will live in.
+</p>
+<p>
+<pre><code class="javascript">var svgViewport = d3.select("body")
+  .append("svg")
+    .attr("width",300)
+    .attr("height",300);</code></pre>
+</p>
+<p>
+BROWSER - Open up the elements section and click on the SVG tag.
+</p>
+<br>
+<p>
+Then, we define the D3 Margin Convention Parameters:
+</p>
+<p>
+<pre><code class="javascript">var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width  = 300 - margin.left - margin.right,           
+    height = 300 - margin.top  - margin.bottom;</code></pre>
+</p>
+<br>
+<p>
+Using the D3 margin convention and SVG Viewport, we define the Inner Drawing Space:
+</p>
+<p>
+<pre><code class="javascript">var innerSpace = svgViewport.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");</code></pre>
+</p>
+<br>
+<p>
+Next, we define the Ordinal X Scaling function to help scale the x axis of the bar chart.
+</p>
+<p>
+<pre><code class="javascript">var xAxisScale = d3.scale.ordinal()
+    .domain(["minute", "second"])
+    .rangeRoundBands([0, width], .1);</code></pre>
+  </p>
+<p>
+Note that the domain is comprised of the string "minute" and the string "second".
+</p>
+<br>
+<p>
+Then, we define the Linear Y Scaling function to help scale the minutes and seconds.
+</p>
+<p>
+<pre><code class="javascript">var yAxisScale = d3.scale.linear()
+    .domain([0, 60])
+    .range([height, 0]);</code></pre>
+</p>
+<p>
+Note that since minutes and seconds both go to 60, we can show them both in the same chart with the same scale.
+</p>
+<p>
+Also - as always, remember that the SVG coordinate space is inverted across the Y axis, so we need the range to go from height to 0.
+</p>
+<br>
+<p>
+Now that we have the X Scaling function, we create the X axis and give it an orientation.
+</p>
+<p>
+<pre><code class="javascript">var myXAxis = d3.svg.axis().scale(xAxisScale).orient("bottom");</code></pre>
+</p>
+<br>
+<p>
+We also create the Y axis and give it an orientation.
+</p>
+<p>
+<pre><code class="javascript">var myYAxis = d3.svg.axis().scale(yAxisScale).orient("left");</code></pre>
+</p>
+<br>
+<p>
+We then call the X axis function to place it inside of the Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var AxisXGroup = innerSpace.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(myXAxis);</code></pre>
+</p>
+<p>
+Note - that we have to transform translate the SVG Group Element to make sure the X axis is at the bottom of the chart.
+</p>
+<br>
+<p>
+We also call the Y Axis function to place it inside of the Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var axisyGroup = innerSpace.append("g")
+    .attr("class", "y axis")
+    .call(myYAxis);</code></pre>
+</p>
+<br>
+<p>
+And with that, we have our coordinate system to draw our data in.
+</p>
+<br>
+<p>
+Now we run the updateData function to generate the data for the first time.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData();</code></pre>
+</p>
+<br>
+<p>
+Let's look to see what data was generated
+</p>
+<p>
+<pre><code class="javascript">data;</code></pre>
+</p>
+<p>
+BROWSER - click into it.
+</p>
+<p>
+We can see the time data for both the minutes and seconds.
+</p>
+<br>
+<p>
+Next, let's use the D3 pattern to generate the SVG Rectangles.
+</p>
+<p>
+<pre><code class="javascript">var rectangles = innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })
+  .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+    .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+    .attr("width", xAxisScale.rangeBand())
+    .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+    .style("fill", "steelblue");</code></pre>
+</p>
+<p>
+We do the normal selectAll non-existing elements, do a data join, choose the enter selection, append SVG rectangles and then define their attributes and styles.
+</p>
+<br>
+<p>
+And there we go, we have our bar chart clock showing us the minute and seconds.
+</p>
+<br>
+<p>
+Next, we do a manual updating of the data.
+</p>
+<br>
+<p>
+First, we calculate a new data set.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData();
+
+data;</code></pre>
+</p>
+<p>
+BROWSER - click into the objects
+</p>
+<p>
+We can see that this is a new data set with new time data for both the minute object and the second object.
+</p>
+<br>
+<p>
+Next, we do a data join and attribute update remembering that we just use the update selection as we have the same number of elements as new data points to be joined.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.selectAll(".bar")
+    .data(data, function(d, i) { return d.time_unit; })
+        .attr("class", "bar")
+        .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+        .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+        .attr("width", xAxisScale.rangeBand())
+        .attr("height", function(d, i) { return height - yAxisScale(d.time_data); });</code></pre>
+</p>
+<p>
+It worked, we saw both the minute bar and the second bar jump up with the new data.
+</p>
+<p>
+The key function in the data join worked correctly and the chart worked.
+</p>
+<p>
+Let's now code up the full Update Data Function.
+</p>
+<br>
+<p>
+In the redraw function, remember that we are adding in a transition so that the bars move smoothly and change color according to whether the number they represent is odd or even.
+</p>
+<p>
+<pre><code class="javascript">function redraw() {
+
+    var data = updateData();
+  
+    innerSpace.selectAll(".bar")
+        .data(data, function(d, i) { return d.time_unit; })
+            .transition()
+                .duration(1000)
+                .attr("class", "bar")
+                .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+                .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+                .attr("width", xAxisScale.rangeBand())
+                .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+                .style("fill", function(d, i) {
+                    if(d.time_data % 2 === 0) { return "steelblue";}
+                    else { return "green" }
+                });
+
+}</code></pre>
+</p>
+<p>
+Note that nothing happens.
+</p>
+<p>
+This because we have just defined the function.
+</p>
+<p>
+We will have to run it in order for it to take effect.
+</p>
+<br>
+<p>
+We run it once.
+</p>
+<p>
+<pre><code class="javascript">redraw();</code></pre>
+</p>
+<br>
+<p>
+We wait a few seconds and then run it again.
+</p>
+<p>
+<pre><code class="javascript">redraw();</code></pre>
+</p>
+<p>
+We can see how it is transitioning bar size for both the minute and second bars as well as changing color.
+</p>
+<br>
+<p>
+Finally, let's use the setInterval command to automate the redrawing so that it functions like a clock.
+</p>
+<p>
+<pre><code class="javascript">setInterval(function() { redraw(); }, 1000);</code></pre>
+</p>
+<p>
+You can see the second bar slowly and smoothly moving upwards as the seconds tick by.
+</p>
+<br>
+<p>
+And with that we have covered the basics of thinking about and generating basic Dynamic Data in JavaScript.
+</p>
+<br>
+<p>
+We have also shown how we can construct an Update Data Function that generates new data, does a data join with a key function and then uses part of the D3 General Update Pattern to construct a dynamic data visualization.
+</p>
+        </div>
+      </div>
+
+    
+    ☺</div>
+
+<hr>
+<h3 id="lesson60">D3 Update Pattern With Key Functions <h3>
+    <div>
+        <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>The D3 Data Operator produces three virtual selections - Enter, Update, and Exit</li>
+<li>The Enter selection contains placeholder elements for any data that did not get bound to DOM elements</li>
+<li>The Update selection contains all of the existing DOM elements that had their __data__ attributes updated</li>
+<li>The Exit selection contains all of the existing DOM elements which did not have their __data__ attributes updated</li>
+<li>When a D3 Data Join is done, there are only three possible scenarios: More Data Than DOM elements, Less Data Than DOM elements, or the same number of Data and DOM elements</li>
+<li>The D3 Data Operator joins data and DOM elements from left to right, unless otherwise specified</li>
+<li>The D3 Data Operator Key Function replaces the default by-index behavior of the data join, with a function of your choosing</li>
+<li>To properly use the D3 Data Join Key Function, you need to have each DOM element and data point return a string that uniquely identifies it from all other elements</li>
+<li>This way, D3 can match up the DOM elements that need to match up to the data points - this is why there needs to be uniqueness on the DOM element side and the Data side</li>
+<li>Object constancy in D3 refers to how graphical elements that represent data can be tracked visually so that as the underlying data changes, the object can be tracked visually through the transition from the old data to the new data</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/d3-data-operator">D3 Data Operator</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-update-selection">D3 Update Selection</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/binding-data-to-dom-elements">Binding Data to DOM Elements</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/using-data-bound-to-dom-elements">Using Data Bound to DOM Elements</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-basic-general-update-pattern">D3 Basic General Update Pattern</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            D3 Update Pattern With Key Functions
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+D3 Update Pattern Revisited
+</strong>
+</p>
+<br>
+<p>
+When D3 computes a data join using the Data Operator, three virtual selections are created.
+</p>
+<p>
+<pre><code class="javascript">// update => d3.selection.data(...);
+// enter  => d3.selection.data(...).enter();
+// exit   => d3.selection.data(...).exit();</code></pre>
+</p>
+<p>
+The update, enter and exit selections.
+</p>
+<p>
+The enter selection - contains placeholder elements for any new elements.
+</p>
+<p>
+The update selection - contains existing elements that have had their __data__ attributes updated.
+</p>
+<p>
+and the exit selection - contains the existing elements that have not had their __data__ attributes updated.
+</p>
+<br>
+<p>
+The Data operator joins a specified array of data with the current selection.
+</p>
+<p>
+[ Image: Image of the D3 Data Join ]
+</p>
+<p>
+If there current selection is empty, then we don't have to worry about the D3 Update pattern.
+</p>
+<p>
+This is because we are using the normal D3 pattern.
+</p>
+<p>
+However, if the current selection is not empty, then we have to use the D3 Update Pattern.
+</p>
+<br>
+<p>
+When we do a data join on a selection that already contains existing elements, we have three scenarios.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 1 - Element # = Data #
+// Scenario 2 - Element # > Data #
+// Scenario 3 - Element # < Data #</code></pre>
+</p>
+<p>
+In scenario one, we have an equal number of existing elements and data elements to be bound.
+</p>
+<p>
+In scenario two, we have more existing elements than we have data elements to be bound.
+</p>
+<p>
+In scenario three, we have less existing elements than we have data elements to be bound.
+</p>
+<br>
+<p>
+In scenario one, we have an equal number of existing elements and data elements to be bound.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 1 - Element # = Data # => Update, Exit empty, Enter empty</code></pre>
+</p>
+<p>
+In this case, the update selection will contain elements.
+</p>
+<p>
+The exit selection will be empty.
+</p>
+<p>
+And the enter selection will be empty.
+</p>
+<br>
+<p>
+In scenario two, we have more existing elements than we have data elements to be bound.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 2 - Element # > Data # => Update, Exit non-empty, Enter empty</code></pre>
+</p>
+<p>
+In this case, the update selection will contain elements.
+</p>
+<p>
+The exit selection will be non-empty as there are more existing elements than data elements to be bound.
+</p>
+<p>
+And the enter selection will be empty.
+</p>
+<br>
+<p>
+In scenario three, we have less existing elements than we have data elements to be bound.
+</p>
+<p>
+<pre><code class="javascript">// Scenario 3 - Element # < Data #</code></pre>
+</p>
+<p>
+In this case, the update selection will contain elements.
+</p>
+<p>
+The exit selection will be empty.
+</p>
+<p>
+And the enter selection will be non-empty as there are less existing elements than data elements to be bound.
+</p>
+<br>
+<p>
+Every time we update data and bind it to our elements, we will run into one of the three scenarios.
+</p>
+<p>
+[ Image: D3 General Update Pattern ]
+</p>
+<p>
+To keep it straight in our heads and in the code, we use the D3 update pattern.
+</p>
+<p>
+This pattern behaves in a way that regardless of what scenarios we are in, the necessary steps are run in order to ensure we are using the correct data.
+</p>
+<p>
+The D3 Update Pattern is as follows:
+</p>
+<p>
+First - do a data join with the new data.
+</p>
+<p>
+Second - update the old elements as needed.
+</p>
+<p>
+Third - create new elements as needed.
+</p>
+<p>
+Fourth - If third step appended elements to enter selection, the update selection expands to include the enter selection so you can operate on enter and update selections at the same time.
+</p>
+<p>
+Fifth and final step, remove old elements as needed.
+</p>
+<p>
+This way, our code will be easily understandable both by us and others.  
+</p>
+<br>
+<p>
+Using these three strings as data sets, we'll walk through an example in the JavaScript Console.
+</p>
+<p>
+<pre><code class="javascript">var cupcake  = "cupcake".split("");
+
+var flamingo = "flamingo".split("");
+
+var pony     = "pony".split("");</code></pre>
+</p>
+<p>
+First, we'll use the D3 pattern to create SVG text elements where each letter of the string cupcake is an individual text element.
+</p>
+<p>
+Then we'll use the D3 general update pattern to bind the flamingo data.
+</p>
+<p>
+Then we'll use the D3 general update pattern to bind the pony data.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+We start with the definition of the SVG container the text will live in.
+</p>
+<p>
+<pre><code class="javascript">var svg = d3.select("body").append("svg")
+    .attr("height", "300")
+    .attr("width", "600")
+  .append("g")
+    .attr("transform", "translate(12, 150)");</code></pre>
+</p>
+<br>
+<p>
+Next, we define the three datasets that we will be using:
+</p>
+<p>
+<pre><code class="javascript">var cupcake  = "cupcake".split("");
+
+cupcake;
+
+var flamingo = "flamingo".split("");
+
+flamingo;
+
+var pony = "pony".split("");
+
+pony;</code></pre>
+</p>
+<p>
+JavaScript is used to split each string into an array of individual letters.
+</p>
+<p>
+We will use these arrays of letters as the data set with D3.
+</p>
+<br>
+<p>
+First, we create the SVG text elements using the D3 pattern and the cupcake variable.
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text")
+    .data(cupcake)
+  .enter().append("text")
+    .attr("class", "cupcake_enter")
+    .attr("dy", ".35em")
+    .attr("x", function(d, i) { return i * 24; })
+    .text(function(d) { return d; });</code></pre>
+</p>
+<p>
+We have used the cupcake array of letters to create SVG text elements.
+</p>
+<p>
+Each element has a class of cupcake_enter.
+</p>
+<p>
+Each letter is spaced from left to right according to the index number of the element in the data array.
+</p>
+<br>
+<p>
+Next, let's do a data update and use the flamingo data set.
+</p>
+<br>
+<p>
+Remembering the D3 General Update Pattern, <strong>we will do a data join, an update, an enter, an enter and update and then an exit<strong>.
+</p>
+<br>
+<p>
+First, the data join
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(flamingo);</code></pre>
+</p>
+<br>
+<p>
+Then, we update the class of the old elements.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "flamingo_update");</code></pre>
+</p>
+<p>
+We can see that all of the DOM elements got their class updated - this is because there are more data elements in the flamingo data set than there were SVG text elements.
+</p>
+<br>
+<p>
+Next, we create new elements using the enter selection.
+</p>
+<p>
+<pre><code class="javascript">text
+  .enter().append("text")
+    .attr("class", "flamingo_enter")
+    .attr("x", function(d, i) { return i * 24; })
+    .attr("dy", ".35em");</code></pre>
+</p>
+<p>
+BROWSER - highlight flamingo enter class in elements.
+</p>
+<p>
+Because the word flamingo has one more letter than cupcake, we will have 1 element in the enter selection.
+</p>
+<p>
+Remember, once we use the append operator on the enter selection, the update selection expands to include the enter and update selection.
+</p>
+<br>
+<p>
+Since the update selection has now expanded, we can update the actual text of each SVG text element.
+</p>
+<p>
+<pre><code class="javascript">text
+    .text(function(d) { return d; });</code></pre>
+</p>
+<p>
+You can now see that the text has been updated.
+</p>
+<br>
+<p>
+To complete the D3 general update pattern, we remove any old elements that did not receive new data.
+</p>
+<p>
+<pre><code class="javascript">text.exit().remove();</code></pre>
+</p>
+<p>
+Since there were no elements left over, the exit selection was empty, so no elements were removed.
+</p>
+<p>
+And that completes the D3 General Update Pattern.
+</p>
+<br>
+<p>
+Let's run the D3 General Update Pattern again, only this time with the pony data set.
+</p>
+<br>
+<p>
+First, we do the data join
+</p>
+<p>
+<pre><code class="javascript">var text = svg.selectAll("text").data(pony);</code></pre>
+</p>
+<br>
+<p>
+Then, we update the class of old elements.
+</p>
+<p>
+<pre><code class="javascript">text.attr("class", "pony_update");</code></pre>
+</p>
+<p>
+BROWSER - highlight the pony_update class
+</p>
+<p>
+We see the first four elements have their class updated to pony underscore update.
+</p>
+<p>
+Note that it was the first four elements that had their data updated.
+</p>
+<p>
+In D3, unless you specify a key function (which we are going to cover later in this video), the elements are bound first come first serve style.
+</p>
+<br>
+<p>
+Next, we create new elements using the enter selection.
+</p>
+<p>
+<pre><code class="javascript">text
+  .enter().append("text")
+    .attr("class", "pony_enter")
+    .attr("x", function(d, i) { return i * 24; })
+    .attr("dy", ".35em");</code></pre>
+</p>
+<p>
+Notice that no new elements were created.
+</p>
+<p>
+This is because pony has less letters than flamingo, so no new data elements had to be created.
+</p>
+<p>
+D3 just doesn't create any new elements in this case.
+</p>
+<p>
+Remember, once we use the append operator on the enter selection, the update selection expands to include the enter and update selection.
+</p>
+<br>
+<p>
+Since the update selection has now expanded, we can update the actual text of each SVG text element.
+</p>
+<p>
+<pre><code class="javascript">text
+    .text(function(d) { return d; });</code></pre>
+</p>
+<p>
+BROWSER - highlight pony in the webpage section.
+</p>
+<p>
+You can now see that the text has been updated.
+</p>
+<p>
+The first four letters are p o n y and the rest of the letters still belong to flamingo.
+</p>
+<br>
+<p>
+To complete the D3 general update pattern, we remove any old elements that did not receive new data.
+</p>
+<p>
+<pre><code class="javascript">text.exit().remove();</code></pre>
+</p>
+<p>
+You can see that the letters that were after pony were removed.
+</p>
+<br>
+<p>
+We have now seen the D3 general update pattern when we have more data elements than existing elements in the selection.
+</p>
+<br>
+<p>
+We have also seen the D3 general update pattern when we have less data elements than existing elements in the selection.
+</p>
+<p>
+In both cases, the data was bound to DOM elements in a first come, first serve type of way.
+</p>
+<p>
+That is, the first data element was bound to the first DOM element, the second data element was bound to the second DOM element and so on and so forth.
+</p>
+<br>
+<p>
+If we specify a key function in the data join, then the data is bound according to the key function.    
+</p>
+<br>
+<br>
+<p>
+<strong>
+Data Join with Key Function
+</strong>
+</p>
+<br>
+<p>
+The first line is the data operator.
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(x)
+
+d3.selection.data(x, function(d, i) { ... });</code></pre>
+</p>
+<p>
+The second line is the data operator with a key function.
+</p>
+<p>
+The key function replaces the default by-index behavior of the data join.
+</p>
+<p>
+The key to key functions are that they are used to achieve object constancy.
+</p>
+<p>
+Though they can also be used to improve performance, we will look at them now through the idea of object constancy.
+</p>
+<br>
+<p>
+Object constancy in D3 refers to how a graphical element that represents data can be tracked visually.
+</p>
+<p>
+Object Constancy
+</p>
+<p>
+This visual tracking refers to any type of transition and / or data joins we can apply to an object.
+</p>
+<p>
+As an object representing data changes, we want to make sure we and our audience can follow the transition from a previous data set to a new data set.
+</p>
+<p>
+This makes it easier to understand what is happening and what changed and what didn't change.
+</p>
+<br>
+<p>
+We now take a look at a famous example of Object Constancy.
+</p>
+<p>
+This comes from Hans Roslings 200 countries, 200 Years, 4 Minutes - The Joy of Stats from BBC Four as seen on YouTube (http://www.youtube.com/watch?v=jbkSRLYSojo).
+</p>
+<p>
+We start the YouTube Video at 1 minute and 31 seconds and will watch to 1 minute and 57 seconds.
+</p>
+<p>
+Each circle you will see represents 1 country.
+</p>
+<p>
+While watching this video make sure to follow one of the circles representing 1 country..
+</p>
+<br>
+<p>
+PLAY VIDEO
+</p>
+<br>
+<p>
+As you were watching the video and following one of the circles, new data was being added to the Scatterplot chart.
+</p>
+<p>
+Though new data was being added, you were able to follow one circle all the way through because of the color hue and location.
+</p>
+<p>
+This is what we refer to as object constancy.
+</p>
+<br>
+<p>
+You were able to visually track a graphical element as it's underlying data changed.
+</p>
+<br>
+<p>
+Okay - so we want to achieve object constancy, how do we do that with a key function?
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(x, function(d, i) { ... });</code></pre>
+</p>
+<p>
+The way we do that is to have the key function returns a string to uniquely identify the data point.
+</p>
+<p>
+It is really important to make sure that the string returned will uniquely identify the data point.
+</p>
+<p>
+This way, we can identify which element in the current selection will be getting which data element from the data set we are using in the data join.
+</p>
+<br>
+<p>
+This data set comes from Wikipedia and is a list of Cities, their population in millions and their rank according to Wikipedia.
+</p>
+<p>
+<pre><code class="javascript">dataSetAll = [{"name": "Shanghai"        , "population": 18, "rank":  1},
+              {"name": "Guangzhou"       , "population": 11, "rank": 10},
+              {"name": "Dongguan"        , "population":  8, "rank": 20},
+              {"name": "Cairo"           , "population":  7, "rank": 30},
+              {"name": "Saint Petersburg", "population":  5, "rank": 40},
+              {"name": "New Taipei"      , "population":  4, "rank": 50}];
+
+dataSetAsiaHalved = [{"name": "Shanghai"  , "population": 9, "rank":  1},
+                     {"name": "Guangzhou" , "population": 5, "rank": 10},
+                     {"name": "Dongguan"  , "population": 4, "rank": 20},
+                     {"name": "New Taipei", "population": 2, "rank": 50}];</code></pre>
+</p>
+<p>
+Shanghai is the largest city and New Taipei is the 50th largest city.
+</p>
+<p>
+The first data set, dataSetAll, has the 6 cities.
+</p>
+<p>
+The second data set, dataSetAsiaHalved, has 4 cities where the population of each city has been cut in half.
+</p>
+<p>
+If we use the by-index default behavior of a data join, the 4th element in the DOM would get the New Taipei population, name and rank.
+</p>
+<p>
+What we would rather have happen is that each city gets the relevant data update.
+</p>
+<br>
+<p>
+By returning the name of each JSON object, we can identify the DOM element that has New Taipei as it's name as well as the data element in the data set that also has New Taipei as it's name.
+</p>
+<p>
+<pre><code class="javascript">d3.selection.data(x, function(d, i) { return d.name; });</code></pre>
+</p>
+<p>
+Once we have identified both, we can do the data join across these two elements.
+</p>
+<p>
+This is why it's very important that the key function returns a unique identifier.
+</p>
+<br>
+<p>
+Using these two data sets, we are going to create a Scatterplot.
+</p>
+<p>
+[ Image: Image of a Scatterplot ]
+</p>
+<p>
+Then we will update the data using a key-function.
+</p>
+<p>
+This will help us understand key-function data joins better.
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+We start by defining the two data sets.
+</p>
+<br>
+<p>
+First, we define the data set with all six cities:
+</p>
+<p>
+<pre><code class="javascript">dataSetAll = [{"name": "Shanghai"        , "population": 18, "rank":  1},
+              {"name": "Guangzhou"       , "population": 11, "rank": 10},
+              {"name": "Dongguan"        , "population":  8, "rank": 20},
+              {"name": "Cairo"           , "population":  7, "rank": 30},
+              {"name": "Saint Petersburg", "population":  5, "rank": 40},
+              {"name": "New Taipei"      , "population":  4, "rank": 50}];</code></pre>
+</p>
+<br>
+<p>
+Then, we define the data set with all the cities from Asia:
+</p>
+<p>
+<pre><code class="javascript">dataSetAsiaHalved = [{"name": "Shanghai"  , "population": 9, "rank":  1},
+                     {"name": "Guangzhou" , "population": 5, "rank": 10},
+                     {"name": "Dongguan"  , "population": 4, "rank": 20},
+                     {"name": "New Taipei", "population": 2, "rank": 50}];</code></pre>
+</p>
+<br>
+<p>
+Next, we define the SVG Viewport:
+</p>
+<p>
+<pre><code class="javascript">var svgViewport = d3.select("body")
+  .append("svg")
+    .attr("width",300)
+    .attr("height",300);</code></pre>
+</p>
+<p>
+BROWSER - Open up the elements section and click on the SVG tag.
+</p>
+<br>
+<p>
+Then, we define the D3 Margin Convention Parameters:
+</p>
+<p>
+<pre><code class="javascript">var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width  = 300 - margin.left - margin.right,           
+    height = 300 - margin.top  - margin.bottom;</code></pre>
+</p>
+<br>
+<p>
+Using the D3 margin convention and SVG Viewport, we define the Inner Drawing Space:
+</p>
+<p>
+<pre><code class="javascript">var innerSpace = svgViewport.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");</code></pre>
+</p>
+<br>
+<p>
+Next, we define the X scaling function to help scale the population of the cities.
+</p>
+<p>
+<pre><code class="javascript">var xAxisScale = d3.scale.linear().domain([0,20]).range([0,width]);</code></pre>
+</p>
+<br>
+<p>
+Then, we define the Y scaling functions to help scale the rank of the cities.
+</p>
+<p>
+<pre><code class="javascript">var yAxisScale = d3.scale.linear().domain([0,50]).range([0,height]);</code></pre>
+</p>
+<br>
+<p>
+Now that we have the X Scaling function, we create the X axis and give it an orientation.
+</p>
+<p>
+<pre><code class="javascript">var myXAxis = d3.svg.axis().scale(xAxisScale).orient("top");</code></pre>
+</p>
+<br>
+<p>
+We also create the Y axis and give it an orientation.
+</p>
+<p>
+<pre><code class="javascript">var myYAxis = d3.svg.axis().scale(yAxisScale).orient("left");</code></pre>
+</p>
+<br>
+<p>
+We then call the X axis function to place it inside of the Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var axisXGroup = innerSpace.append("g").call( myXAxis ).attr("class", "x axis");</code></pre>
+</p>
+<br>
+<p>
+We also call the Y Axis function to place it inside of the Inner Drawing Space.
+</p>
+<p>
+<pre><code class="javascript">var axisyGroup = innerSpace.append("g").call( myYAxis ).attr("class", "y axis");</code></pre>
+</p>
+<br>
+<p>
+And with that we have our coordinate system to draw our data in.
+</p>
+<br>
+<p>
+Now, we create the circles based on the dataSetAll data set inside of an SVG Group element with class of circles.
+</p>
+<p>
+<pre><code class="javascript">var circles = innerSpace
+  .append("g")
+    .attr("class", "circles")
+    .selectAll("circle")
+    .data(dataSetAll)
+  .enter().append("circle");</code></pre>
+</p>
+<br>
+<p>
+Then we define the attributes of the circles:
+</p>
+<p>
+<pre><code class="javascript">var circleAttributes = circles
+    .attr("cx", function(d,i) { return xAxisScale(d.population); })
+    .attr("cy", function(d,i) { return yAxisScale(d.rank      ); })
+    .attr("r",5);</code></pre>
+</p>
+<p>
+We can now see the circle elements.
+</p>
+<br>
+<p>
+Next, let's add text to designate which circle represents which city.
+</p>
+<br>
+<p>
+First we create the SVG text elements based on the data:
+</p>
+<p>
+<pre><code class="javascript">var text = innerSpace.append("g")
+    .attr("class", "city-names")
+    .selectAll("text")
+    .data(dataSetAll)
+  .enter().append("text");</code></pre>
+</p>
+<br>
+<p>
+Then we add the attributes to the SVG text Elements.
+</p>
+<p>
+<pre><code class="javascript">var textAttributes = text
+    .attr("x", function(d,i) { return xAxisScale(d.population) + 10; })
+    .attr("y", function(d,i) { return yAxisScale(d.rank)       + 10; })
+    .text(function(d,i) { return d.name; })
+    .style("fill", "red");</code></pre>
+</p>
+<br>
+<p>
+Fantastic - we now have the city data plotted on a scatter plot.
+</p>
+<br>
+<p>
+Now, let's update the data using the dataSetAsiaHalved
+</p>
+<br>
+<p>
+First, we do a data join where the key function will return the string of the name of the city.
+</p>
+<p>
+<pre><code class="javascript">var circles = innerSpace.selectAll("circle")
+    .data(dataSetAsiaHalved, function(d, i) { return d.name;});</code></pre>
+</p>
+<br>
+<p>
+Let's check the virtual selections.
+</p>
+<br>
+<p>
+First we check the enter selection.
+</p>
+<p>
+<pre><code class="javascript">circles.enter()[0];</code></pre>
+</p>
+<p>
+This returns an array that is filled with undefined.
+</p>
+<p>
+This is expected as the data we just joined had fewer elements than were already in the existing selection.
+</p>
+<br>
+<p>
+Next, we check the update selection.
+</p>
+<p>
+<pre><code class="javascript">circles[0];</code></pre>
+</p>
+<p>
+BROWSER - hover over each one slowly
+</p>
+<p>
+The update selection contains four elements.
+</p>
+<p>
+As we hover over them, you can see that they represent the four cities in Asia.
+</p>
+<br>
+<p>
+Lastly, we check the exit selection.
+</p>
+<p>
+<pre><code class="javascript">circles.exit()[0];</code></pre>
+</p>
+<p>
+BROWSER - hover over each one slowly
+</p>
+<p>
+The exit selection has 6 elements.
+</p>
+<p>
+The first three are undefined, then we have the 2 non-Asia cities and then a last undefined element.
+</p>
+<p>
+This is completely different from what we have seen before.
+</p>
+<p>
+Since we used a key-function, the exit elements are found in the middle of the array, rather than at the end like they have been before.
+</p>
+<br>
+<p>
+Let's now remove the exit selection elements.
+</p>
+<p>
+<pre><code class="javascript">circles.exit().remove();</code></pre>
+</p>
+<br>
+<p>
+Now - let's update the attributes of the circles based on the data we just joined using the key function.
+</p>
+<p>
+<pre><code class="javascript">var circleAttributes = circles
+    .attr("cx", function(d,i) { return xAxisScale(d.population); })
+    .attr("cy", function(d,i) { return yAxisScale(d.rank      ); })
+    .attr("r",5);</code></pre>
+</p>
+<p>
+You can see that each circle in the update selection, had it's cx, cy and r attributes updated.
+</p>
+<p>
+Since we only changed the population in the Asia dataset, the circles moved to the left.
+</p>
+<br>
+<p>
+Finally, let's do a data join with the original data set.
+</p>
+<p>
+<pre><code class="javascript">var circles = innerSpace.selectAll("circle")
+    .data(dataSetAll, function(d, i) { return d.name;});</code></pre>
+</p>
+<br>
+<p>
+Let's check the virtual selections.
+</p>
+<br>
+<p>
+First, we check the enter selection.
+</p>
+<p>
+<pre><code class="javascript">circles.enter()[0];</code></pre>
+</p>
+<p>
+BROWSER - open objects
+</p>
+<p>
+We find 2 data elements that did not match DOM elements, so they were added to the selection as place holder objects.
+</p>
+<p>
+Note that they were filled in using the by-index behavior.
+</p>
+<p>
+This is because the key-function did not return anything for existing elements, so they were added as they came in.
+</p>
+<br>
+<p>
+Next, let's check the update selection.
+</p>
+<p>
+<pre><code class="javascript">circles[0];</code></pre>
+</p>
+<p>
+BROWSER - hover over the elements.
+</p>
+<p>
+Here we see that the elements in the selection had their data updated.
+</p>
+<p>
+However, we see an undefined x 2.
+</p>
+<p>
+This represents the two elements in the enter selection.
+</p>
+<br>
+<p>
+Next, let's check the exit selection.
+</p>
+<p>
+<pre><code class="javascript">circles.exit()[0];</code></pre>
+</p>
+<p>
+Since there were more data points than DOM elements in the selection, the exit selection is empty.
+</p>
+<br>
+<p>
+Let's add in the elements from the enter selection.
+</p>
+<p>
+<pre><code class="javascript">circles.enter().append("circle")
+    .attr("cx", function(d,i) { return xAxisScale(d.population); })
+    .attr("cy", function(d,i) { return yAxisScale(d.rank      ); })
+    .attr("r",5);</code></pre>
+</p>
+<p>
+We choose the enter selection, append an SVG circle for each element in the enter selection and define the attributes of each circle.
+</p>
+<p>
+Note that the circles for Cairo and Saint Petersburg showed up.
+</p>
+<br>
+<p>
+Lastly, let's update the attributes for all of the circles.
+</p>
+<p>
+<pre><code class="javascript">var circleAttributes = circles
+    .attr("cx", function(d,i) { return xAxisScale(d.population); })
+    .attr("cy", function(d,i) { return yAxisScale(d.rank      ); })
+    .attr("r",5);</code></pre>
+</p>
+<p>
+And there we go, now all of our circles have updated their data and are located where they should be.
+</p>
+<p>
+Each circle had it's data updated correctly because we used the key-function.
+</p>
+<br>
+<p>
+And with that we have recovered how the D3 Update Pattern works as well as covered how to think and do a data join in D3 using a key-function.
+</p>
+<br>
+<p>
+Through the understanding generated, we have continued exploring the general update pattern that we can use in D3 when we are using data that will be updated.
+</p>
+        </div>
+      </div>
+
+        
+        
+    </div>
+
+
+<hr>
+<h3 id="lesson61">Making Dynamic Scales and Axes <h3>
+    <div>
+    <!-- DashingD3js.com Lesson Takeaways
+    ================================================== -->
+      <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Takeaways:</span>
+          </strong>
+        </div>
+        <div id="lesson-takeaway" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<ul>
+<li>You can use an HTML form element to change the visual representation of data - in this example, you can have the data represented as seconds or milliseconds</li>
+<li>Because the D3 Scale (linear in this example) is both an object and a function, you can redefine the domain and range as many times as you would like</li>
+<li>When the D3 Scale is used, it will use the last defined range and domain</li>
+<li>To redraw the D3 SVG Axis, you not only need to redefine the D3 Scale that was used for that particular Axis, you also have to call it again on the selection that represents the old D3 SVG Axis</li>
+<li>This redrawing / updating of the scale + axis works for all of the different D3 Scales (linear and ordinal in this example)</li>
+</ul>
+</p>
+        </div>
+      </div>
+
+
+    <!-- DashingD3js.com Lesson Video Resources
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;">
+        <div style="font-size:1.75em;">
+          <strong>
+            <span class="text-primary">Resources:</span>
+          </strong>
+        </div>
+        <div id="lesson-resources" style="font-size:1.25em;padding-top:1%;padding-left:2%;padding-right:2%;">
+          <p>
+<strong>
+D3 Video Tutorial Lessons:
+</strong>
+</p>
+<p>
+<p>
+<ul>
+<li><a href="https://www.dashingd3js.com/lessons/d3-axes">D3 Axes</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-axes-manipulation">D3 Axes Manipulation</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-scales-for-data">D3 Scales For Data</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/basic-chart-bar-chart">Basic Chart - Bar Chart</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-transition-basics">D3 Transition Basics</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-event-action-at-a-distance">D3 Event Action At A Distance</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/d3-basic-general-update-pattern">D3 Basic General Update Pattern</a></li>
+<li><a href="https://www.dashingd3js.com/lessons/dynamic-data-and-update-data-function">Dynamic Data and Update Data Function</a></li>
+</ul>
+</p>
+        </div>
+      </div>
+
+    <!-- Data Science Tutorial Video Lesson Transcript
+    ================================================== -->
+      <div id="wistia_video_resources" class="col-lg-12 well" style="background:white;margin-bottom:0px;">
+        <div style="font-size:2em;">
+          <strong>
+              <span class="text-primary">Transcript:</span>
+            <br>
+            <br>
+            Making Dynamic Scales and Axes
+          </strong>
+        </div>
+        <br>
+        <div id="lesson-transcript" style="font-size:1.25em;padding-top:15px;">
+          <p>
+<strong>
+The Goal
+</strong>
+</p>
+<br>
+<p>
+Let's take a close look at what we are going to be building in this video.
+</p>
+<p>
+BROWSER: Chart is going (see source code)
+</p>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<p>
+We take the chart we made in the previous video and focus on the seconds.
+</p>
+<p>
+Here we see a bar chart that shows what seconds my system currently has for the time.
+</p>
+<p>
+If the seconds is even then it colors the bar chart blue.
+</p>
+<p>
+If the second is odd then it colors the bar chart green.
+</p>
+<p>
+Above the bar is the actual second that is being displayed by the chart.
+</p>
+<p>
+The Y axis is demarcated by the number of seconds.
+</p>
+<p>
+The X axis has an ordinal scale that defines the bar as seconds.
+</p>
+<br>
+<p>
+What this video will cover is what happens when we switch from seconds to milliseconds.
+</p>
+<p>
+BROWSER: Every few seconds click on the seconds or milliseconds button
+</p>
+<p>
+One second is one thousand milliseconds so we will have to change a few things on the fly:
+</p>
+<p>
+First - we will have to change the scaling function of the Y axis
+</p>
+<p>
+Second - we will have to change the actual Y axis as it is drawn on the screen
+</p>
+<p>
+Third - we will have to change the scaling function of the X axis
+</p>
+<p>
+Fourth - we will have to change the actual X axis as it is drawn on the screen.
+</p>
+<p>
+Fifth - we will have to redraw the bar with the new scaling functions
+</p>
+<p>
+Sixth - we will have to make sure the text label above the chart now reflects the data in the units that we are using.
+</p>
+<br>
+<p>
+By changing those things on the fly what we are doing is making our scales and axis dynamic using Dynamic Data and the Update Data Function.
+</p>
+<p>
+Additionally, we will use part of the D3 General Update Pattern in our Update Data Function called redraw.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Making Dynamic Scales
+</strong>
+</p>
+<br>
+<p>
+This is a normal D3 linear scale.
+</p>
+<p>
+<pre><code class="javascript">var yAxisScale = d3.scale.linear()
+    .domain([0, 59])
+    .range([height, 0])
+    .nice();</code></pre>
+</p>
+<p>
+We define the domain - which in this case goes from 0 seconds to 59 seconds.
+</p>
+<p>
+We define the range as going from height to 0.
+</p>
+<p>
+This is done for the inversion of the Y Axis.
+</p>
+<p>
+Finally, we use the D3 scale nice method to extend the domain so that it starts and ends on nice round values.
+</p>
+<p>
+This is particularly useful for making the Y Axis as drawn on the screen look pretty.
+</p>
+<br>
+<p>
+The linear scale is a linear relationship between the domain and the range.
+</p>
+<p>
+<pre><code class="javascript">var tempScale = d3.scale.linear()
+    .domain([0,  10])
+    .range( [0, 100]);
+  
+tempScale(5);
+// returns 50</code></pre>
+</p>
+<p>
+It can be expressed as a y = mx + b formula.
+</p>
+<p>
+In this case, the tempScale will take in the number 5 and return the number 50.
+</p>
+<br>
+<p>
+When we think of a d3 linear scale, we are actually talking about an object and a function.
+</p>
+<p>
+<pre><code class="javascript">// d3.scale.linear is both an object and a function.
+d3.scale.linear
+    .domain(...)
+    .range(...)</code></pre>
+</p>
+<p>
+The reason why it's important to think about it like an object, is that we can use the setters and getters of the object.
+</p>
+<p>
+The setters and getters we are using here are the domain and range.
+</p>
+<p>
+Which means that we can set and then later get the domain of the object.
+</p>
+<p>
+As well as set and then later get the range of the object.
+</p>
+<br>
+<p>
+This is important because it means that we can easily redefine the domain of the scale object.
+</p>
+<p>
+<pre><code class="javascript">var tempScale = d3.scale.linear()
+    .domain([0,  10])
+    .range( [0, 100]);
+
+    tempScale.domain([0, 100]);
+  
+    tempScale(5);
+    // returns 5</code></pre>
+</p>
+<p>
+We just call the method again with the new domain we want.
+</p>
+<p>
+In this case, the tempScale will take in the number 5 and return the number 5.
+</p>
+<br>
+<p>
+It also means that we can easily redefine the range of the scale object.
+</p>
+<p>
+<pre><code class="javascript">var tempScale = d3.scale.linear()
+    .domain([0,  10])
+    .range( [0, 100]);
+
+    tempScale.range([0,  10]);
+  
+    tempScale(5);
+    // returns 5</code></pre>
+</p>
+<p>
+We just call the method again with the new range we want.
+</p>
+<p>
+In this case, the tempScale will take in the number 5 and return the number 5.
+</p>
+<br>
+<p>
+We can define and redefine the range or domain as many times as we want.
+</p>
+<p>
+<pre><code class="javascript">var tempScale = d3.scale.linear()
+    .domain([0,  10])
+    .range( [0, 100]);
+
+tempScale.range([0,  10]);
+
+tempScale.range([0, 100]);
+
+tempScale.range([0,  10]);
+  
+tempScale.range([0, 100]);
+
+tempScale(5);
+// returns 5</code></pre>
+</p>
+<p>
+When we use the scale as a function, it will use the last defined range and domain.
+</p>
+<br>
+<p>
+This is useful because in our Update Data Function, we can redefine the domain and/or range every time we run the function.
+</p>
+<p>
+<pre><code class="javascript">function redraw(type) { 
+    if      (type === "short") { tempScale.range([0,  10]) }
+    else if (type === "long") { tempScale.range([0, 100]) };
+}</code></pre>
+</p>
+<p>
+This is how we will be able to make dynamic linear scales.
+</p>
+<p>
+This simple example shows that we can just pass a string to the redraw function and it will automatically redefine the tempScale for us.  
+</p>
+<br>
+<p>
+We can do the same thing with an ordinal scale.
+</p>
+<p>
+<pre><code class="javascript">var xAxisScale = d3.scale.ordinal()
+    .domain(["seconds"])
+    .rangeRoundBands([0, width], .1);
+  
+xAxisScale.domain(["milliseconds"]);</code></pre>
+</p>
+<p>
+An ordinal scale also behaves like a function and an object.
+</p>
+<p>
+So we can go in and redefine the domain and / or range of the ordinal scale as many times as we want and when we want to.
+</p>
+<p>
+This is how we can make dynamic ordinal scales as well.
+</p>
+<p>
+We can program a redraw function that redefines the scale domain or range according to some given rules.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Making Dynamic Axes
+</strong>
+</p>
+<br>
+<p>
+In order to make an axis, you have to do two things.
+</p>
+<p>
+<pre><code class="javascript">var myXAxis = d3.svg.axis().scale(xAxisScale).orient("bottom");
+  
+var axisXGroup = innerSpace.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(myXAxis);</code></pre>
+</p>
+<p>
+One - you have to define it and provide a scale and orientation.
+</p>
+<p>
+Two - you have to call the axis function you defined on a selection to apply it.
+</p>
+<br>
+<p>
+When we change the scale of a chart or graph we are using, then we have to redefine the axis that used the old scale as well as redraw the axis that was using the old axis.
+</p>
+<p>
+<pre><code class="javascript">// 1) change the scale
+// 2) redefine the axis
+// 3) redraw the axis</code></pre>
+</p>
+<p>
+So it turns into a three step process when we change the scale.
+</p>
+<p>
+In the bar chart example we are going to make, this process will need to happen to both the X Axis as well as the Y Axis.
+</p>
+<br>
+<p>
+Just like the we can get and set the domain and range in the scale, with the d3.svg.axis, we can get and set the scale we are going to use.
+</p>
+<p>
+<pre><code class="javascript">var myXAxis = d3.svg.axis().scale(xAxisScale).orient("bottom");
+  
+// redefine xAxisScale //
+  
+myXAxis.scale(xAxisScale);</code></pre>
+</p>
+<p>
+So to redefine the scale, we just have to pass in the new scale.
+</p>
+<p>
+Once the new scale is passed in, the axis will be using the new scaling function.
+</p>
+<br>
+<p>
+Once we have redefined the new axis, we have to call it to apply it to the selection that contains the axis components.
+</p>
+<p>
+<pre><code class="javascript">d3.select(".x")
+    .call(myXAxis);</code></pre>
+</p>
+<p>
+In this case, we are selecting the "x" axis and all it's child components.
+</p>
+<p>
+Then we call the new axis that has the new scale and apply it to the selection.
+</p>
+<p>
+This behaves in the exact same way as if we were just doing it for the first time.
+</p>
+<br>
+<p>
+To follow object constancy within the scale and to make it clear we are switching scales, we add a transition so that the visual axis will transition from the old axis to the new one.
+</p>
+<p>
+<pre><code class="javascript">d3.select(".x")
+    .transition()
+    .call(myXAxis);</code></pre>
+</p>
+<br>
+<p>
+Note that we can do this with both the ordinal scales and linear scales.
+</p>
+<p>
+<pre><code class="javascript">d3.scale.ordinal() => d3.svg.axis().scale(...)
+// => ......call(xAxis);
+
+d3.scale.linear()  => d3.svg.axis().scale(...)
+// => ......call(yAxis);</code></pre>
+</p>
+<p>
+In the example we are covering we will do both.
+</p>
+<p>
+With the ordinal scale representing the X axis and the linear scale representing the Y axis.
+</p>
+<br>
+<p>
+So in order to make the scales, axis and visual axis dynamic based on the data that is coming in, we have to follow the procedure on the screen.
+</p>
+<p>
+<pre><code class="javascript">function redraw(...) {
+  
+    // 1) change the X scale
+    // 2) redefine the X axis
+    // 3) redraw the X axis
+
+    // 4) change the Y scale
+    // 5) redefine the Y axis
+    // 6) redraw the Y axis
+
+    // 7) redraw rectangle based on new x scale and new y scale
+
+    // 8) redraw text based on new x scale and new y scale
+
+}</code></pre>
+</p>
+<p>
+For each new scale we are going to use we have to go through a series of steps for each axis.
+</p>
+<p>
+Then, lastly, we have to use the new scale to draw the SVG rectangle and SVG Text on the screen.
+</p>
+<br>
+<br>
+<p>
+<strong>
+Redraw Function Walk Through
+</strong>
+</p>
+<br>
+<p>
+Because we just covered how to create the bar chart in the <a href="https://www.dashingd3js.com/lessons/dynamic-data-and-update-data-function">last video (Dynamic Data and Update Data Function)</a>, this video will cover the new things that are important to just this video.
+</p>
+<p>
+<pre><code class="javascript">var intervalName = "seconds";</code></pre>
+</p>
+<p>
+The first thing that is important is that we will use a variable to remember what type of units we are using.
+</p>
+<p>
+That way, the redraw function can be called over and over again with this variable and it will change it's behavior based on what value the intervalName variable has at the time of calling.
+</p>
+<br>
+<p>
+Next, we define the data generation function.
+</p>
+<p>
+<pre><code class="javascript">function updateData(usingSeconds) {
+
+    var currentTime = new Date();
+  
+    return [{ "time_unit": (usingSeconds) ? "second" : "millisecond",
+              "time_data": currentTime.getSeconds() * ((usingSeconds) ? 1 : 1000) }];
+
+}</code></pre>
+</p>
+<p>
+This function is passed a boolean that is true if the intervalName we are using is seconds or false if the intervalName is not seconds.
+</p>
+<p>
+Based on this, the data generation function will return an array of 1 JSON object.
+</p>
+<p>
+The object has two keys - a) the time unit and b) the time data.
+</p>
+<p>
+The time unit value is either seconds or milliseconds depending on the usingSeconds boolean.
+</p>
+<p>
+The time data value is either seconds or milliseconds.
+</p>
+<p>
+Remember, there are 1000 milliseconds in a second, so we just do a multiplication based on the usingSeconds boolean.
+</p>
+<br>
+<p>
+We generate the chart once using the D3 pattern and using seconds as our base case of units.
+</p>
+<p>
+<pre><code class="javascript">// generate the chart</code></pre>
+</p>
+<br>
+<p>
+Given what we have covered, we can break down the redraw function into 10 separate steps.
+</p>
+<p>
+<pre><code class="javascript">function redraw(intervalName) {
+  
+    // 1) calculate usingSeconds boolean
+    // 2) generate data
+
+    // 3) redefine the Y scale
+    // 4) redefine the Y axis
+    // 5) redraw the Y axis
+
+    // 6) redefine the X scale
+    // 7) redefine the X axis
+    // 8) redraw the X axis
+
+    // 9) redraw the rectangle
+    // 10) redraw the text label
+
+}</code></pre>
+</p>
+<p>
+They can also be grouped into 4 different groups.
+</p>
+<p>
+Group 1 does the generation of the data.
+</p>
+<p>
+Group 2 does the redefining of the Y scale and redrawing of the Y axis
+</p>
+<p>
+Group 3 does the redefining of the X scale and redrawing of the X axis
+</p>
+<p>
+Group 4 does the redrawing of the visual data elements.
+</p>
+<br>
+<p>
+This is the Group 1 set of commands - the ones that generate the data.
+</p>
+<p>
+<pre><code class="javascript">var usingSeconds = intervalName === "seconds";
+
+var data = updateData(usingSeconds);</code></pre>
+</p>
+<p>
+First, we take in the interval name and if it is equal to the string "seconds" then we assign the true boolean to the usingSeconds variable.
+</p>
+<p>
+Otherwise we assign the false boolean to the usingSeconds variable.
+</p>
+<p>
+Then we pass in the usingSeconds variable to the data generation function called updateData.
+</p>
+<p>
+This will pass back an array containing 1 JSON object with the data we will use to run the partial D3 General Update Pattern.
+</p>
+<br>
+<p>
+This is the Group 2 set of commands - the ones that redefine the Y scale and redraw the Y axis.
+</p>
+<p>
+<pre><code class="javascript">var yAxisScale = d3.scale.linear()
+    .domain([0, 59 * ((usingSeconds) ? 1 : 1000)])
+    .range([height, 0])
+    .nice();
+        
+myYAxis.scale(yAxisScale);
+  
+d3.select(".y")
+    .transition()
+    .duration(1000)
+    .call(myYAxis);</code></pre>
+</p>
+<p>
+First, the new yAxisScale linear scale is redefined according to whether we are using seconds or milliseconds.
+</p>
+<p>
+We focus in on the domain as the height of the Inner Drawing Space is not changing.
+</p>
+<p>
+Then we update the d3 svg axis function with the new updated scale.
+</p>
+<p>
+Lastly, we select the y axis svg group element and apply the updated d3 svg axis function with the new updated scale.
+</p>
+<p>
+We include a transition so that it is clear we are transitioning to a new scale and to make it pretty.
+</p>
+<br>
+<p>
+This is the Group 3 set of commands - the ones that redefine the X scale and redraw the X axis.
+</p>
+<p>
+<pre><code class="javascript">var xAxisScale = d3.scale.ordinal()
+    .domain([(usingSeconds) ? "seconds" : "milliseconds"])
+    .rangeRoundBands([0, width], .1);
+
+myXAxis.scale(xAxisScale);
+  
+d3.select(".x")
+    .transition()
+    .duration(1000)
+    .call(myXAxis);</code></pre>
+</p>
+<p>
+First, the new xAxisScale ordinal scale is redefined according to whether we are using seconds or milliseconds.
+</p>
+<p>
+We focus in on the domain as the width of the Inner Drawing Space is not changing.
+</p>
+<p>
+Then we update the d3 svg axis function with the new updated scale.
+</p>
+<p>
+Lastly, we select the x axis svg group element and apply the updated d3 svg axis function with the new updated scale.
+</p>
+<p>
+We include a transition so that it is clear we are transitioning to a new scale and to make it pretty.
+</p>
+<br>
+<p>
+This code redraws the bar after the new scales have been defined and updated.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.selectAll(".bar")
+    .data(data)
+        .transition()
+            .duration(1000)
+            .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+            .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+            .style("fill", function(d, i) {
+                if(d.time_data % 2 === 0) { return "steelblue";}
+                else { return "green" }
+            });</code></pre>
+</p>
+<p>
+We do a partial D3 general update pattern where we only care about the update selection as we are not removing or adding any new elements.
+</p>
+<p>
+We use the data object returned by the data generation function to construct the SVG rectangle attributes.
+</p>
+<p>
+Then, like in the last video, we use the time data to style the SVG Rectangle.
+</p>
+<p>
+Notice that because we have already updated and redefined the scales, we don't have to do any math related to whether we are using seconds or milliseconds here.
+</p>
+<p>
+The functionality works the same way for both cases.
+</p>
+<br>
+<p>
+Lastly, we do the update of the text label.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.select("#text_label")
+    .data(data)
+        .transition()
+            .duration(1000)
+            .attr("y", function(d, i) { return yAxisScale(d.time_data) - 15; })
+            .text(function(d, i) { return d.time_data; });</code></pre>
+</p>
+<p>
+We do a partial D3 general update pattern where we only care about the update selection as we are not removing or adding any new elements.
+</p>
+<p>
+Again, like the SVG rectangle, we don't have to do any math related to whether we are using seconds or milliseconds because the yAxisScale function will take care of it for us.
+</p>
+<br>
+<p>
+Then we add event listeners to each button to listen for the click event.
+</p>
+<p>
+<pre><code class="javascript">secondsButton.on("click", function(d, i) { return intervalName = "seconds"; });
+
+millisecondsButton.on("click", function(d, i) { return intervalName = "milliseconds"; });</code></pre>
+</p>
+<p>
+If one of the buttons is clicked, it redefines the intervalName variable to either seconds or milliseconds.
+</p>
+<p>
+This makes it so that when the setInterval function calls the redraw function next, it will use the interval that we last clicked.
+</p>
+<br>
+<p>
+Lastly, to continuously run the animation, we need to use the setInterval JavaScript command to have the redraw function execute once every second until we stop it.
+</p>
+<p>
+<pre><code class="javascript">function redraw(intervalName) {
+    // 1) calculate usingSeconds boolean
+    // 2) generate data
+    // 3) redefine the Y scale
+    // 4) redefine the Y axis
+    // 5) redraw the Y axis
+    // 6) redefine the X scale
+    // 7) redefine the X axis
+    // 8) redraw the X axis
+    // 9) redraw the rectangle
+    // 10) redraw the text label
+}
+
+// ** HIGHLIGHT **
+var originalSetInterval = setInterval(function() { redraw(intervalName); }, 1000);</code></pre>
+</p>
+<br>
+<p>
+Alright, let's walk through building the code up in the JavaScript console and then set the animation moving.
+</p>
+<br>
+<br>
+<p>
+<strong>
+JavaScript Console Walk Through
+</strong>
+</p>
+<br>
+<p>
+This web page has the D3 library imported from the d3js.org website.
+</p>
+<br>
+<p>
+We have opened the Chrome Developer Tools and are in the Console Section.
+</p>
+<br>
+<p>
+We start by creating the Seconds button
+</p>
+<p>
+<pre><code class="javascript">var secondsButton = d3.select("body")
+  .append("input")
+    .attr("type", "button")
+    .attr("value", "Seconds")
+    .attr("id", "button_seconds")
+    .style("font-size", "2em");</code></pre>
+</p>
+<p>
+This is just a normal usage of D3 to add in an HTML element.
+</p>
+<p>
+Note that we don't add in any functionality, later, with d3, we will add an event listener to it.
+</p>
+<br>
+<p>
+Then we create the "Milliseconds" button
+</p>
+<p>
+<pre><code class="javascript">var millisecondsButton = d3.select("body")
+  .append("input")
+    .attr("type", "button")
+    .attr("value", "Milliseconds")
+    .attr("id", "button_milliseconds")
+    .style("font-size", "2em");</code></pre>
+</p>
+<p>
+Note on this button as well, that no functionality was added in because we will add an event listener to it later.
+</p>
+<br>
+<p>
+We add in an HTML break to separate the buttons from the SVG container.
+</p>
+<p>
+<pre><code class="javascript">d3.select("body").append("br");</code></pre>
+</p>
+<br>
+<p>
+We define the interval variable as seconds to start off with.
+</p>
+<p>
+<pre><code class="javascript">var intervalName = "seconds";</code></pre>
+</p>
+<br>
+<p>
+Then we define the data generation function.
+</p>
+<p>
+<pre><code class="javascript">function updateData(usingSeconds) {
+
+    var currentTime = new Date();
+  
+    return [{ "time_unit": (usingSeconds) ? "second" : "millisecond",
+              "time_data": currentTime.getSeconds() * ((usingSeconds) ? 1 : 1000) }];
+
+}</code></pre>
+</p>
+<br>
+<p>
+Then we define the SVG Viewport, D3 Margin Convention and the Inner Drawing Space
+</p>
+<p>
+<pre><code class="javascript">var svgViewport = d3.select("body")
+  .append("svg")
+    .attr("width",300)
+    .attr("height",300);
+
+var margin = {top: 50, right: 50, bottom: 50, left: 75},
+    width  = 300 - margin.left - margin.right,           
+    height = 300 - margin.top  - margin.bottom;
+
+var innerSpace = svgViewport.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");</code></pre>
+</p>
+<p>
+Note, the three commands were run at the same times as we have covered them enough times that we don't have to go through them one by one.
+</p>
+<br>
+<p>
+Next, we do the initial definitions of the x and y scaling functions, the x and y axis functions and the drawing of the x and y axes.
+</p>
+<p>
+<pre><code class="javascript">var xAxisScale = d3.scale.ordinal()
+    .domain(["seconds"])
+    .rangeRoundBands([0, width], .1);
+
+var yAxisScale = d3.scale.linear()
+    .domain([0, 59])
+    .range([height, 0])
+    .nice();
+
+var myXAxis = d3.svg.axis().scale(xAxisScale).orient("bottom");
+
+var myYAxis = d3.svg.axis().scale(yAxisScale).orient("left");
+
+var axisXGroup = innerSpace.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(myXAxis);
+
+var axisYGroup = innerSpace.append("g")
+    .attr("class", "y axis")
+    .call(myYAxis);</code></pre>
+</p>
+<p>
+Again - we run the 6 commands at the same time as we have covered them many times before.
+</p>
+<p>
+Now we have our axes ready for the bar chart and the text label.
+</p>
+<br>
+<p>
+We generate the data using the function updateData we defined before.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData(true);
+
+data;</code></pre>
+</p>
+<p>
+BROWSER - click into data
+</p>
+<p>
+Because we are staring out with seconds on the first go around, we pass the boolean true to the function.
+</p>
+<p>
+The function uses this to set the internal variable, usingSeconds, so it will generate the correct data for the seconds.
+</p>
+<br>
+<p>
+Next, we do the D3 pattern using the data we just generated to create the initial bar for the bar chart.
+</p>
+<p>
+<pre><code class="javascript">var rectangles = innerSpace.selectAll(".bar")
+    .data(data)
+  .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d, i) { return xAxisScale(d.time_unit); })
+    .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+    .attr("width", xAxisScale.rangeBand())
+    .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+    .style("fill", "steelblue");</code></pre>
+</p>
+<p>
+Note that we are still using the original scaling functions.
+</p>
+<br>
+<p>
+Finally, we do the D3 pattern using the data we generated to create the initial text label above the bar chart.
+</p>
+<p>
+<pre><code class="javascript">var text = innerSpace.append("g").attr("class", "bar_label").selectAll("text")
+    .data(data)
+  .enter().append("text")
+    .attr("id", "text_label")
+    .attr("x", function(d, i) { 
+        return xAxisScale(d.time_unit) + (xAxisScale.rangeBand() / 2); })
+    .attr("y", function(d, i) { return yAxisScale(d.time_data) - 15; })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "22px")
+    .attr("fill", "red")
+    .attr("text-anchor", "middle")
+    .text(function(d, i) { return d.time_data; });</code></pre>
+</p>
+<p>
+Perfect - the bar chart and text label are all created.
+</p>
+<br>
+<p>
+Let's now manually run through the redraw function once together before we define it as a function onto itself.
+</p>
+<br>
+<p>
+First let's change the intervalName to milliseconds.
+</p>
+<p>
+<pre><code class="javascript">var intervalName = "milliseconds";</code></pre>
+</p>
+<br>
+<p>
+Next, let's define the usingSeconds variable.
+</p>
+<p>
+<pre><code class="javascript">var usingSeconds = intervalName === "seconds";
+
+usingSeconds;</code></pre>
+</p>
+<p>
+You can see that the usingSeconds variable is now the false boolean.
+</p>
+<br>
+<p>
+Next, let's generate new data using the intervalName variable.
+</p>
+<p>
+<pre><code class="javascript">var data = updateData(usingSeconds);
+
+data;</code></pre>
+</p>
+<p>
+BROWSER - click into the data.
+</p>
+<p>
+You can see that the time unit is now milliseconds and that the number in the 10's of thousands.
+</p>
+<br>
+<p>
+Next is where we start redefining scales, axes functions and visual axes.
+</p>
+<br>
+<p>
+First, we redefine the Y scale with the new updated data.
+</p>
+<p>
+<pre><code class="javascript">var yAxisScale = d3.scale.linear()
+    .domain([0, 59 * ((usingSeconds) ? 1 : 1000)])
+    .range([height, 0])
+    .nice();
+
+yAxisScale.domain();</code></pre>
+</p>
+<p>
+You can see that because we are doing milliseconds, that the domain of the scale now goes from 0 to 60 thousand.
+</p>
+<br>
+<p>
+Next, we redefine the Y axis.
+</p>
+<p>
+<pre><code class="javascript">myYAxis.scale(yAxisScale);</code></pre>
+</p>
+<p>
+Instantly see the code of the function.
+</p>
+<p>
+Don't worry about understanding this, it's not useful for what we are doing.
+</p>
+<br>
+<p>
+Next, we redraw the Y Axis with a transition of 3 seconds.
+</p>
+<p>
+<pre><code class="javascript">d3.select(".y")
+    .transition()
+    .duration(3000)
+    .call(myYAxis);</code></pre>
+</p>
+<p>
+You will have seen the numbers from the old axis move down as the new ones came in from the top.
+</p>
+<p>
+We can now see the Y axis going from 0 to 60 thousand.
+</p>
+<br>
+<p>
+Next, we redefine the X scale.
+</p>
+<p>
+<pre><code class="javascript">var xAxisScale = d3.scale.ordinal()
+    .domain([(usingSeconds) ? "seconds" : "milliseconds"])
+    .rangeRoundBands([0, width], .1);
+
+xAxisScale.domain();</code></pre>
+</p>
+<p>
+You can see that because we are doing milliseconds, that the domain of the scale is now the string "milliseconds".
+</p>
+<br>
+<p>
+Next, we redefine the X Axis with the new updated scale.
+</p>
+<p>
+<pre><code class="javascript">myXAxis.scale(xAxisScale);</code></pre>
+</p>
+<p>
+Again - you can ignore the result of the function.
+</p>
+<br>
+<p>
+Then, we redraw the X Axis with a transition of 3 seconds.
+</p>
+<p>
+<pre><code class="javascript">d3.select(".x")
+    .transition()
+    .duration(3000)
+    .call(myXAxis);</code></pre>
+</p>
+<p>
+We can see that the axis label is milliseconds instead of seconds.
+</p>
+<br>
+<p>
+Next, we redraw the rectangle using the D3 general update pattern, though in this case we only care about the update selection.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.selectAll(".bar")
+    .data(data)
+    .transition()
+        .duration(1000)
+        .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+        .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+        .style("fill", function(d, i) {
+            if(d.time_data % 2 === 0) { return "steelblue";}
+            else { return "green" }
+        });</code></pre>
+</p>
+<p>
+Because we are using updated scales and updated data, we don't have to specify anything about the units or whether we are using seconds or milliseconds.
+</p>
+<br>
+<p>
+Lastly, we update the text label also using the D3 general update pattern.
+</p>
+<p>
+<pre><code class="javascript">innerSpace.select("#text_label")
+    .data(data)
+    .transition()
+        .duration(1000)
+        .attr("y", function(d, i) { return yAxisScale(d.time_data) - 15; })
+        .text(function(d, i) { return d.time_data; });</code></pre>
+</p>
+<p>
+Fantastic - we now have the text label match the bar chart and the axes.
+</p>
+<br>
+<p>
+Let's now define the redraw function so that it does everything we just did manually.
+</p>
+<p>
+<pre><code class="javascript">function redraw(intervalName) {
+
+    var usingSeconds = intervalName === "seconds";
+    var data = updateData(usingSeconds);
+  
+    var yAxisScale = d3.scale.linear()
+        .domain([0, 59 * ((usingSeconds) ? 1 : 1000)])
+        .range([height, 0])
+        .nice();
+
+    myYAxis.scale(yAxisScale);
+
+    d3.select(".y").transition().duration(1000).call(myYAxis);
+
+    var xAxisScale = d3.scale.ordinal()
+        .domain([(usingSeconds) ? "seconds" : "milliseconds"])
+        .rangeRoundBands([0, width], .1);
+
+    myXAxis.scale(xAxisScale);
+  
+    d3.select(".x").transition().duration(1000).call(myXAxis);
+
+    innerSpace.selectAll(".bar")
+        .data(data)
+        .transition()
+            .duration(1000)
+            .attr("y", function(d, i) { return yAxisScale(d.time_data); })
+            .attr("height", function(d, i) { return height - yAxisScale(d.time_data); })
+            .style("fill", function(d, i) {
+                if(d.time_data % 2 === 0) { return "steelblue";}
+                else { return "green" }
+            });
+  
+    innerSpace.select("#text_label")
+        .data(data)
+        .transition()
+            .duration(1000)
+            .attr("y", function(d, i) { return yAxisScale(d.time_data) - 15; })
+            .text(function(d, i) { return d.time_data; });
+}
+
+redraw("seconds");</code></pre>
+</p>
+<p>
+We define the function and then run it with the string of "seconds".
+</p>
+<p>
+You can see that it now automatically changes all the things for us.
+</p>
+<br>
+<p>
+Next, we define the event listeners for both buttons.
+</p>
+<p>
+<pre><code class="javascript">secondsButton.on("click", function(d, i) { return intervalName = "seconds"; });
+
+millisecondsButton.on("click", function(d, i) { return intervalName = "milliseconds"; });</code></pre>
+</p>
+<br>
+<p>
+Let's press the Millisecond button and then check to see what the intervalName is.
+</p>
+<p>
+BROWSER press button
+</p>
+<p>
+<pre><code class="javascript">intervalName;</code></pre>
+</p>
+<p>
+The intervalName is "milliseconds", so it worked correctly.
+</p>
+<br>
+<p>
+Lastly, let's use the setInterval function to call the redraw function once a second.
+</p>
+<p>
+<pre><code class="javascript">var originalSetInterval = setInterval(function() { redraw(intervalName); }, 1000);</code></pre>
+</p>
+<p>
+You can now see the bar chart updating once a second.
+</p>
+<br>
+<p>
+Now, let's test pressing the two different HTML buttons.
+</p>
+<p>
+BROWSER alternate pressing the buttons.
+</p>
+<br>
+<p>
+And with that we have covered the basics of thinking about and Making Dynamic Scales and Axes through the use of the redraw function.
+</p>
+<br>
+<p>
+The Update Data Function redefines the scale, the axis function and then redraws the visual axis in a way that makes it follow the data we are generating.
+</p>
+<br>
+<p>
+This allows for greater control of creating dynamic data visualizations.
+</p>
+        </div>
+      </div>
+    
+    ☺</div>
+
+<hr>
+<h3 id="lesson62">D3 Drag Behavior <h3>
+<div>
+    
+    <!-- DashingD3js.com Lesson Takeaways
     ================================================== -->
       <div id="wistia_video_takeaway" class="col-lg-12 well" style="background:white;">
         <div style="font-size:1.75em;">
@@ -1038,4 +7219,5 @@ This technique will be useful in regular data visualizations, force layout diagr
 </p>
         </div>
       </div>
-
+    
+    ☺</div>☺
