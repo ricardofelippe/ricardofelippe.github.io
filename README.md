@@ -173,6 +173,8 @@
       
 	<h3>Best Sites</h3>
 		<li><a href="http://d3indepth.com/">Peter Cook</a></li>
+		<li><a href="https://bl.ocks.org/phoebebright">Peter Cook</a></li>		
+		
 	
 	
        	<h3>Useful Tips! </h3>
