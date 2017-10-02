@@ -38,6 +38,8 @@
     <h3>Lessons</h3>  
      <li><a href="unb_content.html#Lesson1">Lesson 1</a></li> 
   
+  </div>
+  
   <div class="tab-content">
     <div id="Organizacao" class="tab-pane fade in active">
     <h3>HOME</h3>
