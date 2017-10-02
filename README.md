@@ -36,7 +36,7 @@
 
    <div id="Speech" class="tab-pane fade">
     <h3>Lessons</h3>  
-     <li><a href="unb_content.html#Lesson1">Lesson 1</a></li> 
+     <li><a href="publicSpeak_content.html#Lesson1">Lesson 1</a></li> 
   
  
     </div>
