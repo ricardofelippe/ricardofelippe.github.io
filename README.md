@@ -18,10 +18,11 @@
 <div class="container">
   <h2>Exocórtex</h2>
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#Organizacao">Organização</a></li>
-    <li><a data-toggle="tab" href="#UNB">UNB</a></li>
-    <li><a data-toggle="tab" href="#arduino">Arduino</a></li>
-    <li><a data-toggle="tab" href="#D3">D3</a></li>  
+     <li class="active"><a data-toggle="tab" href="#Organizacao">Organização</a></li>
+     <li><a data-toggle="tab" href="#UNB">UNB</a></li>
+     <li><a data-toggle="tab" href="#D3">D3</a></li> 
+     <li><a data-toggle="tab" href="#Speech">Public Speech</a></li> 
+     <li><a data-toggle="tab" href="#arduino">Arduino</a></li>
     <li><a data-toggle="tab" href="#R">R</a></li>   
     <li><a data-toggle="tab" href="#HTML">HTML</a></li>
     <li><a data-toggle="tab" href="#CSS">CSS</a></li>
@@ -33,6 +34,12 @@
       
   </ul>
 
+  <div class="tab-content">
+    <div id="Speech" class="tab-pane fade in active">
+    
+    </div>
+    
+  
   <div class="tab-content">
     <div id="Organizacao" class="tab-pane fade in active">
     <h3>HOME</h3>
@@ -52,7 +59,7 @@
   
   <h3>Inferência</h3>
     <li><a href="unb_content.html#inferencia">Lista 01</a></li>  
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=13e23f308e2964e38ae0a78fcbece4ea7&authkey=Afu7QH6g_A3irBu79mQXgMQ">Lista 01</a></li>  
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=13e23f308e2964e38ae0a78fcbece4ea7&authkey=Afu7QH6g_A3irBu79mQXgMQ">Lista 02</a></li>  
     
     
     
