@@ -83,7 +83,7 @@
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1cd1f12cc287b47d2b2e9cf5ee14b2040&authkey=AdzNgKhNp2Te6KEo_wYG1CQ
   ">Estatística Básica Morettin e Bussab </a></li>  
       
-<li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fb4b545ce6864f05ba4d68107bdb3931&authkey=AQ51jYn74SBMcTrnYusec38">Probabilidade Total e Bayes ! Bom material/a></li>  
+<li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fb4b545ce6864f05ba4d68107bdb3931&authkey=AQ51jYn74SBMcTrnYusec38">Probabilidade Total e Bayes ! Bom material</a></li>  
 
 <span>No teorema da probabilidade total, um dos elementos de cálculo é a probabilidade a priori. Outro elemento é a 
 probabilidade a posteriori.</span>
