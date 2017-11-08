@@ -52,6 +52,7 @@
      <li><a href="https://bl.ocks.org/ricardofelippe">All Projects</a></li> 
   
   <h3>Secret Blocks</h3>  
+  <li><a href="BoneStructureTesouroDiretoDataDriven.html">BoneStructureTesouroDiretoDataDriven</a></li>
   <li><a href="https://gist.github.com/ricardofelippe/7cc53076d2e8a0a21438703af0df8ae7">Tesouro Direto-Data Driven</a></li> 
   
       
