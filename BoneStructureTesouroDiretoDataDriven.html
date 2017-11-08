@@ -1,0 +1,567 @@
+<!---
+Versão sem TAB.
+
+->
+
+<html>
+
+<head>
+  <title>Dashboard | Siscoserv</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- External JavaScript! -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- DC Core CSS -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.min.css" />
+
+ 
+  <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+
+<style type="text/css">
+
+		.tooltip {
+		    top: 100px;
+		    left: 100px;
+		    -moz-border-radius: 5px;
+		    border-radius: 5px;
+		    border: 2px solid #000;
+		    background: #fff;
+		    opacity: .9;
+		    color: black;
+		    padding: 10px;
+		    width: 375px;
+		    font-size: 1.6em;
+		    line-height: 28pt;
+		    /*font-weight: lighter;*/
+		    /*visibility: visible;*/
+		}
+		
+		table.table {
+			display: table;
+			width: 100%;
+		}
+		
+		table.table thead,
+		table.table tbody {
+			float: left;
+			width: 100%;
+		}
+		
+		table.table tbody {
+			overflow: auto;
+			height: 350px;
+		}
+		
+		table.table tr {
+			width: 100%;
+			display: table;
+			text-align: left;
+		}
+		
+		table.table th,
+		table.table td {
+			width: 20%;
+		}
+		
+		.filter-count,
+		.total-count,
+		.number-display,
+		#dateHeader {
+			color: #3182bd;
+			font-weight: bold;
+			font-size: 24px;
+		}
+		
+		/*
+		 * Full-page application style
+		 */
+		
+		body.application,
+		.keen-dashboard {
+		  background: #f2f2f2; 
+        /*background:#d9d9d9    ;*/
+		  padding: 20px 20px 0px;
+		}
+		
+		body.application > .container-fluid,
+		.keen-dashboard > .container-fluid {
+		  margin: 0px 0px 32px;
+		  margin: 0px 0px 2rem;
+		  padding-left: 0px;
+		  padding-right: 0px;
+		}
+		
+		body.application div[class^="col-"],
+		.keen-dashboard div[class^="col-"] {
+		  padding-left: 5px;
+		  padding-right: 5px;
+		}
+		
+		body.application div[class^="col-"] div[class^="col-"],
+		.keen-dashboard div[class^="col-"] div[class^="col-"] {
+		  padding-left: 15px;
+		  padding-right: 15px;
+		}
+		
+		body.application hr,
+		.keen-dashboard hr {
+		  border-color: #d7d7d7;
+		  margin: 10px 0px;
+		}
+		
+		body.application .navbar-inverse,
+		.keen-dashboard .navbar-inverse {
+		  /*background-color: #3d4a57;*/
+		  border-color: #333;
+		}
+		
+		body.application .navbar-inverse .navbar-nav > li > a,
+		body.application .navbar .navbar-brand,
+		.keen-dashboard .navbar-inverse .navbar-nav > li > a,
+		.keen-dashboard .navbar .navbar-brand {
+		  color: #fbfbfb;
+		  text-decoration: none;
+		}
+		
+		body.application .main-nav > li > a:hover,
+		.keen-dashboard .main-nav > li > a:hover {
+		  border-bottom: 2px solid transparent;
+		  -webkit-transition: border 300ms ease;
+		  -o-transition: border 300ms ease;
+		  transition: border 300ms ease;
+		  border-bottom-color: white;
+		}
+		
+		body.application .return-link,
+		body.application .return-link:focus,
+		body.application .return-link:hover,
+		.keen-dashboard .return-link,
+		.keen-dashboard .return-link:focus,
+		.keen-dashboard .return-link:hover {
+		  text-decoration: none;
+		}
+		
+		
+		.chart-wrapper {
+		  background: #fff;
+		  border: 1px solid #e2e2e2;
+		  border-radius: 3px;
+		  margin-bottom: 10px;
+		}
+		.chart-wrapper .chart-title {
+		  border-bottom: 1px solid #d7d7d7;
+		  color: #666;
+		  font-size: 14px;
+		  font-weight: 200;
+		  padding: 7px 10px 4px;
+		}
+		
+		.chart-wrapper .chart-stage {
+		  overflow: hidden;
+		  padding: 5px 10px;
+		  position: relative;
+		}
+		
+		.chart-wrapper .chart-notes {
+		  background: #fbfbfb;
+		  border-top: 1px solid #e2e2e2;
+		  color: #808080;
+		  font-size: 12px;
+		  padding: 8px 10px 5px;
+		}
+		.navbar-inverse {
+			background-color: #3182bd;
+		}
+		
+		.dc-chart .selected path {
+			stroke-width: 1.0;
+            
+            
+            
+		}
+    .div-total{
+        width: 30%;
+  max-width: 960px;
+        
+    }
+		
+		.col-sm-2,
+		.col-sm-3,
+		.col-sm-4,
+		.col-sm-6,
+		.col-sm-8,
+		.col-sm-9,
+		.col-sm-12 {
+			/*border: solid;*/
+		}
+    .dc-chart g.row text {
+    fill: black;
+    font-size: 12px;
+    cursor: pointer;    
+        }
+   
+    .x.axis path {
+    stroke-width: 1.5;
+   }    
+    
+    .dc-chart g.axis x{
+        fill: yellow;
+        
+    }
+        
+   text.shadow {
+  stroke: #fff;
+  stroke-width: 2.5px;
+  opacity: 0.9;
+}
+
+path { 
+    stroke: steelblue;
+    
+    
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+.grid path {
+          stroke-width: 0;
+}
+
+.area {
+    fill: lightsteelblue;
+      stroke-width: 0;
+}
+
+    
+    
+</style>
+    
+    
+    
+    
+    
+    
+<body class="application">
+
+ <div class="navbar navbar-inverse" role="navigation">
+	
+    <div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+				<a class="navbar-brand" href="../">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				</a>
+				<!--<a class="navbar-brand" href="./">Donors Choose Dashboard</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="https://www.donorschoose.org/">Home</a></li>
+					<li><a href="https://data.donorschoose.org/open-data/overview/">Source</a></li>
+				</ul>-->
+            <a class="navbar-brand" href="./">Siscoserv Dash</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="http://www.mdic.gov.br/index.php/comercio-servicos/estatisticas-do-comercio-exterior-de-servicos">Estatísticas</a></li>
+					<li><a href="http://www.mdic.gov.br/">Ministério da Indústria, Comércio Exterior e Serviços</a></li>
+				</ul>    
+                
+			</div>
+		</div>
+     </div>
+  
+    <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#panel_1">Painel Dinâmico</a></li>
+    <li><a data-toggle="tab" href="#tutorial">Como usar!</a></li>
+    
+      
+      
+        
+      
+  </ul>
+
+  <div class="tab-content">
+    
+    <div id="panel_1" class="tab-pane fade in active">
+   <div class="container-fluid">
+		
+		<div class="row" style="padding-top:50px;padding-bottom:10px">
+			
+			
+			<div class="col-sm-3 " id="total" >
+				<div class="tool radius">
+					<h5 class="text-uppercase">Total (USD)</h5>
+					<div class="dc-chart" id="totalizador"></div>
+					<!-- #data-count -->
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="tool radius">
+					<h5 class="text-uppercase">Seleção</h5>
+					<div class="dc-chart" id="data-count">
+						<span class="filter-count"></span> registros selecionados de
+						<span class="total-count"></span> registros
+						<span>
+							<a href='javascript:dc.filterAll();dc.redrawAll();'><font class="text-uppercase" color="#3182bd">Reset All</font></a>
+						</span>
+					</div>
+					<!-- #data-count -->
+				</div>
+			</div>
+            
+            <div class="col-sm-3">
+				<div class="tool radius">
+					<h5 class="text-uppercase">Ano Base</h5>
+					<select class="form-control" id="anobase"></select>
+				</div>
+			</div>
+		</div>
+
+		<!-- row and ring charts -->
+		<div class="row">
+			
+            <!-- status ring chart -->
+			<div id="Graf_1" class="col-sm-3">
+				<!-- ring chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">
+						<span>Módulo</span>
+					</div>
+					<!-- /.chart-title -->
+					<div class="chart-stage">
+                        <div class="alert alert-info alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <strong>Info !</strong> Selecione um Módulo! </div>
+						
+                        <div id="chart-ring-status" class="dc-chart">
+							<div>Selecionado: <span class="filter"></span>
+								<a class="reset" href="javascript:statusRingChart.filterAll();dc.redrawAll();" style="display:none;">reset</a>
+							</div>
+						</div>
+						<!-- #chart-ring-status -->
+					</div>
+					<!-- /.chart-stage -->
+					<div class="chart-notes"></div>
+					<!-- /.chart-notes -->
+				</div>
+				<!-- /.chart-wrapper -->
+			</div>
+            
+            <!-- amount row chart -->
+			<div class="col-sm-5">
+				<div class="chart-wrapper">
+					<div class="chart-title">
+						<span>Principais Parceiros Comerciais</span>
+					</div>
+					<div class="chart-stage">
+                        <div class="alert alert-info alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <strong>Info !</strong> Selecione um ou mais Países! </div>
+						
+						<div id="chart-country-bar" class="dc-chart">
+							<div>Selecionado: <span class="filter"></span>
+								<a class="reset" href="javascript:CountryBarChart.filterAll();dc.redrawAll();" style="display:none;">reset</a>
+							</div>
+						</div>
+						<!-- #chart-country-bar -->
+					</div>
+					<div class="chart-notes"></div>
+				
+				</div>
+			</div>
+            
+            
+            
+            
+            
+            
+			
+			
+            <!-- UF chart -->			
+            <div class="col-sm-4">
+				<div class="chart-wrapper">
+					<div class="chart-title">
+						<span>Principais Unidades da Federação</span>
+					</div>
+					<div class="chart-stage">
+                        <div class="alert alert-info alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <strong>Info !</strong> Selecione um ou mais Estados! </div>
+						
+						<div id="UFBarChart" class="dc-chart">
+							<div>Selecionado: <span class="filter"></span>
+								<a class="reset" href="javascript:ufBarChart.filterAll();dc.redrawAll();" style="display:none;">reset</a>
+							</div>
+						</div>
+						<!-- #UFBarChart -->
+					</div>
+					<div class="chart-notes"></div>
+				
+				</div>
+			</div>
+       
+		
+       
+       
+       
+       </div>
+		<!-- /.row -->
+       
+        
+		<!-- bar charts -->
+		<div class="row">
+			<!-- resources bar chart -->
+            <div class="col-sm-8">
+				<!-- row chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">
+                        <span><strong>Capítulo</strong> Para especificar as informações relativas a um capítulo basta selecioná-lo no gráfico.</span>
+					</div>
+					<!-- /.chart-title -->
+					<div class="chart-stage">
+                        
+						<div id="chart-bolha-capítulo" class="dc-chart">
+							<div >Selecionado: <span class="filter" ></span>
+								<a class="reset" href="javascript:chapterBubble.filterAll();dc.redrawAll();" style="display:none;">reset</a>
+							</div>
+						</div>
+						<!-- #chart-bolha-capítulo -->
+					</div>
+					<!-- /.chart-stage -->
+					<div class="chart-notes"></div>
+					<!-- /.chart-notes -->
+				</div>
+				<!-- /.chart-wrapper -->
+			</div>
+            
+        <div id="temp" class="col-sm-4">
+				<div class="chart-wrapper">
+					<div class="chart-title">
+                        <span><span><strong> Subitem </strong></span>  Apresentação dos Serviços em nível de Subitem.
+                        
+					</div>
+					<div class="chart-stage">
+                        
+						<div id="subitem-row-chart" class="dc-chart">
+							<div>Selecionado: <span class="filter"></span>
+								<a class="reset" href="javascript:servRowChart.filterAll();dc.redrawAll();" style="display:none;">reset</a>
+							</div>
+						</div>
+						<!-- #UFBarChart -->
+					</div>
+					<div class="chart-notes"></div>
+				
+				</div>
+			</div>
+            
+			
+			
+			
+			
+		</div>
+		<!-- /.row -->
+        <div class="row">
+            
+            
+        
+        </div>
+       
+       
+		<!-- table data -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="chart-wrapper">
+                    
+					<div class="chart-title">Tabela Resumo</div>
+                     
+					<div class="chart-stage">
+						<table class="table table-striped table-hover" id="data-table"></table>
+					</div>
+                    <button type="button" class="btn btn-primary btn-block" id="download3" ><strong>Download</strong></button>
+					<div class="chart-notes"></div>
+                    
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+
+	</div>        
+        
+    </div>
+      
+       
+      
+      
+      
+    <div id="tutorial" class="tab-pane fade">
+        <div id="GroupedBarChart"  role="main">
+        
+            <br>
+            <br>
+            <br>
+            
+            <span>TESTE</span>
+            
+        </div>
+     </div>    
+      
+      
+      
+        
+        
+  </div> 
+
+    
+</div>
+    
+<!-- /.container-fluid -->
+
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- D3 Core JavaScript -->
+	<script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<!-- D3 Queue JavaScript -->
+	<script type="text/javascript" src="https://d3js.org/d3-queue.v3.min.js" charset="utf-8"></script>
+	<!-- Crossfilter JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+	<!-- DC.js Core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.min.js"></script>
+	<!-- Moment Core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    
+	<!-- Custom JavaScript -->
+	<script type="text/javascript">
+		
+   	  
+       var svgSelection = d3.select("#Graf_1").append("svg").attr("width","200").attr("height","200");
+             
+     
+    
+      
+        
+        
+	</script>    
+    </body>
+
+</html>
