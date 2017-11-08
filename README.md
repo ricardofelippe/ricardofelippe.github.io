@@ -21,7 +21,7 @@
      <li class="active"><a data-toggle="tab" href="#Organizacao">Organização</a></li>
      <li><a data-toggle="tab" href="#UNB">UNB</a></li>
      <li><a data-toggle="tab" href="#D3">D3</a></li> 
-     <li><a data-toggle="tab" href="#Projetos">D3</a></li> 
+     <li><a data-toggle="tab" href="#Projetos">Projetos</a></li> 
      <li><a data-toggle="tab" href="#Speech">Public Speech</a></li> 
      <li><a data-toggle="tab" href="#arduino">Arduino</a></li>
     <li><a data-toggle="tab" href="#R">R</a></li>   
