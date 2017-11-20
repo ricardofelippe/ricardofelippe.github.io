@@ -79,6 +79,9 @@
   <h3>Inferência</h3>
     <li><a href="unb_content.html#inferencia">Lista 01</a></li>  
     <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=13e23f308e2964e38ae0a78fcbece4ea7&authkey=Afu7QH6g_A3irBu79mQXgMQ">Lista 02</a></li>  
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=10574408ca88e4533ae746b6e6b6f8c1d&authkey=AVsWsI_b5af48T-xJNCPx2E&e=da4cabcb28e14045ab49d0d0719174d8">Lista 03</a></li>  
+    
+    
     
     
     
