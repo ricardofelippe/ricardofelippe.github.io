@@ -83,6 +83,10 @@
     
     
     
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a9d80a3c643e41948a6ea96890cd7be4&authkey=AXYb5zeIXwmwitHrc0hKm2k&e=e5276bd1c8af4456abf59b58496acced">Bolfarine</a></li>  
+    
+    
+    <li><a href="http://www.portalaction.com.br/inferencia-0"> Portal Action-Inferência</a></li>  
     
     
     <li><a href="unb_content.html#inferencia">Hald - A History of Parametric Statistical Inference from Bernoulli to Fisher, 1713 to 1935</a></li>  
