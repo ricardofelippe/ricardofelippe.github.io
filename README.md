@@ -232,9 +232,13 @@ probabilidade a posteriori.</span>
 	if (typeof(f.top) != "undefined") {f=f.top(Infinity);}else{}
 	if (typeof(f.dimension) != "undefined") {f=f.dimension(function(d) { return "";}).top(Infinity);}else{}
 	console.log(filter+"("+f.length+") = "+JSON.stringify(f).replace("[","[\n\t").replace(/}\,/g,"},\n\t").replace("]","\n]"));
+	} 
+	
+	print_filter(mostreisso);
 	</pre>
 	
-}   
+	
+
 	
 	
     <h3>Blocker & Gist</h3>
