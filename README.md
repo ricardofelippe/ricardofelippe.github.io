@@ -223,6 +223,19 @@ probabilidade a posteriori.</span>
        	<h3>Useful Tips! </h3>
 	<li><a href="d3_content.html#d30">How Setup a Server with Python!</a></li>
 	<li><a href="https://bl.ocks.org/mbostock/3019563">Margin Convention!</a></li>
+	<li><a href="">How print result using Crossfilter filter! <br> </a></li>
+		
+	<pre>
+	function print_filter(filter){
+	var f=eval(filter);
+	if (typeof(f.length) != "undefined") {}else{}
+	if (typeof(f.top) != "undefined") {f=f.top(Infinity);}else{}
+	if (typeof(f.dimension) != "undefined") {f=f.dimension(function(d) { return "";}).top(Infinity);}else{}
+	console.log(filter+"("+f.length+") = "+JSON.stringify(f).replace("[","[\n\t").replace(/}\,/g,"},\n\t").replace("]","\n]"));
+	</pre>
+	
+}   
+	
 	
     <h3>Blocker & Gist</h3>
       <li><a href="https://bl.ocks.org/ricardofelippe">Blocker!</a></li>
