@@ -115,8 +115,12 @@ probabilidade a posteriori.</span>
     <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=15eeecd377ae44f66bad8e2ad5929236e&authkey=ASTmSVOfatyt5UBVxEzpths
 ">Estatística & R</a></li>  
 
-    
+    <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html
+">Curso R UFPR</a></li>  
+
+
     <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fbcb21f219fa485a8e81e457adf6634b&authkey=ASUu-KdmW6jLwLczB-tHbGU">Estatísticas de Ordem</a></li>  
+
 
 
     
@@ -418,6 +422,8 @@ probabilidade a posteriori.</span>
     </div>
     <div id="R" class="tab-pane fade">
     <h3>R advanced</h3>
+    <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
+
 
 <li><a href="r_content.html#R0">R Tips!</a></li>
 <li><a href="r_content.html#R1">R and its indices!</a></li>
