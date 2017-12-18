@@ -58,6 +58,9 @@
   <h3>Opções</h3>  
   <h4>Videos</h4>  
   <li><a href="https://www.youtube.com/watch?v=kQt67kxY5C8&t=1s">Volatilidade - Histórica vs Implícita - Ep.1</a></li>
+  <li><a href="https://www.youtube.com/watch?v=8gTwfMV7oKs">Aula de opção #27 - Fly / Borboleta</a></li>
+  
+  
   
   
   </div>
