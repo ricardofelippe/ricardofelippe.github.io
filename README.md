@@ -19,9 +19,9 @@
   <h2>Exocórtex</h2>
   <ul class="nav nav-tabs">
      <li class="active"><a data-toggle="tab" href="#Organizacao">Organização</a></li>
+     <li><a data-toggle="tab" href="#Projetos">Projetos</a></li> 
      <li><a data-toggle="tab" href="#UNB">UNB</a></li>
      <li><a data-toggle="tab" href="#D3">D3</a></li> 
-     <li><a data-toggle="tab" href="#Projetos">Projetos</a></li> 
      <li><a data-toggle="tab" href="#Speech">Public Speech</a></li> 
      <li><a data-toggle="tab" href="#arduino">Arduino</a></li>
     <li><a data-toggle="tab" href="#R">R</a></li>   
@@ -55,7 +55,11 @@
   <li><a href="BoneStructureTesouroDiretoDataDriven.html">BoneStructureTesouroDiretoDataDriven</a></li>
   <li><a href="https://gist.github.com/ricardofelippe/7cc53076d2e8a0a21438703af0df8ae7">Tesouro Direto-Data Driven</a></li> 
   
-      
+  <h3>Opções</h3>  
+  <h4>Videos</h4>  
+  <li><a href="https://www.youtube.com/watch?v=kQt67kxY5C8&t=1s">Volatilidade - Histórica vs Implícita - Ep.1</a></li>
+  
+  
   </div>
   <!------------------------------------PROJETOS--------------------------------------------------------------->
   
