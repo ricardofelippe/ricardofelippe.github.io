@@ -65,7 +65,7 @@
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1191748ad152a4d11936f495288741381&authkey=ASMpvdLicK2CDGOI3Bc2qh4&e=55c50049cae4447f8d8bd60d466fa5a5">Introdução às opções</a></li>
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1191748ad152a4d11936f495288741381&authkey=ASMpvdLicK2CDGOI3Bc2qh4&e=55c50049cae4447f8d8bd60d466fa5a5">
 Quase tudo que sei sobre ações</a></li>
-  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a66c2ae92c5a4e4aad4a77d008d8da6b&authkey=AWBw3Qo5e4UfFCyfla44YZk&e=b2b2d54323be4b4e8a5031d33c279046"Investimentos no Exterior</a></li>
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a66c2ae92c5a4e4aad4a77d008d8da6b&authkey=AWBw3Qo5e4UfFCyfla44YZk&e=b2b2d54323be4b4e8a5031d33c279046">Investimentos no Exterior</a></li>
  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1479b45c7482446259a571543926dff15&authkey=AQmAV294hztEIyudiaxP7Tk&e=ab91c2ce515645c3a0d4b1519cc1ff99">Vocês são burros!</a></li>
    
 
