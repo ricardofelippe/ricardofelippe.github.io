@@ -59,6 +59,15 @@
   <h4>Videos</h4>  
   <li><a href="https://www.youtube.com/watch?v=kQt67kxY5C8&t=1s">Volatilidade - Histórica vs Implícita - Ep.1</a></li>
   <li><a href="https://www.youtube.com/watch?v=8gTwfMV7oKs">Aula de opção #27 - Fly / Borboleta</a></li>
+
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=16056033d057e40118daf81fa10eeeb62&authkey=AfMLJjvoaZWLKzlPZhdewuY&e=dd715328b7f747cf8660c8246583c36d">Black Sholes</a></li>
+  <li><a href=https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=11e6680793a734d08a7ccfddf9ef7592f&authkey=AcOoaRWaY98B-NEQ2ysQ_R4&e=ca7f9c1eed3845bb88cb05500debcbda">Introdução ao mercado de Opções</a></li>
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1bd4b1eeee6c04342b06cc1ba1d9a8b65&authkey=AZxM5W5Drr080HNw-umZEmU&e=5ad0bc4b38c14533876ff6c0a40658de">Trava de Alta</a></li>
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1bd4b1eeee6c04342b06cc1ba1d9a8b65&authkey=AZxM5W5Drr080HNw-umZEmU&e=5ad0bc4b38c14533876ff6c0a40658de">Trava de Baixa</a></li>
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1bd4b1eeee6c04342b06cc1ba1d9a8b65&authkey=AZxM5W5Drr080HNw-umZEmU&e=5ad0bc4b38c14533876ff6c0a40658de">Venda Coberta</a></li>
+  
+
+  
   
   <h3>Opções-Ebooks</h3>  
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1bdfecc5d2ac744ecb9b2d54e1cdcc1af&authkey=AcfNzKCYpFLXwMdR7lGGSiY&e=4ff70fc747be4000aaa67ffead648d47"> Filosofia Basster </a></li>
@@ -68,6 +77,10 @@ Quase tudo que sei sobre ações</a></li>
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a66c2ae92c5a4e4aad4a77d008d8da6b&authkey=AWBw3Qo5e4UfFCyfla44YZk&e=b2b2d54323be4b4e8a5031d33c279046">Investimentos no Exterior</a></li>
  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1479b45c7482446259a571543926dff15&authkey=AQmAV294hztEIyudiaxP7Tk&e=ab91c2ce515645c3a0d4b1519cc1ff99">Vocês são burros!</a></li>
    
+
+
+
+
 
   
   
