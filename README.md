@@ -61,7 +61,7 @@
   <li><a href="https://www.youtube.com/watch?v=8gTwfMV7oKs">Aula de opção #27 - Fly / Borboleta</a></li>
 
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=16056033d057e40118daf81fa10eeeb62&authkey=AfMLJjvoaZWLKzlPZhdewuY&e=dd715328b7f747cf8660c8246583c36d">Black Sholes</a></li>
-  <li><a href=https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=11e6680793a734d08a7ccfddf9ef7592f&authkey=AcOoaRWaY98B-NEQ2ysQ_R4&e=ca7f9c1eed3845bb88cb05500debcbda">Introdução ao mercado de Opções</a></li>
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=11e6680793a734d08a7ccfddf9ef7592f&authkey=AcOoaRWaY98B-NEQ2ysQ_R4&e=ca7f9c1eed3845bb88cb05500debcbda">Introdução ao mercado de Opções</a></li>
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1bd4b1eeee6c04342b06cc1ba1d9a8b65&authkey=AZxM5W5Drr080HNw-umZEmU&e=5ad0bc4b38c14533876ff6c0a40658de">Trava de Alta</a></li>
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1bd4b1eeee6c04342b06cc1ba1d9a8b65&authkey=AZxM5W5Drr080HNw-umZEmU&e=5ad0bc4b38c14533876ff6c0a40658de">Trava de Baixa</a></li>
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1bd4b1eeee6c04342b06cc1ba1d9a8b65&authkey=AZxM5W5Drr080HNw-umZEmU&e=5ad0bc4b38c14533876ff6c0a40658de">Venda Coberta</a></li>
