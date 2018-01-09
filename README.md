@@ -474,6 +474,12 @@ probabilidade a posteriori.</span>
 <h3>R Data Carpentry</h3>
 <li><a href="https://bookdown.org/csgillespie/efficientR/data-carpentry.html" target="_blank">Carpentry!!</a></li>
     
+
+<h3>Efficiente R</h3>
+<li><a href="https://bookdown.org/csgillespie/efficientR/" target="_blank">Efficiente R programing</a></li>
+
+    
+    
     </div>
     <div id="OUTROS" class="tab-pane fade">
         
