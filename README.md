@@ -478,7 +478,11 @@ probabilidade a posteriori.</span>
 <h3>Efficiente R</h3>
 <li><a href="https://bookdown.org/csgillespie/efficientR/" target="_blank">Efficiente R programing</a></li>
 
-    
+
+<h3>Swirll!</h3>
+<li><a href="http://swirlstats.com/students.html" target="_blank">Efficiente R programing</a></li>
+
+
     
     </div>
     <div id="OUTROS" class="tab-pane fade">
