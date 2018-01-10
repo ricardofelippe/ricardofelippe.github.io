@@ -77,6 +77,13 @@ Quase tudo que sei sobre ações</a></li>
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a66c2ae92c5a4e4aad4a77d008d8da6b&authkey=AWBw3Qo5e4UfFCyfla44YZk&e=b2b2d54323be4b4e8a5031d33c279046">Investimentos no Exterior</a></li>
  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1479b45c7482446259a571543926dff15&authkey=AQmAV294hztEIyudiaxP7Tk&e=ab91c2ce515645c3a0d4b1519cc1ff99">Vocês são burros!</a></li>
    
+  <h3>VCSA</h3> 
+  
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a5761779ac204038899477633227dd93&authkey=AV9X4n0cxlaj3k_Ut09FhQA&e=nO7hZY"> Controle risco-VCSA </a></li>
+  
+  
+  
+
 
 
 
