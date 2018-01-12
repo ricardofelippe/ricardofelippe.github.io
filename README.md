@@ -29,7 +29,7 @@
     <li><a data-toggle="tab" href="#CSS">CSS</a></li>
     <li><a data-toggle="tab" href="#JAVA">Java</a></li>
     <li><a data-toggle="tab" href="#SVG">SVG</a></li>   
-    <li><a data-toggle="tab" href="#OUTROS">OUTROS</a></li>   
+    <li><a data-toggle="tab" href="#OUTROS">Livros</a></li>   
       
         
       
@@ -494,6 +494,9 @@ probabilidade a posteriori.</span>
     </div>
     <div id="OUTROS" class="tab-pane fade">
         
+	
+    <li>Ver livro :"Iludidos pelo acaso  </li>
+	
    <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>  , utilizando o crossfilter </li>
    
     
