@@ -29,7 +29,7 @@
     <li><a data-toggle="tab" href="#CSS">CSS</a></li>
     <li><a data-toggle="tab" href="#JAVA">Java</a></li>
     <li><a data-toggle="tab" href="#SVG">SVG</a></li>   
-    <li><a data-toggle="tab" href="#OUTROS">Livros</a></li>   
+    <li><a data-toggle="tab" href="#OUTROS">Livros/Ideias! ;)</a></li>   
       
         
       
@@ -392,21 +392,6 @@ probabilidade a posteriori.</span>
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-    
-    
-    
-    
-    
         
     <h3>Ebook D3 in action</h3>
 
@@ -495,14 +480,11 @@ probabilidade a posteriori.</span>
     <div id="OUTROS" class="tab-pane fade">
         
 	
-    <li>Ver livro :"Iludidos pelo acaso  </li>
+    <li>Ver livro : Iludidos pelo acaso  </li>
 	
    <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>  , utilizando o crossfilter </li>
    
     
-    
-      
-  
  
 <li>Salvo Inicialmente em Bibliotecas no Computador do MDIC!</a></li>
 <h3>JavaScript</h3>
