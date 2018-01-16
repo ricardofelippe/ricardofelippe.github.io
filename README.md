@@ -472,7 +472,7 @@ probabilidade a posteriori.</span>
 
 
 <h3>Swirll!</h3>
-<li><a href="http://swirlstats.com/students.html" target="_blank">Efficiente R programing</a></li>
+<li><a href="http://swirlstats.com/students.html" target="_blank">Swirl ! </a></li>
 
 
     
