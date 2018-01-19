@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- External JavaScript! -->
-  <script src=".\js\exocortex_script.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -17,6 +16,7 @@
 
 <div class="container">
   <h2>Exocórtex</h2>
+	
   <ul class="nav nav-tabs">
      <li class="active"><a data-toggle="tab" href="#Organizacao">Organização</a></li>
      <li><a data-toggle="tab" href="#Projetos">Projetos</a></li> 
@@ -34,8 +34,7 @@
         
       
   </ul>
-
-   
+  
   
  
   <div class="tab-content">
