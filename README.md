@@ -511,9 +511,9 @@ probabilidade a posteriori.</span>
  <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EQIDBoCPELpDkKcATUDPohIBXjgbKa28Id43yu6ujb98ZA?e=KvdkdV">Elements Data Analytic Style</a></li>
  
  
+ <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/Ef-lqFv9LMVFpcqKDjea-7QBuHAPQls9dGvWPL7645FrvA?e=ke5DMg">Modern Scientist</a></li>
  
- 
- 
+  
   
  
  <li><a href="morning_pages_content.html#M0">Text 1!</a></li>
