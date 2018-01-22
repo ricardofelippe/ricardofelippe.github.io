@@ -477,6 +477,8 @@ probabilidade a posteriori.</span>
 <li><a href="http://swirlstats.com/students.html" target="_blank">Swirl ! </a></li>
 
 
+
+
     
     </div>
     <div id="OUTROS" class="tab-pane fade">
@@ -498,13 +500,17 @@ probabilidade a posteriori.</span>
    
  
 <h3>Toolbox of Data Science/GIT</h3>
+<li><a href="http://dygraphs.com/download.html">DyGraph!</a></li>
+
  <li><a href="toolbox_content.html#T0">Command Line Interface!</a></li>
  <li><a href="toolbox_content.html#T1">Git!</a></li>
  <li><a href="toolbox_content.html#T2">Git Help!</a></li>
  <li><a href="toolbox_content.html#T3">Git Basic Commands!</a></li>
 
-<h3>Gist</h3>
- <li><a href="toolbox_content.html#gist1">Gist Basic!</a></li>
+<h3>Textbooks</h3>
+ <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EQIDBoCPELpDkKcATUDPohIBXjgbKa28Id43yu6ujb98ZA?e=KvdkdV">Elements Data Analytic Style</a></li>
+ 
+ 
  
  
  
