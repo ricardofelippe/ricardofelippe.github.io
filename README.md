@@ -16,6 +16,7 @@
 body {
       position: relative; 
   }
+  #section0
   #section1 
   #section2 
   #section3 
@@ -40,7 +41,8 @@ body {
     <div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li><a href="#section1">Cursos</a></li>
+          <li><a href="#section1">Ideias & Pensamentos</a></li>
+           <li><a href="#section1">Cursos</a></li>
           <li><a href="#section2">Finanças</a></li>
           <li><a href="#section3">Projetos</a></li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Data Science <span class="caret"></span></a>
@@ -56,6 +58,12 @@ body {
   </div>
 </nav>    
 
+    
+<div id="section01" class="container-fluid">
+<li>Ver livro : Iludidos pelo acaso  </li>
+<li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
+   
+</div>
     
 <div id="section1" class="container-fluid">
   <h1>Cursos</h1>
