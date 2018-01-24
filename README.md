@@ -16,14 +16,14 @@
 body {
       position: relative; 
   }
-  #section0 {padding-top:50px;height:500px;color: #fff; background-color: #E9967A;}
-  #section1 
+  #section1 {padding-top:50px;height:500px;color: #fff; background-color: #E9967A;}
   #section2 
   #section3 
-  #section41 
-  #section42 
-  #section43        
-  #section5 
+  #section4 
+  #section51 
+  #section52 
+  #section53        
+  #section6 
           
   </style>
 
@@ -42,18 +42,18 @@ body {
     <div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li><a href="#section0">Ideias & Pensamentos</a></li>
-           <li><a href="#section1">Cursos</a></li>
-          <li><a href="#section2">Finanças</a></li>
-          <li><a href="#section3">Projetos</a></li>
+          <li><a href="#section1">Ideias & Pensamentos</a></li>
+          <li><a href="#section2">Cursos</a></li>
+          <li><a href="#section3">Finanças</a></li>
+          <li><a href="#section4">Projetos</a></li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Data Science <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#section41">R</a></li>
-              <li><a href="#section42">D3</a></li>
-              <li><a href="#section43">Data Science Toolboxl</a></li>    
+              <li><a href="#section51">R</a></li>
+              <li><a href="#section52">D3</a></li>
+              <li><a href="#section53">Data Science Toolboxl</a></li>    
             </ul>
           </li>
-        <li><a href="#section5">UNB</a></li>    
+        <li><a href="#section6">UNB</a></li>    
         </ul>
       </div>
     </div>
@@ -61,15 +61,15 @@ body {
 </nav>    
 
     
-<div id="section0" class="container-fluid">
+<div id="section1" class="container-fluid">
   <h1>Pensamentos & Ideias</h1>
     
 <li>Ver livro : Iludidos pelo acaso  </li>
 <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
    
 </div>
-    
-<div id="section1" class="container-fluid">
+<hr>
+<div id="section2" class="container-fluid">
   <h1>Cursos</h1>
     <hr>
   
@@ -163,13 +163,8 @@ body {
 
     
     </div>
-    
-    <hr>
-    
-    
-      
-    
-<div id="section2" class="container-fluid">
+<hr>
+<div id="section3" class="container-fluid">
   <h1>Finanças</h1>
   
     <h3>Opções</h3>  
@@ -200,10 +195,11 @@ Quase tudo que sei sobre ações</a></li>
   
     
     </div>
-
 <hr>
-        
-<div id="section3" class="container-fluid">
+<div id="section4" class="container-fluid">
+ <h1>Projetos</h1>
+ 
+
   <!------------------------------------INÍCIO-PROJETOS----------------------------------------------->
     <h3>Public Blocks</h3>  
      <li><a href="https://bl.ocks.org/ricardofelippe">All Projects</a></li> 
@@ -216,13 +212,9 @@ Quase tudo que sei sobre ações</a></li>
   
   <!------------------------------------FIM-PROJETOS------------------------------------------------>
   </div>
-    
-    <hr>
-    
-<div id="section41" class="container-fluid">
+<hr>
+<div id="section51" class="container-fluid">
 <!-----------------------------INÍCIO-R Section----------------------------------------------------->
-    
-    
     
     
     <h2>R Section</h2>
@@ -280,13 +272,12 @@ voyages = import(fname)
 <!-----------------------------FIM-R SECTION---------------------------------------------------------->
 
 </div>
-    <hr>
-    
-    
-<div id="section42" class="container-fluid">
+<hr>
+<div id="section52" class="container-fluid">
     
   <!---------------------------INÍCIO-D3 SECTION----------------------------------------------------->
-
+ <h2>D3 Section</h2>
+   
 	<h3>Best Sites</h3>
 		<li><a href="http://d3indepth.com/">Peter Cook</a></li>
 		<li><a href="https://bl.ocks.org/phoebebright">Peter Cook</a></li>		
@@ -464,18 +455,14 @@ voyages = import(fname)
 <!-----------------------------FIM-D3 SECTION----------------------------------------------------->
       
  </div>
-    
-
-<div id="section43" class="container-fluid">
+<hr>    
+<div id="section53" class="container-fluid">
     <h2>Data Science Toolbox</h2>
     </div>
 <!-----------------------------FIM-Data Science------------------------------------------------------->
-    
-
-    
 <hr>
-            
-<div id="section5" class="container-fluid">
+<div id="section6" class="container-fluid">
+    <h1>UNB</h1>
       
        <h3>Editais/Informes</h3>  
    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6da70443db24b49aedc2bcefadd32ba&authkey=AWlU5wO5l3GZvPn_Nl8QXLI">Calendário 2º/2017</a></li> 
