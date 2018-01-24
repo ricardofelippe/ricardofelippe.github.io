@@ -41,7 +41,7 @@ body {
     <div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li><a href="#section1">Ideias & Pensamentos</a></li>
+          <li><a href="#section0">Ideias & Pensamentos</a></li>
            <li><a href="#section1">Cursos</a></li>
           <li><a href="#section2">Finanças</a></li>
           <li><a href="#section3">Projetos</a></li>
@@ -59,7 +59,7 @@ body {
 </nav>    
 
     
-<div id="section01" class="container-fluid">
+<div id="section0" class="container-fluid">
 <li>Ver livro : Iludidos pelo acaso  </li>
 <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
    
