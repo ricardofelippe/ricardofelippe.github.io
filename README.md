@@ -16,13 +16,15 @@
 body {
       position: relative; 
   }
-  #section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
-  #section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
-  #section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
-  #section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
-  #section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
+  #section1 
+  #section2 
+  #section3 
+  #section41 
+  #section42 
+  #section5 
+          
   </style>
-</head>
+
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -38,15 +40,16 @@ body {
     <div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li><a href="#section1">Section 1</a></li>
-          <li><a href="#section2">Section 2</a></li>
-          <li><a href="#section3">Section 3</a></li>
+          <li><a href="#section1">Cursos</a></li>
+          <li><a href="#section2">Finanças</a></li>
+          <li><a href="#section3">Projetos</a></li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Data Science <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#section41">R</a></li>
               <li><a href="#section42">D3</a></li>
             </ul>
           </li>
+        <li><a href="#section5">UNB</a></li>    
         </ul>
       </div>
     </div>
@@ -54,66 +57,108 @@ body {
 </nav>    
 
     
-
-    
-<div id="section41" class="container-fluid">
-  <h1>Section 4 Submenu 1</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-</div>
-<div id="section42" class="container-fluid">
-  <h1>Section 4 Submenu 2</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-</div>
-    
-    
-    
-<div class="container">
-  <h2>Exocórtex</h2>
-	
-  <ul class="nav nav-tabs">
-     <li class="active"><a data-toggle="tab" href="#Organizacao">Organização</a></li>
-     <li><a data-toggle="tab" href="#Projetos">Projetos</a></li> 
-     <li><a data-toggle="tab" href="#UNB">UNB</a></li>
-     <li><a data-toggle="tab" href="#DataScience">Data Science</a></li>
-     <li><a data-toggle="tab" href="#D3">D3</a></li> 
-     <li><a data-toggle="tab" href="#Speech">Public Speech</a></li> 
-     <li><a data-toggle="tab" href="#arduino">Arduino</a></li>
-    <li><a data-toggle="tab" href="#R">R</a></li>   
-    <li><a data-toggle="tab" href="#HTML">HTML</a></li>
-    <li><a data-toggle="tab" href="#CSS">CSS</a></li>
-    <li><a data-toggle="tab" href="#JAVA">Java</a></li>
-    <li><a data-toggle="tab" href="#SVG">SVG</a></li>   
-    <li><a data-toggle="tab" href="#Ideias">Livros/Ideias! ;)</a></li>   
-      
-        
-      
-  </ul>
+<div id="section1" class="container-fluid">
+  <h1>Cursos</h1>
+    <hr>
   
-  
- 
-  <div class="tab-content">
-  <div id="Speech" class="tab-pane fade">
-    <h3>Lessons</h3>  
+    <h3>Speech</h3>  
      <li><a href="publicSpeak_content.html#Lesson1">Lesson 1</a></li> 
+  <hr>
+  <h3>Arduino</h3>
+   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
+    
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=19e089c3fd4eb4d218c9c17d5d876f80b&authkey=AVTZO6PnPSO9b84-E3I-qXY">Kit Arduino Mega2560</a></li> 
+    
+    
+   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
+   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
   
+  <h3>Curso Arduino</h3>
+  <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
+  <li><a href="https://www.youtube.com/watch?v=0HXSXlFKxUc">Aprendendo Arduino sem tem um!-Youtube</a></li>
+  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
+    
+<li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
+<h3>Coursera Robots-Arduino</h3>
+<li><a href=".\Arduino\s1.4_traffic_light.ino">Week one: Traffic light </a></li>   
+  
+
+
+<h3>Curso Arduino</h3>
+<li><a href="http://www.comofazerascoisas.com.br/robotica-eletronica-mecatronica/eletronica/arduino
+">Como Fazer as coisas: Arduino</a></li>   
+
+<span> Projeto Alimentador Automático</span>
+<pre>
+-Motor
+-WIRELESS COM O WIFI SHIELD CC3000 KEYES
+
+</pre>
       
-  </div>
+  <hr>
+      
+ <h3>HTML</h3>
+	<li><a href="html_content.html#H0">HTML Structure</a></li>
+	<li><a href="html_content.html#H0">HTML Headings</a></li>
+	<li><a href="html_content.html#H1">HTML Links</a></li>
+	<li><a href="html_content.html#H2">HTML Quotation and Citation Elements</a></li>
+	<li><a href="html_content.html#H3">HTML Links- Syntax</a></li>
+	<li><a href="html_content.html#H4">HTML Images</a></li>
+	<li><a href="html_content.html#H5">HTML Attributes</a></li>
+	<li><a href="html_content.html#H6">HTML -head- Element</a></li>
+	<li><a href="html_content.html#H7">HTML Text Formatting</a></li>
+	<li><a href="html_content.html#H8">HTML -blockquote- for Quotations</a></li>
+      
+  <hr>
+      
+      <h3>CSS</h3>
+	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
+    <input id="someCheckbox" type="checkbox" />
+	<hr>
+    
+    <h3>SVG</h3>
+	
+	<svg width="400" height="180">
+	  <rect x="50%" y="20" width="150" height="150"
+	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
+	</svg>
+	 
+	 <svg style="width:500px;height:500px;border:1px lightgray solid;">
+			 <path d="M 10,60 40,30 50,50 60,30 70,80"
+			 style="fill:black;stroke:gray;stroke-width:4px;" />
+			 <polygon style="fill:gray;"
+			 points="80,400 120,400 160,440 120,480 60,460" />
+		 <g>
+			 <line x1="200" y1="100" x2="450" y2="225"
+			 style="stroke:black;stroke-width:2px;"/>
+			 <circle cy="100" cx="200" r="30"/>
+			 <rect x="410" y="200" width="100" height="50"
+			 style="fill:pink;stroke:black;stroke-width:1px;" />
+		 </g>
+	</svg>
+		 
+	  
+    <hr>
+    
+          
+<h3>JavaScript</h3>
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1b879e807432643f8a090c8f4ed3c8464&authkey=Ad3_JtVHUtUmrJYCcTh2OEo">JavaScript & JQuery</a></li>   
+
+    </div>
+    
+    <hr>
+    
+    
+      
+    
+<div id="section2" class="container-fluid">
+  <h1>Finanças</h1>
   
-  
-  
-  
-  <!------------------------------------INÍCIO-PROJETOS--------------------------------------------------------------->
-  <div id="Projetos" class="tab-pane fade">
-    <h3>Public Blocks</h3>  
-     <li><a href="https://bl.ocks.org/ricardofelippe">All Projects</a></li> 
-  
-  <h3>Secret Blocks</h3>  
-  <li><a href="BoneStructureTesouroDiretoDataDriven.html">BoneStructureTesouroDiretoDataDriven</a></li>
-  <li><a href="https://gist.github.com/ricardofelippe/7cc53076d2e8a0a21438703af0df8ae7">Tesouro Direto-Data Driven</a></li> 
-  
-  <h3>Opções</h3>  
+    <h3>Opções</h3>  
   <h4>Videos</h4>  
   <li><a href="https://www.youtube.com/watch?v=kQt67kxY5C8&t=1s">Volatilidade - Histórica vs Implícita - Ep.1</a></li>
   <li><a href="https://www.youtube.com/watch?v=8gTwfMV7oKs">Aula de opção #27 - Fly / Borboleta</a></li>
@@ -139,101 +184,29 @@ Quase tudo que sei sobre ações</a></li>
   
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a5761779ac204038899477633227dd93&authkey=AV9X4n0cxlaj3k_Ut09FhQA&e=nO7hZY"> Controle risco-VCSA </a></li>
   
-  
-  
-
-
-
-
-  
-  
-  
-  
-  
-  </div>
-  <!------------------------------------FIM-PROJETOS------------------------------------------------>
-  
-  
-    <div id="Organizacao" class="tab-pane fade in active">
-    <h3>HOME</h3>
-      
-    <li>Programing Invest Plan: Disponível PC do MDIC </li>   
-    <li><a href="https://trello.com/">Trello </a></li>   
     
     </div>
-    
-    <div id="UNB" class="tab-pane fade">
-      
-       <h3>Editais/Informes</h3>  
-   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6da70443db24b49aedc2bcefadd32ba&authkey=AWlU5wO5l3GZvPn_Nl8QXLI">Calendário 2º/2017</a></li> 
-   <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
-    
+
+<hr>
+        
+<div id="section3" class="container-fluid">
+  <!------------------------------------INÍCIO-PROJETOS----------------------------------------------->
+    <h3>Public Blocks</h3>  
+     <li><a href="https://bl.ocks.org/ricardofelippe">All Projects</a></li> 
+  
+  <h3>Secret Blocks</h3>  
+  <li><a href="BoneStructureTesouroDiretoDataDriven.html">BoneStructureTesouroDiretoDataDriven</a></li>
+  <li><a href="https://gist.github.com/ricardofelippe/7cc53076d2e8a0a21438703af0df8ae7">Tesouro Direto-Data Driven</a></li> 
   
   
-  <h3>Inferência</h3>
-    <li><a href="unb_content.html#inferencia">Lista 01</a></li>  
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=13e23f308e2964e38ae0a78fcbece4ea7&authkey=Afu7QH6g_A3irBu79mQXgMQ">Lista 02</a></li>  
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=10574408ca88e4533ae746b6e6b6f8c1d&authkey=AVsWsI_b5af48T-xJNCPx2E&e=da4cabcb28e14045ab49d0d0719174d8">Lista 03</a></li>  
-    
-    
-    
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a9d80a3c643e41948a6ea96890cd7be4&authkey=AXYb5zeIXwmwitHrc0hKm2k&e=e5276bd1c8af4456abf59b58496acced">Bolfarine</a></li>  
-    
-    
-    <li><a href="http://www.portalaction.com.br/inferencia-0"> Portal Action-Inferência</a></li>  
-    
-    
-    <li><a href="unb_content.html#inferencia">Hald - A History of Parametric Statistical Inference from Bernoulli to Fisher, 1713 to 1935</a></li>  
-    
-    <li><a href="unb_content.html#inferencia">Farias, Laurencel - Introdução à Inferência Estatística</a></li>  
-    
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1cad1af50fff14d9daeae04227a939ff3&authkey=AYZKgFmzYk9GQz8kH_fxwoo">Estimação Pontual por Momentos-Ótimo Material</a></li>  
-    
-    
-    
-      <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6ba40af3e7c4fa4ae73ce76577fb1f2&authkey=Ac_Uy6c4KVZ6ggbTTG5alls
-  ">Máxima Verossimilhança</a></li> 
-    
-     <h3>Probabilidade</h3>
   
-  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1cd1f12cc287b47d2b2e9cf5ee14b2040&authkey=AdzNgKhNp2Te6KEo_wYG1CQ
-  ">Estatística Básica Morettin e Bussab </a></li>  
-      
-<li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fb4b545ce6864f05ba4d68107bdb3931&authkey=AQ51jYn74SBMcTrnYusec38">Probabilidade Total e Bayes ! Bom material</a></li>  
-
-<span>No teorema da probabilidade total, um dos elementos de cálculo é a probabilidade a priori. Outro elemento é a 
-probabilidade a posteriori.</span>
-
-
-
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=15eeecd377ae44f66bad8e2ad5929236e&authkey=ASTmSVOfatyt5UBVxEzpths
-">Estatística & R</a></li>  
-
-    <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html
-">Curso R UFPR</a></li>  
-
-
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fbcb21f219fa485a8e81e457adf6634b&authkey=ASUu-KdmW6jLwLczB-tHbGU">Estatísticas de Ordem</a></li>  
-
-
-
+  <!------------------------------------FIM-PROJETOS------------------------------------------------>
+  </div>
     
+    <hr>
     
-  <h3>Amostragem</h3>
-    <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
-    <li><a href="unb_content.html#amostragem2">Técnicas de Amostragem (2º/2017)</a></li>   
- <li><a href="2016_TD_PRO_V_1.3.xlsm">Teste EXCEL</a></li>
-      
-      </div>
-  
-  
-  <!-----------------------------INÍCIO-Data Science------------------------------------------------->
-
-<div id="DataScience" class="tab-pane fade">
-  
-    <!-----------------------------INÍCIO-R Section----------------------------------------------------->
-
-<div id="R" class="tab-pane fade">
+<div id="section41" class="container-fluid">
+<!-----------------------------INÍCIO-R Section----------------------------------------------------->
     
     <h2>R Section</h2>
     
@@ -287,18 +260,15 @@ voyages = import(fname)
 </pre>
 
 
-
-</div>
-
-
 <!-----------------------------FIM-R SECTION---------------------------------------------------------->
 
+</div>
+    <hr>
     
-<!-----------------------------INÍCIO-D3 SECTION----------------------------------------------------->
+<div id="section42" class="container-fluid">
+    
+  <!---------------------------INÍCIO-D3 SECTION----------------------------------------------------->
 
-    
-    <div id="D3" class="tab-pane fade">
-      
 	<h3>Best Sites</h3>
 		<li><a href="http://d3indepth.com/">Peter Cook</a></li>
 		<li><a href="https://bl.ocks.org/phoebebright">Peter Cook</a></li>		
@@ -354,11 +324,6 @@ voyages = import(fname)
 <li><a href="http://localhost:3000/examples/advanced_time_axis.html">advanced_time_axis!</a></li>
 <li><a href="http://localhost:3000/examples/advanced_trellis_bar.html">advanced_trellis_bar!</a></li>
 
-    
-    
-    
-    
-    
     
 	<h3>
 	</h3>
@@ -478,140 +443,85 @@ voyages = import(fname)
           
       
       
-      
-  </div>
-    
 <!-----------------------------FIM-D3 SECTION----------------------------------------------------->
+      
+ </div>
     
-
-</div>
 <!-----------------------------FIM-Data Science------------------------------------------------------->
+    
 
+    
+<hr>
+            
+<div id="section5" class="container-fluid">
+      
+       <h3>Editais/Informes</h3>  
+   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6da70443db24b49aedc2bcefadd32ba&authkey=AWlU5wO5l3GZvPn_Nl8QXLI">Calendário 2º/2017</a></li> 
+   <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
+    
+  
+  
+  <h3>Inferência</h3>
+    <li><a href="unb_content.html#inferencia">Lista 01</a></li>  
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=13e23f308e2964e38ae0a78fcbece4ea7&authkey=Afu7QH6g_A3irBu79mQXgMQ">Lista 02</a></li>  
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=10574408ca88e4533ae746b6e6b6f8c1d&authkey=AVsWsI_b5af48T-xJNCPx2E&e=da4cabcb28e14045ab49d0d0719174d8">Lista 03</a></li>  
+    
+    
+    
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a9d80a3c643e41948a6ea96890cd7be4&authkey=AXYb5zeIXwmwitHrc0hKm2k&e=e5276bd1c8af4456abf59b58496acced">Bolfarine</a></li>  
+    
+    
+    <li><a href="http://www.portalaction.com.br/inferencia-0"> Portal Action-Inferência</a></li>  
+    
+    
+    <li><a href="unb_content.html#inferencia">Hald - A History of Parametric Statistical Inference from Bernoulli to Fisher, 1713 to 1935</a></li>  
+    
+    <li><a href="unb_content.html#inferencia">Farias, Laurencel - Introdução à Inferência Estatística</a></li>  
+    
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1cad1af50fff14d9daeae04227a939ff3&authkey=AYZKgFmzYk9GQz8kH_fxwoo">Estimação Pontual por Momentos-Ótimo Material</a></li>  
+    
+    
+    
+      <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6ba40af3e7c4fa4ae73ce76577fb1f2&authkey=Ac_Uy6c4KVZ6ggbTTG5alls
+  ">Máxima Verossimilhança</a></li> 
+    
+     <h3>Probabilidade</h3>
+  
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1cd1f12cc287b47d2b2e9cf5ee14b2040&authkey=AdzNgKhNp2Te6KEo_wYG1CQ
+  ">Estatística Básica Morettin e Bussab </a></li>  
+      
+<li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fb4b545ce6864f05ba4d68107bdb3931&authkey=AQ51jYn74SBMcTrnYusec38">Probabilidade Total e Bayes ! Bom material</a></li>  
+
+<span>No teorema da probabilidade total, um dos elementos de cálculo é a probabilidade a priori. Outro elemento é a 
+probabilidade a posteriori.</span>
+
+
+
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=15eeecd377ae44f66bad8e2ad5929236e&authkey=ASTmSVOfatyt5UBVxEzpths
+">Estatística & R</a></li>  
+
+    <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html
+">Curso R UFPR</a></li>  
+
+
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fbcb21f219fa485a8e81e457adf6634b&authkey=ASUu-KdmW6jLwLczB-tHbGU">Estatísticas de Ordem</a></li>  
+
+
+
+    
+    
+  <h3>Amostragem</h3>
+    <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
+    <li><a href="unb_content.html#amostragem2">Técnicas de Amostragem (2º/2017)</a></li>   
+ <li><a href="2016_TD_PRO_V_1.3.xlsm">Teste EXCEL</a></li>
+      
+      </div>
+  
+    
+    
 
   
   
-  <div id="arduino" class="tab-pane fade">
-      <h3>PDF Arduino</h3>
-   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
-    
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=19e089c3fd4eb4d218c9c17d5d876f80b&authkey=AVTZO6PnPSO9b84-E3I-qXY">Kit Arduino Mega2560</a></li> 
-    
-    
-   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
-   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
-   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
-   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
-  
-  <h3>Curso Arduino</h3>
-  <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
-  <li><a href="https://www.youtube.com/watch?v=0HXSXlFKxUc">Aprendendo Arduino sem tem um!-Youtube</a></li>
-  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
-    
-<li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
-<h3>Coursera Robots-Arduino</h3>
-<li><a href=".\Arduino\s1.4_traffic_light.ino">Week one: Traffic light </a></li>   
-  
-
-
-<h3>Curso Arduino</h3>
-<li><a href="http://www.comofazerascoisas.com.br/robotica-eletronica-mecatronica/eletronica/arduino
-">Como Fazer as coisas: Arduino</a></li>   
-
-<span> Projeto Alimentador Automático</span>
-<pre>
--Motor
--WIRELESS COM O WIFI SHIELD CC3000 KEYES
-
-</pre>
-      
-      
-      </div>
-    <div id="HTML" class="tab-pane fade">
-      <h3>HTML</h3>
-	<li><a href="html_content.html#H0">HTML Structure</a></li>
-	<li><a href="html_content.html#H0">HTML Headings</a></li>
-	<li><a href="html_content.html#H1">HTML Links</a></li>
-	<li><a href="html_content.html#H2">HTML Quotation and Citation Elements</a></li>
-	<li><a href="html_content.html#H3">HTML Links- Syntax</a></li>
-	<li><a href="html_content.html#H4">HTML Images</a></li>
-	<li><a href="html_content.html#H5">HTML Attributes</a></li>
-	<li><a href="html_content.html#H6">HTML -head- Element</a></li>
-	<li><a href="html_content.html#H7">HTML Text Formatting</a></li>
-	<li><a href="html_content.html#H8">HTML -blockquote- for Quotations</a></li>
-      
-      </div>
-    <div id="CSS" class="tab-pane fade">
-      
-      <h3>CSS</h3>
-	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
-      </div>
-    <div id="SVG" class="tab-pane fade">
-      
-      	<input id="someCheckbox" type="checkbox" />
-	  
-	<svg width="400" height="180">
-	  <rect x="50%" y="20" width="150" height="150"
-	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
-	</svg>
-	 
-	  <div id="infovizDiv">
-	<svg style="width:500px;height:500px;border:1px lightgray solid;">
-			 <path d="M 10,60 40,30 50,50 60,30 70,80"
-			 style="fill:black;stroke:gray;stroke-width:4px;" />
-			 <polygon style="fill:gray;"
-			 points="80,400 120,400 160,440 120,480 60,460" />
-		 <g>
-			 <line x1="200" y1="100" x2="450" y2="225"
-			 style="stroke:black;stroke-width:2px;"/>
-			 <circle cy="100" cx="200" r="30"/>
-			 <rect x="410" y="200" width="100" height="50"
-			 style="fill:pink;stroke:black;stroke-width:1px;" />
-		 </g>
-	</svg>
-		 
-	 </div> 
-      
-      
-      </div>
-    
-    <div id="JAVA" class="tab-pane fade">
-    
-<h3>JavaScript</h3>
-  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1b879e807432643f8a090c8f4ed3c8464&authkey=Ad3_JtVHUtUmrJYCcTh2OEo">JavaScript & JQuery</a></li>   
-
-    </div>
-    
-
-
-
-    
-    </div>
-
-<!-----------------------------INÍCIO-Ideias---------------------------------------------------------->
-
-    <div id="Ideias" class="tab-pane fade">
-        
-	
-    <li>Ver livro : Iludidos pelo acaso  </li>
-    <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
-   
-    
-<h3>JavaScript</h3>
-<li><a href="http://dygraphs.com/download.html">DyGraph!</a></li>
-
-    
   
   
  
- 
- 
-    </div>
-
-    </div>
-</div>
-
- 
-</body>
-</html>   
