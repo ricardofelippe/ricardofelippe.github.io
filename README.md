@@ -214,6 +214,22 @@ probabilidade a posteriori.</span>
 <h3>Swirll!</h3>
 <li><a href="http://swirlstats.com/students.html" target="_blank">Swirl ! </a></li>
 
+<h3>Versatile data import with rio!</h3>
+<pre>
+
+library("rio")
+# Specify a file
+fname = system.file("extdata/voc_voyages.tsv", package = "efficient")
+# Import the file (uses the fread function from data.table)
+voyages = import(fname)
+# Export the file as an Excel spreadshe
+
+</pre>
+
+
+
+
+
 <!-----------------------------FIM-R--------------------------------------------------------------->
 
   
