@@ -12,8 +12,63 @@
   
 </head>
 
-<body>
+    <style>
+body {
+      position: relative; 
+  }
+  #section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
+  #section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
+  #section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
+  #section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
+  #section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
+  </style>
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
 
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="#section1">Section 1</a></li>
+          <li><a href="#section2">Section 2</a></li>
+          <li><a href="#section3">Section 3</a></li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Data Science <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#section41">R</a></li>
+              <li><a href="#section42">D3</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>    
+
+    
+
+    
+<div id="section41" class="container-fluid">
+  <h1>Section 4 Submenu 1</h1>
+  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+</div>
+<div id="section42" class="container-fluid">
+  <h1>Section 4 Submenu 2</h1>
+  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+</div>
+    
+    
+    
 <div class="container">
   <h2>Exocórtex</h2>
 	
@@ -21,6 +76,7 @@
      <li class="active"><a data-toggle="tab" href="#Organizacao">Organização</a></li>
      <li><a data-toggle="tab" href="#Projetos">Projetos</a></li> 
      <li><a data-toggle="tab" href="#UNB">UNB</a></li>
+     <li><a data-toggle="tab" href="#DataScience">Data Science</a></li>
      <li><a data-toggle="tab" href="#D3">D3</a></li> 
      <li><a data-toggle="tab" href="#Speech">Public Speech</a></li> 
      <li><a data-toggle="tab" href="#arduino">Arduino</a></li>
@@ -29,7 +85,7 @@
     <li><a data-toggle="tab" href="#CSS">CSS</a></li>
     <li><a data-toggle="tab" href="#JAVA">Java</a></li>
     <li><a data-toggle="tab" href="#SVG">SVG</a></li>   
-    <li><a data-toggle="tab" href="#OUTROS">Livros/Ideias! ;)</a></li>   
+    <li><a data-toggle="tab" href="#Ideias">Livros/Ideias! ;)</a></li>   
       
         
       
@@ -48,7 +104,7 @@
   
   
   
-  <!------------------------------------PROJETOS--------------------------------------------------------------->
+  <!------------------------------------INÍCIO-PROJETOS--------------------------------------------------------------->
   <div id="Projetos" class="tab-pane fade">
     <h3>Public Blocks</h3>  
      <li><a href="https://bl.ocks.org/ricardofelippe">All Projects</a></li> 
@@ -89,15 +145,13 @@ Quase tudo que sei sobre ações</a></li>
 
 
 
-
-
   
   
   
   
   
   </div>
-  <!------------------------------------PROJETOS--------------------------------------------------------------->
+  <!------------------------------------FIM-PROJETOS------------------------------------------------>
   
   
     <div id="Organizacao" class="tab-pane fade in active">
@@ -172,10 +226,16 @@ probabilidade a posteriori.</span>
       
       </div>
   
+  
+  <!-----------------------------INÍCIO-Data Science------------------------------------------------->
 
-  <!-----------------------------INÍCIO-R--------------------------------------------------------------->
+<div id="DataScience" class="tab-pane fade">
+  
+    <!-----------------------------INÍCIO-R Section----------------------------------------------------->
 
 <div id="R" class="tab-pane fade">
+    
+    <h2>R Section</h2>
     
     <h3>R Pubs</h3>
     <li><a href="http://rpubs.com/ricafelippe/351486">R Pubs</a></li>  
@@ -228,96 +288,15 @@ voyages = import(fname)
 
 
 
+</div>
 
 
-<!-----------------------------FIM-R--------------------------------------------------------------->
+<!-----------------------------FIM-R SECTION---------------------------------------------------------->
 
-  
-  <div id="arduino" class="tab-pane fade">
-      <h3>PDF Arduino</h3>
-   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
     
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=19e089c3fd4eb4d218c9c17d5d876f80b&authkey=AVTZO6PnPSO9b84-E3I-qXY">Kit Arduino Mega2560</a></li> 
+<!-----------------------------INÍCIO-D3 SECTION----------------------------------------------------->
+
     
-    
-   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
-   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
-   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
-   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
-  
-  <h3>Curso Arduino</h3>
-  <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
-  <li><a href="https://www.youtube.com/watch?v=0HXSXlFKxUc">Aprendendo Arduino sem tem um!-Youtube</a></li>
-  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
-    
-<li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
-<h3>Coursera Robots-Arduino</h3>
-<li><a href=".\Arduino\s1.4_traffic_light.ino">Week one: Traffic light </a></li>   
-  
-
-
-<h3>Curso Arduino</h3>
-<li><a href="http://www.comofazerascoisas.com.br/robotica-eletronica-mecatronica/eletronica/arduino
-">Como Fazer as coisas: Arduino</a></li>   
-
-<span> Projeto Alimentador Automático</span>
-<pre>
--Motor
--WIRELESS COM O WIFI SHIELD CC3000 KEYES
-
-</pre>
-      
-      
-      </div>
-    <div id="HTML" class="tab-pane fade">
-      <h3>HTML</h3>
-	<li><a href="html_content.html#H0">HTML Structure</a></li>
-	<li><a href="html_content.html#H0">HTML Headings</a></li>
-	<li><a href="html_content.html#H1">HTML Links</a></li>
-	<li><a href="html_content.html#H2">HTML Quotation and Citation Elements</a></li>
-	<li><a href="html_content.html#H3">HTML Links- Syntax</a></li>
-	<li><a href="html_content.html#H4">HTML Images</a></li>
-	<li><a href="html_content.html#H5">HTML Attributes</a></li>
-	<li><a href="html_content.html#H6">HTML -head- Element</a></li>
-	<li><a href="html_content.html#H7">HTML Text Formatting</a></li>
-	<li><a href="html_content.html#H8">HTML -blockquote- for Quotations</a></li>
-      
-      </div>
-    <div id="CSS" class="tab-pane fade">
-      
-      <h3>CSS</h3>
-	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
-      </div>
-    <div id="SVG" class="tab-pane fade">
-      
-      	<input id="someCheckbox" type="checkbox" />
-	  
-	<svg width="400" height="180">
-	  <rect x="50%" y="20" width="150" height="150"
-	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
-	</svg>
-	 
-	  <div id="infovizDiv">
-	<svg style="width:500px;height:500px;border:1px lightgray solid;">
-			 <path d="M 10,60 40,30 50,50 60,30 70,80"
-			 style="fill:black;stroke:gray;stroke-width:4px;" />
-			 <polygon style="fill:gray;"
-			 points="80,400 120,400 160,440 120,480 60,460" />
-		 <g>
-			 <line x1="200" y1="100" x2="450" y2="225"
-			 style="stroke:black;stroke-width:2px;"/>
-			 <circle cy="100" cx="200" r="30"/>
-			 <rect x="410" y="200" width="100" height="50"
-			 style="fill:pink;stroke:black;stroke-width:1px;" />
-		 </g>
-	</svg>
-		 
-	 </div> 
-      
-      
-      </div>
     <div id="D3" class="tab-pane fade">
       
 	<h3>Best Sites</h3>
@@ -501,6 +480,102 @@ voyages = import(fname)
       
       
   </div>
+    
+<!-----------------------------FIM-D3 SECTION----------------------------------------------------->
+    
+
+</div>
+<!-----------------------------FIM-Data Science------------------------------------------------------->
+
+
+  
+  
+  <div id="arduino" class="tab-pane fade">
+      <h3>PDF Arduino</h3>
+   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
+    
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=19e089c3fd4eb4d218c9c17d5d876f80b&authkey=AVTZO6PnPSO9b84-E3I-qXY">Kit Arduino Mega2560</a></li> 
+    
+    
+   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
+   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
+  
+  <h3>Curso Arduino</h3>
+  <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
+  <li><a href="https://www.youtube.com/watch?v=0HXSXlFKxUc">Aprendendo Arduino sem tem um!-Youtube</a></li>
+  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
+    
+<li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
+<h3>Coursera Robots-Arduino</h3>
+<li><a href=".\Arduino\s1.4_traffic_light.ino">Week one: Traffic light </a></li>   
+  
+
+
+<h3>Curso Arduino</h3>
+<li><a href="http://www.comofazerascoisas.com.br/robotica-eletronica-mecatronica/eletronica/arduino
+">Como Fazer as coisas: Arduino</a></li>   
+
+<span> Projeto Alimentador Automático</span>
+<pre>
+-Motor
+-WIRELESS COM O WIFI SHIELD CC3000 KEYES
+
+</pre>
+      
+      
+      </div>
+    <div id="HTML" class="tab-pane fade">
+      <h3>HTML</h3>
+	<li><a href="html_content.html#H0">HTML Structure</a></li>
+	<li><a href="html_content.html#H0">HTML Headings</a></li>
+	<li><a href="html_content.html#H1">HTML Links</a></li>
+	<li><a href="html_content.html#H2">HTML Quotation and Citation Elements</a></li>
+	<li><a href="html_content.html#H3">HTML Links- Syntax</a></li>
+	<li><a href="html_content.html#H4">HTML Images</a></li>
+	<li><a href="html_content.html#H5">HTML Attributes</a></li>
+	<li><a href="html_content.html#H6">HTML -head- Element</a></li>
+	<li><a href="html_content.html#H7">HTML Text Formatting</a></li>
+	<li><a href="html_content.html#H8">HTML -blockquote- for Quotations</a></li>
+      
+      </div>
+    <div id="CSS" class="tab-pane fade">
+      
+      <h3>CSS</h3>
+	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
+      </div>
+    <div id="SVG" class="tab-pane fade">
+      
+      	<input id="someCheckbox" type="checkbox" />
+	  
+	<svg width="400" height="180">
+	  <rect x="50%" y="20" width="150" height="150"
+	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
+	</svg>
+	 
+	  <div id="infovizDiv">
+	<svg style="width:500px;height:500px;border:1px lightgray solid;">
+			 <path d="M 10,60 40,30 50,50 60,30 70,80"
+			 style="fill:black;stroke:gray;stroke-width:4px;" />
+			 <polygon style="fill:gray;"
+			 points="80,400 120,400 160,440 120,480 60,460" />
+		 <g>
+			 <line x1="200" y1="100" x2="450" y2="225"
+			 style="stroke:black;stroke-width:2px;"/>
+			 <circle cy="100" cx="200" r="30"/>
+			 <rect x="410" y="200" width="100" height="50"
+			 style="fill:pink;stroke:black;stroke-width:1px;" />
+		 </g>
+	</svg>
+		 
+	 </div> 
+      
+      
+      </div>
+    
     <div id="JAVA" class="tab-pane fade">
     
 <h3>JavaScript</h3>
@@ -513,42 +588,23 @@ voyages = import(fname)
 
     
     </div>
-    <div id="OUTROS" class="tab-pane fade">
+
+<!-----------------------------INÍCIO-Ideias---------------------------------------------------------->
+
+    <div id="Ideias" class="tab-pane fade">
         
 	
     <li>Ver livro : Iludidos pelo acaso  </li>
-	
-   <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>  , utilizando o crossfilter </li>
+    <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
    
     
- 
-<li>Salvo Inicialmente em Bibliotecas no Computador do MDIC!</a></li>
 <h3>JavaScript</h3>
 <li><a href="http://dygraphs.com/download.html">DyGraph!</a></li>
 
-
- 
- 
-   
- 
-<h3>Toolbox of Data Science/GIT</h3>
-<li><a href="http://dygraphs.com/download.html">DyGraph!</a></li>
-
- <li><a href="toolbox_content.html#T0">Command Line Interface!</a></li>
- <li><a href="toolbox_content.html#T1">Git!</a></li>
- <li><a href="toolbox_content.html#T2">Git Help!</a></li>
- <li><a href="toolbox_content.html#T3">Git Basic Commands!</a></li>
-
-<h3>Textbooks</h3>
- <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EQIDBoCPELpDkKcATUDPohIBXjgbKa28Id43yu6ujb98ZA?e=KvdkdV">Elements Data Analytic Style</a></li>
- 
- 
- <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/Ef-lqFv9LMVFpcqKDjea-7QBuHAPQls9dGvWPL7645FrvA?e=ke5DMg">Modern Scientist</a></li>
- 
+    
   
   
  
- <li><a href="morning_pages_content.html#M0">Text 1!</a></li>
  
  
     </div>
