@@ -42,7 +42,7 @@ body {
     <div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li><a href="#section1">Ideias-Pensamentos</a></li>
+          <li><a href="#section1">Ideias</a></li>
           <li><a href="#section2">Cursos</a></li>
           <li><a href="#section3">Finanças</a></li>
           <li><a href="#section4">Projetos</a></li>
