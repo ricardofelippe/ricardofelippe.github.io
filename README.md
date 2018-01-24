@@ -22,6 +22,7 @@ body {
   #section3 
   #section41 
   #section42 
+  #section43        
   #section5 
           
   </style>
@@ -49,6 +50,7 @@ body {
             <ul class="dropdown-menu">
               <li><a href="#section41">R</a></li>
               <li><a href="#section42">D3</a></li>
+              <li><a href="#section43">Data Science Toolboxl</a></li>    
             </ul>
           </li>
         <li><a href="#section5">UNB</a></li>    
@@ -220,6 +222,9 @@ Quase tudo que sei sobre ações</a></li>
 <div id="section41" class="container-fluid">
 <!-----------------------------INÍCIO-R Section----------------------------------------------------->
     
+    
+    
+    
     <h2>R Section</h2>
     
     <h3>R Pubs</h3>
@@ -276,6 +281,7 @@ voyages = import(fname)
 
 </div>
     <hr>
+    
     
 <div id="section42" class="container-fluid">
     
@@ -459,6 +465,10 @@ voyages = import(fname)
       
  </div>
     
+
+<div id="section43" class="container-fluid">
+    <h2>Data Science Toolbox</h2>
+    </div>
 <!-----------------------------FIM-Data Science------------------------------------------------------->
     
 
