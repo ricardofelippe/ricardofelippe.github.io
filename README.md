@@ -45,6 +45,9 @@
       
   </div>
   
+  
+  
+  
   <!------------------------------------PROJETOS--------------------------------------------------------------->
   <div id="Projetos" class="tab-pane fade">
     <h3>Public Blocks</h3>  
@@ -168,7 +171,53 @@ probabilidade a posteriori.</span>
  <li><a href="2016_TD_PRO_V_1.3.xlsm">Teste EXCEL</a></li>
       
       </div>
-    <div id="arduino" class="tab-pane fade">
+  
+
+  <!-----------------------------INÍCIO-R--------------------------------------------------------------->
+
+<div id="R" class="tab-pane fade">
+    
+    <h3>R Pubs</h3>
+    <li><a href="http://rpubs.com/ricafelippe/351486">R Pubs</a></li>  
+
+    
+    <h3>R advanced</h3>
+    <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
+
+
+<li><a href="r_content.html#R0">R Tips!</a></li>
+<li><a href="r_content.html#R1">R and its indices!</a></li>
+<li><a href="r_content.html#R2">R and its lists!</a></li>
+<li><a href="r_content.html#R3">Subsetting!</a></li>
+<li><a href="r_content.html#R4">R Graphics!</a></li>
+<li><a href="r_content.html#R5">R Data Products!</a></li>
+<li><a href="r_content.html#R6">R Colors!</a></li>
+<li><a href="r_content.html#R7">R ggplot!</a></li>
+<li><a href="r_content.html#R8">R Cleaning and Getting Data!</a></li>
+<li><a href="r_content.html#R9">R Functional programming!</a></li>
+
+
+<h3>R htmlWidgets</h3>
+<li><a href="htmlWidgets.html">Ebook:htmlWidgets!</a></li>
+
+<h3>R Data Carpentry</h3>
+<li><a href="https://bookdown.org/csgillespie/efficientR/data-carpentry.html" target="_blank">Carpentry!!</a></li>
+    
+
+<h3>Efficiente R</h3>
+<li><a href="https://bookdown.org/csgillespie/efficientR/" target="_blank">Efficiente R programing</a></li>
+
+<h3>Advanced R</h3>
+<li><a href="http://adv-r.had.co.nz/" target="_blank">Advanced R</a></li>
+
+
+<h3>Swirll!</h3>
+<li><a href="http://swirlstats.com/students.html" target="_blank">Swirl ! </a></li>
+
+<!-----------------------------FIM-R--------------------------------------------------------------->
+
+  
+  <div id="arduino" class="tab-pane fade">
       <h3>PDF Arduino</h3>
    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
     <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
@@ -442,40 +491,7 @@ probabilidade a posteriori.</span>
   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1b879e807432643f8a090c8f4ed3c8464&authkey=Ad3_JtVHUtUmrJYCcTh2OEo">JavaScript & JQuery</a></li>   
 
     </div>
-    <div id="R" class="tab-pane fade">
-    <h3>R advanced</h3>
-    <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
-
-
-<li><a href="r_content.html#R0">R Tips!</a></li>
-<li><a href="r_content.html#R1">R and its indices!</a></li>
-<li><a href="r_content.html#R2">R and its lists!</a></li>
-<li><a href="r_content.html#R3">Subsetting!</a></li>
-<li><a href="r_content.html#R4">R Graphics!</a></li>
-<li><a href="r_content.html#R5">R Data Products!</a></li>
-<li><a href="r_content.html#R6">R Colors!</a></li>
-<li><a href="r_content.html#R7">R ggplot!</a></li>
-<li><a href="r_content.html#R8">R Cleaning and Getting Data!</a></li>
-<li><a href="r_content.html#R9">R Functional programming!</a></li>
-
-
-<h3>R htmlWidgets</h3>
-<li><a href="htmlWidgets.html">Ebook:htmlWidgets!</a></li>
-
-<h3>R Data Carpentry</h3>
-<li><a href="https://bookdown.org/csgillespie/efficientR/data-carpentry.html" target="_blank">Carpentry!!</a></li>
     
-
-<h3>Efficiente R</h3>
-<li><a href="https://bookdown.org/csgillespie/efficientR/" target="_blank">Efficiente R programing</a></li>
-
-<h3>Advanced R</h3>
-<li><a href="http://adv-r.had.co.nz/" target="_blank">Advanced R</a></li>
-
-
-<h3>Swirll!</h3>
-<li><a href="http://swirlstats.com/students.html" target="_blank">Swirl ! </a></li>
-
 
 
 
