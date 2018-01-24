@@ -16,7 +16,7 @@
 body {
       position: relative; 
   }
-  #section0
+  #section0 {padding-top:50px;height:500px;color: #fff; background-color: #E9967A;}
   #section1 
   #section2 
   #section3 
@@ -60,6 +60,8 @@ body {
 
     
 <div id="section0" class="container-fluid">
+  <h1>Pensamentos & Ideias</h1>
+    
 <li>Ver livro : Iludidos pelo acaso  </li>
 <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
    
