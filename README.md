@@ -242,8 +242,8 @@ Quase tudo que sei sobre ações</a></li>
 <h3>R htmlWidgets</h3>
 <li><a href="htmlWidgets.html">Ebook:htmlWidgets!</a></li>
 
-<h3>R Data Carpentry</h3>
-<li><a href="https://bookdown.org/csgillespie/efficientR/data-carpentry.html" target="_blank">Carpentry!!</a></li>
+<h3>Data Tidying</h3>
+<li><a href="http://garrettgman.github.io/tidying/">R-Data Tidying</a></li>
     
 
 <h3>Efficiente R</h3>
