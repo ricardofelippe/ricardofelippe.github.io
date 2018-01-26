@@ -301,8 +301,11 @@ voyages = import(fname)
 	print_filter(mostreisso);
 	</pre>
 	
+	<h3>Useful Skills! </h3>
+	<li><a href="https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming">Functional Programming</a></li>
 	
-
+	
+      
 	
 	
     <h3>Blocker & Gist</h3>
