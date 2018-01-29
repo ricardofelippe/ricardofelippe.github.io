@@ -282,9 +282,11 @@ voyages = import(fname)
 		<li><a href="http://d3indepth.com/">Peter Cook</a></li>
 		<li><a href="https://bl.ocks.org/phoebebright">Peter Cook</a></li>		
 		
-	<h3>Functional Programming</h2>
+	<h3>Functional Programming</h3>
 	
 <li><a href="https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming">Functional Programming</a></li>
+
+http://jsdatav.is/intro.html
 		
 	
        	<h3>Useful Tips! </h3>
