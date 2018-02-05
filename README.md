@@ -22,7 +22,8 @@ body {
   #section4 
   #section51 
   #section52 
-  #section53        
+  #section53 
+  #section54       
   #section6 
           
   </style>
@@ -51,6 +52,7 @@ body {
               <li><a href="#section51">R</a></li>
               <li><a href="#section52">D3</a></li>
               <li><a href="#section53">Data Science Toolboxl</a></li>    
+            <li><a href="#section54">SQL</a></li>       
             </ul>
           </li>
         <li><a href="#section6">UNB</a></li>    
@@ -462,7 +464,16 @@ http://jsdatav.is/intro.html
       
 <!-----------------------------FIM-D3 SECTION----------------------------------------------------->
       
- </div>
+ <!---------------------------INÍCIO-SQL SECTION----------------------------------------------------->
+ <h2>SQL Training</h2>
+   
+	<h3>Learning</h3>
+		<li><a href="https://www.udemy.com/bancos-de-dados-relacionais-basico-avancado/learn/v4/">Udemy</a></li>
+		
+<!-----------------------------FIM-SQL SECTION----------------------------------------------------->
+    
+    
+    </div>
 <hr>    
 <div id="section53" class="container-fluid">
     <h2>Data Science Toolbox</h2>
