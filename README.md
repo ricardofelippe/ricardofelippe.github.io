@@ -228,6 +228,10 @@ Quase tudo que sei sobre ações</a></li>
     <h3>R advanced</h3>
     <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
 
+<li><a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">How to make a great R reproducible example?</a></li>  
+
+    
+
 
 <li><a href="r_content.html#R0">R Tips!</a></li>
 <li><a href="r_content.html#R1">R and its indices!</a></li>
