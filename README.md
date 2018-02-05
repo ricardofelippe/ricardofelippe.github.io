@@ -465,10 +465,13 @@ http://jsdatav.is/intro.html
 <!-----------------------------FIM-D3 SECTION----------------------------------------------------->
       
  <!---------------------------INÍCIO-SQL SECTION----------------------------------------------------->
- <h2>SQL Training</h2>
+<div id="section54" class="container-fluid">
+
+<h2>SQL Training</h2>
    
 	<h3>Learning</h3>
 		<li><a href="https://www.udemy.com/bancos-de-dados-relacionais-basico-avancado/learn/v4/">Udemy</a></li>
+</div>
 		
 <!-----------------------------FIM-SQL SECTION----------------------------------------------------->
     
