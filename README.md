@@ -216,7 +216,14 @@ Quase tudo que sei sobre ações</a></li>
   </div>
 <hr>
 <div id="section51" class="container-fluid">
-<!-----------------------------INÍCIO-R Section----------------------------------------------------->
+
+    <h2>Data Science Ebooks</h2>
+    
+    <h3>Art of Data</h3>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EQdHsi45jj9Dm2uPQIqRybMBRXsbyTuogQYCA6HQAkndDA?e=MURifB">Art Data</a></li>  
+    
+
+    <!-----------------------------INÍCIO-R Section----------------------------------------------------->
     
     
     <h2>R Section</h2>
@@ -227,6 +234,10 @@ Quase tudo que sei sobre ações</a></li>
     
     <h3>R advanced</h3>
     <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
+    
+    <h3>ggplot</h3>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EbfokS6kuupDlpNoZlWiK-0BYCAyqtvgI2phyGaMY2Dmtw?e=wYe34s">ggplot</a></li>  
+
 
 <li><a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">How to make a great R reproducible example?</a></li>  
 
@@ -495,6 +506,8 @@ http://jsdatav.is/intro.html
    <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
     
   
+  <h3>Calculus</h3>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EaYGhVsb4kVJuXGpuh6ju6IBJAVH0xxcNF1oKTmHFXqLyQ?e=cIEjG1">Calculus</a></li>  
   
   <h3>Inferência</h3>
     <li><a href="unb_content.html#inferencia">Lista 01</a></li>  
