@@ -234,6 +234,8 @@ Quase tudo que sei sobre ações</a></li>
     
     <h3>R advanced</h3>
     <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
+    <li><a href="http://adv-r.had.co.nz/" target="_blank">Advanced R</a></li>
+
     
     <h3>ggplot</h3>
     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EbfokS6kuupDlpNoZlWiK-0BYCAyqtvgI2phyGaMY2Dmtw?e=wYe34s">ggplot</a></li>  
@@ -241,6 +243,9 @@ Quase tudo que sei sobre ações</a></li>
 
 <li><a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">How to make a great R reproducible example?</a></li>  
 
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EWwWfXdaiqpJnN6682q4k0YBnVSE1YWoz7-ZgNgXcEkTZw?e=bHkf4Z">Split_Aplly-Combine Strategy for Data Analysis with R</a></li>  
+
+    
     
 
 
@@ -265,9 +270,6 @@ Quase tudo que sei sobre ações</a></li>
 
 <h3>Efficiente R</h3>
 <li><a href="https://bookdown.org/csgillespie/efficientR/" target="_blank">Efficiente R programing</a></li>
-
-<h3>Advanced R</h3>
-<li><a href="http://adv-r.had.co.nz/" target="_blank">Advanced R</a></li>
 
 
 <h3>Swirll!</h3>
