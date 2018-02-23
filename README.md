@@ -1,3 +1,4 @@
+
 <html>
 
 <head>
@@ -237,6 +238,7 @@ Quase tudo que sei sobre ações</a></li>
     <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EWwWfXdaiqpJnN6682q4k0YBnVSE1YWoz7-ZgNgXcEkTZw?e=bHkf4Z">Split_Aplly-Combine Strategy for Data Analysis with R</a></li>  
     <li><a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">How to make a great R reproducible example?</a></li>  
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EUVckORMfvNHs2s4HsDLXUIBXF3MckH32Tbi5ifQTUqXCA?e=vNXHy1">Byesian Data Analysis with R</a></li>  
 
 
 
@@ -567,9 +569,6 @@ probabilidade a posteriori.</span>
  <li><a href="2016_TD_PRO_V_1.3.xlsm">Teste EXCEL</a></li>
       
       </div>
-    
-    
-
   
   
   
