@@ -233,48 +233,49 @@ Quase tudo que sei sobre ações</a></li>
 
     
     <h3>R advanced</h3>
-    <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
     <li><a href="http://adv-r.had.co.nz/" target="_blank">Advanced R</a></li>
+    <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html">Curso R UFPR</a></li>  
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EWwWfXdaiqpJnN6682q4k0YBnVSE1YWoz7-ZgNgXcEkTZw?e=bHkf4Z">Split_Aplly-Combine Strategy for Data Analysis with R</a></li>  
+    <li><a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">How to make a great R reproducible example?</a></li>  
+
+
 
     
     <h3>ggplot</h3>
     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EbfokS6kuupDlpNoZlWiK-0BYCAyqtvgI2phyGaMY2Dmtw?e=wYe34s">ggplot</a></li>  
 
 
-<li><a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">How to make a great R reproducible example?</a></li>  
+    <h3>R htmlWidgets</h3>
+    <li><a href="htmlWidgets.html">Ebook:htmlWidgets!</a></li>
 
-<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EWwWfXdaiqpJnN6682q4k0YBnVSE1YWoz7-ZgNgXcEkTZw?e=bHkf4Z">Split_Aplly-Combine Strategy for Data Analysis with R</a></li>  
+    <h3>Data Tidying</h3>
+    <li><a href="http://garrettgman.github.io/tidying/">R-Data Tidying</a></li>
+
+
+    <h3>Efficiente R</h3>
+    <li><a href="https://bookdown.org/csgillespie/efficientR/" target="_blank">Efficiente R programing</a></li>
+
+
+    <h3>Swirll!</h3>
+    <li><a href="http://swirlstats.com/students.html" target="_blank">Swirl ! </a></li>
+
+
+    <h3>Diverses</h3>
+
+    <li><a href="r_content.html#R0">R Tips!</a></li>
+    <li><a href="r_content.html#R1">R and its indices!</a></li>
+    <li><a href="r_content.html#R2">R and its lists!</a></li>
+    <li><a href="r_content.html#R3">Subsetting!</a></li>
+    <li><a href="r_content.html#R4">R Graphics!</a></li>
+    <li><a href="r_content.html#R5">R Data Products!</a></li>
+    <li><a href="r_content.html#R6">R Colors!</a></li>
+    <li><a href="r_content.html#R7">R ggplot!</a></li>
+    <li><a href="r_content.html#R8">R Cleaning and Getting Data!</a></li>
+    <li><a href="r_content.html#R9">R Functional programming!</a></li>
+
+
 
     
-    
-
-
-<li><a href="r_content.html#R0">R Tips!</a></li>
-<li><a href="r_content.html#R1">R and its indices!</a></li>
-<li><a href="r_content.html#R2">R and its lists!</a></li>
-<li><a href="r_content.html#R3">Subsetting!</a></li>
-<li><a href="r_content.html#R4">R Graphics!</a></li>
-<li><a href="r_content.html#R5">R Data Products!</a></li>
-<li><a href="r_content.html#R6">R Colors!</a></li>
-<li><a href="r_content.html#R7">R ggplot!</a></li>
-<li><a href="r_content.html#R8">R Cleaning and Getting Data!</a></li>
-<li><a href="r_content.html#R9">R Functional programming!</a></li>
-
-
-<h3>R htmlWidgets</h3>
-<li><a href="htmlWidgets.html">Ebook:htmlWidgets!</a></li>
-
-<h3>Data Tidying</h3>
-<li><a href="http://garrettgman.github.io/tidying/">R-Data Tidying</a></li>
-    
-
-<h3>Efficiente R</h3>
-<li><a href="https://bookdown.org/csgillespie/efficientR/" target="_blank">Efficiente R programing</a></li>
-
-
-<h3>Swirll!</h3>
-<li><a href="http://swirlstats.com/students.html" target="_blank">Swirl ! </a></li>
-
 <h3>Versatile data import with rio!</h3>
 <pre>
 
@@ -566,7 +567,6 @@ probabilidade a posteriori.</span>
  <li><a href="2016_TD_PRO_V_1.3.xlsm">Teste EXCEL</a></li>
       
       </div>
-  
     
     
 
