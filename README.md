@@ -1,4 +1,3 @@
-
 <html>
 
 <head>
@@ -508,7 +507,18 @@ http://jsdatav.is/intro.html
       
        <h3>Editais/Informes</h3>  
    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1e6da70443db24b49aedc2bcefadd32ba&authkey=AWlU5wO5l3GZvPn_Nl8QXLI">Calendário 2º/2017</a></li> 
-   <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
+    
+   <li><a href="http://www.saa.unb.br/images/stories/documentos/calendarios/graduacao/cal_atividades/calendario_atividade_1_2018.pdf">Calendário por Atividades 1º/2018</a></li> 
+    
+        
+   <li><a href="http://www.unbidiomas.unb.br/">UNB idiomas</a></li> 
+          
+    <li><a href="http://www.est.unb.br/index.php?option=com_phocadownload&view=category&download=31:listagem-de-disciplinas-curriculo-novo&id=2:disciplinas">Listagem Disciplinas-Estatística</a></li> 
+    
+    <li><a href="http://www.est.unb.br/index.php?option=com_phocadownload&view=category&download=29:fluxo-de-disciplinas&id=2:disciplinas">Fluxo Disciplinas-Estatística</a></li> 
+   
+   
+    <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
     
   
   <h3>Calculus</h3>
@@ -565,12 +575,11 @@ probabilidade a posteriori.</span>
     
   <h3>Amostragem</h3>
     <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
-    <li><a href="unb_content.html#amostragem2">Técnicas de Amostragem (2º/2017)</a></li>   
- <li><a href="2016_TD_PRO_V_1.3.xlsm">Teste EXCEL</a></li>
-      
+     
       </div>
   
   
   
   
  
+
