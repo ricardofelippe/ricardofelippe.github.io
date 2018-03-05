@@ -521,7 +521,7 @@ http://jsdatav.is/intro.html
    
     <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
     
-  <h3>Computação Estatística-106771</h3>
+  <h3>Estatística Computacional-106771</h3>
     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ETb7xJzsoUVMoLsEcULp3pMBJpoguEXUWltC9Q-LNEFN3g?e=jFWrmt">Plano Estudo 01/2018</a></li>  
   
     
