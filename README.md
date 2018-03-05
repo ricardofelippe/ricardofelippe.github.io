@@ -1,4 +1,5 @@
-<html>
+
+  <html>
 
 <head>
   <title>My Exo-cortex Bootstrap</title>
@@ -520,9 +521,10 @@ http://jsdatav.is/intro.html
    
     <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
     
+  <h3>Computação Estatística-106771</h3>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ETb7xJzsoUVMoLsEcULp3pMBJpoguEXUWltC9Q-LNEFN3g?e=jFWrmt">Plano Estudo 01/2018</a></li>  
   
-  <h3>Calculus</h3>
-    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EaYGhVsb4kVJuXGpuh6ju6IBJAVH0xxcNF1oKTmHFXqLyQ?e=cIEjG1">Calculus</a></li>  
+    
   
   <h3>Inferência</h3>
     <li><a href="unb_content.html#inferencia">Lista 01</a></li>  
@@ -566,7 +568,9 @@ probabilidade a posteriori.</span>
     <li><a href="http://www.leg.ufpr.br/Rpira/Rpira/Rpira.html
 ">Curso R UFPR</a></li>  
 
-
+<h3>Calculus</h3>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EaYGhVsb4kVJuXGpuh6ju6IBJAVH0xxcNF1oKTmHFXqLyQ?e=cIEjG1">Calculus</a></li>  
+  
     <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1fbcb21f219fa485a8e81e457adf6634b&authkey=ASUu-KdmW6jLwLczB-tHbGU">Estatísticas de Ordem</a></li>  
 
 
@@ -577,7 +581,6 @@ probabilidade a posteriori.</span>
     <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
      
       </div>
-  
   
   
   
