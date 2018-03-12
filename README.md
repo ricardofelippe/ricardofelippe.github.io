@@ -75,13 +75,28 @@ body {
   <h1>Cursos</h1>
     <hr>
   
-    <h3>English-ECC</h3>  
-     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EVebSyG-cydLv4mNxJHDF7MBFap6DUNxjY4haG5G8N_ulA?e=PvPjxR">Text_1(08/03/18)</a></li> 
+    
+    <h3>English-ECC-Reading</h3>  
+     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EVebSyG-cydLv4mNxJHDF7MBFap6DUNxjY4haG5G8N_ulA?e=PvPjxR">Text_5(08/03/18)</a></li> 
+ 
+    <h3>English-ECC-Listening</h3>  
+  
+    <li><a href="https://www.ted.com/talks/laura_vanderkam_how_to_gain_control_of_your_free_time#t-98647">Listening Source 1st</a></li> 
+  
+    <li><a href="https://www.youtube.com/embed/P2XVdDSJHqY?rel=0&amp;showinfo=0">Listening Source 2 nd</a></li> 
+  
+    <li><a href="https://www.ted.com/talks/susan_david_the_gift_and_power_of_emotional_courage?utm_source=newsletter_daily&utm_campaign=daily&utm_medium=email&utm_content=image__2018-01-30">Listening Source 4th</a></li> 
+  
+    <li><a href="https://www.ted.com/talks/tanya_menon_the_secret_to_great_opportunities_the_person_you_haven_t_met_yet?utm_source=newsletter_weekly_2018-02-17&utm_campaign=newsletter_weekly&utm_medium=email&utm_content=bottom_right_image">Listening Source 5th</a></li> 
   <hr>
+ 
+    
  
     
     <h3>Speech</h3>  
      <li><a href="publicSpeak_content.html#Lesson1">Lesson 1</a></li> 
+    
+    
   <hr>
   <h3>Arduino</h3>
    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
