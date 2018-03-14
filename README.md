@@ -76,8 +76,11 @@ body {
     <hr>
   
     
-    <h3>English-ECC-Reading</h3>  
-     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EVebSyG-cydLv4mNxJHDF7MBFap6DUNxjY4haG5G8N_ulA?e=PvPjxR">Text_5(08/03/18)</a></li> 
+    <h3>English-Grammar-Beginner</h3>  
+     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EStcOmRpO6xPgGRsYqOnDrQBm6duxEfJ4VBjISfbUFOG1Q?e=ioUnLx">Grammar Beginner</a></li>
+    
+    
+     
  
     <h3>English-ECC-Listening</h3>  
   
@@ -546,6 +549,17 @@ http://jsdatav.is/intro.html
   <h3>Análise de Regressão Linear-115177</h3>
     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EZmCaDtUIbRFpirlbymenCUBN5Xaa_2DhT4IxquRwuODXA?e=m4d6Ob">Plano Estudo 01/2018</a></li>  
   
+  <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EXb48dFmTM9EkCioPMa8kZIBIpvwcItL4ax93PcutG9few?e=0enYD5">Ebook-Weisberg</a></li> 
+  
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ERybTMZa_GREg7b1vTwPT8ABPomC2jf8rJQMQ0xi0eHShA?e=f0egPp">Ebook-John Neter</a></li> 
+    
+  
+    
+   
+    
+    
+    
+    
     
   
   <h3>Inferência</h3>
