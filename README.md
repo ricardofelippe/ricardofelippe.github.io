@@ -87,6 +87,12 @@ body {
     <li><a href="https://www.ted.com/talks/laura_vanderkam_how_to_gain_control_of_your_free_time#t-98647">Listening Source 1st</a></li> 
   
     <li><a href="https://www.youtube.com/embed/P2XVdDSJHqY?rel=0&amp;showinfo=0">Listening Source 2 nd</a></li> 
+
+        <li><a href="https://www.ted.com/talks/dani el_susskind_3_myths_about_the_ future_of_work_and_why_they_re _not_true?utm_source=newslette r_weekly_2018-03-17&utm_campai gn=newsletter_weekly&utm_mediu m=email&utm_content=talk_of_ the_week_image#t-127588">Listening Source 3 rd</a></li> 
+
+    
+
+    
   
     <li><a href="https://www.ted.com/talks/susan_david_the_gift_and_power_of_emotional_courage?utm_source=newsletter_daily&utm_campaign=daily&utm_medium=email&utm_content=image__2018-01-30">Listening Source 4th</a></li> 
   
@@ -621,6 +627,9 @@ probabilidade a posteriori.</span>
   
   
  
+
+
+  
 
 
   
