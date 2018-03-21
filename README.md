@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <title>My Exo-cortex Bootstrap</title>
   <meta charset="UTF-8">
@@ -47,7 +46,7 @@ body {
           <li><a href="#section2">Cursos</a></li>
           <li><a href="#section3">Finanças</a></li>
           <li><a href="#section4">Projetos</a></li>
-          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Data Science <span class="caret"></span></a>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="sectionDataScience">Data Science <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#section51">R</a></li>
               <li><a href="#section52">D3</a></li>
@@ -55,7 +54,15 @@ body {
             <li><a href="#section54">SQL</a></li>       
             </ul>
           </li>
-        <li><a href="#section6">UNB</a></li>    
+        <li><a href="#sectionUNB">UNB</a></li>    
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="sectionProjetos">Projetos <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#sectionVBA">Códigos VBA</a></li>
+              <li><a href="#sectionR">Códigos R</a></li>
+             </ul>
+          </li>
+          
+            
         </ul>
       </div>
     </div>
@@ -79,9 +86,7 @@ body {
     <h3>English-Grammar-Beginner</h3>  
      <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EStcOmRpO6xPgGRsYqOnDrQBm6duxEfJ4VBjISfbUFOG1Q?e=ioUnLx">Grammar Beginner</a></li>
     
-    <script src="https://gist.github.com/ricardofelippe/d3fa8278eab4391cd8a1d0f0daff7b11.js"></script>
-    
-     
+         
  
     <h3>English-ECC-Listening</h3>  
   
@@ -228,22 +233,6 @@ Quase tudo que sei sobre ações</a></li>
     
     </div>
 <hr>
-<div id="section4" class="container-fluid">
- <h1>Projetos</h1>
- 
-
-  <!------------------------------------INÍCIO-PROJETOS----------------------------------------------->
-    <h3>Public Blocks</h3>  
-     <li><a href="https://bl.ocks.org/ricardofelippe">All Projects</a></li> 
-  
-  <h3>Secret Blocks</h3>  
-  <li><a href="BoneStructureTesouroDiretoDataDriven.html">BoneStructureTesouroDiretoDataDriven</a></li>
-  <li><a href="https://gist.github.com/ricardofelippe/7cc53076d2e8a0a21438703af0df8ae7">Tesouro Direto-Data Driven</a></li> 
-  
-  
-  
-  <!------------------------------------FIM-PROJETOS------------------------------------------------>
-  </div>
 <hr>
 <div id="section51" class="container-fluid">
 
@@ -532,7 +521,7 @@ http://jsdatav.is/intro.html
     </div>
 <!-----------------------------FIM-Data Science------------------------------------------------------->
 <hr>
-<div id="section6" class="container-fluid">
+<div id="sectionUNB" class="container-fluid">
     <h1>UNB</h1>
       
        <h3>Editais/Informes</h3>  
@@ -619,7 +608,6 @@ probabilidade a posteriori.</span>
 
 
     
-    
   <h3>Amostragem</h3>
     <li><a href="unb_content.html#amostragem">Técnicas de Amostragem (2º/2017)</a></li>   
      
@@ -627,10 +615,25 @@ probabilidade a posteriori.</span>
   
   
   
+<div id="sectionProjetos" class="container-fluid">
+ <h1>Projetos</h1>
  
 
-
+  <!------------------------------------INÍCIO-PROJETOS----------------------------------------------->
+    <h3>Public Blocks</h3>  
+     <li><a href="https://bl.ocks.org/ricardofelippe">All Projects</a></li> 
   
-
-
+  <h3>Secret Blocks</h3>  
+  <li><a href="BoneStructureTesouroDiretoDataDriven.html">BoneStructureTesouroDiretoDataDriven</a></li>
+  <li><a href="https://gist.github.com/ricardofelippe/7cc53076d2e8a0a21438703af0df8ae7">Tesouro Direto-Data Driven</a></li> 
   
+  
+  
+  <!------------------------------------FIM-PROJETOS------------------------------------------------>
+  </div>
+    
+<div id="sectionVBA" class="container-fluid">
+
+        <script src="https://gist.github.com/ricardofelippe/37e28edc727df786545b81c1323a2017.js"></script>
+ 
+</div>
