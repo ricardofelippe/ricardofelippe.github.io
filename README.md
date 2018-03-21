@@ -45,7 +45,6 @@ body {
           <li><a href="#section1">Ideias</a></li>
           <li><a href="#section2">Cursos</a></li>
           <li><a href="#section3">Finanças</a></li>
-          <li><a href="#section4">Projetos</a></li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="sectionDataScience">Data Science <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#section51">R</a></li>
@@ -87,7 +86,20 @@ body {
      <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EStcOmRpO6xPgGRsYqOnDrQBm6duxEfJ4VBjISfbUFOG1Q?e=ioUnLx">Grammar Beginner</a></li>
     
          
- 
+    <h3>English-ECC-Text</h3>  
+    
+    <li><a href="  ">Text</a>
+        <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EXEF_BElbbJPq-RHCOuQD4sBxZlkK0HasqP4em4WyY7Kzg?e=XVC3tP">Text 2</a>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EXEF_BElbbJPq-RHCOuQD4sBxZlkK0HasqP4em4WyY7Kzg?e=XVC3tP">Text 3</a>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EXxODZJ9tElHohKPYPe-QFMBFhu6x-nUqfiwX19bX_ln6Q?e=v1y86v">Text 4</a>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ESoM8eKsEXJFnvT07d2lG2IB0SWAqhGd04MR8ejgQZQB-g?e=lmivCd">Text 5</a>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ESoM8eKsEXJFnvT07d2lG2IB0SWAqhGd04MR8ejgQZQB-g?e=lmivCd">Text 6</a>
+    <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ESoM8eKsEXJFnvT07d2lG2IB0SWAqhGd04MR8ejgQZQB-g?e=lmivCd">Text 7</a>
+    
+    
+    
+  
+    
     <h3>English-ECC-Listening</h3>  
   
     <li><a href="https://www.ted.com/talks/laura_vanderkam_how_to_gain_control_of_your_free_time#t-98647">Listening Source 1st</a></li> 
