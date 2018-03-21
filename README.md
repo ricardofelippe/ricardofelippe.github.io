@@ -628,12 +628,18 @@ probabilidade a posteriori.</span>
   <li><a href="https://gist.github.com/ricardofelippe/7cc53076d2e8a0a21438703af0df8ae7">Tesouro Direto-Data Driven</a></li> 
   
   
-  
-  <!------------------------------------FIM-PROJETOS------------------------------------------------>
-  </div>
-    
-<div id="sectionVBA" class="container-fluid">
+  <div id="sectionVBA" class="container-fluid">
 
+    <h3>Depuração Estatística</h3>  
+  
         <script src="https://gist.github.com/ricardofelippe/37e28edc727df786545b81c1323a2017.js"></script>
  
 </div>
+    
+  <!------------------------------------FIM-PROJETOS------------------------------------------------>
+
+    
+    
+    
+    </div>
+    
