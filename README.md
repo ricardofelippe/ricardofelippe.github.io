@@ -57,6 +57,7 @@ body {
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="sectionProjetos">Projetos <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#sectionVBA">Códigos VBA</a></li>
+              <li><a href="#sectionTabuada">Tabuada</a></li>
               <li><a href="#sectionR">Códigos R</a></li>
              </ul>
           </li>
@@ -645,13 +646,18 @@ probabilidade a posteriori.</span>
     <h3>Depuração Estatística</h3>  
   
         <script src="https://gist.github.com/ricardofelippe/37e28edc727df786545b81c1323a2017.js"></script>
- 
+      
+  
 </div>
     
-  <!------------------------------------FIM-PROJETOS------------------------------------------------>
+    <div id="sectionTabuada" class="container-fluid">
 
+        <h3>Depuração Estatística</h3>  
+  
+        <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ER0xR9q5G_1Ghy-OQ1I50x4BdfJET85_CMrvtBukmr-E9A?e=iuvTjs">Tabuada 1</a></li>
+  
+        
     
+</div>
     
-    
-    </div>
-    
+<!------------------------------------FIM-PROJETOS------------------------------------------------>
