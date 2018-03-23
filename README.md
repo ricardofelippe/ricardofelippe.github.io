@@ -654,7 +654,7 @@ probabilidade a posteriori.</span>
 
         <h3>Depuração Estatística</h3>  
   
-        <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ER0xR9q5G_1Ghy-OQ1I50x4BdfJET85_CMrvtBukmr-E9A?e=iuvTjs">Tabuada 1</a></li>
+        <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EUkPJ45eOe5JsJhEdgpswSABIuqc3UgVS4KPLMUO-y-8PA?e=fjno52">Tabuada 1</a></li>
   
         
     
