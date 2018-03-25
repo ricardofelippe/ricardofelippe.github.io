@@ -77,14 +77,16 @@ body {
 <li>Ver livro : Iludidos pelo acaso  </li>
 <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
 
+</div>
+<hr>
 <div lang="latex">1+sin(x)^2+3</div>
 <ul>
 <li lang="latex">x^2+y^2+z^2</li>
 <li>a^2+b^2</li>
 </ul>
    
-</div>
-<hr>
+
+
 <div id="section2" class="container-fluid">
   <h1>Cursos</h1>
     <hr>
