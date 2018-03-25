@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
  
   
 </head>
@@ -75,6 +76,12 @@ body {
     
 <li>Ver livro : Iludidos pelo acaso  </li>
 <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
+
+<div lang="latex">1+sin(x)^2+3</div>
+<ul>
+<li lang="latex">x^2+y^2+z^2</li>
+<li>a^2+b^2</li>
+</ul>
    
 </div>
 <hr>
