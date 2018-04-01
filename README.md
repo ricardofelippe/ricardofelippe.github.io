@@ -44,14 +44,14 @@ body {
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li><a href="#section1">Ideias</a></li>
-          <li><a href="#section2">Cursos</a></li>
+          <li><a href="#section2">Inglês</a></li>
           <li><a href="#section3">Finanças</a></li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="sectionDataScience">Data Science <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#section51">R</a></li>
               <li><a href="#section52">D3</a></li>
               <li><a href="#section53">Data Science Toolboxl</a></li>    
-            <li><a href="#section54">SQL</a></li>       
+             <li><a href="#section54">SQL</a></li>       
             </ul>
           </li>
         <li><a href="#sectionUNB">UNB</a></li>    
@@ -60,6 +60,16 @@ body {
               <li><a href="#sectionVBA">Códigos VBA</a></li>
               <li><a href="#sectionTabuada">Tabuada</a></li>
               <li><a href="#sectionR">Códigos R</a></li>
+			  <li><a href="#sectionArduino">Arduino</a></li>
+			  <li><a href="#sectionHTML">HTML</a></li>
+			  <li><a href="#sectionCSS">CSS</a></li>
+			  <li><a href="#sectionSVG">SVG</a></li>
+			  <li><a href="#sectionJavaScrip">JavaScript</a></li>
+			  
+			   
+
+
+			  
              </ul>
           </li>
           
@@ -79,19 +89,15 @@ body {
 
 </div>
 <hr>
-<div lang="latex">1+sin(x)^2+3</div>
-<ul>
-<li lang="latex">x^2+y^2+z^2</li>
-<li>a^2+b^2</li>
-</ul>
-   
-
+  
 
 <div id="section2" class="container-fluid">
+  
   <h1>Cursos</h1>
     <hr>
-  
-    
+      
+    <h2>ECC-English-1ºSem 2018</h2>
+
     <h3>English-Grammar-Beginner</h3>  
      <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EStcOmRpO6xPgGRsYqOnDrQBm6duxEfJ4VBjISfbUFOG1Q?e=ioUnLx">Grammar Beginner</a></li>
     
@@ -110,8 +116,6 @@ body {
     
     
     
-  
-    
     <h3>English-ECC-Listening</h3>  
   
     <li><a href="https://www.ted.com/talks/laura_vanderkam_how_to_gain_control_of_your_free_time#t-98647">Listening Source 1st</a></li> 
@@ -119,8 +123,6 @@ body {
     <li><a href="https://www.youtube.com/embed/P2XVdDSJHqY?rel=0&amp;showinfo=0">Listening Source 2 nd</a></li> 
 
         <li><a href="https://www.ted.com/talks/daniel_susskind_3_myths_about_the_future_of_work_and_why_they_re_not_true?utm_source=newsletter_weekly_2018-03-17&utm_campaign=newsletter_weekly&utm_medium=email&utm_content=talk_of_the_week_image#t-127588">Listening Source 3 rd</a></li> 
-
-    
 
     
   
@@ -136,92 +138,12 @@ body {
      <li><a href="publicSpeak_content.html#Lesson1">Lesson 1</a></li> 
     
     
-  <hr>
-  <h3>Arduino</h3>
-   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
-    
-    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=19e089c3fd4eb4d218c9c17d5d876f80b&authkey=AVTZO6PnPSO9b84-E3I-qXY">Kit Arduino Mega2560</a></li> 
-    
-    
-   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
-   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
-   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
-   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
-  
-  <h3>Curso Arduino</h3>
-  <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
-  <li><a href="https://www.youtube.com/watch?v=0HXSXlFKxUc">Aprendendo Arduino sem tem um!-Youtube</a></li>
-  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
-    
-<li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
-<h3>Coursera Robots-Arduino</h3>
-<li><a href=".\Arduino\s1.4_traffic_light.ino">Week one: Traffic light </a></li>   
-  
+	<h2>English-Portfólio Profissional</h2>
 
-
-<h3>Curso Arduino</h3>
-<li><a href="http://www.comofazerascoisas.com.br/robotica-eletronica-mecatronica/eletronica/arduino
-">Como Fazer as coisas: Arduino</a></li>   
-
-<span> Projeto Alimentador Automático</span>
-<pre>
--Motor
--WIRELESS COM O WIFI SHIELD CC3000 KEYES
-
-</pre>
-      
-  <hr>
-      
- <h3>HTML</h3>
-	<li><a href="html_content.html#H0">HTML Structure</a></li>
-	<li><a href="html_content.html#H0">HTML Headings</a></li>
-	<li><a href="html_content.html#H1">HTML Links</a></li>
-	<li><a href="html_content.html#H2">HTML Quotation and Citation Elements</a></li>
-	<li><a href="html_content.html#H3">HTML Links- Syntax</a></li>
-	<li><a href="html_content.html#H4">HTML Images</a></li>
-	<li><a href="html_content.html#H5">HTML Attributes</a></li>
-	<li><a href="html_content.html#H6">HTML -head- Element</a></li>
-	<li><a href="html_content.html#H7">HTML Text Formatting</a></li>
-	<li><a href="html_content.html#H8">HTML -blockquote- for Quotations</a></li>
-      
-  <hr>
-      
-      <h3>CSS</h3>
-	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
-    <input id="someCheckbox" type="checkbox" />
-	<hr>
-    
-    <h3>SVG</h3>
 	
-	<svg width="400" height="180">
-	  <rect x="50%" y="20" width="150" height="150"
-	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
-	</svg>
-	 
-	 <svg style="width:500px;height:500px;border:1px lightgray solid;">
-			 <path d="M 10,60 40,30 50,50 60,30 70,80"
-			 style="fill:black;stroke:gray;stroke-width:4px;" />
-			 <polygon style="fill:gray;"
-			 points="80,400 120,400 160,440 120,480 60,460" />
-		 <g>
-			 <line x1="200" y1="100" x2="450" y2="225"
-			 style="stroke:black;stroke-width:2px;"/>
-			 <circle cy="100" cx="200" r="30"/>
-			 <rect x="410" y="200" width="100" height="50"
-			 style="fill:pink;stroke:black;stroke-width:1px;" />
-		 </g>
-	</svg>
-		 
-	  
-    <hr>
-    
-          
-<h3>JavaScript</h3>
-  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1b879e807432643f8a090c8f4ed3c8464&authkey=Ad3_JtVHUtUmrJYCcTh2OEo">JavaScript & JQuery</a></li>   
-<li><a href="http://dygraphs.com/download.html">DyGraph!</a></li>
-
+	
+	
+  <hr>
     
     </div>
 <hr>
@@ -563,10 +485,13 @@ http://jsdatav.is/intro.html
    
     <li><a href="http://www.cespe.unb.br/avaliacao/">Site Proficiência</a></li> 
     
-  <h3>Estatística Computacional-106771</h3>
+  <h3>Estatística Computacional-106771-1º Sem-2018</h3>
     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ETb7xJzsoUVMoLsEcULp3pMBJpoguEXUWltC9Q-LNEFN3g?e=jFWrmt">Plano Estudo 01/2018</a></li>  
+	<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EVDk2HipK9lArv1K9Os-hlkBPZ8PcCv008q5eou_zv9cig?e=DTW3eV">Trabalho Prático 1</a></li>  	
+	<li><a href="https://mdic-my.sharepoint.com/:t:/g/personal/ricardo_ramos_mdic_gov_br/EUeA2p6U_sBLthBUwjjw8OgBvwZjwbx68Sxt9Ds2zcRp-Q?e=GAyLA1">Código Trabalho Prático 1</a></li>  
+	
   
-  <h3>Análise de Regressão Linear-115177</h3>
+  <h3>Análise de Regressão Linear-115177-1º Sem-2018</h3>
     <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EZmCaDtUIbRFpirlbymenCUBN5Xaa_2DhT4IxquRwuODXA?e=m4d6Ob">Plano Estudo 01/2018</a></li>  
   
   <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EXb48dFmTM9EkCioPMa8kZIBIpvwcItL4ax93PcutG9few?e=0enYD5">Ebook-Weisberg</a></li> 
@@ -652,7 +577,7 @@ probabilidade a posteriori.</span>
   <li><a href="https://gist.github.com/ricardofelippe/7cc53076d2e8a0a21438703af0df8ae7">Tesouro Direto-Data Driven</a></li> 
   
   
-  <div id="sectionVBA" class="container-fluid">
+ <div id="sectionVBA" class="container-fluid">
 
     <h3>Depuração Estatística</h3>  
   
@@ -661,14 +586,120 @@ probabilidade a posteriori.</span>
   
 </div>
     
-    <div id="sectionTabuada" class="container-fluid">
-
-        <h3>Depuração Estatística</h3>  
-  
+ <div id="sectionTabuada" class="container-fluid">
+ 
         <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EUkPJ45eOe5JsJhEdgpswSABIuqc3UgVS4KPLMUO-y-8PA?e=fjno52">Tabuada 1</a></li>
-  
         
     
 </div>
+
+ <div id="sectionArduino" class="container-fluid">
+
+  <h3>Arduino</h3>
+   <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=12e23846ae4e94662abf05878985f59be&authkey=AaAMlircLugwJC5cCQVh_Eo">Arduino Básico</a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=0836a5c564f4141baa170c7d7c870331e&authkey=AROKcT5i35GSJFBVH7w3qNs">Arduino by Example </a></li>   
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1a205434e02ef4918ab18e37d9dc0d421&authkey=AYabBqT2xBl9o3eEx1R6uPI">30 Projetos com Arduino</a></li> 
+    
+    <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=19e089c3fd4eb4d218c9c17d5d876f80b&authkey=AVTZO6PnPSO9b84-E3I-qXY">Kit Arduino Mega2560</a></li> 
+    
+    
+   <li><a href=".\Arduino\Oreilly.Arduino.Cookbook.2nd.Edition.Dec.2011.pdf">Cookbook </a></li>  
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>  
+   <li><a href=".\Arduino\Guia_Arduino_Iniciante_Multilogica_Shop.pdf">Guia Iniciante</a></li>   
+   <li><a href=".\Arduino\Tut_Arduino.pdf">Tutorial </a></li>   
+  
+  <h3>Curso Arduino</h3>
+  <li><a href="https://www.tinkercad.com/">Arduino on Line:Tinkercad</a></li>   
+  <li><a href="https://www.youtube.com/watch?v=0HXSXlFKxUc">Aprendendo Arduino sem tem um!-Youtube</a></li>
+  <li><a href="http://www.cursou.com.br/informatica/curso-de-arduino-e-avr">Link</a></li>   
+    
+<li><a href="https://www.youtube.com/watch?v=S34PnG143sE&list=PLZ8dBTV2_5HSyOXhJ77d-iyt5Z_v_1DPM">HARDWARE DO ARDUINO DUEMILANOVE | Curso de Arduino #001 </a></li> 
+<h3>Coursera Robots-Arduino</h3>
+<li><a href=".\Arduino\s1.4_traffic_light.ino">Week one: Traffic light </a></li>   
+  
+
+
+<h3>Curso Arduino</h3>
+<li><a href="http://www.comofazerascoisas.com.br/robotica-eletronica-mecatronica/eletronica/arduino
+">Como Fazer as coisas: Arduino</a></li>   
+
+<span> Projeto Alimentador Automático</span>
+<pre>
+-Motor
+-WIRELESS COM O WIFI SHIELD CC3000 KEYES
+
+</pre>
+
+</div>
+      
+  <hr>
+      
+ <div id="sectionHTML" class="container-fluid">
+
+	  <h3>HTML</h3>
+	<li><a href="html_content.html#H0">HTML Structure</a></li>
+	<li><a href="html_content.html#H0">HTML Headings</a></li>
+	<li><a href="html_content.html#H1">HTML Links</a></li>
+	<li><a href="html_content.html#H2">HTML Quotation and Citation Elements</a></li>
+	<li><a href="html_content.html#H3">HTML Links- Syntax</a></li>
+	<li><a href="html_content.html#H4">HTML Images</a></li>
+	<li><a href="html_content.html#H5">HTML Attributes</a></li>
+	<li><a href="html_content.html#H6">HTML -head- Element</a></li>
+	<li><a href="html_content.html#H7">HTML Text Formatting</a></li>
+	<li><a href="html_content.html#H8">HTML -blockquote- for Quotations</a></li>
+
+</div>
+	
+  <hr>
+<div id="sectionCSS" class="container-fluid">
+      
+      <h3>CSS</h3>
+	<li><a href="css_content.html#C2">CSS Border Properties</a></li>
+    <input id="someCheckbox" type="checkbox" />
+</div>
+
+	<hr>
+<div id="sectionCSS" class="container-fluid">
+
+<div id="sectionSVG" class="container-fluid">
+    
+    <h3>SVG</h3>
+	
+	<svg width="400" height="180">
+	  <rect x="50%" y="20" width="150" height="150"
+	  style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
+	</svg>
+	 
+	 <svg style="width:500px;height:500px;border:1px lightgray solid;">
+			 <path d="M 10,60 40,30 50,50 60,30 70,80"
+			 style="fill:black;stroke:gray;stroke-width:4px;" />
+			 <polygon style="fill:gray;"
+			 points="80,400 120,400 160,440 120,480 60,460" />
+		 <g>
+			 <line x1="200" y1="100" x2="450" y2="225"
+			 style="stroke:black;stroke-width:2px;"/>
+			 <circle cy="100" cx="200" r="30"/>
+			 <rect x="410" y="200" width="100" height="50"
+			 style="fill:pink;stroke:black;stroke-width:1px;" />
+		 </g>
+	</svg>
+		 
+</div>
+	  
+    <hr>
+    
+<div id="sectionJavaScrip" class="container-fluid">
+          
+<h3>JavaScript</h3>
+  <li><a href="https://mdic-my.sharepoint.com/personal/ricardo_ramos_mdic_gov_br/_layouts/15/guestaccess.aspx?docid=1b879e807432643f8a090c8f4ed3c8464&authkey=Ad3_JtVHUtUmrJYCcTh2OEo">JavaScript & JQuery</a></li>   
+<li><a href="http://dygraphs.com/download.html">DyGraph!</a></li>
+
+
+</div>
+
+
+
+
+
     
 <!------------------------------------FIM-PROJETOS------------------------------------------------>
