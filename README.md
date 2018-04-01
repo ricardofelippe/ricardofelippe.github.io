@@ -139,13 +139,10 @@ body {
     
     
 	<h2>English-Portfólio Profissional</h2>
-
 	
-	
-	
-  <hr>
     
-    </div>
+</div>
+
 <hr>
 <div id="section3" class="container-fluid">
   <h1>Finanças</h1>
@@ -587,7 +584,8 @@ probabilidade a posteriori.</span>
 </div>
     
  <div id="sectionTabuada" class="container-fluid">
- 
+ <h3>Tabuada</h3>  
+  
         <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EUkPJ45eOe5JsJhEdgpswSABIuqc3UgVS4KPLMUO-y-8PA?e=fjno52">Tabuada 1</a></li>
         
     
