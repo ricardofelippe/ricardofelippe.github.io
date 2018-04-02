@@ -113,7 +113,8 @@ body {
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EVebSyG-cydLv4mNxJHDF7MBFap6DUNxjY4haG5G8N_ulA?e=TXPsPY">Text 5</a>
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EQ50NOhhI09CrPzGHHpri-IBfhFKlRy8M32HZvxj80TBsQ?e=28QLcz">Text 6</a>
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EVAJAjRhXFFOteMxe9QtdkEBt8ATz1JkS2q4kNeExCpnVg?e=UPb32W">Text 7</a>
-    
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ESkPb3WYhz1MqOfk1XIv4I8BaM9Z6SnTK1y00VLBjttZPA?e=PKK1T1">Text 8-March 2018 - 3rd Weekly Text (The Facebook scandal could change...)</a>
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ERVuvvxc5whFlY7q4MPf1WEB51-JhIQdD3ppS9Q9w84qfg?e=rK37eJ">Text 9-March 2018 - 4th Weekly Text (The sunny and dark side of AI)</a>
     
     
     <h3>English-ECC-Listening</h3>  
@@ -122,7 +123,7 @@ body {
   
     <li><a href="https://www.youtube.com/embed/P2XVdDSJHqY?rel=0&amp;showinfo=0">Listening Source 2 nd</a></li> 
 
-        <li><a href="https://www.ted.com/talks/daniel_susskind_3_myths_about_the_future_of_work_and_why_they_re_not_true?utm_source=newsletter_weekly_2018-03-17&utm_campaign=newsletter_weekly&utm_medium=email&utm_content=talk_of_the_week_image#t-127588">Listening Source 3 rd</a></li> 
+        <li><a href="https://www.ted.com/talks/daniel_susskind_3_myths_about_the_future_of_work_and_why_they_re_not_true?utm_source=newsletter_weekly_2018-03-17&utm_campaign=newsletter_weekly&utm_medium=email&utm_content=talk_of_the_week_image#t-127588">March 2018 - 3rd Listening Source (TED: Daniel Susskind)</a></li> 
 
     
   
@@ -131,6 +132,7 @@ body {
     <li><a href="https://www.ted.com/talks/tanya_menon_the_secret_to_great_opportunities_the_person_you_haven_t_met_yet?utm_source=newsletter_weekly_2018-02-17&utm_campaign=newsletter_weekly&utm_medium=email&utm_content=bottom_right_image">Listening Source 5th</a></li> 
  
     <li><a href="https://embed.ted.com/talks/dave_meslin_the_antidote_to_apathy">April 2018 - 1st Listening Source (TED: The antidote to apathy by Dave Meslin)</a></li> 
+    
  
     
     
