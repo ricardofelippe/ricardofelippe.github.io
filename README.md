@@ -116,7 +116,7 @@ body {
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ESkPb3WYhz1MqOfk1XIv4I8BaM9Z6SnTK1y00VLBjttZPA?e=PKK1T1">Text 8-March 2018 - 3rd Weekly Text (The Facebook scandal could change...)</a>
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ERVuvvxc5whFlY7q4MPf1WEB51-JhIQdD3ppS9Q9w84qfg?e=rK37eJ">Text 9-March 2018 - 4th Weekly Text (The sunny and dark side of AI)</a>
 
-<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EcTtMpuzH3NEomkBkaSAGaUBigBgfoFigvWa4wmspyNfUA?e=zhnQY2">April 2018 - 1st Weekly Text (Brazil´s Lula and government by judges)</a>
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EcTtMpuzH3NEomkBkaSAGaUBigBgfoFigvWa4wmspyNfUA?e=zhnQY2">Text 10-April 2018 - 1st Weekly Text (Brazil´s Lula and government by judges)</a>
 
     
     
