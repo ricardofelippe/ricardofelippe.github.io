@@ -38,7 +38,7 @@ body {
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">Exocórtex_git</a>
+      <a class="navbar-brand" href="#">Exocórtex</a>
     </div>
     <div>
       <div class="collapse navbar-collapse" id="myNavbar">
