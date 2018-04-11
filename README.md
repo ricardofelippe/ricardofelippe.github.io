@@ -305,7 +305,10 @@ http://jsdatav.is/intro.html
 	
 	
       
-	
+	<h3>Observable</h3>
+      <li><a href="https://beta.observablehq.com/@ricardofelippe">Observable!</a></li>
+    
+    
 	
     <h3>Blocker & Gist</h3>
       <li><a href="https://bl.ocks.org/ricardofelippe">Blocker!</a></li>
