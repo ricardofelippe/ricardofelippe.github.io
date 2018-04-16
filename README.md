@@ -84,6 +84,8 @@ body {
 <div id="section1" class="container-fluid">
   <h1>Pensamentos & Ideias</h1>
     
+<li>Editar essa página criando outra a partir da página do Wilson Freitas </li>
+
 <li>Ver livro : Iludidos pelo acaso  </li>
 <li> Criar página web que filtra os dados contidos na página <a href="http://animateddata.co.uk/articles/crossfilter/">Peter Cook</a>    , utilizando o crossfilter </li>
 
