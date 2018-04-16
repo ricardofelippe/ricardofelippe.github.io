@@ -80,6 +80,10 @@ body {
   </div>
 </nav>    
 
+<!--
+            COMENTÁRIOS
+-->
+        
     
 <div id="section1" class="container-fluid">
   <h1>Pensamentos & Ideias</h1>
@@ -119,6 +123,8 @@ body {
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ERVuvvxc5whFlY7q4MPf1WEB51-JhIQdD3ppS9Q9w84qfg?e=rK37eJ">Text 9-March 2018 - 4th Weekly Text (The sunny and dark side of AI)</a>
 
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EcTtMpuzH3NEomkBkaSAGaUBigBgfoFigvWa4wmspyNfUA?e=zhnQY2">Text 10-April 2018 - 1st Weekly Text (Brazil´s Lula and government by judges)</a>
+
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EZV8aL5HxBdNtxO9HXyD4cgBXgTHB8df6h2mYOpdJzxvZA?e=G8pbKE">April 2018 - 2nd Weekly Text (Brazil´s election is now up for grabs)</a>
 
     
     
@@ -277,6 +283,8 @@ voyages = import(fname)
 	<h3>Best Sites</h3>
 		<li><a href="http://d3indepth.com/">Peter Cook</a></li>
 		<li><a href="https://bl.ocks.org/phoebebright">Peter Cook</a></li>		
+        <li><a href="https://www.jasondavies.com/">Peter Cook</a></li>
+        
 		
 	<h3>Functional Programming</h3>
 	
