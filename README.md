@@ -2,10 +2,8 @@
 <html lang="pt">
 <head>
 	<meta charset="utf-8">
-	<title>Ricardo Felippe</title>
-	<!--
+	<title>Wilson Freitas</title>
 	<link rel="shortcut icon" href="https://ricardofelippe.github.io/images/favicon.ico">
-	-->
 	<meta name="description" content="Coding, scientific development, finance, data analysis, visualization, statistics, and machine learning">
 	<meta name="author" content="Wilson Freitas">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,12 +65,12 @@
 		<div class="col-md-10 col-md-offset-1">
         
 <div class="page-header">
-	<h3>Artigos</h2>
+	<h2>Artigos</h2>
 </div>
 <div class="article" itemscope itemtype="https://schema.org/BlogPosting" style="margin-bottom:2em;">
 	<div class="row">
 		<div class="lead-article-title col-md-10">
-			<a href="https://ricardofelippe.github.io/posts/rbcb-013-como-usar.html"><h4 itemprop="name headline">rbcb 0.1.3 - Como usar?</h4></a>
+			<a href="https://ricardofelippe.github.io/posts/rbcb-013-como-usar.html"><h4 itemprop="name headline">Primeiro artigo</h4></a>
 		</div>
 		<div class="col-md-2">
 			<h4 class="text-right">
