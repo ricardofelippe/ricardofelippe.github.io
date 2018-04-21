@@ -9,11 +9,6 @@
 	<meta name="description" content="Coding, scientific development, finance, data analysis, visualization, statistics, and machine learning">
 	<meta name="author" content="Ricardo Felippe">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-	<!--[if lt IE 9]>
-		<script src="https://ricardofelippe.github.io/theme/html5.js"></script>
-		<![endif]-->
-	<!-- <link href="https://ricardofelippe.github.io/theme/css/ipython.css" rel="stylesheet"> -->
 	<link href="https://ricardofelippe.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://ricardofelippe.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://ricardofelippe.github.io/theme/css/local.css" rel="stylesheet">
