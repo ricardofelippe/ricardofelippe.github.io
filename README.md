@@ -2,10 +2,12 @@
 <html lang="pt">
 <head>
 	<meta charset="utf-8">
-	<title>Wilson Freitas</title>
+	<title>Ricardo Felippe</title>
+	<!--
 	<link rel="shortcut icon" href="https://ricardofelippe.github.io/images/favicon.ico">
+	-->
 	<meta name="description" content="Coding, scientific development, finance, data analysis, visualization, statistics, and machine learning">
-	<meta name="author" content="Wilson Freitas">
+	<meta name="author" content="Ricardo Felippe">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]>
