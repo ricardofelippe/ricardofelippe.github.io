@@ -41,7 +41,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="https://ricardofelippe.github.io/index.html">Wilson Freitas</a>
+				<a class="navbar-brand" href="https://ricardofelippe.github.io/index.html">Ricardo Felippe</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
