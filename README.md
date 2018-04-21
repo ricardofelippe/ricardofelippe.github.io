@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<html>
 <html lang="pt">
 <head>
 	<meta charset="utf-8">
-	<title>Wilson Freitas</title>
+	<title>Ricardo Felippe</title>
+	<!--
 	<link rel="shortcut icon" href="https://ricardofelippe.github.io/images/favicon.ico">
+	-->
 	<meta name="description" content="Coding, scientific development, finance, data analysis, visualization, statistics, and machine learning">
 	<meta name="author" content="Wilson Freitas">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
