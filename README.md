@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
 	<meta charset="utf-8">
@@ -21,7 +21,7 @@
 		tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 	});
 	</script>
-	<script type="text/javascript" src="httpss://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -49,14 +49,14 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="https://ricardofelippe.github.io/index.html"><i class="fa fa-home"></i> Home</a></li>
-					<li><a href="httpss://ricardofelippe.github.io/archives.html"><i class="fa fa-archive "></i> Arquivo</a></li>
-					<li><a href="httpss://ricardofelippe.github.io/pages/about.html"><i class="fa fa-user "></i> Sobre</a></li>
-					<li><a href="httpss://ricardofelippe.github.io/pages/projects.html"><i class="fa fa-code "></i> Projetos</a></li>
+					<li><a href="https://ricardofelippe.github.io/archives.html"><i class="fa fa-archive "></i> Arquivo</a></li>
+					<li><a href="https://ricardofelippe.github.io/pages/about.html"><i class="fa fa-user "></i> Sobre</a></li>
+					<li><a href="https://ricardofelippe.github.io/pages/projects.html"><i class="fa fa-code "></i> Projetos</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="httpss://ricardofelippe.github.io/categories.html"><i class="fa fa-archive"></i> Categorias</a></li>
-					<li><a href="httpss://ricardofelippe.github.io/tags.html"><i class="fa fa-tags"></i> Tags</a></li>
-					<li><a href="httpss://ricardofelippe.github.io/feeds/rss.xml"><i class="fa fa-rss"></i> RSS</a></li>
+					<li><a href="https://ricardofelippe.github.io/categories.html"><i class="fa fa-archive"></i> Categorias</a></li>
+					<li><a href="https://ricardofelippe.github.io/tags.html"><i class="fa fa-tags"></i> Tags</a></li>
+					<li><a href="https://ricardofelippe.github.io/feeds/rss.xml"><i class="fa fa-rss"></i> RSS</a></li>
 				</ul>
 			</div>
 		</div>
