@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Wilson Freitas - finance</title><link>http://wilsonfreitas.github.io/</link><description></description><lastBuildDate>Sat, 25 Jan 2014 00:00:00 -0200</lastBuildDate><item><title>Que 2014 seja um ano melhor para a Petrobrás</title><link>http://wilsonfreitas.github.io/posts/que-2014-seja-um-ano-melhor-para-a-petrobras.html</link><description>&lt;p&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;O objetivo aqui é tentar reproduzir os resultados &lt;a href="http://www.opequenoinvestidor.com.br/2014/01/que-2014-seja-finalmente-um-novo-ano-para-petrobras/"&gt;deste &lt;em&gt;post&lt;/em&gt;&lt;/a&gt; (do blog &lt;a href="http://www.opequenoinvestidor.com.br/"&gt;o pequeno investidor&lt;/a&gt;) que avalia alguns indicadores da Petrobrás no cenário atual, começo de 2014, utilizando Python e alguns pacotes do &lt;em&gt;stack&lt;/em&gt; científico.&lt;/p&gt;
+&lt;p&gt;Vamos começar importando os dados e para isso vamos utilizar o &lt;strong&gt;pandas&lt;/strong&gt;.
+&lt;strong&gt;pandas&lt;/strong&gt; possui uma …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wilson Freitas</dc:creator><pubDate>Sat, 25 Jan 2014 00:00:00 -0200</pubDate><guid isPermaLink="false">tag:wilsonfreitas.github.io,2014-01-25:/posts/que-2014-seja-um-ano-melhor-para-a-petrobras.html</guid><category>finance</category><category>python</category><category>visualization</category></item></channel></rss>

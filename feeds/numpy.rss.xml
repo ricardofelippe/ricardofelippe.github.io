@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Wilson Freitas - numpy</title><link>http://wilsonfreitas.github.io/</link><description></description><lastBuildDate>Mon, 21 Sep 2015 00:00:00 -0300</lastBuildDate><item><title>Calculando Retornos Financeiros com Pandas</title><link>http://wilsonfreitas.github.io/posts/calculando-retornos-financeiros-com-pandas.html</link><description>&lt;p&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;O objetivo aqui é apresentar o cálculo dos retornos para uma série temporal de um ativo financeiro utilizando o Pandas.&lt;/p&gt;
+&lt;h2 id="O-que-s&amp;#227;o-retornos?"&gt;O que s&amp;#227;o retornos?&lt;a class="anchor-link" href="#O-que-s&amp;#227;o-retornos?"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Os retornos representam a variação percentual do valor absoluto de um ativo financeiro.
+Os retornos são calculado de duas formas:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Retornos Aritméticos
+$$
+R_t = \frac{S_t - S_ …&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wilson Freitas</dc:creator><pubDate>Mon, 21 Sep 2015 00:00:00 -0300</pubDate><guid isPermaLink="false">tag:wilsonfreitas.github.io,2015-09-21:/posts/calculando-retornos-financeiros-com-pandas.html</guid><category>python</category><category>visualization</category><category>numpy</category><category>pandas</category></item></channel></rss>

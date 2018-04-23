@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="utf-8">
+	<title>Webscraping Títulos Públicos Federais: Tesouro IPCA+ — Wilson Freitas</title>
+	<link rel="shortcut icon" href="http://wilsonfreitas.github.io/images/favicon.ico">
+	<meta name="description" content="Title: Webscraping Títulos Públicos Federais: Tesouro IPCA+; Date: 2015-11-05; Author: Wilson Freitas">
+	<meta name="author" content="Wilson Freitas">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://wilsonfreitas.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<!-- <link href="http://wilsonfreitas.github.io/theme/css/ipython.css" rel="stylesheet"> -->
+	<link href="http://wilsonfreitas.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+	<link href="http://wilsonfreitas.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="http://wilsonfreitas.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="http://wilsonfreitas.github.io/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+		tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	});
+	</script>
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<meta property="twitter:card" content="summary" />
+	<meta property="twitter:site" content="@aboutwilson" />
+	<meta property="twitter:title" content="Webscraping Títulos Públicos Federais: Tesouro IPCA+"/>
+	<meta property="twitter:description" content=""/>
+	<meta property="twitter:image" content=""/>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-4510606-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+<div class="container">
+	<nav class="navbar navbar-default" style="margin-top:2em;">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="http://wilsonfreitas.github.io/index.html">Wilson Freitas</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="http://wilsonfreitas.github.io/index.html"><i class="fa fa-home"></i> Home</a></li>
+					<li><a href="http://wilsonfreitas.github.io/archives.html"><i class="fa fa-archive "></i> Arquivo</a></li>
+					<li><a href="http://wilsonfreitas.github.io/pages/about.html"><i class="fa fa-user "></i> Sobre</a></li>
+					<li><a href="http://wilsonfreitas.github.io/pages/projects.html"><i class="fa fa-code "></i> Projetos</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="http://wilsonfreitas.github.io/categories.html"><i class="fa fa-archive"></i> Categorias</a></li>
+					<li><a href="http://wilsonfreitas.github.io/tags.html"><i class="fa fa-tags"></i> Tags</a></li>
+					<li><a href="http://wilsonfreitas.github.io/feeds/rss.xml"><i class="fa fa-rss"></i> RSS</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Webscraping Títulos Públicos Federais: Tesouro IPCA+</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Wilson Freitas</h4>
+		</span>
+		<time datetime="2015-11-05T00:00:00-02:00" itemprop="datePublished">05/11/2015</time>
+	</div>
+	<div>
+		Categoria:
+		<span itemprop="articleSection">
+			<a href="http://wilsonfreitas.github.io/category/webscraping.html" rel="category">webscraping</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="http://wilsonfreitas.github.io/tag/r.html" rel="tag">R</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://wilsonfreitas.github.io/tag/rvest.html" rel="tag">rvest</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>No post <a href="http://wilsonfreitas.github.io/posts/webscraping-ipca.html">Webscraping IPCA</a> mostrei como capturar a série histórica do IPCA.
+O IPCA é o indicador que o governo acompanha para avaliar a meta de inflação e também é o índice que corrige o valor nominal dos títulos Tesouro IPCA+ (antigas Notas do Tesouro Nacional Série B - NTN-B).
+Neste post vou mostrar como capturar dados destes títulos públicos federais.</p>
+<p>A ANBIMA diariamente disponibiliza os preços e taxas para estes títulos públicos no seu site, na página <a href="http://www.anbima.com.br/merc_sec/merc-sec.asp">Mercado Secundário de Títulos Públicos - Taxas Médias</a>.
+Nesta página é possível inserir uma data e acessar as informações referentes aos contratos.
+O problema é que a ANBIMA disponibiliza apenas os cinco últimos dias úteis, logo, é necessário baixar os dados diariamente e construir o histórico de forma independente.
+Felizmente as URLs para os contratos são padronizadas, de forma que podem ser acessadas diretamente.
+As URLs tem o seguinte formato:</p>
+<div class="highlight"><pre><span></span>http://www.anbima.com.br/merc_sec/resultados/msec_[dia][mês][ano]_[contrato].asp
+</pre></div>
+
+
+<p>onde:</p>
+<ul>
+<li><code>dia</code> é o dia da data de referência com 2 digitos</li>
+<li><code>mês</code> é o mês da data de referência em portugês, abreviado (com 3 caractéres) e em letras minúsculas</li>
+<li><code>ano</code> é o ano da data de referência com 4 digitos</li>
+<li><code>contrato</code> é uma string com o nome do contrato:</li>
+<li><code>ntn-b</code> para Tesouro IPCA+</li>
+<li><code>ntn-f</code> para Tesouro Prefixado com Juros Semestrais</li>
+<li><code>ltn</code> para Tesouro Prefixado</li>
+<li><code>lft</code> para Tesouro Selic</li>
+<li><code>ntn-c</code> para as NTN-Cs (que já não são emitidas a um bom tempo)</li>
+</ul>
+<p>Então, para obter os preços dos títulos Tesouro IPCA+ para o dia 22/07/2016 usaremos a URL:</p>
+<div class="highlight"><pre><span></span>http://www.anbima.com.br/merc_sec/resultados/msec_22jul2016_ntn-b.asp
+</pre></div>
+
+
+<p><img alt="Tesouro IPCA+" src="http://wilsonfreitas.github.io/figure/tabela-ntn-b-22072016.png"></p>
+<p>Vamos começar carregando o pacote <a href="https://github.com/hadley/rvest">rvest</a> que possui diversas funções para acessar documentos na web e processar hiper-texto.</p>
+<div class="highlight"><pre><span></span><span class="kn">library</span><span class="p">(</span>rvest<span class="p">)</span>
+</pre></div>
+
+
+<p>Agora carregaremos o documento da URL e armazeraremos o conteúdo na variável <code>html_data</code>.</p>
+<div class="highlight"><pre><span></span>html_data <span class="o">&lt;-</span> read_html<span class="p">(</span><span class="s">&#39;http://www.anbima.com.br/merc_sec/resultados/msec_22jul2016_ntn-b.asp&#39;</span><span class="p">,</span> encoding<span class="o">=</span><span class="s">&#39;iso-8859-1&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>## Error in open.connection(x, &quot;rb&quot;): HTTP error 404.
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>xml_children<span class="p">(</span>html_data<span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>## Error in nodeset_apply(x, node_children): object &#39;html_data&#39; not found
+</pre></div>
+
+
+<p>Uma coisa legal no rvest é que podemos processar o documento HTML usando pipelining (a lá <a href="https://github.com/smbache/magrittr">magrittr</a>).</p>
+<div class="highlight"><pre><span></span>html_data <span class="o">%&gt;%</span> html_nodes<span class="p">(</span>xpath<span class="o">=</span><span class="s">&quot;//table&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>## Error in eval(lhs, parent, parent): object &#39;html_data&#39; not found
+</pre></div></div>
+	<hr>
+	<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'aboutwilson'; 
+    var disqus_title = 'Webscraping Títulos Públicos Federais: Tesouro IPCA+';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Wilson Freitas 2015</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="http://wilsonfreitas.github.io/theme/js/jquery-2.1.1.min.js"></script>
+<script src="http://wilsonfreitas.github.io/theme/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>
