@@ -9,6 +9,14 @@
     </head>
     
     <body>
+
+        <p id="demo"></p>
+<p id="demo2"></p>
+<p id="demo3"></p>
+<p id="demo4"></p>
+
+
+        
         <a href="#" onclick="alert('clicked');">Click Me</a> <br>
         
        <a href="#" id="myLink">Click Me</a><br>
@@ -48,6 +56,43 @@
 },0);  
         
       console.log("Total: " + total);  
+        
+        var car = {type:"Fiat", model:"500", color:"white"};
+document.getElementById("demo").innerHTML = car.type;
+
+const users =[{name:'Ricardo', id:39, friends:[0,1,2]},
+{name:'Tais', id:35, friends:[0,1,2]},
+]
+
+const actualnums=numbers.map(function(item,index,array){ return parseInt(item)})
+
+const getnumber=(number) => number.map()
+
+const numbers=['20','30','40','50'];
+
+
+document.getElementById("demo3").innerHTML = numbers.map(function(item,index,array){ return parseInt(item)});
+;
+
+
+document.getElementById("demo4").innerHTML = actualnums;
+
+/*
+function start() {    Func_GroupedBarChart();};
+    
+        
+window.onload=function(event){
+    //start();
+    width=document.getElementById('largura_1').offsetWidth;
+    
+    console.log("Largura Inicial: " +width );
+    
+    
+    
+}        
+        
+  */      
+        
         
         
 </script> 
