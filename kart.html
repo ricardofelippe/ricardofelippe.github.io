@@ -3,14 +3,12 @@
 <head>
     <title>Kart 19</title>
     <meta charset="UTF-8">
-    
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  
- 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- DC Core CSS -->
-
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/dc.css"/>
+     
+    <script type="text/javascript" src="../js/d3.js"></script>
+<script type="text/javascript" src="../js/crossfilter.js"></script>
+<script type="text/javascript" src="../js/dc.js"></script>
   
   <!-- jQuery -->
 	<!-- Bootstrap Core JavaScript -->
@@ -19,6 +17,235 @@
   
     
 </head>
+    <style type="text/css">
+
+		.tooltip {
+		    top: 100px;
+		    left: 100px;
+		    -moz-border-radius: 5px;
+		    border-radius: 5px;
+		    border: 2px solid #000;
+		    background: #fff;
+		    opacity: .9;
+		    color: black;
+		    padding: 10px;
+		    width: 375px;
+		    font-size: 1.6em;
+		    line-height: 28pt;
+		    /*font-weight: lighter;*/
+		    /*visibility: visible;*/
+		}
+		
+		table.table {
+			display: table;
+			width: 100%;
+		}
+		
+		table.table thead,
+		table.table tbody {
+			float: left;
+			width: 100%;
+		}
+		
+		table.table tbody {
+			overflow: auto;
+			height: 350px;
+		}
+		
+		table.table tr {
+			width: 100%;
+			display: table;
+			text-align: left;
+		}
+		
+		table.table th,
+		table.table td {
+			width: 20%;
+		}
+		
+		.filter-count,
+		.total-count,
+		.number-display,
+		#dateHeader {
+			color: #3182bd;
+			font-weight: bold;
+			font-size: 24px;
+		}
+		
+		/*
+		 * Full-page application style
+		 */
+		
+		body.application,
+		.keen-dashboard {
+		  background: #f2f2f2; 
+        /*background:#d9d9d9    ;*/
+		  padding: 20px 20px 0px;
+		}
+		
+		body.application > .container-fluid,
+		.keen-dashboard > .container-fluid {
+		  margin: 0px 0px 32px;
+		  margin: 0px 0px 2rem;
+		  padding-left: 0px;
+		  padding-right: 0px;
+		}
+		
+		body.application div[class^="col-"],
+		.keen-dashboard div[class^="col-"] {
+		  padding-left: 5px;
+		  padding-right: 5px;
+		}
+		
+		body.application div[class^="col-"] div[class^="col-"],
+		.keen-dashboard div[class^="col-"] div[class^="col-"] {
+		  padding-left: 15px;
+		  padding-right: 15px;
+		}
+		
+		body.application hr,
+		.keen-dashboard hr {
+		  border-color: #d7d7d7;
+		  margin: 10px 0px;
+		}
+		
+		body.application .navbar-inverse,
+		.keen-dashboard .navbar-inverse {
+		  /*background-color: #3d4a57;*/
+		  border-color: #333;
+		}
+		
+		body.application .navbar-inverse .navbar-nav > li > a,
+		body.application .navbar .navbar-brand,
+		.keen-dashboard .navbar-inverse .navbar-nav > li > a,
+		.keen-dashboard .navbar .navbar-brand {
+		  color: #fbfbfb;
+		  text-decoration: none;
+		}
+		
+		body.application .main-nav > li > a:hover,
+		.keen-dashboard .main-nav > li > a:hover {
+		  border-bottom: 2px solid transparent;
+		  -webkit-transition: border 300ms ease;
+		  -o-transition: border 300ms ease;
+		  transition: border 300ms ease;
+		  border-bottom-color: white;
+		}
+		
+		body.application .return-link,
+		body.application .return-link:focus,
+		body.application .return-link:hover,
+		.keen-dashboard .return-link,
+		.keen-dashboard .return-link:focus,
+		.keen-dashboard .return-link:hover {
+		  text-decoration: none;
+		}
+		
+		
+		.chart-wrapper {
+		  background: #fff;
+		  border: 1px solid #e2e2e2;
+		  border-radius: 3px;
+		  margin-bottom: 10px;
+		}
+		.chart-wrapper .chart-title {
+		  border-bottom: 1px solid #d7d7d7;
+		  color: #666;
+		  font-size: 14px;
+		  font-weight: 200;
+		  padding: 7px 10px 4px;
+		}
+		
+		.chart-wrapper .chart-stage {
+		  overflow: hidden;
+		  padding: 5px 10px;
+		  position: relative;
+		}
+		
+		.chart-wrapper .chart-notes {
+		  background: #fbfbfb;
+		  border-top: 1px solid #e2e2e2;
+		  color: #808080;
+		  font-size: 12px;
+		  padding: 8px 10px 5px;
+		}
+		.navbar-inverse {
+			background-color: #3182bd;
+		}
+		
+		.dc-chart .selected path {
+			stroke-width: 1.0;
+            
+            
+            
+		}
+    .div-total{
+        width: 30%;
+  max-width: 960px;
+        
+    }
+		
+		.col-sm-2,
+		.col-sm-3,
+		.col-sm-4,
+		.col-sm-6,
+		.col-sm-8,
+		.col-sm-9,
+		.col-sm-12 {
+			/*border: solid;*/
+		}
+    .dc-chart g.row text {
+    fill: black;
+    font-size: 12px;
+    cursor: pointer;    
+        }
+   
+    .x.axis path {
+    stroke-width: 1.5;
+   }    
+    
+    .dc-chart g.axis x{
+        fill: yellow;
+        
+    }
+        
+   text.shadow {
+  stroke: #fff;
+  stroke-width: 2.5px;
+  opacity: 0.9;
+}
+
+path { 
+    stroke: steelblue;
+    
+    
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+.grid path {
+          stroke-width: 0;
+}
+
+.area {
+    fill: lightsteelblue;
+      stroke-width: 0;
+}
+
+    
+    
+</style>
 <body>
 
 <div class="container">
@@ -38,14 +265,14 @@
     
 
     function createViz(){
-        console.log("funcionando")
+        console.log("funcionando");
 var chart = dc.boxPlot("#box-test"),
     pie = dc.pieChart("#pie-chart");
 
          d3.csv("morley.csv",function(error,dados){
     
     dados.forEach(function(d) {
-    x.Speed = +x.Speed;
+    d.Speed = +d.Speed;
     });
         
 		
@@ -53,7 +280,7 @@ var chart = dc.boxPlot("#box-test"),
   var ndx                 = crossfilter(dados),
       runDimension        = ndx.dimension(function(d) {return +d.Run;}),
       runGroup            = runDimension.group(),
-      experimentDimension = ndx.dimension(function(d) {return "exp-" + d.Expt;}),
+      experimentDimension = ndx.dimension(function(d) {return d.Expt;}),
       speedArrayGroup     = experimentDimension.group().reduce(
         function(p,v) {
           p.push(v.Speed);
@@ -83,7 +310,7 @@ var chart = dc.boxPlot("#box-test"),
     .group(runGroup);
         
   
- 
+  dc.renderAll();
     /*
   var i=0;
   setInterval(function() {
@@ -92,22 +319,22 @@ var chart = dc.boxPlot("#box-test"),
     dc.renderAll();
   }, 2000);
 */
-});
+
+         }) };
 
 
-      dc.renderAll();    
+         
  
 
-function start() {    createViz();};
+function start() {    createViz();}
  
         
 window.onload=function(event){
     start();
     
-     
     
-    
-}
+};
+
     
         
     
