@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Kart 4</title>
+    <title>Kart 5</title>
     <meta charset="UTF-8">
     
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,7 +22,7 @@
 <body>
 
 <div class="container">
-
+<script type="text/javascript" src="header.js"></script>
 <div id="box-test"></div>
 <div id="pie-chart"></div>    
     
@@ -39,11 +39,12 @@
     
 
     
-var chart = dc.boxPlot("#box-test"),
-    pie = dc.pieChart("#pie-chart");
 
     function createViz(dados){
         
+var chart = dc.boxPlot("#box-test"),
+    pie = dc.pieChart("#pie-chart");
+
         var url = "morley.csv";
 		var dados = d3.csv(url);
 		
