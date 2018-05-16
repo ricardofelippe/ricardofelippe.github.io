@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Kart 15</title>
+    <title>Kart 16</title>
     <meta charset="UTF-8">
     
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -42,13 +42,13 @@
 var chart = dc.boxPlot("#box-test"),
     pie = dc.pieChart("#pie-chart");
 
-        var url = "morley.csv";
-        dados = d3.csv(url);
-        console.log(dados)
-		
-    dados.forEach(function(x) {
+         d3.csv("morley.csv",function(error,dados){
+    
+    dados.forEach(function(d) {
     x.Speed = +x.Speed;
-  });
+    });
+        
+		
             
   var ndx                 = crossfilter(dados),
       runDimension        = ndx.dimension(function(d) {return +d.Run;}),
