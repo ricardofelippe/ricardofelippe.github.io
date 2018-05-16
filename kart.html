@@ -250,7 +250,12 @@ path {
 
 <div class="container">
 <div id="box-test"></div>
-<div id="pie-chart"></div>    
+<div id="pie-chart"></div> 
+<div id="test"></div>
+<div id="test-overview"></div>
+
+    
+    
     
     <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<!-- D3 Queue JavaScript -->
@@ -268,6 +273,10 @@ path {
         console.log("funcionando");
 var chart = dc.boxPlot("#box-test"),
     pie = dc.pieChart("#pie-chart");
+        
+var focusChart = dc.lineChart("#test");
+var overviewChart = dc.seriesChart("#test-overview");
+var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;        
 
          d3.csv("morley.csv",function(error,dados){
     
@@ -294,6 +303,8 @@ var chart = dc.boxPlot("#box-test"),
           return [];
         }
       );
+             
+             
   chart
     .width(768)
     .height(480)
@@ -307,8 +318,10 @@ var chart = dc.boxPlot("#box-test"),
     .height(140)
     .radius(70)
     .dimension(runDimension)
-    .group(runGroup);
-        
+    .group(runGroup)
+    ;           
+             ;
+             
   
   dc.renderAll();
     /*
