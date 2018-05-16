@@ -30,25 +30,7 @@
 
 <div class="container">
 
-<p>This page demonstrates the usage of the html legend.
-  It shows example of scrollbars for the vertical menu and setting up a horizontal menu.
-</p>
-<p style="padding-bottom: 20px">
-  It also shows the selected legend highlighted
-</p>
-
-    <div style="width:250px; height:150px;display: inline-block">
-        <div id="year"></div>
-        <div id="year-legend" class="dc-html-legend-container"></div>
-    </div>
-
-    <div style="width:250px; height:150px;display: inline-block;margin-left: 80px">
-        <div id="name"></div>
-        <div id="name-legend" class="dc-html-legend-container"></div>
-    </div>
-
-
-    <script type="text/javascript">
+<script type="text/javascript">
     
 var chart = dc.boxPlot("#box-test"),
     pie = dc.pieChart("#pie-chart");
@@ -64,16 +46,16 @@ var chart = dc.boxPlot("#box-test"),
 		        .await(createViz);
 		        
 		}   
-    function createViz(data){
+    function createViz(dados){
   
-        data.forEach(function(x) {
+        dados.forEach(function(x) {
     x.Speed = +x.Speed;
   });
             
-  var ndx                 = crossfilter(experiments),
+  var ndx                 = crossfilter(dados),
       runDimension        = ndx.dimension(function(d) {return +d.Run;}),
       runGroup            = runDimension.group(),
-      experimentDimension = ndx.dimension(function(d) {return d.Expt;}),
+      experimentDimension = ndx.dimension(function(d) {return "exp-" + d.Expt;}),
       speedArrayGroup     = experimentDimension.group().reduce(
         function(p,v) {
           p.push(v.Speed);
