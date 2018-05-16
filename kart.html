@@ -49,52 +49,55 @@
 
 
     <script type="text/javascript">
-      var spendData = [
-        { Name: 'Mr A', Spent: '$40', Year: 2010 },
-        { Name: 'Mr B', Spent: '$10', Year: 2011 },
-        { Name: 'Mr C', Spent: '$40', Year: 2012 },
-        { Name: 'Mr D', Spent: '$70', Year: 2013 },
-        { Name: 'Mr E', Spent: '$20', Year: 2014 },
-        { Name: 'Mr F', Spent: '$50', Year: 2015 },
-        { Name: 'Mr G', Spent: '$30', Year: 2016 },
-        { Name: 'Mr D', Spent: '$70', Year: 2017 },
-        { Name: 'Mr E', Spent: '$20', Year: 2018 },
-        { Name: 'Mr F', Spent: '$50', Year: 2019 },
-        { Name: 'Mr G', Spent: '$30', Year: 2020 }
-      ];
-      // normalize/parse data
-      spendData.forEach(function (d) {
-        d.Spent = d.Spent.match(/\d+/)[0];
-      });
-      // set crossfilter
-      var ndx = crossfilter(spendData),
-        yearDim = ndx.dimension(function (d) {
-          return +d.Year;
-        }),
-        nameDim = ndx.dimension(function (d) {
-          return d.Name;
-        }),
-        spendPerYearGroup = yearDim.group().reduceSum(function (d) {
-          return +d.Spent;
-        }),
-        nameGroup = nameDim.group().reduceCount();
-      var yearChart = dc.pieChart("#year"),
-        nameChart = dc.pieChart("#name");
-      yearChart
-        .width(200)
-        .height(200)
-        .dimension(yearDim)
-        .group(spendPerYearGroup)
-        .turnOnControls(true);
-        
-      nameChart
-        .width(200)
-        .height(200)
-        .dimension(nameDim)
-        .group(nameGroup);
-              yearChart.render();
-      nameChart.render();
-    </script>
+    var chart = dc.boxPlot("#box-test"),
+    pie = dc.pieChart("#pie-chart");
+d3.csv("morley.csv").then(function(experiments) {
+  experiments.forEach(function(x) {
+    x.Speed = +x.Speed;
+  });
+  var ndx                 = crossfilter(experiments),
+      runDimension        = ndx.dimension(function(d) {return +d.Run;}),
+      runGroup            = runDimension.group(),
+      experimentDimension = ndx.dimension(function(d) {return "exp-" + d.Expt;}),
+      speedArrayGroup     = experimentDimension.group().reduce(
+        function(p,v) {
+          p.push(v.Speed);
+          return p;
+        },
+        function(p,v) {
+          p.splice(p.indexOf(v.Speed), 1);
+          return p;
+        },
+        function() {
+          return [];
+        }
+      );
+  chart
+    .width(768)
+    .height(480)
+    .margins({top: 10, right: 50, bottom: 30, left: 50})
+    .dimension(experimentDimension)
+    .group(speedArrayGroup)
+    .elasticY(true)
+    .elasticX(true);
+  pie
+    .width(140)
+    .height(140)
+    .radius(70)
+    .dimension(runDimension)
+    .group(runGroup);
+  dc.renderAll();
+/*
+  var i=0;
+  setInterval(function() {
+    runDimension.filterAll();
+    runDimension.filter([i++,21]);
+    dc.renderAll();
+  }, 2000);
+*/
+});
+</script>
+
 </div>
 </body>
 </html>
