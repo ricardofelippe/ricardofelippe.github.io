@@ -42,20 +42,12 @@
 var chart = dc.boxPlot("#box-test"),
     pie = dc.pieChart("#pie-chart");
 
-    function getData() {
-		
-		    var url = "morley.csv";
-		    var endpoint = d3.csv(url);
-		
-		    // Get the data
-		    d3.queue()
-		        .defer(endpoint.get)
-		        .await(createViz);
-		        
-		}   
     function createViz(dados){
-  
-        dados.forEach(function(x) {
+        
+        var url = "morley.csv";
+		var dados = d3.csv(url);
+		
+                dados.forEach(function(x) {
     x.Speed = +x.Speed;
   });
             
@@ -102,8 +94,7 @@ var chart = dc.boxPlot("#box-test"),
 */
 };
     
-    $(document).ready(function() {		    getData();		});	
-        
+    
  
 
 function start() {    createViz();};
