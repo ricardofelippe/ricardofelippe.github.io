@@ -91,7 +91,8 @@ var chart = dc.boxPlot("#box-test"),
     .dimension(runDimension)
     .group(runGroup);
   dc.renderAll();
-/*
+
+    /*
   var i=0;
   setInterval(function() {
     runDimension.filterAll();
@@ -100,6 +101,13 @@ var chart = dc.boxPlot("#box-test"),
   }, 2000);
 */
 };
+    
+    $(document).ready(function() {		    getData();		});	
+        
+ 
+
+function start() {    createViz();};
+ 
         
         
     
