@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Kart 6</title>
+    <title>Kart 8</title>
     <meta charset="UTF-8">
     
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,7 +22,6 @@
 <body>
 
 <div class="container">
-<script type="text/javascript" src="header.js"></script>
 <div id="box-test"></div>
 <div id="pie-chart"></div>    
     
@@ -38,10 +37,8 @@
 <script type="text/javascript">
     
 
-    
-
     function createViz(dados){
-        
+        console.log("funcionando")
 var chart = dc.boxPlot("#box-test"),
     pie = dc.pieChart("#pie-chart");
 
@@ -83,8 +80,7 @@ var chart = dc.boxPlot("#box-test"),
     .radius(70)
     .dimension(runDimension)
     .group(runGroup);
-  dc.renderAll();
-
+ 
     /*
   var i=0;
   setInterval(function() {
@@ -94,7 +90,8 @@ var chart = dc.boxPlot("#box-test"),
   }, 2000);
 */
 };
-    
+dc.renderAll();
+
     
  
 
