@@ -319,7 +319,9 @@ path {
 					</div>
 					<!-- /.chart-title -->
 					<div class="chart-stage">
-                        
+                        <div class="alert alert-info alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <strong>Info !</strong> A partir da corrida 2 os dados estão simulados </div>
 						<div id="box-test"></div>
 
                         <!-- #chart-bolha-capítulo -->
@@ -429,6 +431,8 @@ var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;
         d.Speed = formatDecimal(+d.Speed);
     });
         
+    var height = 250;
+		         
 		
             
   var ndx                 = crossfilter(dados),
@@ -451,9 +455,9 @@ var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;
              
              
   chart
-    .width(1208)
-    .height(480)
-    .margins({top: 10, right: 50, bottom: 30, left: 50})
+     .width(width* 0.65)
+	.height(height*2.4)
+      .margins({top: 10, right: 50, bottom: 30, left: 50})
     .dimension(experimentDimension)
     .group(speedArrayGroup)
     .elasticX(true)
@@ -462,8 +466,8 @@ var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;
     ;
   
     pie
-    .width(480)
-    .height(480)
+    .width(width* 0.30)
+    .height(height*2.4)
     .radius(150)
     .dimension(runDimension)
     .group(runGroup)
@@ -491,6 +495,9 @@ function start() {    createViz();}
  
         
 window.onload=function(event){
+    width=document.getElementById('panel_1').offsetWidth;
+    console.log("Largura Inicial: " +width );
+    
     start();
     
     
