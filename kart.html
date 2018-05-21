@@ -463,6 +463,10 @@ var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;
     .elasticX(true)
               .yAxisLabel("Melhores Tempos")
              .y(d3.scale.linear().domain([41, 49]))
+               .renderlet(function (chart) {
+                chart.selectAll("g.x text")
+                .attr('transform', "rotate(-20)");
+            })
     ;
   
     pie
