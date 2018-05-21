@@ -1,14 +1,14 @@
 Expt,Run,Speed
-Ricardo,1,42.3
-Ricardo,2,43.3
-Ricardo,3,44.3
-Ricardo,4,45.3
-Ricardo,5,46.3
-Chanel,1,43.1
-Chanel,2,44.1
-Chanel,3,45.1
-Chanel,4,46.1
-Chanel,5,47.1
+Ricardo Felippe,1,42.343
+Ricardo Felippe,2,43.343
+Ricardo Felippe,3,44.3
+Ricardo Felippe,4,45.3
+Ricardo Felippe,5,46.3
+Zomer,1,43.1
+Zomer,2,44.1
+Zomer,3,45.1
+Zomer,4,46.1
+Zomer,5,47.1
 Rafael,1,43.3
 Rafael,2,44.3
 Rafael,3,45.3
@@ -19,3 +19,53 @@ Caixeta,2,43.6
 Caixeta,3,44.6
 Caixeta,4,45.6
 Caixeta,5,46.6
+Jose H,1,43.295
+Jose H,2,44.295
+Jose H,3,45.295
+Jose H,4,46.295
+Jose H,5,47.295
+Victor,1,42.891
+Victor,2,43.891
+Victor,3,42.891
+Victor,4,46.295
+Victor,5,47.295
+R. Codeço,1,43.295
+R. Codeço,2,43.891
+R. Codeço,3,42.891
+R. Codeço,4,46.295
+R. Codeço,5,47.295
+F. Goulart,1,44.129
+F. Goulart,2,43.891
+F. Goulart,3,42.891
+F. Goulart,4,46.295
+F. Goulart,5,47.295
+Ignacio,1,43.77
+Ignacio,2,43.891
+Ignacio,3,42.891
+Ignacio,4,46.295
+Ignacio,5,47.295
+Orto,1,43.002
+Orto,2,43.891
+Orto,3,42.891
+Orto,4,46.295
+Orto,5,47.295
+Marcio,1,42.997
+Marcio,2,43.891
+Marcio,3,42.891
+Marcio,4,46.295
+Marcio,5,47.295
+Mateus,1,44.663
+Mateus,2,43.891
+Mateus,3,42.891
+Mateus,4,46.295
+Mateus,5,47.295
+Luiz,1,43.037
+Luiz,2,43.891
+Luiz,3,42.891
+Luiz,4,46.295
+Luiz,5,47.295
+Mario,1,47.441
+Mario,2,43.891
+Mario,3,42.891
+Mario,4,46.295
+Mario,5,47.295

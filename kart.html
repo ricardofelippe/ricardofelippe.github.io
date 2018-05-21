@@ -3,12 +3,23 @@
 <head>
     <title>Kart 21</title>
     <meta charset="UTF-8">
+   <!--
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/dc.css"/>
      
     <script type="text/javascript" src="../js/d3.js"></script>
 <script type="text/javascript" src="../js/crossfilter.js"></script>
 <script type="text/javascript" src="../js/dc.js"></script>
+-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- DC Core CSS -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.min.css" />
+
+ 
+  <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  
   
   <!-- jQuery -->
 	<!-- Bootstrap Core JavaScript -->
@@ -246,14 +257,148 @@ path {
     
     
 </style>
-<body>
+
+<body class="application">
+    <div class="navbar navbar-inverse" role="navigation">
+	
+    <div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+				<a class="navbar-brand" href="../">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				</a>
+				<!--<a class="navbar-brand" href="./">Donors Choose Dashboard</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="https://www.donorschoose.org/">Home</a></li>
+					<li><a href="https://data.donorschoose.org/open-data/overview/">Source</a></li>
+				</ul>-->
+            <a class="navbar-brand" href="./">Kart -BSB</a>
+			</div>
+				</div>
+     </div>
+ 
+
+      <div class="tab-content">
+    
+    <div id="panel_1" class="tab-pane fade in active">
+   <div class="container-fluid">
+		
+		
+		<!-- row and ring charts -->
+		<div class="row">
+			
+            <!-- status ring chart -->
+			
+            <!-- amount row chart -->
+			
+			
+            <!-- UF chart -->			
+            
+       
+       
+       
+       </div>
+		<!-- /.row -->
+       
+        
+		<!-- bar charts -->
+		<div class="row">
+			<!-- resources bar chart -->
+            <div class="col-sm-8">
+				<!-- row chart -->
+				<div class="chart-wrapper">
+					<div class="chart-title">
+                        <span><strong>Box-Plot :</strong> Distribuição de dados relativo aos melhores tempos.</span>
+					</div>
+					<!-- /.chart-title -->
+					<div class="chart-stage">
+                        
+						<div id="box-test"></div>
+
+                        <!-- #chart-bolha-capítulo -->
+					</div>
+					<!-- /.chart-stage -->
+					<div class="chart-notes"></div>
+					<!-- /.chart-notes -->
+				</div>
+				<!-- /.chart-wrapper -->
+			</div>
+            
+        <div id="temp" class="col-sm-4">
+				<div class="chart-wrapper">
+					<div class="chart-title">
+                        <span><span><strong> Corridas: </strong></span> Selecione a(s) corrida(s) 
+                            
+                        
+					</div>
+					<div class="chart-stage">
+                        
+						<div id="subitem-row-chart" class="dc-chart">
+                            <div class="alert alert-info alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <strong>Info !</strong> A partir da corrida 2 os dados estão simulados </div>
+						
+						<div id="pie-chart"></div> 
+	
+                        </div>
+						<!-- #UFBarChart -->
+					</div>
+					<div class="chart-notes"></div>
+				
+				</div>
+			</div>
+            
+			
+			
+			
+			
+		</div>
+		<!-- /.row -->
+        <div class="row">
+            
+            
+        
+        </div>
+       
+       
+		<!-- table data -->
+		
+	</div>        
+        
+    </div>
+      
+       
+      
+      
+      
+    <div id="tutorial" class="tab-pane fade">
+        <div id="GroupedBarChart"  role="main">
+        
+            <br>
+            <br>
+            <br>
+            
+            <span>TESTE</span>
+            
+        </div>
+     </div>    
+      
+      
+      
+        
+        
+  </div> 
 
 <div class="container">
-<div id="box-test"></div>
-<div id="pie-chart"></div> 
-<div id="test"></div>
-<div id="test-overview"></div>
 
+    
     
     
     
@@ -270,8 +415,7 @@ path {
     
 
     function createViz(){
-        console.log("funcionando");
-var chart = dc.boxPlot("#box-test"),
+        var chart = dc.boxPlot("#box-test"),
     pie = dc.pieChart("#pie-chart");
         
 var focusChart = dc.lineChart("#test");
@@ -281,7 +425,8 @@ var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;
          d3.csv("morley.csv",function(error,dados){
     
     dados.forEach(function(d) {
-    d.Speed = +d.Speed;
+        formatDecimal = d3.format(".1f"), 
+        d.Speed = formatDecimal(+d.Speed);
     });
         
 		
@@ -306,17 +451,20 @@ var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;
              
              
   chart
-    .width(768)
+    .width(1208)
     .height(480)
     .margins({top: 10, right: 50, bottom: 30, left: 50})
     .dimension(experimentDimension)
     .group(speedArrayGroup)
-    .elasticY(true)
-    .elasticX(true);
-  pie
-    .width(140)
-    .height(140)
-    .radius(70)
+    .elasticX(true)
+              .yAxisLabel("Melhores Tempos")
+             .y(d3.scale.linear().domain([41, 49]))
+    ;
+  
+    pie
+    .width(480)
+    .height(480)
+    .radius(150)
     .dimension(runDimension)
     .group(runGroup)
     ;           
