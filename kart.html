@@ -357,7 +357,30 @@ path {
 				</div>
 			</div>
             
-			
+		<div id="temp" class="col-sm-4">
+				<div class="chart-wrapper">
+					<div class="chart-title">
+                        <span><span><strong> Corridas: </strong></span> Selecione a(s) corrida(s) 
+                            
+                        
+					</div>
+					<div class="chart-stage">
+                        
+						<div id="subitem-row-chart" class="dc-chart">
+                            <div class="alert alert-info alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <strong>Info !</strong> A partir da corrida 2 os dados estão simulados </div>
+						
+						<div id="table"></div> 
+	
+                        </div>
+						<!-- #UFBarChart -->
+					</div>
+					<div class="chart-notes"></div>
+				
+				</div>
+			</div>
+        	
 			
 			
 			
@@ -419,10 +442,12 @@ path {
     function createViz(){
         var chart = dc.boxPlot("#box-test"),
     pie = dc.pieChart("#pie-chart");
+    var chart2 = dc.dataTable("#table");    
         
 var focusChart = dc.lineChart("#test");
 var overviewChart = dc.seriesChart("#test-overview");
-var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;        
+var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;  
+        
 
          d3.csv("morley.csv",function(error,dados){
     
@@ -433,7 +458,13 @@ var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;
         
     var height = 250;
 		         
-		
+	// Definindo tabela
+    ndx2              = crossfilter(dados);
+    var fmt = d3.format('02d');
+    var runDimension2    = ndx2.dimension(function(d) {return [fmt(+d.Expt),fmt(+d.Run)];}),
+        grouping = function (d) { return d.Expt;};
+
+             
             
   var ndx                 = crossfilter(dados),
       runDimension        = ndx.dimension(function(d) {return +d.Run;}),
@@ -478,6 +509,44 @@ var ndx2, runDimension2, runGroup2, overviewRunDimension2, overviewRunGroup2;
     ;           
              ;
              
+             
+    chart2
+        .width(768)
+        .height(480)
+        .dimension(runDimension)
+        .group(grouping)
+        .size(Infinity)
+        .columns(['Run', 'Speed'])
+        .sortBy(function (d) { return [fmt(+d.Expt),fmt(+d.Run)]; })
+        .order(d3.ascending);
+    
+             
+            
+    chart.render();         
+    
+      var ofs = 0, pag = 17;
+  function display() {
+      d3.select('#begin')
+          .text(ofs);
+      d3.select('#end')
+          .text(ofs+pag-1);
+      d3.select('#last')
+          .attr('disabled', ofs-pag<0 ? 'true' : null);
+      d3.select('#next')
+          .attr('disabled', ofs+pag>=ndx.size() ? 'true' : null);
+      d3.select('#size').text(ndx.size());
+  }
+  
+  function next() {
+      ofs += pag;
+      update();
+      chart.redraw();
+  }
+  function last() {
+      ofs -= pag;
+      update();
+      chart.redraw();
+  }         
   
   dc.renderAll();
     /*
