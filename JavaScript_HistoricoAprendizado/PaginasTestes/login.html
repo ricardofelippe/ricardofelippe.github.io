@@ -25,7 +25,7 @@
 	background-image:  url(../_images/open.png);
 	background-repeat: no-repeat;
 	background-position:  8px 7px;
-	color: white;
+	color: red;
 	padding: 5px 0 5px 30px;
 	border-radius: 0 0 5px 5px;
 }
@@ -59,6 +59,7 @@
 #login .button {
 	text-align: right;	
 	padding-right: 15px;
+    
 }
 </style>
 <script src="../_js/jquery.min.js"></script>
@@ -66,7 +67,7 @@
 $(document).ready(function() {
     $('#open').click(function(evt){
         evt.preventDefault();
-        $('#login form').slideToggle(300);
+        $('#login form').toggle(300);
         $(this).toggleClass('close');
     }); //end ready
  
