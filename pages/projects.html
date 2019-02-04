@@ -77,6 +77,31 @@
 
 
 
+<h3><strong>Como faço?</strong></h3>
+    
+<ul>
+<li> Para acessar o MySql do meu PC via comando prompt ?</li>
+# 1) Verificar onde se encontra o binário(bin) no PC e entrar na pasta via comando cd.
+    No caso do computador atual em uso, o Caminho do executável é:    C:\Program Files\MySQL\MySQL Server 8.0\bin
+# 2) Econtrada e acessada a pasta, digite : mysql -u root -p 
+# 3) A senha no momento é: 009763
+# Os comandos gerados via prompt serão refletidos no MySql Workbench
+
+
+<li>Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe? </li>
+ Usar os comandos:
+    ```{r}
+    numeric.var <- sapply(churn, is.numeric) 
+    corr.matrix <- cor(churn[,numeric.var])  
+    corrplot(corr.matrix, main="\n\nGráfico de Correlação para Variáveis Numéricas", method="number")
+```
+
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EYG5w4P8u9NMi9FuZ0mZa8QBj3nQoIcwGy5gTNBZ4SAjfQ?e=JngIi3">Soroban-Manual</a></li>
+
+    
+
+</ul>
+    
     
 <h3><strong>Matemática Mental</strong></h3>
     
