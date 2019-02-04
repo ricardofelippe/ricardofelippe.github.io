@@ -94,13 +94,14 @@
 
 
 <li>Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe? </li>
- Usar os comandos:
+ <p>
+    Usar os comandos:
     ```{r}
     numeric.var <- sapply(churn, is.numeric) 
     corr.matrix <- cor(churn[,numeric.var])  
     corrplot(corr.matrix, main="\n\nGráfico de Correlação para Variáveis Numéricas", method="number")
 ```
-
+</p>
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EYG5w4P8u9NMi9FuZ0mZa8QBj3nQoIcwGy5gTNBZ4SAjfQ?e=JngIi3">Soroban-Manual</a></li>
 
     
