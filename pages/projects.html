@@ -79,7 +79,7 @@
 
 <h3><strong>Como faço?</strong></h3>
     
-<p>Para acessar o MySql do meu PC via comando prompt ?</p>
+<li><p>Para acessar o MySql do meu PC via comando prompt ?</p></li>
 <ol>
   <li>Verificar onde se encontra o binário(bin) no PC e entrar na pasta via comando cd.
     No caso do computador atual em uso, o Caminho do executável é:    C:\Program Files\MySQL\MySQL Server 8.0\bin
@@ -91,18 +91,37 @@
 </ol>    
     
     
-
-
-<li>Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe? </li>
- <p>
+<li><p>Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe?</p></li>
+    <p>
     Usar os comandos:
-    ```{r}
+    <pre>
+     ```{r}
     numeric.var <- sapply(churn, is.numeric) 
     corr.matrix <- cor(churn[,numeric.var])  
     corrplot(corr.matrix, main="\n\nGráfico de Correlação para Variáveis Numéricas", method="number")
-```
+    ```
+    </pre>
 </p>
-<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EYG5w4P8u9NMi9FuZ0mZa8QBj3nQoIcwGy5gTNBZ4SAjfQ?e=JngIi3">Soroban-Manual</a></li>
+            
+<li><p>Para obter apenas as colunas numéricas do dataframe no R e filtrar essa colunas?</p></li>
+    <p>
+    Usar os comandos:
+<pre>
+```
+    # Obtendo apenas as colunas numéricas
+    colunas_numericas <- sapply(df, is.numeric)
+    colunas_numericas
+
+    # Filtrando as colunas numéricas para correlação
+    data_cor <- cor(df[,colunas_numericas])
+    data_cor
+    head(data_cor)
+
+```
+    </pre>
+</p>
+
+            
 
     
 
@@ -112,6 +131,8 @@
 <h3><strong>Matemática Mental</strong></h3>
     
 <ul>
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EYG5w4P8u9NMi9FuZ0mZa8QBj3nQoIcwGy5gTNBZ4SAjfQ?e=JngIi3">Soroban-Manual</a></li>
+    
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/Ed3xXPwznaFEmCNdgl7YxmEBUxyo4h9E_heTbcw0wLuykQ?e=j2n6pG">The Magic of Math </a></li>
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EUowPL1nSX1AiH4J03CElx8BDc43_3cNYT1h2mJ6FxqK1w?e=Z2O594">Secrets of Math</a></li>
 <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EYG5w4P8u9NMi9FuZ0mZa8QBj3nQoIcwGy5gTNBZ4SAjfQ?e=JngIi3">Soroban-Manual</a></li>
