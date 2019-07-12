@@ -75,7 +75,33 @@
         
 <section id="content" class="body">    
 
+<div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#DadosPublicosCnpj"><h4>Passo-a-Passo</a></h4></a>
+        </h4>    
+        </div>
+      <div id="DadosPublicosCnpj" class="panel-collapse collapse">
+      <div class="panel-body">         
+        <p><code>R</code> é um pacote estatístico com inúmeros tutoriais.</p>
+        <ul>
+         <li>Acessar prompt de comand</li>
+         <li>Usar comand cd para acessar a pasta com os arquivos Python(na ocasião esta pasta se localizava em: "C:\Users\ricardo.ramos\OneDrive - Ministerio do Desenvolvimento da Industria e Comercio Exterior\R-projects\DAMPE-SEMPE\DadosPublicosCnpj\Python\CNPJ-full"</li>
+         <li>Acessar prompt de comand</li>
+         <li>Acessar prompt de comand</li>
+            
+         <li><a href="http://fulljoin.com.br/">Blog Saulo-R</a></li>
+         <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EaxCWKfT9qFHjl6gmxWH3OoBoA4Pr73TRlQLA8VtwK5Hxw?e=4ebzgz">R-Graphics-Ebook</a></li>
+         
+            
+        </ul>    
 
+        <hr>    
+          
+      </div>
+      </div>
+</div> 
+            
 
 <h3><strong>Como faço?</strong></h3>
     
@@ -217,28 +243,104 @@
   <li>Utilizações: detecção de fraudes em tempo real; detecçaõ de invasão de redes; campanhas de marketing e propagandas em tempo real; análise de sentimento em redes sociais; pode ser usado como ferramente ETL </li>
   <li> Suporte 4 linguagens: R, Java , Scala e Python. Pyhton é a ferramenta ideal para trabalhar com Spark</li>
   <li>Streming de dados: são dados gerados continuamente por milhares de fontes de dados, que geralmente enviam os registros de dados simultaneamente, em tamanhos pequenos(na ordem de kilobytes). Os dados em streaming devem ser processados de maneira sequencial e incremental por registro e usados para uma ampla variedade de análises de dados, como agregações, correlações filtragem e amostragem.</li>
-  <li> </li>
-  <li> </li>
-  
+  <li>O Apache Spark foi a primeira plataforma de Big Data a integrar processamento de dados em batch, streaming e computação distribuída em um único framework. </li>
+  <li> Spark é excelente para trabalhos iterativos(Machine Learnig)</li>
+  <li> Shell para exploração ad-hoc(abre um terminal, digita comando e acessa os dados quase em tempo real) </li>
+  <li>Regra de Ouro: conjunto de dados < 1 TB: Melhor usar Spark; cc : Hadoop/Spark</li>
     
     
 </ol>
           
 <h3><strong>Passo-a-Passo</strong></h3>
-<li><p>Para acessar o MySql do meu PC via comando prompt ?</p></li>
+<li><p>Preparando o Ambiente Python e Spark</p></li>
 <ol>
-  <li>Verificar onde se encontra o binário(bin) no PC e entrar na pasta via comando cd.
-    No caso do computador atual em uso, o Caminho do executável é:    C:\Program Files\MySQL\MySQL Server 8.0\bin
-  </li>
-  <li>Econtrada e acessada a pasta, digite : mysql -u root -p</li>
-  <li>A senha no momento é: 009763</li>
- <p> Os comandos gerados via prompt serão refletidos no MySql Workbench</p>
+  <li>Endereço oficial Python: www.python.org</li>
+  <li>Anaconda traz o interpretador padrão python + vários pacotes. Endereço: anaconda.org</li>
+  <li> O endereço: spark.apach.org encontra-se o Spark . Na opção 2 deixar marcado "Pre-built for Apach Hadoop 2.7 and later"   </li>
+  <li> O Spark foi desenvolvido na linguagem Scala. Essa linguagem requer uma JVM(Java Virtual Machine). Econtra-se no endereço:(a versão utilizada foi a kit 11.0.3) https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html  </li>
+    <li><a href="http://spark.apache.org/docs/latest/">Apache Spark –Documentação Oficial</a></li>
+    
+    <li><a href="http://www.computerweekly.com/feature/Apache-Spark-speeds-up-big-data-decision-making">Apache Spark speeds up Big Data decisio-making</a></li>
+    
+    <li><a href="http://www.computerweekly.com/feature/Apache-Spark-speeds-up-big-data-decision-making">Apache Spark speeds up Big Data decisio-making</a></li>
+    
+    Site Oficial da Linguagem Python
+    https://www.python.org/
+    Python Brasil
+    http://wiki.python.org.br/
+    Python Package Index
+    https://pypi.python.org/pypi
+    Documentação Anaconda
+    https://docs.continuum.io/
+    Beaker Notebookhttp://beakernotebook.com/
+    PyScience Brasil
+    http://pyscience-brasil.wikidot.com/
+    Anaconda Download
+    https://repo.continuum.io/archive/
+    Spark Download
+    http://spark.apache.org/downloads.html
+    Apache Spark
+    http://spark.apache.org/Winutils
+    https://github.com/steveloughran/winutils
+    Java JDK
+    https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
+    Spark Archive
+    https://archive.apache.org/dist/spark/    
+    
+   <p> Instalando o Java. Dicas: 1) O diretório não deve ter espaço no nome. 2)Criar uma pasta exclusiva em C:\ para o Java </p>
+   <p> O Apache Spark não tem um instalador. Simplesmente descompacta o arquivo e configura-se as variáveis de ambiente. Descompactar duas vezes. O primeiro arquivo é com extensão tgz(é arquivo compactado). A extensão .tar é o arquivo comprimido. Mover o arquivo descompactado para a raiz C: para facilitar a configuração das variáveis de ambiente. </p>
+    <p>Configuração das Variáveis de ambiente: Variáveis de ambiente indica para o sistema operacional onde se encontra os programas de interesse.</p>
+<p>O Spark não foi feito para Windows, por isso esses passos.</p>    
+<p>1) Abrir o painel das variáveis de ambiente</p>    
+<p>2)No campo de variáveis de sistema, criar nova variável de ambiente </p>    
+<li># JDK # Inserir as variáveis JAVA_HOME e PATH :   JAVA_HOME = C:\Java\jdk-11.0.3 
+    PATH = C:\Java\jdk-11.0.3\bin (tem q mover o JAVA para cima!!)</li>
+
+<p>Instalar as variáveis para o Spark:</p>
+
+<pre>    # Spark
+SPARK_HOME = C:\spark
+PATH = C:\spark\bin
+PYSPARK_DRIVER_PYTHON = jupyter
+PYSPARK_DRIVER_PYTHON_OPTS = notebook
+PYSPARK_PYTHON = python3
+
+# Wintools 64 bits:
+
+https://github.com/steveloughran/winutils/tree/master/hadoop-2.7.1/bin
+<p> Baixar o arquivo. Criar em C: as pastas Hadoop e bin. Inserir em bin o executável baixado</p> <p>Ajusta a vairável HADOOP_HOME:C:\Hadoop. Além disso tenho q adicionar o diretório bin na variável de ambiente path C:\Hadoop\bin</p>   
+    
+# Wintools 32 bits:
+
+https://drive.google.com/file/d/0B4PlPwU6yGTNT2FBdl9nTGNGOFk/view
+
+# Permissão
+Crie o diretório C:\tmp\hive
+Abra o prompt e digite: C:\Hadoop\bin\winutils.exe chmod -R 777 C:\tmp\hive</li>
+<p>Após realizado os passos, abir o prompt e testar os comandos: java -version ; python ; e spark-shell </p>   
+<p>Como não queremos progamar em scala, saimos do prompt com :q, cls e digita pyspark </p>    
+ </pre>    
+    
     
 </ol>   
-          
-          
 
-          <hr>   
+<p>Manipulação de Dados com<code>Python</code></p>          
+<p>Informações Relevantes</p>
+<ul>
+  <li>Pandas: Excel para programação. Muitas funções do excel podem ser realizadas com essa biblioteca</li>
+  <li>Numpy: biblioteca matemática para linguagem Python </li>
+  <li>Python: linguagem completa. Eficiente na etapa de pré-processamento(aquele que é realizado antes da criação dos modelos preditivos). Outra vantagem, é que todo o processo do início ao fim pode ser realizado em Python (desde a concepção do problema até a publicação de uma aplicação analítica construída, por exe, para o ambiente web ). Essa situação fica limitada no R. </li>
+  <li>PyData Stack: Conjunto de pacotes Python específicos para ciência de dados. Numpy é a base para a maioria dos pacotes.</li>
+
+<li>NumPy: oferece a base para a manipulação de estruturas de dados. Usado conjuntamente com outros pacotes. O objetivo principal é ser usado como conteiner para os dados para serem usados/manipulados no processo de análise. Os arrays do Numpy são muito eficientes!! </li>    
+<li>Pandas I: Pacote de análise de dados de alta performance. Amplamente adotada para manipulação de dados. <em>No processo de análise frequentemente necessita-se de dataframes. Isso é obtido via Pandas, fornecendo possibilidades de fatiar, manipular os dados muito facilmente. </em> </li>  
+<li><a href="C:\Users\ricardo.ramos\OneDrive - Ministerio do Desenvolvimento da Industria e Comercio Exterior\GitHub\ricardofelippe.github.io\slides\DSA\Python_2019.pdf">Python Slides</a></li>
+    <li>Pandas II: </li>    
+    
+</ul>          
+          
+<hr>   
+
 
           
           
