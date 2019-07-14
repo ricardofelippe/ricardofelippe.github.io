@@ -76,16 +76,17 @@
 <section id="content" class="body">    
 
 <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#DadosPublicosCnpj"><h4>Passo-a-Passo</a></h4></a>
-        </h4>    
-        </div>
-      <div id="DadosPublicosCnpj" class="panel-collapse collapse">
+ <div class="panel-heading">
+  <h4 class="panel-title">
+    <a data-toggle="collapse" data-parent="#accordion" href="#DadosPublicosCnpj"><h4>Passo-a-Passo</a></h4></a>
+  </h4>    
+ </div>
+  <div id="DadosPublicosCnpj" class="panel-collapse collapse">
       <div class="panel-body">         
         <p><code>R</code> é um pacote estatístico com inúmeros tutoriais.</p>
         <ul>
-         <li>Acessar prompt de comand</li>
+        
+        <li>Acessar prompt de comand</li>
          <li>Usar comand cd para acessar a pasta com os arquivos Python(na ocasião esta pasta se localizava em: "C:\Users\ricardo.ramos\OneDrive - Ministerio do Desenvolvimento da Industria e Comercio Exterior\R-projects\DAMPE-SEMPE\DadosPublicosCnpj\Python\CNPJ-full"</li>
          <li>Acessar prompt de comand</li>
          <li>Acessar prompt de comand</li>
@@ -93,18 +94,8 @@
          <li><a href="http://fulljoin.com.br/">Blog Saulo-R</a></li>
          <li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/EaxCWKfT9qFHjl6gmxWH3OoBoA4Pr73TRlQLA8VtwK5Hxw?e=4ebzgz">R-Graphics-Ebook</a></li>
          
-            
-        </ul>    
-
-        <hr>    
-          
-      </div>
-      </div>
-</div> 
-            
-
-<h3><strong>Como faço?</strong></h3>
-    
+        </ul>
+<hr>
 <li><p>Para acessar o MySql do meu PC via comando prompt ?</p></li>
 <ol>
   <li>Verificar onde se encontra o binário(bin) no PC e entrar na pasta via comando cd.
@@ -118,7 +109,7 @@
     
     
 <li><p>Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe?</p></li>
-    <p>
+<p>
     Usar os comandos:
     <pre>
      ```{r}
@@ -130,8 +121,8 @@
 </p>
             
 <li><p>Para obter apenas as colunas numéricas do dataframe no R e filtrar essa colunas?</p></li>
-    <p>
-    Usar os comandos:
+<p>
+Usar os comandos:
 <pre>
 ```
     # Obtendo apenas as colunas numéricas
@@ -146,10 +137,11 @@
 ```
     </pre>
 </p>
-
+      </div>
+  </div>
+</div> 
             
 
-    
 
 </ul>
     
@@ -232,7 +224,7 @@
 
 <p><code>Big Data Real-Time</code> Analytics com Python e Spark</p>
 <h3><strong>Informações Relevantes</strong></h3>
-<li><p>Apache Spark</p></li>
+<li>Apache Spark</li>
 <ol>
   <li>Engine principal de processamento de Big Data. Funciona como hadoop</li>
   <li>Benefícios: Fácil de usar, Veloz,Engine de uso geral para várias atividades  </li>
@@ -252,7 +244,7 @@
 </ol>
           
 <h3><strong>Passo-a-Passo</strong></h3>
-<li><p>Preparando o Ambiente Python e Spark</p></li>
+<li>Preparando o Ambiente Python e Spark</li>
 <ol>
   <li>Endereço oficial Python: www.python.org</li>
   <li>Anaconda traz o interpretador padrão python + vários pacotes. Endereço: anaconda.org</li>
@@ -324,25 +316,40 @@ Abra o prompt e digite: C:\Hadoop\bin\winutils.exe chmod -R 777 C:\tmp\hive</li>
     
 </ol>   
 
-<p>Manipulação de Dados com<code>Python</code></p>          
+<h3><strong>Manipulação de Dados com<code>Python</code></strong></h3>
+          
+<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ETu2kIbWKfhAt2ngaa5YQrYB3Lgb5lywsy1UKVltDRcYOA?e=WPd7jR">Python Slides Aulas DSA</a></li>
+<li><a href="https://mdic-my.sharepoint.com/:u:/g/personal/ricardo_ramos_mdic_gov_br/ERYZqGL2kt9FlCbG9_R5efkBLcY7t28Uuv1ftSIXXcVkmg?e=J0dqbN">Compilado Aulas Python Numpy DSA 07-2019</a></li>
+    
 <p>Informações Relevantes</p>
 <ul>
+  
   <li>Pandas: Excel para programação. Muitas funções do excel podem ser realizadas com essa biblioteca</li>
   <li>Numpy: biblioteca matemática para linguagem Python </li>
   <li>Python: linguagem completa. Eficiente na etapa de pré-processamento(aquele que é realizado antes da criação dos modelos preditivos). Outra vantagem, é que todo o processo do início ao fim pode ser realizado em Python (desde a concepção do problema até a publicação de uma aplicação analítica construída, por exe, para o ambiente web ). Essa situação fica limitada no R. </li>
-<li>Em <code>Python</code>TUDO é objeto. Os objetos tem características e podem executar ações.A característica pode ser resgatada via atributo. Já para aplicar uma ação, uso um método. Os métodos são chamados com o uso de parênteses ().</li>
+  <li>Em <code>Python</code>TUDO é objeto. Os objetos tem características e podem executar ações.A característica pode ser resgatada via atributo. Já para aplicar uma ação, uso um método. Os métodos são chamados com o uso de parênteses ().</li>
   <li>PyData Stack: Conjunto de pacotes Python específicos para ciência de dados. Numpy é a base para a maioria dos pacotes.</li>
+  <li>NumPy: oferece a base para a manipulação de estruturas de dados. Usado conjuntamente com outros pacotes. O objetivo principal é ser usado como conteiner para os dados para serem usados/manipulados no processo de análise. Os arrays do Numpy são muito eficientes!! </li>    
+  <li>Pandas I: Pacote de análise de dados de alta performance. Amplamente adotada para manipulação de dados. <em>No processo de análise frequentemente necessita-se de dataframes. Isso é obtido via Pandas, fornecendo possibilidades de fatiar, manipular os dados muito facilmente. </em> </li>  
+  <li><em>Uma plataforma de manipulaçaõ de dados</em>pode ser obtida com a união das bibliotecas Numpy e Pandas</li>    
 
-<li>NumPy: oferece a base para a manipulação de estruturas de dados. Usado conjuntamente com outros pacotes. O objetivo principal é ser usado como conteiner para os dados para serem usados/manipulados no processo de análise. Os arrays do Numpy são muito eficientes!! </li>    
-<li>Pandas I: Pacote de análise de dados de alta performance. Amplamente adotada para manipulação de dados. <em>No processo de análise frequentemente necessita-se de dataframes. Isso é obtido via Pandas, fornecendo possibilidades de fatiar, manipular os dados muito facilmente. </em> </li>  
-<li><em>Uma plataforma de manipulaçaõ de dados</em>pode ser obtida com a união das bibliotecas Numpy e Pandas</li>    
-<li><a href="https://mdic-my.sharepoint.com/:b:/g/personal/ricardo_ramos_mdic_gov_br/ETu2kIbWKfhAt2ngaa5YQrYB3Lgb5lywsy1UKVltDRcYOA?e=WPd7jR">Python Slides</a></li>
-<li><a href="https://mdic-my.sharepoint.com/:u:/g/personal/ricardo_ramos_mdic_gov_br/ERYZqGL2kt9FlCbG9_R5efkBLcY7t28Uuv1ftSIXXcVkmg?e=J0dqbN">Compilado Python Numpy DSA 07-2019</a></li>
-
-    
-    <li>Pandas II: </li>    
-    
 </ul>          
+
+<h3><strong>Manipulação de Dados com<code>Python:Pandas</code></strong></h3>
+          
+<li><a href="https://mdic-my.sharepoint.com/:u:/g/personal/ricardo_ramos_mdic_gov_br/ETQ_ILOFoApEghBaLevcTPABPsuiQD3cXRkkQOsKHV-_hg?e=TWomE6">Compilado Aulas Python Pandas DSA 07-2019</a></li>
+    
+<p>Informações Relevantes</p>
+<ul>
+<li>Pandasd: Permite trabalhar com séries temporais e dataframes contendo qualquer tipo de dado, executando inúmeras operações com esses dados</li>  
+<li>Posso usar o Pandas para transformar um conjunto de dados no formato JSON para um dataframe. Com isso, consegue-se manipular os dados facilmente.</li> 
+<li>Os objetos criados com Numpy e Pandas são semelhantes. A diferença é que usa-se o Numpy para computação numérica(só se tem valores numéricos no conjunto de dados), enquanto o Pandas é usado de forma mais ampla, quando tenho um conjunto de dados muito diversificado(strings, valores NA,...)</li>   
+<li>Para instalar um pacote Python diretamente do Jupyter Notebook, usar a exclamação antes do comando pip. Exemplo: !pip install xarray</li>    
+
+<li><stron>Pivotear</stron>um conjunto de dados é modificá-lo em diferentes perspectivas! </li>    
+<li><strong>DICA:</strong>Ao manipular dados em Python, consultar a página https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html</li>    
+</ul>          
+          
           
 <hr>   
 
