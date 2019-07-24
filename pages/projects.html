@@ -238,6 +238,7 @@ Usar os comandos:
 <li>Apache Spark</li>
 <ol>
   <li>Engine principal de processamento de Big Data. Funciona como hadoop</li>
+  <li>O Spark não possui um sistema de armazenamento como o Hadoop MapReduce. Logo, podemos usar o Hadoop HDFS junto com o Spark </li>
   <li>Benefícios: Fácil de usar, Veloz,Engine de uso geral para várias atividades  </li>
   <li> Apache Spark é uma plataforma de computação em cluster(conjunto de computadores), criado 
     para ser veloz e de uso geral, sendo ideal para processamenteo iterativo e processamento de streaming de dados(fluxo contínuo de dados)</li>
@@ -259,9 +260,22 @@ Usar os comandos:
     <li><strong>Características do Spark:</strong> Realizaa operações de MapReduce; Pode utilizar o HDFS; Permite construir um workflow de Analytics; Utiliza a memória do computador de forma diferente e eficiente; Veloz, flexível e <strong>gratuito</strong> </li>
     
     
-    
-    
 </ol>
+<h3><strong>Apache Spark SQL</strong></h3>
+<ul>
+    <li>Spark Session: conector para acessa o API spark-sql.  </li>
+    <li>SQL Context:Encapsula todas a funcionalidades relacionadas ao  Apache Spark; é possível criar um SQL-context a partir do Spark-context;  </li>
+    <li><code>Spark-Context: </code>é para entrar no contexto de cluster e executar a aplicação </li>
+    <li>SQL-context: Necessária a criação para acessar o API Spark-sql </li>
+    <li> Exemplo de string de conexão: jdbc:mysql://localhost:3306/test </li>
+    <li>Tabelas Temporáriais: Estruturas simples, mas poderosas. Uma query aplicada em tabela temporária retorna outro dataframe.</li>
+    
+    
+    
+    
+    
+</ul>
+          
           
 <h3><strong>Passo-a-Passo</strong></h3>
 <li>Preparando o Ambiente Python e Spark</li>
@@ -301,12 +315,25 @@ Usar os comandos:
    <p> Instalando o Java. Dicas: 1) O diretório não deve ter espaço no nome. 2)Criar uma pasta exclusiva em C:\ para o Java </p>
    <p> O Apache Spark não tem um instalador. Simplesmente descompacta o arquivo e configura-se as variáveis de ambiente. Descompactar duas vezes. O primeiro arquivo é com extensão tgz(é arquivo compactado). A extensão .tar é o arquivo comprimido. Mover o arquivo descompactado para a raiz C: para facilitar a configuração das variáveis de ambiente. </p>
     <p>Configuração das Variáveis de ambiente: Variáveis de ambiente indica para o sistema operacional onde se encontra os programas de interesse.</p>
-<p>O Spark não foi feito para Windows, por isso esses passos.</p>    
+<li>O Spark não foi feito para Windows, por isso esses passos.</li>    
 <p>1) Abrir o painel das variáveis de ambiente</p>    
 <p>2)No campo de variáveis de sistema, criar nova variável de ambiente </p>    
 <li># JDK # Inserir as variáveis JAVA_HOME e PATH :   JAVA_HOME = C:\Java\jdk-11.0.3 
     PATH = C:\Java\jdk-11.0.3\bin (tem q mover o JAVA para cima!!)</li>
+<h4>Ajustando a versão do Java JDK</h4>
+<pre>
+1) o JVM do java permite que o java seja uma linguagem de programação multiplataforma.
+2) A instalação do java-jdk é necessária porque o Spark foi desenvolvido em linguagem Scala, a qual utiliza o JVM para sua execução.
+3) A instalação da JVM se dá com a instalação do JAVA-JDK
+4) Até 07/2019 era o Java 11 que é usada, devido a sua compatibilidade com o Spark.
+5) Há um bug no uso do Spark SQL com o Java 11. Com isso, é necessário usar o Java JDK 1.8 . CONFIGURAÇÃO necessária.
+6) Basta alterar a variável de ambiente. 
+7) Verificar no futuro próximo se a próxima versão do Spark traga suporte para o Java 11.
 
+
+</pre>    
+    
+    
 <p>Instalar as variáveis para o Spark:</p>
 
 <pre>    # Spark
