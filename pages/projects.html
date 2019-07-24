@@ -103,12 +103,16 @@
   </li>
   <li>Econtrada e acessada a pasta, digite : mysql -u root -p</li>
   <li>A senha no momento é: 009763</li>
- <p> Os comandos gerados via prompt serão refletidos no MySql Workbench</p>
+    
+  <p> Os comandos gerados via prompt serão refletidos no MySql Workbench</p>
+
+ <p> Outra maneira para ativar o MYSQL80 é acessar aplicativo "Executar" e digitar "serviços". Encontrar o MYSQL80 e iniciá-lo. </p>
+     
     
 </ol>    
     
     
-<li><p>Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe?</p></li>
+<p>Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe?</p>
 <p>
     Usar os comandos:
     <pre>
@@ -268,7 +272,7 @@ Usar os comandos:
     <li><code>Spark-Context: </code>é para entrar no contexto de cluster e executar a aplicação </li>
     <li>SQL-context: Necessária a criação para acessar o API Spark-sql </li>
     <li> Exemplo de string de conexão: jdbc:mysql://localhost:3306/test </li>
-    <li>Tabelas Temporáriais: Estruturas simples, mas poderosas. Uma query aplicada em tabela temporária retorna outro dataframe.</li>
+    <li>Tabelas Temporáriais: Estruturas simples, mas poderosas. Uma query aplicada em tabela temporária retorna outro dataframe.<strong>O uso</strong> de Tabelas Temporárias se dá quando queremos utilizar SQL no padrão ANSI. Se não for possível, podemos usar SQL no padrão do SPARK, que tem sintaxe diferente. O uso de TT tem a limitação da memória, pois os dados são carregados na memória.</li>
     
     
     
