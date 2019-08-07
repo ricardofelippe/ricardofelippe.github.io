@@ -96,17 +96,29 @@
          
         </ul>
 <hr>
+
+<li>Debugar o R </li>
+<ol>
+  <li><a href="https://www.youtube.com/watch?v=M5n_2jmdJ_8">YouTube - stop() - breathe - recover()</li>  
+  <li>editar o options: options(error = recover)</li>
+  <li>Iniciar a procura do erro de baixo para cima. Procurar pela linha que mais se parece com o código problema que se quer analisar.</li>    
+   <li>Escolhendo a linha, o sistema abre o lócus de todas as variáveis da função alvo.</li>    
+    <li>Com a função ls() encontro todas as variáveis no environment da função alvo.</li>
+    <li>Se digitar data, encontro os dados que estão sendo analisados.</li>
+    <li><strong>Dica</strong>Chamar funções que estão localizadas no lócus de uma função recuperada pela opção options, pode ser diferente do global environment</li>
+    
+    <li> Resetar o options: options(erro = NULL) </li>
+</ol>    
+          
 <li>Atualizar o Rtools </li>
 <ol>
   <li><a href="https://cran-r-project.org">Acessar o CRAN</li>  
   <li>Acessar Download R for Windows</li>  
   <li>Baixar o Rtools no C</li>    
- <li>Configurar a variável de ambiente para a pasta bin do Rtools. (C:\Rtools\bin)</li>   
-<li>Usar o comando pkgbuild::find_rtools(debug = TRUE)</li>    
-  <    
-      
+  <li>Configurar a variável de ambiente para a pasta bin do Rtools. (C:\Rtools\bin)</li>   
+  <li>Usar o comando pkgbuild::find_rtools(debug = TRUE)</li>    
 </ol>    
-
+<hr>
           
 <li>Para acessar o MySql do meu PC via comando prompt ?</li>
 <ol>
