@@ -1,4 +1,4 @@
-# Consulta dados Públicos CNPJ- Receita Federal
+# Consulta dados P�blicos CNPJ- Receita Federal
 # Fonte: https://receita.economia.gov.br/orientacao/tributaria/cadastros/cadastro-nacional-de-pessoas-juridicas-cnpj/dados-publicos-cnpj
 
 # Log Atualizações:
