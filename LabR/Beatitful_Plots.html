@@ -1,0 +1,259 @@
+
+<!-- saved from url=(0180)file:///C:/Users/ricardo.ramos/OneDrive%20-%20Ministerio%20do%20Desenvolvimento%20da%20Industria%20e%20Comercio%20Exterior/GitHub/ricardofelippe.github.io/LabR/Beatitful_Plots.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>Title</title>
+</head>
+
+<body>
+
+<p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(tidyverse)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Registered S3 methods overwritten by 'ggplot2':
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang
+</pre></div>
+<div class="message"><pre class="knitr r">## Registered S3 method overwritten by 'rvest':
+##   method            from
+##   read_xml.response xml2
+</pre></div>
+<div class="message"><pre class="knitr r">## -- Attaching packages ------------- tidyverse 1.2.1 --
+</pre></div>
+<div class="message"><pre class="knitr r">## v ggplot2 3.1.0     v purrr   0.2.5
+## v tibble  2.1.1     v dplyr   0.8.1
+## v tidyr   0.8.2     v stringr 1.3.1
+## v readr   1.3.1     v forcats 0.4.0
+</pre></div>
+<div class="message"><pre class="knitr r">## -- Conflicts ---------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(ggplot2)</span>
+<span class="hl kwd">library</span><span class="hl std">(ggflags)</span>
+<span class="hl kwd">library</span><span class="hl std">(countrycode)</span>
+
+<span class="hl std">dat</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">tibble</span><span class="hl std">(</span><span class="hl kwc">country</span> <span class="hl std">=</span> <span class="hl kwd">toupper</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"US"</span><span class="hl std">,</span> <span class="hl str">"Italy"</span><span class="hl std">,</span> <span class="hl str">"Canada"</span><span class="hl std">,</span> <span class="hl str">"UK"</span><span class="hl std">,</span> <span class="hl str">"Japan"</span><span class="hl std">,</span> <span class="hl str">"Germany"</span><span class="hl std">,</span> <span class="hl str">"France"</span><span class="hl std">,</span> <span class="hl str">"Russia"</span><span class="hl std">)),</span>
+              <span class="hl kwc">count</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">3.2</span><span class="hl std">,</span> <span class="hl num">0.71</span><span class="hl std">,</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0.2</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">),</span>
+              <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl kwd">as.character</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">3.2</span><span class="hl std">,</span> <span class="hl num">0.71</span><span class="hl std">,</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0.2</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">)),</span> <span class="hl str">"No Data"</span><span class="hl std">),</span>
+              <span class="hl kwc">code</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"br"</span><span class="hl std">,</span> <span class="hl str">"it"</span><span class="hl std">,</span> <span class="hl str">"ca"</span><span class="hl std">,</span> <span class="hl str">"gb"</span><span class="hl std">,</span> <span class="hl str">"jp"</span><span class="hl std">,</span> <span class="hl str">"de"</span><span class="hl std">,</span> <span class="hl str">"fr"</span><span class="hl std">,</span> <span class="hl str">"ru"</span><span class="hl std">))</span>
+
+<span class="hl std">dat</span> <span class="hl opt">%&gt;%</span> <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">country</span> <span class="hl std">=</span> <span class="hl kwd">reorder</span><span class="hl std">(country,</span> <span class="hl opt">-</span><span class="hl std">count))</span> <span class="hl opt">%&gt;%</span>
+    <span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(country, count,</span> <span class="hl kwc">label</span> <span class="hl std">= label))</span> <span class="hl opt">+</span>
+    <span class="hl kwd">geom_bar</span><span class="hl std">(</span><span class="hl kwc">stat</span> <span class="hl std">=</span> <span class="hl str">"identity"</span><span class="hl std">,</span> <span class="hl kwc">fill</span> <span class="hl std">=</span> <span class="hl str">"darkred"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwc">nudge_y</span> <span class="hl std">=</span> <span class="hl num">0.2</span><span class="hl std">,</span> <span class="hl kwc">color</span> <span class="hl std">=</span> <span class="hl str">"darkred"</span><span class="hl std">,</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">5</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl kwd">geom_flag</span><span class="hl std">(</span><span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl opt">-</span><span class="hl num">.5</span><span class="hl std">,</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">country</span> <span class="hl std">= code),</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">12</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl kwd">scale_y_continuous</span><span class="hl std">(</span><span class="hl kwc">breaks</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">2</span><span class="hl std">,</span> <span class="hl num">3</span><span class="hl std">,</span> <span class="hl num">4</span><span class="hl std">),</span> <span class="hl kwc">limits</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span><span class="hl num">4</span><span class="hl std">))</span> <span class="hl opt">+</span>
+    <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl num">6.25</span><span class="hl std">,</span> <span class="hl num">3.8</span><span class="hl std">,</span> <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl str">"Source UNODC Homicide Statistics"</span><span class="hl std">))</span> <span class="hl opt">+</span>
+    <span class="hl kwd">ggtitle</span><span class="hl std">(</span><span class="hl kwd">toupper</span><span class="hl std">(</span><span class="hl str">"Homicide Per 100,000 in G-8 Countries"</span><span class="hl std">))</span> <span class="hl opt">+</span>
+    <span class="hl kwd">xlab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl kwd">ylab</span><span class="hl std">(</span><span class="hl str">"# of gun-related homicides\nper 100,000 people"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl std">ggthemes</span><span class="hl opt">::</span><span class="hl kwd">theme_economist</span><span class="hl std">()</span> <span class="hl opt">+</span>
+    <span class="hl kwd">theme</span><span class="hl std">(</span><span class="hl kwc">axis.text.x</span> <span class="hl std">=</span> <span class="hl kwd">element_text</span><span class="hl std">(</span><span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">8</span><span class="hl std">,</span> <span class="hl kwc">vjust</span> <span class="hl std">=</span> <span class="hl opt">-</span><span class="hl num">16</span><span class="hl std">),</span>
+          <span class="hl kwc">axis.ticks.x</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+          <span class="hl kwc">axis.line.x</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+          <span class="hl kwc">plot.margin</span> <span class="hl std">=</span> <span class="hl kwd">unit</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">),</span> <span class="hl str">"cm"</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot"></div></div>
+
+<p>You can also embed plots, for example:</p>
+
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">dat</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">tibble</span><span class="hl std">(</span><span class="hl kwc">country</span> <span class="hl std">=</span> <span class="hl kwd">toupper</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"United States"</span><span class="hl std">,</span> <span class="hl str">"Canada"</span><span class="hl std">,</span> <span class="hl str">"Portugal"</span><span class="hl std">,</span> <span class="hl str">"Ireland"</span><span class="hl std">,</span> <span class="hl str">"Italy"</span><span class="hl std">,</span> <span class="hl str">"Belgium"</span><span class="hl std">,</span> <span class="hl str">"Finland"</span><span class="hl std">,</span> <span class="hl str">"France"</span><span class="hl std">,</span> <span class="hl str">"Netherlands"</span><span class="hl std">,</span> <span class="hl str">"Denmark"</span><span class="hl std">,</span> <span class="hl str">"Sweden"</span><span class="hl std">,</span> <span class="hl str">"Slovakia"</span><span class="hl std">,</span> <span class="hl str">"Austria"</span><span class="hl std">,</span> <span class="hl str">"New Zealand"</span><span class="hl std">,</span> <span class="hl str">"Australia"</span><span class="hl std">,</span> <span class="hl str">"Spain"</span><span class="hl std">,</span> <span class="hl str">"Czech Republic"</span><span class="hl std">,</span> <span class="hl str">"Hungry"</span><span class="hl std">,</span> <span class="hl str">"Germany"</span><span class="hl std">,</span> <span class="hl str">"United Kingdom"</span><span class="hl std">,</span> <span class="hl str">"Norway"</span><span class="hl std">,</span> <span class="hl str">"Japan"</span><span class="hl std">,</span> <span class="hl str">"Republic of Korea"</span><span class="hl std">)),</span>
+              <span class="hl kwc">count</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">3.61</span><span class="hl std">,</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl num">0.48</span><span class="hl std">,</span> <span class="hl num">0.35</span><span class="hl std">,</span> <span class="hl num">0.35</span><span class="hl std">,</span> <span class="hl num">0.33</span><span class="hl std">,</span> <span class="hl num">0.26</span><span class="hl std">,</span> <span class="hl num">0.20</span><span class="hl std">,</span> <span class="hl num">0.20</span><span class="hl std">,</span> <span class="hl num">0.20</span><span class="hl std">,</span> <span class="hl num">0.19</span><span class="hl std">,</span> <span class="hl num">0.19</span><span class="hl std">,</span> <span class="hl num">0.18</span><span class="hl std">,</span> <span class="hl num">0.16</span><span class="hl std">,</span>
+                        <span class="hl num">0.16</span><span class="hl std">,</span> <span class="hl num">0.15</span><span class="hl std">,</span> <span class="hl num">0.12</span><span class="hl std">,</span> <span class="hl num">0.10</span><span class="hl std">,</span> <span class="hl num">0.06</span><span class="hl std">,</span> <span class="hl num">0.04</span><span class="hl std">,</span> <span class="hl num">0.04</span><span class="hl std">,</span> <span class="hl num">0.01</span><span class="hl std">,</span> <span class="hl num">0.01</span><span class="hl std">))</span>
+
+<span class="hl std">dat</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">country</span> <span class="hl std">=</span> <span class="hl kwd">reorder</span><span class="hl std">(country, count))</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(country, count,</span> <span class="hl kwc">label</span> <span class="hl std">= count))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_bar</span><span class="hl std">(</span><span class="hl kwc">stat</span> <span class="hl std">=</span> <span class="hl str">"identity"</span><span class="hl std">,</span> <span class="hl kwc">fill</span> <span class="hl std">=</span> <span class="hl str">"darkred"</span><span class="hl std">,</span> <span class="hl kwc">width</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwc">nudge_y</span> <span class="hl std">=</span> <span class="hl num">0.2</span><span class="hl std">,</span>  <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">3</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">xlab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span> <span class="hl kwd">ylab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">ggtitle</span><span class="hl std">(</span><span class="hl kwd">toupper</span><span class="hl std">(</span><span class="hl str">"Gun Murders per 100,000 residents"</span><span class="hl std">))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">theme_minimal</span><span class="hl std">()</span> <span class="hl opt">+</span>
+  <span class="hl kwd">theme</span><span class="hl std">(</span><span class="hl kwc">panel.grid.major</span> <span class="hl std">=</span><span class="hl kwd">element_blank</span><span class="hl std">(),</span> <span class="hl kwc">panel.grid.minor</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">axis.text.x</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">axis.ticks.length</span> <span class="hl std">=</span> <span class="hl kwd">unit</span><span class="hl std">(</span><span class="hl opt">-</span><span class="hl num">0.4</span><span class="hl std">,</span> <span class="hl str">"cm"</span><span class="hl std">))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">coord_flip</span><span class="hl std">()</span>
+</pre></div>
+</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot"></div></div>
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(dslabs)</span>
+<span class="hl kwd">data</span><span class="hl std">(us_contagious_diseases)</span>
+<span class="hl std">the_disease</span> <span class="hl kwb">&lt;-</span> <span class="hl str">"Measles"</span>
+<span class="hl std">dat</span> <span class="hl kwb">&lt;-</span> <span class="hl std">us_contagious_diseases</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(</span><span class="hl opt">!</span><span class="hl std">state</span><span class="hl opt">%in%</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"Hawaii"</span><span class="hl std">,</span><span class="hl str">"Alaska"</span><span class="hl std">)</span> <span class="hl opt">&amp;</span> <span class="hl std">disease</span> <span class="hl opt">==</span> <span class="hl std">the_disease)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">rate</span> <span class="hl std">= count</span> <span class="hl opt">/</span> <span class="hl std">population</span> <span class="hl opt">*</span> <span class="hl num">10000</span> <span class="hl opt">*</span> <span class="hl num">52</span> <span class="hl opt">/</span> <span class="hl std">weeks_reporting)</span>
+
+<span class="hl std">jet.colors</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">colorRampPalette</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"#F0FFFF"</span><span class="hl std">,</span> <span class="hl str">"cyan"</span><span class="hl std">,</span> <span class="hl str">"#007FFF"</span><span class="hl std">,</span> <span class="hl str">"yellow"</span><span class="hl std">,</span> <span class="hl str">"#FFBF00"</span><span class="hl std">,</span> <span class="hl str">"orange"</span><span class="hl std">,</span> <span class="hl str">"red"</span><span class="hl std">,</span> <span class="hl str">"#7F0000"</span><span class="hl std">),</span> <span class="hl kwc">bias</span> <span class="hl std">=</span> <span class="hl num">2.25</span><span class="hl std">)</span>
+
+<span class="hl std">dat</span> <span class="hl opt">%&gt;%</span> <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">state</span> <span class="hl std">=</span> <span class="hl kwd">reorder</span><span class="hl std">(state,</span> <span class="hl kwd">desc</span><span class="hl std">(state)))</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(year, state,</span> <span class="hl kwc">fill</span> <span class="hl std">= rate))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_tile</span><span class="hl std">(</span><span class="hl kwc">color</span> <span class="hl std">=</span> <span class="hl str">"white"</span><span class="hl std">,</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">0.35</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">scale_x_continuous</span><span class="hl std">(</span><span class="hl kwc">expand</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span><span class="hl num">0</span><span class="hl std">))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">scale_fill_gradientn</span><span class="hl std">(</span><span class="hl kwc">colors</span> <span class="hl std">=</span> <span class="hl kwd">jet.colors</span><span class="hl std">(</span><span class="hl num">16</span><span class="hl std">),</span> <span class="hl kwc">na.value</span> <span class="hl std">=</span> <span class="hl str">'white'</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_vline</span><span class="hl std">(</span><span class="hl kwc">xintercept</span> <span class="hl std">=</span> <span class="hl num">1963</span><span class="hl std">,</span> <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">"black"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">theme_minimal</span><span class="hl std">()</span> <span class="hl opt">+</span>
+  <span class="hl kwd">theme</span><span class="hl std">(</span><span class="hl kwc">panel.grid</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">())</span> <span class="hl opt">+</span>
+        <span class="hl kwd">coord_cartesian</span><span class="hl std">(</span><span class="hl kwc">clip</span> <span class="hl std">=</span> <span class="hl str">'off'</span><span class="hl std">)</span> <span class="hl opt">+</span>
+        <span class="hl kwd">ggtitle</span><span class="hl std">(the_disease)</span> <span class="hl opt">+</span>
+        <span class="hl kwd">ylab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span>
+        <span class="hl kwd">xlab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span>
+        <span class="hl kwd">theme</span><span class="hl std">(</span><span class="hl kwc">legend.position</span> <span class="hl std">=</span> <span class="hl str">"bottom"</span><span class="hl std">,</span> <span class="hl kwc">text</span> <span class="hl std">=</span> <span class="hl kwd">element_text</span><span class="hl std">(</span><span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">8</span><span class="hl std">))</span> <span class="hl opt">+</span>
+        <span class="hl kwd">annotate</span><span class="hl std">(</span><span class="hl kwc">geom</span> <span class="hl std">=</span> <span class="hl str">"text"</span><span class="hl std">,</span> <span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">1963</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">50.5</span><span class="hl std">,</span> <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl str">"Vaccine introduced"</span><span class="hl std">,</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">3</span><span class="hl std">,</span> <span class="hl kwc">hjust</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot"></div></div>
+
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">data</span><span class="hl std">(</span><span class="hl str">"nyc_regents_scores"</span><span class="hl std">)</span>
+<span class="hl std">nyc_regents_scores</span><span class="hl opt">$</span><span class="hl std">total</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rowSums</span><span class="hl std">(nyc_regents_scores[,</span><span class="hl opt">-</span><span class="hl num">1</span><span class="hl std">],</span> <span class="hl kwc">na.rm</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+<span class="hl std">nyc_regents_scores</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(</span><span class="hl opt">!</span><span class="hl kwd">is.na</span><span class="hl std">(score))</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(score, total))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">annotate</span><span class="hl std">(</span><span class="hl str">"rect"</span><span class="hl std">,</span> <span class="hl kwc">xmin</span> <span class="hl std">=</span> <span class="hl num">65</span><span class="hl std">,</span> <span class="hl kwc">xmax</span> <span class="hl std">=</span> <span class="hl num">99</span><span class="hl std">,</span> <span class="hl kwc">ymin</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">ymax</span> <span class="hl std">=</span> <span class="hl num">35000</span><span class="hl std">,</span> <span class="hl kwc">alpha</span> <span class="hl std">=</span> <span class="hl num">.5</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_bar</span><span class="hl std">(</span><span class="hl kwc">stat</span> <span class="hl std">=</span> <span class="hl str">"identity"</span><span class="hl std">,</span> <span class="hl kwc">color</span> <span class="hl std">=</span> <span class="hl str">"black"</span><span class="hl std">,</span> <span class="hl kwc">fill</span> <span class="hl std">=</span> <span class="hl str">"#C4843C"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">annotate</span><span class="hl std">(</span><span class="hl str">"text"</span><span class="hl std">,</span> <span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">66</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">28000</span><span class="hl std">,</span> <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl str">"MINIMUM\nREGENTS DIPLOMA\nSCORE IS 65"</span><span class="hl std">,</span> <span class="hl kwc">hjust</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">3</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">annotate</span><span class="hl std">(</span><span class="hl str">"text"</span><span class="hl std">,</span> <span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">12000</span><span class="hl std">,</span> <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl str">"2010 Regents scores on\nthe five most common tests"</span><span class="hl std">,</span> <span class="hl kwc">hjust</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">3</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">scale_x_continuous</span><span class="hl std">(</span><span class="hl kwc">breaks</span> <span class="hl std">=</span> <span class="hl kwd">seq</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">,</span> <span class="hl num">95</span><span class="hl std">,</span> <span class="hl num">5</span><span class="hl std">),</span> <span class="hl kwc">limit</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span><span class="hl num">99</span><span class="hl std">))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">scale_y_continuous</span><span class="hl std">(</span><span class="hl kwc">position</span> <span class="hl std">=</span> <span class="hl str">"right"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">ggtitle</span><span class="hl std">(</span><span class="hl str">"Scraping By"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">xlab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span> <span class="hl kwd">ylab</span><span class="hl std">(</span><span class="hl str">"Number of tests"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">theme_minimal</span><span class="hl std">()</span> <span class="hl opt">+</span>
+  <span class="hl kwd">theme</span><span class="hl std">(</span><span class="hl kwc">panel.grid.major.x</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">panel.grid.minor.x</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">axis.ticks.length</span> <span class="hl std">=</span> <span class="hl kwd">unit</span><span class="hl std">(</span><span class="hl opt">-</span><span class="hl num">0.2</span><span class="hl std">,</span> <span class="hl str">"cm"</span><span class="hl std">),</span>
+        <span class="hl kwc">plot.title</span> <span class="hl std">=</span> <span class="hl kwd">element_text</span><span class="hl std">(</span><span class="hl kwc">face</span> <span class="hl std">=</span> <span class="hl str">"bold"</span><span class="hl std">))</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning: Removed 1 rows containing missing values (position_stack).
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning: Removed 2 rows containing missing values (geom_bar).
+</pre></div>
+</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot"></div></div>
+
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">my_dgamma</span> <span class="hl kwb">&lt;-</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">,</span> <span class="hl kwc">mean</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl kwc">sd</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">){</span>
+  <span class="hl std">shape</span> <span class="hl kwb">=</span> <span class="hl std">mean</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl opt">/</span><span class="hl std">sd</span><span class="hl opt">^</span><span class="hl num">2</span>
+  <span class="hl std">scale</span> <span class="hl kwb">=</span> <span class="hl std">sd</span><span class="hl opt">^</span><span class="hl num">2</span> <span class="hl opt">/</span> <span class="hl std">mean</span>
+  <span class="hl kwd">dgamma</span><span class="hl std">(x,</span> <span class="hl kwc">shape</span> <span class="hl std">= shape,</span> <span class="hl kwc">scale</span> <span class="hl std">= scale)</span>
+<span class="hl std">}</span>
+
+<span class="hl std">my_qgamma</span> <span class="hl kwb">&lt;-</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">mean</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl kwc">sd</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">){</span>
+  <span class="hl std">shape</span> <span class="hl kwb">=</span> <span class="hl std">mean</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl opt">/</span><span class="hl std">sd</span><span class="hl opt">^</span><span class="hl num">2</span>
+  <span class="hl std">scale</span> <span class="hl kwb">=</span> <span class="hl std">sd</span><span class="hl opt">^</span><span class="hl num">2</span> <span class="hl opt">/</span> <span class="hl std">mean</span>
+  <span class="hl kwd">qgamma</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0.1</span><span class="hl std">,</span><span class="hl num">0.9</span><span class="hl std">),</span> <span class="hl kwc">shape</span> <span class="hl std">= shape,</span> <span class="hl kwc">scale</span> <span class="hl std">= scale)</span>
+<span class="hl std">}</span>
+
+<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">tibble</span><span class="hl std">(</span><span class="hl kwc">candidate</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"Clinton"</span><span class="hl std">,</span> <span class="hl str">"Trump"</span><span class="hl std">,</span> <span class="hl str">"Johnson"</span><span class="hl std">),</span>
+              <span class="hl kwc">avg</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">48.5</span><span class="hl std">,</span> <span class="hl num">44.9</span><span class="hl std">,</span> <span class="hl num">5.0</span><span class="hl std">),</span>
+              <span class="hl kwc">avg_txt</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"48.5%"</span><span class="hl std">,</span> <span class="hl str">"44.9%"</span><span class="hl std">,</span> <span class="hl str">"5.0%"</span><span class="hl std">),</span>
+              <span class="hl kwc">sd</span> <span class="hl std">=</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">,</span> <span class="hl num">3</span><span class="hl std">),</span>
+              <span class="hl kwc">m</span> <span class="hl std">=</span> <span class="hl kwd">my_dgamma</span><span class="hl std">(avg, avg, sd))</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">candidate</span> <span class="hl std">=</span> <span class="hl kwd">reorder</span><span class="hl std">(candidate,</span> <span class="hl opt">-</span><span class="hl std">avg))</span>
+
+<span class="hl std">xx</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">seq</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">75</span><span class="hl std">,</span> <span class="hl kwc">len</span> <span class="hl std">=</span> <span class="hl num">300</span><span class="hl std">)</span>
+
+<span class="hl std">tmp_2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">map_df</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">,</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">i</span><span class="hl std">){</span>
+  <span class="hl kwd">tibble</span><span class="hl std">(</span><span class="hl kwc">candidate</span> <span class="hl std">= tmp</span><span class="hl opt">$</span><span class="hl std">candidate[i],</span>
+         <span class="hl kwc">avg</span> <span class="hl std">= tmp</span><span class="hl opt">$</span><span class="hl std">avg[i],</span>
+         <span class="hl kwc">sd</span> <span class="hl std">= tmp</span><span class="hl opt">$</span><span class="hl std">sd[i],</span>
+         <span class="hl kwc">x</span> <span class="hl std">= xx,</span>
+         <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl kwd">my_dgamma</span><span class="hl std">(xx, tmp</span><span class="hl opt">$</span><span class="hl std">avg[i], tmp</span><span class="hl opt">$</span><span class="hl std">sd[i]))</span>
+<span class="hl std">})</span>
+
+<span class="hl std">tmp_3</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">map_df</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">,</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">i</span><span class="hl std">){</span>
+  <span class="hl std">qq</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">my_qgamma</span><span class="hl std">(tmp</span><span class="hl opt">$</span><span class="hl std">avg[i], tmp</span><span class="hl opt">$</span><span class="hl std">sd[i])</span>
+  <span class="hl std">xx</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">seq</span><span class="hl std">(qq[</span><span class="hl num">1</span><span class="hl std">], qq[</span><span class="hl num">2</span><span class="hl std">],</span> <span class="hl kwc">len</span> <span class="hl std">=</span> <span class="hl num">200</span><span class="hl std">)</span>
+  <span class="hl kwd">tibble</span><span class="hl std">(</span><span class="hl kwc">candidate</span> <span class="hl std">= tmp</span><span class="hl opt">$</span><span class="hl std">candidate[i],</span>
+         <span class="hl kwc">avg</span> <span class="hl std">= tmp</span><span class="hl opt">$</span><span class="hl std">avg[i],</span>
+         <span class="hl kwc">sd</span> <span class="hl std">= tmp</span><span class="hl opt">$</span><span class="hl std">sd[i],</span>
+         <span class="hl kwc">x</span> <span class="hl std">= xx,</span>
+         <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl kwd">my_dgamma</span><span class="hl std">(xx, tmp</span><span class="hl opt">$</span><span class="hl std">avg[i], tmp</span><span class="hl opt">$</span><span class="hl std">sd[i]))</span>
+<span class="hl std">})</span>
+
+<span class="hl std">tmp_2</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(x,</span> <span class="hl kwc">ymax</span> <span class="hl std">= y,</span> <span class="hl kwc">ymin</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_ribbon</span><span class="hl std">(</span><span class="hl kwc">fill</span> <span class="hl std">=</span> <span class="hl str">"grey"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">facet_grid</span><span class="hl std">(candidate</span><span class="hl opt">~</span><span class="hl std">.,</span> <span class="hl kwc">switch</span> <span class="hl std">=</span> <span class="hl str">"y"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">scale_x_continuous</span><span class="hl std">(</span><span class="hl kwc">breaks</span> <span class="hl std">=</span> <span class="hl kwd">seq</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">75</span><span class="hl std">,</span> <span class="hl num">25</span><span class="hl std">),</span> <span class="hl kwc">position</span> <span class="hl std">=</span> <span class="hl str">"top"</span><span class="hl std">,</span>
+                     <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl kwd">paste0</span><span class="hl std">(</span><span class="hl kwd">seq</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">75</span><span class="hl std">,</span> <span class="hl num">25</span><span class="hl std">),</span> <span class="hl str">"%"</span><span class="hl std">))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_abline</span><span class="hl std">(</span><span class="hl kwc">intercept</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">slope</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">xlab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span> <span class="hl kwd">ylab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">theme_minimal</span><span class="hl std">()</span> <span class="hl opt">+</span>
+  <span class="hl kwd">theme</span><span class="hl std">(</span><span class="hl kwc">panel.grid.major.y</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">panel.grid.minor.y</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">axis.title.y</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">axis.text.y</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">axis.ticks.y</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+        <span class="hl kwc">strip.text.y</span> <span class="hl std">=</span> <span class="hl kwd">element_text</span><span class="hl std">(</span><span class="hl kwc">angle</span> <span class="hl std">=</span> <span class="hl num">180</span><span class="hl std">,</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">11</span><span class="hl std">,</span> <span class="hl kwc">vjust</span> <span class="hl std">=</span> <span class="hl num">0.2</span><span class="hl std">))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_ribbon</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">= tmp_3,</span> <span class="hl kwc">mapping</span> <span class="hl std">=</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">= x,</span> <span class="hl kwc">ymax</span> <span class="hl std">= y,</span> <span class="hl kwc">ymin</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">fill</span> <span class="hl std">= candidate),</span> <span class="hl kwc">inherit.aes</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">show.legend</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">scale_fill_manual</span><span class="hl std">(</span><span class="hl kwc">values</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"#3cace4"</span><span class="hl std">,</span> <span class="hl str">"#fc5c34"</span><span class="hl std">,</span> <span class="hl str">"#fccc2c"</span><span class="hl std">))</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_point</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">= tmp,</span> <span class="hl kwc">mapping</span> <span class="hl std">=</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">= avg,</span> <span class="hl kwc">y</span> <span class="hl std">= m),</span> <span class="hl kwc">inherit.aes</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">= tmp,</span> <span class="hl kwc">mapping</span> <span class="hl std">=</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">= avg,</span> <span class="hl kwc">y</span> <span class="hl std">= m,</span> <span class="hl kwc">label</span> <span class="hl std">= avg_txt),</span> <span class="hl kwc">inherit.aes</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">hjust</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">nudge_x</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot"></div></div>
+
+
+
+
+
+</body></html>
