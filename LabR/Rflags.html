@@ -1,0 +1,141 @@
+
+<!-- saved from url=(0171)file:///C:/Users/ricardo.ramos/OneDrive%20-%20Ministerio%20do%20Desenvolvimento%20da%20Industria%20e%20Comercio%20Exterior/GitHub/ricardofelippe.github.io/LabR/Rflags.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>Title</title>
+</head>
+
+<body>
+
+<p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">summary</span><span class="hl std">(cars)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(tidyverse)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Registered S3 methods overwritten by 'ggplot2':
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang
+</pre></div>
+<div class="message"><pre class="knitr r">## Registered S3 method overwritten by 'rvest':
+##   method            from
+##   read_xml.response xml2
+</pre></div>
+<div class="message"><pre class="knitr r">## -- Attaching packages ------------- tidyverse 1.2.1 --
+</pre></div>
+<div class="message"><pre class="knitr r">## v ggplot2 3.1.0     v purrr   0.2.5
+## v tibble  2.1.1     v dplyr   0.8.1
+## v tidyr   0.8.2     v stringr 1.3.1
+## v readr   1.3.1     v forcats 0.4.0
+</pre></div>
+<div class="message"><pre class="knitr r">## -- Conflicts ---------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(ggplot2)</span>
+<span class="hl kwd">library</span><span class="hl std">(ggflags)</span>
+<span class="hl kwd">library</span><span class="hl std">(countrycode)</span>
+
+<span class="hl std">dat</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">tibble</span><span class="hl std">(</span><span class="hl kwc">country</span> <span class="hl std">=</span> <span class="hl kwd">toupper</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"US"</span><span class="hl std">,</span> <span class="hl str">"Italy"</span><span class="hl std">,</span> <span class="hl str">"Canada"</span><span class="hl std">,</span> <span class="hl str">"UK"</span><span class="hl std">,</span> <span class="hl str">"Japan"</span><span class="hl std">,</span> <span class="hl str">"Germany"</span><span class="hl std">,</span> <span class="hl str">"France"</span><span class="hl std">,</span> <span class="hl str">"Russia"</span><span class="hl std">)),</span>
+              <span class="hl kwc">count</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">3.2</span><span class="hl std">,</span> <span class="hl num">0.71</span><span class="hl std">,</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0.2</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">),</span>
+              <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl kwd">as.character</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">3.2</span><span class="hl std">,</span> <span class="hl num">0.71</span><span class="hl std">,</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0.2</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">)),</span> <span class="hl str">"No Data"</span><span class="hl std">),</span>
+              <span class="hl kwc">code</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">"br"</span><span class="hl std">,</span> <span class="hl str">"it"</span><span class="hl std">,</span> <span class="hl str">"ca"</span><span class="hl std">,</span> <span class="hl str">"gb"</span><span class="hl std">,</span> <span class="hl str">"jp"</span><span class="hl std">,</span> <span class="hl str">"de"</span><span class="hl std">,</span> <span class="hl str">"fr"</span><span class="hl std">,</span> <span class="hl str">"ru"</span><span class="hl std">))</span>
+
+<span class="hl std">dat</span> <span class="hl opt">%&gt;%</span> <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">country</span> <span class="hl std">=</span> <span class="hl kwd">reorder</span><span class="hl std">(country,</span> <span class="hl opt">-</span><span class="hl std">count))</span> <span class="hl opt">%&gt;%</span>
+    <span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(country, count,</span> <span class="hl kwc">label</span> <span class="hl std">= label))</span> <span class="hl opt">+</span>
+    <span class="hl kwd">geom_bar</span><span class="hl std">(</span><span class="hl kwc">stat</span> <span class="hl std">=</span> <span class="hl str">"identity"</span><span class="hl std">,</span> <span class="hl kwc">fill</span> <span class="hl std">=</span> <span class="hl str">"darkred"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwc">nudge_y</span> <span class="hl std">=</span> <span class="hl num">0.2</span><span class="hl std">,</span> <span class="hl kwc">color</span> <span class="hl std">=</span> <span class="hl str">"darkred"</span><span class="hl std">,</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">5</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl kwd">geom_flag</span><span class="hl std">(</span><span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl opt">-</span><span class="hl num">.5</span><span class="hl std">,</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">country</span> <span class="hl std">= code),</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">12</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl kwd">scale_y_continuous</span><span class="hl std">(</span><span class="hl kwc">breaks</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">2</span><span class="hl std">,</span> <span class="hl num">3</span><span class="hl std">,</span> <span class="hl num">4</span><span class="hl std">),</span> <span class="hl kwc">limits</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span><span class="hl num">4</span><span class="hl std">))</span> <span class="hl opt">+</span>
+    <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl num">6.25</span><span class="hl std">,</span> <span class="hl num">3.8</span><span class="hl std">,</span> <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl str">"Source UNODC Homicide Statistics"</span><span class="hl std">))</span> <span class="hl opt">+</span>
+    <span class="hl kwd">ggtitle</span><span class="hl std">(</span><span class="hl kwd">toupper</span><span class="hl std">(</span><span class="hl str">"Homicide Per 100,000 in G-8 Countries"</span><span class="hl std">))</span> <span class="hl opt">+</span>
+    <span class="hl kwd">xlab</span><span class="hl std">(</span><span class="hl str">""</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl kwd">ylab</span><span class="hl std">(</span><span class="hl str">"# of gun-related homicides\nper 100,000 people"</span><span class="hl std">)</span> <span class="hl opt">+</span>
+    <span class="hl std">ggthemes</span><span class="hl opt">::</span><span class="hl kwd">theme_economist</span><span class="hl std">()</span> <span class="hl opt">+</span>
+    <span class="hl kwd">theme</span><span class="hl std">(</span><span class="hl kwc">axis.text.x</span> <span class="hl std">=</span> <span class="hl kwd">element_text</span><span class="hl std">(</span><span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">8</span><span class="hl std">,</span> <span class="hl kwc">vjust</span> <span class="hl std">=</span> <span class="hl opt">-</span><span class="hl num">16</span><span class="hl std">),</span>
+          <span class="hl kwc">axis.ticks.x</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+          <span class="hl kwc">axis.line.x</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
+          <span class="hl kwc">plot.margin</span> <span class="hl std">=</span> <span class="hl kwd">unit</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">),</span> <span class="hl str">"cm"</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="./Rflags_files/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot"></div></div>
+
+<p>You can also embed plots, for example:</p>
+
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">plot</span><span class="hl std">(cars)</span>
+</pre></div>
+</div><div class="rimage default"><img src="./Rflags_files/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot"></div></div>
+
+
+
+</body></html>

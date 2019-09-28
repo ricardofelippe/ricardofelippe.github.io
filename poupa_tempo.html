@@ -167,6 +167,92 @@
     
   </div>
 </div>   
+<div class="container">
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#customizando_R"><h4><i class="fa fa-clock-o "></i> Customizando o R</a></h4></a>
+        </h4>    
+      </div>
+      <div id="customizando_R" class="panel-collapse collapse">
+      <div class="panel-body">         
+       
+      <li>Debugar o R </li>
+        <ol>
+            <li><a href="https://www.youtube.com/watch?v=M5n_2jmdJ_8">YouTube - stop() - breathe - recover()</a></li>  
+          <li>editar o options: options(error = recover)</li>
+          <li>Iniciar a procura do erro de baixo para cima. Procurar pela linha que mais se parece com o código problema que se quer analisar.</li>    
+          <li>Escolhendo a linha, o sistema abre o lócus de todas as variáveis da função alvo.</li>    
+          <li>Com a função ls() encontro todas as variáveis no environment da função alvo.</li>
+          <li>Se digitar data, encontro os dados que estão sendo analisados.</li>
+          <li><strong>Dica</strong>Chamar funções que estão localizadas no lócus de uma função recuperada pela opção options, pode ser diferente do global environment</li>
+          <li> Resetar o options: options(erro = NULL) </li>
+        </ol>    
+        <hr>
+      
+      <li>Atualizar o Rtools </li>
+        <ol>
+            <li><a href="https://cran-r-project.org">Acessar o CRAN</a></li>  
+          <li>Acessar Download R for Windows</li>  
+          <li>Baixar o Rtools no C</li>    
+          <li>Configurar a variável de ambiente para a pasta bin do Rtools. (C:\Rtools\bin)</li>   
+          <li>Usar o comando pkgbuild::find_rtools(debug = TRUE)</li>    
+        </ol>    
+        <hr>
+      
+      <li>Instalar o ggflags ?</li>
+        <ol>
+          <li>Baixar o pacote no endereço: https://codeload.github.com/rensa/ggflags/legacy.tar.gz/master</li>
+         <p> Caso não mais disponível, o pacote se encontra na pasta atual lib na pasta do R(28/09/2019) </p>
+         <li>Descompactar. Entrar na pasta e abrir o ggflags.Rproj</li>
+        <li>O projeto abre. Na aba Build, solicitar a instalação. Verificar se há pacotes faltantes. Caso sim, basta instalá-los.</li>    
+          </ol>    
+        <hr>
+      
+      <li>Como faz?: Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe?</li>
+        <p>
+            Usar os comandos:
+            <pre>
+             ```{r}
+            numeric.var <- sapply(churn, is.numeric) 
+            corr.matrix <- cor(churn[,numeric.var])  
+            corrplot(corr.matrix, main="\n\nGráfico de Correlação para Variáveis Numéricas", method="number")
+            ```
+            </pre>
+        </p>
+        <hr>
+      
+      <li>Como faz?: Para obter apenas as colunas numéricas do dataframe no R e filtrar essa colunas?</li>
+        <p>
+        Usar os comandos:
+        <pre>
+        ```
+            # Obtendo apenas as colunas numéricas
+            colunas_numericas <- sapply(df, is.numeric)
+            colunas_numericas
+
+            # Filtrando as colunas numéricas para correlação
+            data_cor <- cor(df[,colunas_numericas])
+            data_cor
+            head(data_cor)
+
+        ```
+            </pre>
+        </p>
+      
+
+      
+
+
+      
+  </div>    
+      </div>
+    </div> 
+   
+    
+  </div>
+</div>   
 
     
     
