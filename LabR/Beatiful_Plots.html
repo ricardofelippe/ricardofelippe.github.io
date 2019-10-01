@@ -118,7 +118,7 @@
           <span class="hl kwc">axis.line.x</span> <span class="hl std">=</span> <span class="hl kwd">element_blank</span><span class="hl std">(),</span>
           <span class="hl kwc">plot.margin</span> <span class="hl std">=</span> <span class="hl kwd">unit</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">),</span> <span class="hl str">"cm"</span><span class="hl std">))</span>
 </pre></div>
-</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot"></div></div>
+</div><div class="rimage default"><img src="./Beatiful_Plots_files/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot"></div></div>
 
 <p>You can also embed plots, for example:</p>
 
@@ -139,7 +139,7 @@
         <span class="hl kwc">axis.ticks.length</span> <span class="hl std">=</span> <span class="hl kwd">unit</span><span class="hl std">(</span><span class="hl opt">-</span><span class="hl num">0.4</span><span class="hl std">,</span> <span class="hl str">"cm"</span><span class="hl std">))</span> <span class="hl opt">+</span>
   <span class="hl kwd">coord_flip</span><span class="hl std">()</span>
 </pre></div>
-</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot"></div></div>
+</div><div class="rimage default"><img src="./Beatiful_Plots_files/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot"></div></div>
 <div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(dslabs)</span>
 <span class="hl kwd">data</span><span class="hl std">(us_contagious_diseases)</span>
 <span class="hl std">the_disease</span> <span class="hl kwb">&lt;-</span> <span class="hl str">"Measles"</span>
@@ -164,7 +164,7 @@
         <span class="hl kwd">theme</span><span class="hl std">(</span><span class="hl kwc">legend.position</span> <span class="hl std">=</span> <span class="hl str">"bottom"</span><span class="hl std">,</span> <span class="hl kwc">text</span> <span class="hl std">=</span> <span class="hl kwd">element_text</span><span class="hl std">(</span><span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">8</span><span class="hl std">))</span> <span class="hl opt">+</span>
         <span class="hl kwd">annotate</span><span class="hl std">(</span><span class="hl kwc">geom</span> <span class="hl std">=</span> <span class="hl str">"text"</span><span class="hl std">,</span> <span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">1963</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">50.5</span><span class="hl std">,</span> <span class="hl kwc">label</span> <span class="hl std">=</span> <span class="hl str">"Vaccine introduced"</span><span class="hl std">,</span> <span class="hl kwc">size</span> <span class="hl std">=</span> <span class="hl num">3</span><span class="hl std">,</span> <span class="hl kwc">hjust</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">)</span>
 </pre></div>
-</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot"></div></div>
+</div><div class="rimage default"><img src="./Beatiful_Plots_files/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot"></div></div>
 
 <div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">data</span><span class="hl std">(</span><span class="hl str">"nyc_regents_scores"</span><span class="hl std">)</span>
 <span class="hl std">nyc_regents_scores</span><span class="hl opt">$</span><span class="hl std">total</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rowSums</span><span class="hl std">(nyc_regents_scores[,</span><span class="hl opt">-</span><span class="hl num">1</span><span class="hl std">],</span> <span class="hl kwc">na.rm</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
@@ -189,7 +189,7 @@
 </pre></div>
 <div class="warning"><pre class="knitr r">## Warning: Removed 2 rows containing missing values (geom_bar).
 </pre></div>
-</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot"></div></div>
+</div><div class="rimage default"><img src="./Beatiful_Plots_files/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot"></div></div>
 
 <div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">my_dgamma</span> <span class="hl kwb">&lt;-</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">,</span> <span class="hl kwc">mean</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl kwc">sd</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">){</span>
   <span class="hl std">shape</span> <span class="hl kwb">=</span> <span class="hl std">mean</span><span class="hl opt">^</span><span class="hl num">2</span><span class="hl opt">/</span><span class="hl std">sd</span><span class="hl opt">^</span><span class="hl num">2</span>
@@ -250,7 +250,7 @@
   <span class="hl kwd">geom_point</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">= tmp,</span> <span class="hl kwc">mapping</span> <span class="hl std">=</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">= avg,</span> <span class="hl kwc">y</span> <span class="hl std">= m),</span> <span class="hl kwc">inherit.aes</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span> <span class="hl opt">+</span>
   <span class="hl kwd">geom_text</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">= tmp,</span> <span class="hl kwc">mapping</span> <span class="hl std">=</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">= avg,</span> <span class="hl kwc">y</span> <span class="hl std">= m,</span> <span class="hl kwc">label</span> <span class="hl std">= avg_txt),</span> <span class="hl kwc">inherit.aes</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">hjust</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">nudge_x</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">)</span>
 </pre></div>
-</div><div class="rimage default"><img src="./Beatitful_Plots_files/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot"></div></div>
+</div><div class="rimage default"><img src="./Beatiful_Plots_files/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot"></div></div>
 
 
 

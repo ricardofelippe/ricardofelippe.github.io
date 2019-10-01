@@ -1,4 +1,4 @@
-# Consulta dados P�blicos CNPJ- Receita Federal
+# Consulta dados P?blicos CNPJ- Receita Federal
 # Fonte: https://receita.economia.gov.br/orientacao/tributaria/cadastros/cadastro-nacional-de-pessoas-juridicas-cnpj/dados-publicos-cnpj
 
 # Log Atualizações:
@@ -80,7 +80,11 @@ dadosFull<-rbind(dadosFull, MPE_Municipios_Simplesdados01a10_opc5,MPE_Municipios
 
 rm(dados)
 
-# head(dados01a10)
+dadosFull<-rbind(dadosFull, MPE_Municipios_Simplesdados01a10_opc5,MPE_Municipios_Simplesdados01a10_opc7)
+
+granfpolisMunicipios<-c("AGUAS MORNAS","ALFREDO WAGNER","ANGELINA","ANITAPOLIS","ANTONIO CARLOS","BIGUACU","CANELINHA","FLORIANOPOLIS","GAROPABA","GOVERNADOR CELSO RAMOS","LEOBERTO LEAL","MAJOR GERCINO","NOVA TRENTO","PALHOCA","PAULO LOPES","RANCHO QUEIMADO","SANTO AMARO DA IMPERATRIZ","SAO BONIFACIO","SAO JOAO BATISTA","SAO JOSE","SAO PEDRO DE ALCANTARA","TIJUCAS")
+dados_Filtrados<-dadosFull %>% filter(municipio %in% granfpolisMunicipios)
+
 
 pastaC<-"C:/BigData/CNPJ/Extracao_Municipios_Set2019"
 
@@ -88,15 +92,31 @@ setwd(pastaC)
 getwd()
 
 
-
-wck=paste("MPE_Municipios_Simples_cod_05_Dados01a10",".csv",sep="")
-
-write.csv(MPE_Municipios_Simplesdados01a10_opc5, file=wck)
+wck=paste("GRANFPOLIS",".csv",sep="")
 
 
-wck=paste("MPE_Municipios_Simplesdados01a10_opc7",".csv",sep="")
+write.csv(dados_Filtrados, file=wck)
 
-write.csv(MPE_Municipios_Simplesdados01a10_opc7, file=wck)
+
+
+
+# head(dados01a10)
+
+# pastaC<-"C:/BigData/CNPJ/Extracao_Municipios_Set2019"
+# 
+# setwd(pastaC)
+# getwd()
+# 
+# 
+# 
+# wck=paste("MPE_Municipios_Simples_cod_05_Dados01a10",".csv",sep="")
+# 
+# write.csv(MPE_Municipios_Simplesdados01a10_opc5, file=wck)
+# 
+# 
+# wck=paste("MPE_Municipios_Simplesdados01a10_opc7",".csv",sep="")
+# 
+# write.csv(MPE_Municipios_Simplesdados01a10_opc7, file=wck)
 
 
 
@@ -184,12 +204,15 @@ MPE_Simplesdados11a20_opc7<-dados2 %>% filter(porte=="01" | porte=="03",email !=
 # 
 # write.csv(MPE_Simplesdados11a20, file=wck)
 
-municipios<-
 
 # dadosFull é concebido somente para consultas locais no R, devido ao tamanho do arquivo.
 dadosFull<-rbind(dadosFull, MPE_Simplesdados11a20_opc5,MPE_Simplesdados11a20_opc7)
 
+rm(dados)
 
+
+granfpolisMunicipios<-c("AGUAS MORNAS","ALFREDO WAGNER","ANGELINA","ANITAPOLIS","ANTONIO CARLOS","BIGUACU","CANELINHA","FLORIANOPOLIS","GAROPABA","GOVERNADOR CELSO RAMOS","LEOBERTO LEAL","MAJOR GERCINO","NOVA TRENTO","PALHOCA","PAULO LOPES","RANCHO QUEIMADO","SANTO AMARO DA IMPERATRIZ","SAO BONIFACIO","SAO JOAO BATISTA","SAO JOSE","SAO PEDRO DE ALCANTARA","TIJUCAS")
+dados_Filtrados<-dadosFull %>% filter(municipio %in% granfpolisMunicipios)
 
 
 pastaC<-"C:/BigData/CNPJ/Extracao_Municipios_Set2019"
@@ -198,19 +221,23 @@ setwd(pastaC)
 getwd()
 
 
+ wck=paste("GRANFPOLIS_2",".csv",sep="")
 
-wck=paste("MPE_Simples_cod_05_Dados11a20",".csv",sep="")
-
-write.csv(MPE_Simplesdados11a20_opc5, file=wck)
-
-
-wck=paste("MPE_Simples_cod_07_Dados11a20",".csv",sep="")
-
-write.csv(MPE_Simplesdados11a20_opc7, file=wck)
-
-
-# dadosFull é concebido somente para consultas locais no R, devido ao tamanho do arquivo.
-dadosFull<-rbind(dadosFull, MPE_Simplesdados11a20_opc5,MPE_Simplesdados11a20_opc7)
+ write.csv(dados_Filtrados, file=wck)
+ 
+ 
+# wck=paste("MPE_Simples_cod_05_Dados11a20",".csv",sep="")
+# 
+# write.csv(MPE_Simplesdados11a20_opc5, file=wck)
+# 
+# 
+# wck=paste("MPE_Simples_cod_07_Dados11a20",".csv",sep="")
+# 
+# write.csv(MPE_Simplesdados11a20_opc7, file=wck)
+# 
+# 
+# # dadosFull é concebido somente para consultas locais no R, devido ao tamanho do arquivo.
+# dadosFull<-rbind(dadosFull, MPE_Simplesdados11a20_opc5,MPE_Simplesdados11a20_opc7)
 
 
 # wck=paste("Simples_cod_05_07",".csv",sep="")
