@@ -1,0 +1,4680 @@
+---
+title: "microdados_CAGED_v5"
+author: "Ricardo Felippe Ramos"
+date: "05/09/2019"
+output: html_document
+---
+## Descrição
+ Script R criado para sistematiza a coleta e organização dos microdados derivados do site do PDET (ftp://ftp.mtps.gov.br/pdet/microdados/)
+
+Data criação: 05/09/2019
+
+Log atualizações: 05/09/2019
+
+POP: Mensalmente os microdados estarão disponíveis na página do PDET.
+Os passos seguintes devem ser observados para a correta manipulação dos microdados.
+Passo 1: Baixar os dados dentro do prazo(DP) disponíveis no site ftp://ftp.mtps.gov.br/pdet/microdados/CAGED/. 
+No momento presente( 09/2019) as pastas destinos estão no endereço:
+Endereço pasta destino
+C:\BigData\MicrodadosCaged
+
+Passo 2: Com os documentos devidamente alocados nas pastas correta, isso é, dados dentro do prazo na pasta DP, dados fora do prazo na pasta FP(igualmente importante é alocar os dados nas pastas indicadoras dos respectivos anos).
+
+Passo 3: Descompactar os microdados para a extensão .txt
+
+Passo 4: No mês a ser gerado os dados, conferir se a parametrização das variáveis estão corretas.
+
+## TO DO
+(05/09/2019)
+--Simular atualização do dataset com os dados de julho/2019 (STATUS:ok)
+--Criar banco de dados histórico desde o ano 2015 (05/09/2019)
+
+
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#------BIBLIOTECAS NECESSÁRIAS----
+library(RSQLite)
+library(dplyr)
+library(readr)
+library(xlsx)
+
+#------CONFIGURAÇÃO VARIÁVEIS-------
+
+# SETORES IBGE
+# Realizando De/Para segundo a planilha CAGEDEST_layout_Atualizados disponível
+# em:http://pdet.mte.gov.br/microdados-rais-e-caged
+extrativa<-c(1)
+industria<-c(2,3,4,5,6,7,8,9,10,11,12,13)
+SIUP<- c(14)
+construcao<-c(15)
+comercio<-c(16,17)
+servicos<-c(18,19,20,21,22,23)
+agropecuaria<-c(25)
+ignorado<-c(-1)
+adm<-c(24)
+
+# CATEGORIA     VALOR NA FONTE
+# ATE 4	         1
+# DE 5 A 9	     2
+# DE 10 A 19	   3
+# DE 20 A 49	   4
+# DE 50 A 99	   5
+# DE 100 A 249	 6
+# DE 250 A 499	 7
+# DE 500 A 999	 8
+# 1000 OU MAIS	 9
+# 
+
+#------FUNÇÕES-----
+# Inserindo coluna de classifição MPE/MGE segundo classificação SEBRAE
+tabulaDados <-function(dados){ dados %>% mutate(CLASS_SEBRAE = if_else(IBGE_SUBSETOR == "24","MGE",if_else(FAIXA_EMPR_JAN == "5" &  IBGE_SUBSETOR %in% industria,"MPE",if_else(FAIXA_EMPR_JAN == "5" &  IBGE_SUBSETOR %in% extrativa,"MPE",if_else(FAIXA_EMPR_JAN == "5" &  IBGE_SUBSETOR %in% construcao,"MPE",if_else(FAIXA_EMPR_JAN == "1","MPE",if_else(FAIXA_EMPR_JAN == "2","MPE",if_else(FAIXA_EMPR_JAN == "3","MPE",if_else(FAIXA_EMPR_JAN == "4","MPE","MGE")))))))))
+}
+
+# Função que consolida os valores segmentados do dataset
+CONSOLIDA<-function(MGE,MPE,MPE_MGE,D,E,F) { data.frame("MGE"=MGE,"MPE"=MPE,"SALDO"=MPE_MGE,"MGEACUM"=D,"MPEACUM"=E,"SALDOACUM"=F)
+  
+  }
+
+leituraDataset<-function(nomearquivo,tipo,anobase){
+#------LEITURA E ORGANIZAÇÃO DO DATASET DP e FP----# 
+#Descrição: realiza-se a leitura dos microdados DP ou FP. A diferenciação se dará pelo argumento "tipo" da função. 
+pastaC <- file.path("C:", "BigData","MicrodadosCaged",tipo,anobase) # o ponto indica diretório atual 
+setwd(pastaC)
+microdados<-nomearquivo
+microdados<-paste(microdados,".txt",sep="")
+
+DadosMensaisFull <- read.table(microdados,sep=";",header=TRUE)
+
+# Seleção das colunas: 08 colunas selecionadas
+# [1] "Admitidos.Desligados" 
+#  [2] "Competência.Declarada"
+#  [4] "Ano.Declarado"        
+#  [9] "Faixa.Empr.Início.Jan"
+# [12] "IBGE.Subsetor"        
+# [18] "Saldo.Mov"            
+# [24] "UF"                   
+
+# Para visualizar a descrição das colunas, usar: names(data)
+if (tipo =="DP") {
+colunas <- c(1,2,4,9,12,18,24)
+
+DadosMensais<-DadosMensaisFull %>% select(colunas)
+rm(DadosMensaisFull)
+
+colnames(DadosMensais)<-c("ADMITIDOS_DESLIGADOS","COMPETENCIA_DECLARADA","ANO","FAIXA_EMPR_JAN","IBGE_SUBSETOR","SALDO_MOV","UF")
+
+DadosFiltrados<-tabulaDados(DadosMensais)
+rm(DadosMensais)  
+
+
+} else{
+  colunas <- c(1,2,4,8,11,15,20,21)
+
+DadosMensais<-DadosMensaisFull %>% select(colunas)
+rm(DadosMensaisFull)
+
+colnames(DadosMensais)<-c("ADMITIDOS_DESLIGADOS","COMPETENCIA_MOVIMENTACAO","ANO","FAIXA_EMPR_JAN","IBGE_SUBSETOR","SALDO_MOV","UF","COMPETENCIA_DECLARADA")
+
+
+
+#### Tratando dados FP ###########
+DadosFiltrados<-tabulaDados(DadosMensais)
+
+rm(DadosMensais)  
+  
+}
+
+return(DadosFiltrados)
+}
+
+
+acumulaFP<-function(mes,unidades,anobase){
+# Função acumulaFP: Sintetiza os dados FP de determinado mês,
+# unidade da federação(tb contabiliza os dados nacionais(unidades=100),
+# das regiões Norte, Nordeste, Sudeste, Sul e Centro Oeste)
+# acumFP<-data.frame(matrix(0,29,6))
+# Descrição: A função acumulaFP busca agrupar os dados fora do prazo(FP) desde o início do anobase de referência. Por exemplo, se o mês é Julho(07) e o anobase é 2019, a função irá acumular os dados desde janeiro(01) de 2019.
+
+  #print(mes)
+  tipo<-"FP"
+  acumFP<-data.frame(matrix(0,29,6))
+
+  if(mes !=1){
+  mesesAnteriores<-seq(mes-1)
+  #browser()
+  for(i in mesesAnteriores){
+    #browser()
+     val<-paste(anobase,"0",i,sep="")
+    for(j in seq(i+1,mes)){
+      #print(j)
+      #anobase<-2019
+      #browser()
+      # tipo<-"FP"
+      # val<-paste(anobase,"0",i,sep="")
+      #print(val)
+      nomearquivo<-paste("CAGEDEST_AJUSTES_","0",j,anobase,sep="")
+      #print(nomearquivo)
+      dados<-leituraDataset(nomearquivo,tipo,anobase)
+      #print("Leitura")
+      #head(dados)
+      dados<-dados %>%filter(COMPETENCIA_MOVIMENTACAO==val)
+      #head(dados)
+      dadosFP<-Brasil_RegionalizaDados(dados,unidades)
+      #head(dadosFP)
+      acumFP<-dadosFP+acumFP
+      
+      
+    }
+  }
+  rm(mesesAnteriores)
+  rm(tipo)
+  rm(nomearquivo)
+  rm(dadosFP)
+  rm(dados)
+      
+  
+  
+  }
+  # else{
+  #   acumFP<-data.frame(matrix(0,29,6))
+  # }
+  return( acumFP)
+}
+
+datasetAgrupadoDP<-function(dados) {
+ dados %>% select(FAIXA_EMPR_JAN,COMPETENCIA_DECLARADA,IBGE_SUBSETOR,SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(FAIXA_EMPR_JAN,IBGE_SUBSETOR,UF,COMPETENCIA_DECLARADA,CLASS_SEBRAE)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))
+
+}
+
+datasetAgrupado<-function(dados) {
+ dados %>% select(FAIXA_EMPR_JAN,COMPETENCIA_MOVIMENTACAO,IBGE_SUBSETOR,SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(FAIXA_EMPR_JAN,IBGE_SUBSETOR,UF,COMPETENCIA_MOVIMENTACAO,CLASS_SEBRAE)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))
+ 
+}
+
+
+acumulaFP_NPeriodos<-function(vetor_interesse=c(),mes_referencia="",consulta_padrao="ON"){
+  #---LÓGICA DO PROCESSO----
+  # 1) Identificar arquivos com os microdados relativo ao anobase e mes de interesse 
+  # 2) Coletar os dados e consolidar
+  # 3) Se for o caso, iterar conforme o número de períodos de interesses
+  # 
+  # 
+  # Variáveis a serem inicializadadas:
+  # mes_atual;  vetor_interesse
+  # 
+  ## Definição: 
+  # consulta_padrão: uma consulta padrão é uma consulta que faz referência aos dados dos 12(doze) meses imediatamente anteriores relativo aos dados FORA DO PRAZO que são mensalmente disponibilizados nos arquivos de ajuste. Por exemplo, os dados FP disponibilizados em Setembro/2019 com denominação "CAGEDEST_AJUSTES_082019" contém os dados históricos FP de 08/2018 até 07/2019, totalizando exatos 12 meses.
+  # Se a consulta_padrão for ativada(consulta_padra =="ON") o código gerará as variáveis mes_interesse e vetor de interesse. Caso contrário, é necessário especificar essas variáveis.
+  
+  
+  #----TESTES----
+  #---EDITANDO PERÍODOS DE INTERESSE----
+  
+
+  #browser()
+  if(consulta_padrao=="ON"){
+  
+  if (mes_atual==""){
+    mes_referencia<-as.numeric(substring(Sys.Date(),6,7))-1
+  }
+  
+   if(mes_referencia==1){
+  #browser()
+  vetor_interesse<-seq(from=12,to=01)
+  anoanterior<-as.numeric(substring(Sys.Date(),1,4))-1
+  
+  vetor_intesse<-paste(anoanterior, formatC(anoanterior,width=2, flag="0"),sep="")  # identificar os meses a serem filtrados
+
+  #print(identificadores)
+  }else{
+  #browser()
+  anoanterior<-as.numeric(substring(Sys.Date(),1,4))-1
+  
+  # vetor_interesse<-c(seq(from=mes_referencia, to=1),seq(from=12, to=mes_referencia-1) ) 
+  vetor_interesse<-c(paste(anoanterior+1,formatC(seq(from=mes_referencia-1, to=1),width=2, flag="0"),  sep=""),paste(anoanterior,formatC(seq(from=12, to=mes_referencia),width=2, flag="0"),sep=""))
+  # print(identificadores)
+  }
+  }
+  
+  
+  
+  vet2015<-paste(2015,formatC(seq(from=1, to=12),width=2, flag="0"),sep="")
+  vet2016<-paste(2016,formatC(seq(from=1, to=12),width=2, flag="0"),sep="")
+  vet2017<-paste(2017,formatC(seq(from=1, to=12),width=2, flag="0"),sep="")
+  vet2018<-paste(2018,formatC(seq(from=1, to=12),width=2, flag="0"),sep="")
+  vet2019<-paste(2019,formatC(seq(from=1, to=mes_referencia),width=2, flag="0"),sep="")
+  
+  vetFull<-c(vet2015,vet2016,vet2017,vet2018,vet2019)
+  rm(vet2015,vet2016,vet2017,vet2018,vet2019)
+  acumFPFull<-data.frame()
+  for (i in vetor_interesse){
+    
+    localizador<-match(i,vetFull)
+    fimVetorFull<-length(vetFull)
+    localizador<-localizador+1
+    inicioDados<-vetFull[localizador]
+    extraiAno<-substring(inicioDados,1,4)
+    extraiMes<-substring(inicioDados,5,6)
+    vet12<-seq(1,12)
+    print(i)
+    #acumFPFull<-data.frame()
+    for(j in vet12){
+      nomearquivo<-paste("CAGEDEST_AJUSTES_",extraiMes,extraiAno,sep="")  
+      
+      print(nomearquivo)
+      #browser()
+      dados<-leituraDataset(nomearquivo,"FP",extraiAno)
+      dados2<-dados %>%filter(COMPETENCIA_MOVIMENTACAO==i)
+      #browser()
+      
+      
+      acumFPFull<-rbind(dados2,acumFPFull)
+      
+      
+      #browser()
+      if(j==12 | localizador ==fimVetorFull ){
+        #next
+        
+        break
+      }
+      
+      
+      localizador<-localizador+1  
+      inicioDados<-vetFull[localizador]
+      extraiAno<-substring(inicioDados,1,4)
+      extraiMes<-substring(inicioDados,5,6)
+      
+      
+      
+    }
+    #browser()
+    # 
+    #  print(paste("valor:",sum(acumFPFull$SALDO_MOV)))
+    
+    
+    
+    
+    
+  } # end for externo
+  
+  #-----------------------------------------    
+  
+  # 
+#browser()
+
+  wck=paste("acumFPFull_12","-","Anual",".xlsx",sep="")
+  # # 
+  # # 
+  #write.xlsx2(acumFPFull, file = wck)
+  
+  
+  
+  
+  acumFPFull<-datasetAgrupado(acumFPFull)
+  
+  
+  # #---------PREPARANDO BASE PARA DIVULGAÇÃO EXTERNA------   
+  # Identificando o os dados
+  acumFPFull<-data.frame(acumFPFull)%>% mutate(TIPO="FP")
+  
+  acumFPFull$UF <- as.character(acumFPFull$UF)
+  
+  de <- c("11","12","13","14","15","16","17","21","22","23","24","25","26","27","28","29","31","32","33","35","41","42","43","50","51","52","53")
+  #   
+  para <-c("Rondônia","Acre","Amazonas","Roraima","Pará","Amapá","Tocantins","Maranhão","Piauí","Ceará","Rio Grande do Norte","Paraíba","Pernambuco","Alagoas","Sergipe","Bahia","Minas Gerais","Espírito Santo","Rio de Janeiro","São Paulo","Paraná","Santa Catarina","Rio Grande do Sul","Mato Grosso do Sul","Mato Grosso","Goiás","Distrito Federal")
+  
+  j<-1
+  for(i in de){
+    
+    acumFPFull$UF[acumFPFull$UF == i] <- para[j]    
+    j<-j+1
+  }
+  
+  # 
+  # # Alterando a coluna FAIXA_EMPR_JAN
+  acumFPFull$FAIXA_EMPR_JAN <- as.character(acumFPFull$FAIXA_EMPR_JAN)
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "1"] <- "ATÉ 4"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "2"] <- "DE 5 A 9"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "3"] <- "DE 10 A 19"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "4"] <- "DE 20 A 49"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "5"] <- "DE 50 A 99"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "6"] <- "DE 100 A 249"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "7"] <- "DE 250 A 499"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "8"] <- "DE 500 A 999"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "9"] <- "1000 OU MAIS"    
+  acumFPFull$FAIXA_EMPR_JAN[acumFPFull$FAIXA_EMPR_JAN == "-1"] <- "IGNORADO"    
+  
+  
+  
+  # # Alterando a coluna IBGE_SUBSETOR
+  acumFPFull$IBGE_SUBSETOR <- as.character(acumFPFull$IBGE_SUBSETOR)
+  
+  # #extrativa<-c(1)
+#acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR %in% extrativa] <- "Extrativa"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="1"] <- "Extrativa"    
+# #industria<-c(2,3,4,5,6,7,8,9,10,11,12,13)
+
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="2"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="3"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="4"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="5"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="6"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="7"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="8"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="9"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="10"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="11"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="12"] <- "Indústria"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="13"] <- "Indústria"    
+
+# # SIUP<- c(14)
+
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="14"] <- "SIUP"    
+
+# # construcao<-c(15)
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="15"] <- "Construção"    
+# # comercio<-c(16,17)
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="16"] <- "Comércio"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="17"] <- "Comércio"    
+
+# # servicos<-c(18,19,20,21,22,23)
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="18"] <- "Serviços"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="19"] <- "Serviços"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="20"] <- "Serviços"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="21"] <- "Serviços"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="22"] <- "Serviços"    
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR =="23"] <- "Serviços"    
+
+# # agropecuaria<-c(25)
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR %in% agropecuaria] <- "Agropecuária"    
+# # ignorado<-c(-1)
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR %in% ignorado] <- "ignorado"    
+# # adm<-c(24)
+acumFPFull$IBGE_SUBSETOR[acumFPFull$IBGE_SUBSETOR %in% adm] <- "Adm.Pública"    
+# 
+# 
+  #     
+  
+  
+acumFPFull<-acumFPFull[,c(1,4,2,6,7,5,3)]
+colnames(acumFPFull)<-c("FAIXA_EMPR_JAN","PERIODO","IBGE_SUBSETOR","SALDO_EMPREGO","TIPO","CLASS_SEBRAE","UF")
+
+acumFPFull<-data.frame(acumFPFull)%>% mutate(PERIODO=paste("01/",substring(PERIODO,5,6),"/",substring(PERIODO,1,4),sep=""))
+
+
+colnames(acumFPFull)<-c("FAIXA_EMPR_JAN","PERIODO","IBGE_SUBSETOR","SALDO_EMPREGO","TIPO","CLASS_SEBRAE","UF")
+
+
+  
+  
+  print(paste("valor:",sum(acumFPFull$SALDO_MOV)))
+  #browser()
+  
+  write.csv(acumFPFull, file = "AcumuladoFP_12MESES.csv",row.names = FALSE)
+  print(paste("Arquivo Gerado!",getwd()))
+  # 
+  # return(acumFPFull)
+  
+}  # end for
+
+acumulaDP_NPeriodos<-function(vetor_interesse){
+    acumDPFull<-data.frame()
+  for (i in vetor_interesse){
+  
+    # localizador<-match(i,vetFull)
+    # fimVetorFull<-length(vetFull)
+    # localizador<-localizador+1
+    # inicioDados<-vetFull[localizador]
+    extraiAno<-substring(i,1,4)
+    extraiMes<-substring(i,5,6)
+    vet12<-seq(1,12)
+    #print(i)
+    #acumFPFull<-data.frame()
+    
+      nomearquivo<-paste("CAGEDEST_",extraiMes,extraiAno,sep="")  
+      
+      print(nomearquivo)
+      #browser()
+      dados<-leituraDataset(nomearquivo,"DP",extraiAno)
+      #dados2<-dados %>%filter(COMPETENCIA_MOVIMENTACAO==i)
+      #browser()
+      
+      
+      
+      # teste<-data.frame(datasetAgrupadoDP_teste2(dados))
+      # browser()
+
+      
+      dados<-data.frame(datasetAgrupadoDP(dados))
+      
+      acumDPFull<-rbind(dados,acumDPFull)
+      
+    
+    #acumDPFull$UF<-as.factor(acumDPFull$UF)
+      # 
+    #  print(paste("valor:",sum(acumDPFull$SALDO_EMPREGO)))
+    
+    
+
+    # # Alterando a coluna IBGE_SUBSETOR
+acumDPFull$IBGE_SUBSETOR <- as.character(acumDPFull$IBGE_SUBSETOR)
+#browser()
+
+# #extrativa<-c(1)
+#acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR %in% extrativa] <- "Extrativa"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="1"] <- "Extrativa"    
+# #industria<-c(2,3,4,5,6,7,8,9,10,11,12,13)
+
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="2"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="3"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="4"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="5"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="6"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="7"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="8"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="9"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="10"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="11"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="12"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="13"] <- "Indústria"    
+
+# # SIUP<- c(14)
+
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="14"] <- "SIUP"    
+
+# # construcao<-c(15)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="15"] <- "Construção"    
+# # comercio<-c(16,17)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="16"] <- "Comércio"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="17"] <- "Comércio"    
+
+# # servicos<-c(18,19,20,21,22,23)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="18"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="19"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="20"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="21"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="22"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="23"] <- "Serviços"    
+
+# # agropecuaria<-c(25)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR %in% agropecuaria] <- "Agropecuária"    
+# # ignorado<-c(-1)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR %in% ignorado] <- "ignorado"    
+# # adm<-c(24)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR %in% adm] <- "Adm.Pública"    
+# 
+  
+      
+# browser()
+# unique(acumDPFull$IBGE_SUBSETOR)
+# unique(acumDPFull$FAIXA_EMPR_JAN)
+      
+          
+    
+  
+  } # end for externo
+  
+#-----------------------------------------    
+  
+  # 
+    #wck=paste("acumFPFull_12","-","Anual",".xlsx",sep="")
+  # # 
+  # # 
+  #write.xlsx2(acumFPFull, file = wck)
+    
+    # browser()
+    # acumDPFull<-datasetAgrupadoDP(acumDPFull)
+    # # print(paste("valor:",sum(acumFPFull$SALDO_EMPREGO)))
+     #browser()
+
+#   dfAcumFP<-data.frame(dfAcumFP)%>% mutate(tipo="DP")
+#   
+#browser()
+# #---------PREPARANDO BASE PARA DIVULGAÇÃO EXTERNA------   
+# Identificando o os dados
+acumDPFull<-data.frame(acumDPFull)%>% mutate(TIPO="DP")
+
+acumDPFull$UF <- as.character(acumDPFull$UF)
+
+de <- c("11","12","13","14","15","16","17","21","22","23","24","25","26","27","28","29","31","32","33","35","41","42","43","50","51","52","53")
+#   
+para <-c("Rondônia","Acre","Amazonas","Roraima","Pará","Amapá","Tocantins","Maranhão","Piauí","Ceará","Rio Grande do Norte","Paraíba","Pernambuco","Alagoas","Sergipe","Bahia","Minas Gerais","Espírito Santo","Rio de Janeiro","São Paulo","Paraná","Santa Catarina","Rio Grande do Sul","Mato Grosso do Sul","Mato Grosso","Goiás","Distrito Federal")
+
+j<-1
+for(i in de){
+
+ acumDPFull$UF[acumDPFull$UF == i] <- para[j]    
+  j<-j+1
+}
+
+#
+acumDPFull$IBGE_SUBSETOR <- as.character(acumDPFull$IBGE_SUBSETOR)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 1"] <- "Extrativa"    
+
+
+# # Alterando a coluna FAIXA_EMPR_JAN
+acumDPFull$FAIXA_EMPR_JAN <- as.character(acumDPFull$FAIXA_EMPR_JAN)
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 1"] <- "ATÉ 4"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 2"] <- "DE 5 A 9"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 3"] <- "DE 10 A 19"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 4"] <- "DE 20 A 49"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 5"] <- "DE 50 A 99"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 6"] <- "DE 100 A 249"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 7"] <- "DE 250 A 499"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 8"] <- "DE 500 A 999"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " 9"] <- "1000 OU MAIS"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == " -1"] <- "IGNORADO"    
+
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "1"] <- "ATÉ 4"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "2"] <- "DE 5 A 9"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "3"] <- "DE 10 A 19"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "4"] <- "DE 20 A 49"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "5"] <- "DE 50 A 99"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "6"] <- "DE 100 A 249"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "7"] <- "DE 250 A 499"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "8"] <- "DE 500 A 999"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "9"] <- "1000 OU MAIS"    
+acumDPFull$FAIXA_EMPR_JAN[acumDPFull$FAIXA_EMPR_JAN == "-1"] <- "IGNORADO"    
+
+
+
+
+
+
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 2"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 3"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 4"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 5"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 6"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 7"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 8"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 9"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 10"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 11"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 12"] <- "Indústria"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 13"] <- "Indústria"    
+
+# # SIUP<- c(14)
+
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 14"] <- "SIUP"    
+
+# # construcao<-c(15)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR =="15"] <- "Construção"    
+# # comercio<-c(16,17)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 16"] <- "Comércio"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 17"] <- "Comércio"    
+
+# # servicos<-c(18,19,20,21,22,23)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 18"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 19"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 20"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 21"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 22"] <- "Serviços"    
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR ==" 23"] <- "Serviços"    
+
+# # agropecuaria<-c(25)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR %in% agropecuaria] <- "Agropecuária"    
+# # ignorado<-c(-1)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR %in% ignorado] <- "ignorado"    
+# # adm<-c(24)
+acumDPFull$IBGE_SUBSETOR[acumDPFull$IBGE_SUBSETOR %in% adm] <- "Adm.Pública"    
+
+
+
+
+ 
+#     
+
+acumDPFull<-acumDPFull[,c(1,4,2,6,7,5,3)]
+
+colnames(acumDPFull)<-c("FAIXA_EMPR_JAN","PERIODO","IBGE_SUBSETOR","SALDO_EMPREGO","TIPO","CLASS_SEBRAE","UF")
+
+acumDPFull<-data.frame(acumDPFull)%>% mutate(PERIODO=paste("01/",substring(PERIODO,5,6),"/",substring(PERIODO,1,4),sep=""))
+
+
+colnames(acumDPFull)<-c("FAIXA_EMPR_JAN","PERIODO","IBGE_SUBSETOR","SALDO_EMPREGO","TIPO","CLASS_SEBRAE","UF")
+
+
+
+#-----------GERA ARQUIVO EXTERNO--------
+    
+    write.csv(acumDPFull, file = "AcumuladoDP.csv",row.names = FALSE)
+    
+    print(paste("Arquivo Gerado!",getwd()))
+  # 
+  # return(acumFPFull)
+  
+  }  # 
+
+# Função que retorna os dados do Brasil e dados regionalizados(Região Norte, Nordeste, Sudeste, Sul, Centro Oeste e as 27 UF)
+
+Brasil_RegionalizaDados<-function(dados,val){
+# O valor 100 representará o Brasil
+#vetorUF<-c(100,101,102,103,104,105,11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,31,32,33,35,41,42,43,50,51,52,53)
+
+  # O primeiro consolidado será para o BRASIL
+  if (val >=100){
+    #----BRASIL----
+    if (val==100 ){
+    #---Agropecuária(25)----
+    ValorNaFonte <-25
+    
+    # SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    # 
+    
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Agropecuária")
+    AcumResultados<-data.frame()
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+
+    #---Administração Pública(24)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Administração Pública")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    #---Ensino(23)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Ensino")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    #---Serviços Méd., Odontol.(22)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Serviços Méd., Odontol.")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Serv. Aloj. Alim. Rep. Manut.(21)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Serv. Aloj. Alim. Rep. Manut.")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+
+    #---Transportes e Comunicações(20)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Transportes e Comunicações")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+
+    #---Com. Adm. Imóv. Serv. Téc-prof(19)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Com. Adm. Imóv. Serv. Téc-prof")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+     #---Instituições Financeiras(18)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Instituições Financeiras")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Servicos<-c(18,19,20,21,22,23) ----
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% servicos) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% servicos) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Serviços")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+
+    #---Comércio Atacadista(17)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Comércio Atacadista")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+
+    #---Comércio Varejista(16)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Comércio Varejista")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+      
+    #---Comércio(16,17)----
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% comercio) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% comercio) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Comércio")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+    #---Construção Civil(15)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Construção Civil")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Serviços Industriais de Utilidade Pública(14)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Serviços Industriais de Utilidade Pública")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+    #---Ind. Prod. Aliment. Bebidas(13)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Ind. Prod. Aliment. Bebidas")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+  
+    #---Ind. Calçados(12)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Ind. Calçados")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    #---Ind. Têxtil, Vestuário(11)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Ind. Têxtil, Vestuário")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Ind. Quím., Prod. Farm. Veter(10)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Ind. Quím., Prod. Farm. Veter")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Ind. Borracha, Fumo, Couros(9)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Ind. Borracha, Fumo, Couros")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Ind. Papel, Papelão, Editor(8)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    
+    row.names(DF) <- c("Ind. Papel, Papelão, Editor")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Ind. Madeira e Mobiliários(7)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    # DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    # 
+    DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Ind. Madeira e Mobiliários")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Ind. Materiais de Transporte(6)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    # DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    # 
+    DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Ind. Materiais de Transporte")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Ind. Materiais Elétricos e Comunicações(5)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    # DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    # 
+    DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Ind. Materiais Elétricos e Comunicações")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+    
+
+    #---Ind. Mecânica(4)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    # DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    # 
+    DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Ind. Mecânica")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+
+    #---Ind. Metalúrgica (3)----
+    ValorNaFonte <-ValorNaFonte -1     
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    # DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    # 
+    
+    DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Ind. Metalúrgica")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Ind. Prod. Min. Não Metálicos(2)----
+    ValorNaFonte<-2
+    
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    # DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    # 
+    
+    DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Ind. Prod. Min. Não Metálicos")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+    
+
+    #---Indústria de Transformação----
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% industria) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR %in% industria) %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    # DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    # 
+    DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Indústria de Transformação")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+
+    #---Extrativa(1)----
+    SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR=="1") %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR=="1") %>% summarize(Saldo=sum(SALDO_MOV))
+    
+    
+    # DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+    # 
+    
+    DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Extrativa Mineral")
+    
+    AcumResultados<-rbind(DF,AcumResultados)
+    
+    
+    
+
+    #---Consolidado Brasil(0)----
+# O dataset dados precisa estar devidamente recortado para os dados DP OU FP
+    
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE") %>%   summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE") %>% summarize(Saldo=sum(SALDO_MOV))
+    
+DF<-CONSOLIDA(SaldoDP_MGE$Saldo,SaldoDP_MPE$Saldo,SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,0,0,0)
+    
+    row.names(DF) <- c("Brasil")
+    #AcumResultados<-data.frame()
+    AcumResultados<-rbind(DF,AcumResultados)
+    #   
+    
+    
+    
+    #----------------
+    AcumResultados<-as.data.frame(AcumResultados)
+    
+    return(AcumResultados)
+    # 
+    
+    }
+    #----REGIÃO NORTE----
+    else if (val ==101 ){
+     vetor<-c(11,12,13,14,15,16,17)
+nomeRegiao<-paste("Região Norte")
+AcumResultados<-data.frame()
+#---Agropecuária(25)----
+ValorNaFonte <-25 
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Agropecuária")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+    
+#---Administração Pública(24)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Administração Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ensino(23)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ensino")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Serviços Méd., Odontol.(22)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Méd., Odontol.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Serv. Aloj. Alim. Rep. Manut.(21)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serv. Aloj. Alim. Rep. Manut.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Transportes e Comunicações(20)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Transportes e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Com. Adm. Imóv. Serv. Téc-prof(19)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Com. Adm. Imóv. Serv. Téc-prof")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Instituições Financeiras(18)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Instituições Financeiras")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Servicos<-c(18,19,20,21,22,23) ----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Comércio Atacadista(17)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Atacadista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio Varejista(16)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Varejista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio(16,17)----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Construção Civil(15)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Construção Civil")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Serviços Industriais de Utilidade Pública(14)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Industriais de Utilidade Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Aliment. Bebidas(13)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Aliment. Bebidas")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Calçados(12)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Calçados")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Têxtil, Vestuário(11)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Têxtil, Vestuário")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Quím., Prod. Farm. Veter(10)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Quím., Prod. Farm. Veter")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Borracha, Fumo, Couros(9)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Borracha, Fumo, Couros")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Papel, Papelão, Editor(8)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Papel, Papelão, Editor")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Madeira e Mobiliários(7)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Madeira e Mobiliários")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais de Transporte(6)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais de Transporte")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais Elétricos e Comunicações(5)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais Elétricos e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Mecânica(4)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Mecânica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Metalúrgica (3)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Metalúrgica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Min. Não Metálicos(2)----
+ValorNaFonte<-2
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Min. Não Metálicos")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Indústria de Transformação----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Indústria de Transformação")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Extrativa Mineral(1)----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Extrativa Mineral")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#------- Região Norte-----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Região Norte")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#----------------
+
+AcumResultados<-as.data.frame(AcumResultados)
+return(AcumResultados)
+    
+# write.xlsx2(AcumResultados, file = "Compilado.xlsx",sheetName = nomeRegiao, append = TRUE)
+# AcumResultados<-data.frame()
+
+  
+    }
+    #----REGIÃO NORDESTE----
+    else if (val ==102  ){
+      vetor<-c(21,22,23,24,25,26,27,28,29)
+      nomeRegiao<-paste("Região Nordeste")
+      AcumResultados<-data.frame()
+    #---Agropecuária(25)----
+ValorNaFonte <-25 
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Agropecuária")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+    
+#---Administração Pública(24)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Administração Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ensino(23)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ensino")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Serviços Méd., Odontol.(22)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Méd., Odontol.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Serv. Aloj. Alim. Rep. Manut.(21)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serv. Aloj. Alim. Rep. Manut.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Transportes e Comunicações(20)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Transportes e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Com. Adm. Imóv. Serv. Téc-prof(19)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Com. Adm. Imóv. Serv. Téc-prof")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Instituições Financeiras(18)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Instituições Financeiras")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Servicos<-c(18,19,20,21,22,23) ----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Comércio Atacadista(17)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Atacadista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio Varejista(16)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Varejista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio(16,17)----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Construção Civil(15)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Construção Civil")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Serviços Industriais de Utilidade Pública(14)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Industriais de Utilidade Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Aliment. Bebidas(13)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Aliment. Bebidas")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Calçados(12)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Calçados")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Têxtil, Vestuário(11)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Têxtil, Vestuário")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Quím., Prod. Farm. Veter(10)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Quím., Prod. Farm. Veter")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Borracha, Fumo, Couros(9)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Borracha, Fumo, Couros")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Papel, Papelão, Editor(8)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Papel, Papelão, Editor")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Madeira e Mobiliários(7)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Madeira e Mobiliários")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais de Transporte(6)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais de Transporte")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais Elétricos e Comunicações(5)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais Elétricos e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Mecânica(4)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Mecânica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Metalúrgica (3)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Metalúrgica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Min. Não Metálicos(2)----
+ValorNaFonte<-2
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Min. Não Metálicos")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Indústria de Transformação----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Indústria de Transformação")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Extrativa Mineral(1)----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Extrativa Mineral")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#------- Região Nordeste-----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Região Nordeste")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#----------------
+
+
+AcumResultados<-as.data.frame(AcumResultados)
+return(AcumResultados)
+    
+# write.xlsx2(AcumResultados, file = "Compilado.xlsx",sheetName = nomeRegiao, append = TRUE)
+# AcumResultados<-data.frame()
+
+
+    }
+    #----REGIÃO SUDESTE----
+    else if(val ==103 ){
+     vetor<-c(31,32,33,34,35) 
+      nomeRegiao<-paste("Região Sudeste")
+      AcumResultados<-data.frame()
+
+#---Agropecuária(25)----
+ValorNaFonte <-25 
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Agropecuária")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+    
+#---Administração Pública(24)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Administração Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ensino(23)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ensino")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Serviços Méd., Odontol.(22)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Méd., Odontol.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Serv. Aloj. Alim. Rep. Manut.(21)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serv. Aloj. Alim. Rep. Manut.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Transportes e Comunicações(20)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Transportes e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Com. Adm. Imóv. Serv. Téc-prof(19)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Com. Adm. Imóv. Serv. Téc-prof")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Instituições Financeiras(18)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Instituições Financeiras")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Servicos<-c(18,19,20,21,22,23) ----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Comércio Atacadista(17)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Atacadista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio Varejista(16)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Varejista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio(16,17)----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Construção Civil(15)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Construção Civil")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Serviços Industriais de Utilidade Pública(14)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Industriais de Utilidade Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Aliment. Bebidas(13)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Aliment. Bebidas")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Calçados(12)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Calçados")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Têxtil, Vestuário(11)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Têxtil, Vestuário")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Quím., Prod. Farm. Veter(10)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Quím., Prod. Farm. Veter")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Borracha, Fumo, Couros(9)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Borracha, Fumo, Couros")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Papel, Papelão, Editor(8)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Papel, Papelão, Editor")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Madeira e Mobiliários(7)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Madeira e Mobiliários")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais de Transporte(6)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais de Transporte")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais Elétricos e Comunicações(5)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais Elétricos e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Mecânica(4)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Mecânica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Metalúrgica (3)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Metalúrgica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Min. Não Metálicos(2)----
+ValorNaFonte<-2
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Min. Não Metálicos")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Indústria de Transformação----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Indústria de Transformação")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Extrativa Mineral(1)----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Extrativa Mineral")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#------- Região Sudeste-----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Região Sudeste")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#----------------
+          
+#----------------
+
+AcumResultados<-as.data.frame(AcumResultados)
+return(AcumResultados)
+    
+# write.xlsx2(AcumResultados, file = "Compilado.xlsx",sheetName = nomeRegiao, append = TRUE)
+# AcumResultados<-data.frame()
+
+    }
+    #----REGIÃO SUL----
+    else if(val ==104 ){
+    vetor<-c(41,42,43)
+    nomeRegiao<-paste("Região Sul")
+    AcumResultados<-data.frame()
+#---Agropecuária(25)----
+ValorNaFonte <-25 
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Agropecuária")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+    
+#---Administração Pública(24)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Administração Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ensino(23)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ensino")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Serviços Méd., Odontol.(22)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Méd., Odontol.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Serv. Aloj. Alim. Rep. Manut.(21)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serv. Aloj. Alim. Rep. Manut.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Transportes e Comunicações(20)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Transportes e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Com. Adm. Imóv. Serv. Téc-prof(19)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Com. Adm. Imóv. Serv. Téc-prof")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Instituições Financeiras(18)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Instituições Financeiras")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Servicos<-c(18,19,20,21,22,23) ----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Comércio Atacadista(17)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Atacadista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio Varejista(16)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Varejista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio(16,17)----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Construção Civil(15)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Construção Civil")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Serviços Industriais de Utilidade Pública(14)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Industriais de Utilidade Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Aliment. Bebidas(13)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Aliment. Bebidas")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Calçados(12)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Calçados")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Têxtil, Vestuário(11)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Têxtil, Vestuário")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Quím., Prod. Farm. Veter(10)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Quím., Prod. Farm. Veter")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Borracha, Fumo, Couros(9)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Borracha, Fumo, Couros")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Papel, Papelão, Editor(8)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Papel, Papelão, Editor")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Madeira e Mobiliários(7)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Madeira e Mobiliários")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais de Transporte(6)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais de Transporte")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais Elétricos e Comunicações(5)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais Elétricos e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Mecânica(4)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Mecânica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Metalúrgica (3)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Metalúrgica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Min. Não Metálicos(2)----
+ValorNaFonte<-2
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Min. Não Metálicos")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Indústria de Transformação----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Indústria de Transformação")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Extrativa Mineral(1)----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Extrativa Mineral")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#------- Região Sul-----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Região Sul")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#----------------
+    
+#----------------
+
+AcumResultados<-as.data.frame(AcumResultados)
+return(AcumResultados)
+    
+# write.xlsx2(AcumResultados, file = "Compilado.xlsx",sheetName = nomeRegiao, append = TRUE)
+# AcumResultados<-data.frame()
+
+    }
+    #----REGIÃO CENTROOESTE----
+    else  if(val==105 ){
+     vetor<-c(50,51,52,53)
+nomeRegiao<-paste("Região Centro Oeste")
+AcumResultados<-data.frame()
+    
+#---Agropecuária(25)----
+ValorNaFonte <-25 
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Agropecuária")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+    
+#---Administração Pública(24)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Administração Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ensino(23)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ensino")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Serviços Méd., Odontol.(22)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Méd., Odontol.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Serv. Aloj. Alim. Rep. Manut.(21)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serv. Aloj. Alim. Rep. Manut.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Transportes e Comunicações(20)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Transportes e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Com. Adm. Imóv. Serv. Téc-prof(19)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Com. Adm. Imóv. Serv. Téc-prof")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Instituições Financeiras(18)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Instituições Financeiras")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Servicos<-c(18,19,20,21,22,23) ----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% servicos,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Comércio Atacadista(17)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Atacadista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio Varejista(16)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Varejista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio(16,17)----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% comercio,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Construção Civil(15)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Construção Civil")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Serviços Industriais de Utilidade Pública(14)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Industriais de Utilidade Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Aliment. Bebidas(13)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Aliment. Bebidas")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Calçados(12)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Calçados")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Têxtil, Vestuário(11)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Têxtil, Vestuário")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Quím., Prod. Farm. Veter(10)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Quím., Prod. Farm. Veter")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Borracha, Fumo, Couros(9)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Borracha, Fumo, Couros")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Papel, Papelão, Editor(8)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Papel, Papelão, Editor")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Madeira e Mobiliários(7)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Madeira e Mobiliários")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais de Transporte(6)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais de Transporte")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais Elétricos e Comunicações(5)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais Elétricos e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Mecânica(4)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Mecânica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Metalúrgica (3)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Metalúrgica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Min. Não Metálicos(2)----
+ValorNaFonte<-2
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Min. Não Metálicos")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Indústria de Transformação----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR %in% industria,UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Indústria de Transformação")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Extrativa Mineral(1)----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR=="1",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Extrativa Mineral")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#------- Região Centro Oeste-----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Região Centro Oeste")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#----------------
+
+#----------------
+
+AcumResultados<-as.data.frame(AcumResultados)
+return(AcumResultados)
+    
+# write.xlsx2(AcumResultados, file = "Compilado.xlsx",sheetName = nomeRegiao, append = TRUE)
+# AcumResultados<-data.frame()
+
+    }
+    }
+    
+  else {
+    AcumResultados<-data.frame()
+    
+#---Agropecuária(25)----
+valorNaFonte<-seq(from=25,to=1)
+descricao<-c("Ensino","Administração Pública","Agropecuária")
+for (i in valorNaFonte){
+  SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>%      summarize(Saldo=sum(SALDO_MOV))
+  
+  SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+  
+  
+  DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+  
+  row.names(DF) <- c("Agropecuária")
+  
+  AcumResultados<-rbind(DF,AcumResultados)
+
+    
+}
+
+
+#---Administração Pública(24)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Administração Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ensino(23)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ensino")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Serviços Méd., Odontol.(22)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Méd., Odontol.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Serv. Aloj. Alim. Rep. Manut.(21)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serv. Aloj. Alim. Rep. Manut.")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Transportes e Comunicações(20)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Transportes e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Com. Adm. Imóv. Serv. Téc-prof(19)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Com. Adm. Imóv. Serv. Téc-prof")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Instituições Financeiras(18)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Instituições Financeiras")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Servicos<-c(18,19,20,21,22,23) ----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% servicos,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% servicos,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#---Comércio Atacadista(17)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Atacadista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio Varejista(16)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio Varejista")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Comércio(16,17)----
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% comercio,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% comercio,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Comércio")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Construção Civil(15)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Construção Civil")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Serviços Industriais de Utilidade Pública(14)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Serviços Industriais de Utilidade Pública")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Aliment. Bebidas(13)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Aliment. Bebidas")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Calçados(12)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Calçados")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Têxtil, Vestuário(11)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Têxtil, Vestuário")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Quím., Prod. Farm. Veter(10)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Quím., Prod. Farm. Veter")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Borracha, Fumo, Couros(9)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Borracha, Fumo, Couros")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Papel, Papelão, Editor(8)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Papel, Papelão, Editor")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Madeira e Mobiliários(7)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Madeira e Mobiliários")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais de Transporte(6)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais de Transporte")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Materiais Elétricos e Comunicações(5)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Materiais Elétricos e Comunicações")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Ind. Mecânica(4)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Mecânica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#---Ind. Metalúrgica (3)----
+ValorNaFonte <-ValorNaFonte -1     
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Metalúrgica")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Ind. Prod. Min. Não Metálicos(2)----
+ValorNaFonte<-2
+
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Ind. Prod. Min. Não Metálicos")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+
+#---Indústria de Transformação----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% industria,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR %in% industria,UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Indústria de Transformação")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+#---Extrativa Mineral(1)----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR=="1",UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",IBGE_SUBSETOR=="1",UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c("Extrativa Mineral")
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+
+
+#------- UF-----
+SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE",UF ==val) %>% summarize(Saldo=sum(SALDO_MOV))
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+row.names(DF) <- c(val)
+
+AcumResultados<-rbind(DF,AcumResultados)
+
+
+#----------------
+
+    
+        #----------------
+    AcumResultados<-as.data.frame(AcumResultados)
+    return(AcumResultados)
+    
+    
+    
+  }
+}
+
+
+# Função que consolida os dados de emprego em Planilha única Excel dos dados referentes a todas as entidades de interesse
+CriaPlanilhaUnica<-function(mesreferencial,anobase){
+
+MESES<-paste("0",seq(1:mesreferencia),sep="")
+nomearquivo_doMes<-paste("CAGEDEST_","0",length(MESES),anobase,sep="")
+microDados_doMes<-leituraDataset(nomearquivo_doMes,"DP",anobase)
+
+dfAcum<-data.frame()
+for (unidades in ENTIDADES){
+  # Para cada entidade zera-se a matriz acumuladora de dados
+  dfAcum<-data.frame()
+  for (j in MESES){
+  tipo<-"DP"
+  nomearquivo<-paste("CAGEDEST_",j,anobase,sep="")
+  dados<-leituraDataset(nomearquivo,tipo,anobase)
+  #browser()
+  #dadosDP_agrupados<-datasetAgrupadoDP(dados)
+  dadosDP<-Brasil_RegionalizaDados(dados,unidades)
+  rm(dados)
+  # A condição abaixo se faz necessária visto que no primeiro mês de cada ano, os dados agregados mensais e acumulados são numericamente iguais.
+
+  if(j=="01") {
+    dfAcum<-dadosDP
+              }
+  else{
+    dfAcum<-dadosDP+dfAcum
+      }
+
+
+    } # end for interno
+
+    
+  dadosFP<-acumulaFP(length(MESES),unidades, anobase)
+
+  dfAcum<-dadosFP+dfAcum
+
+  # # Cálculo dos dados DP do Mês
+  # nomearquivo<-paste("CAGEDEST_","0",length(MESES),anobase,sep="")
+  # dados<-leituraDataset(nomearquivo,tipo,anobase)
+  dfMes<-Brasil_RegionalizaDados(microDados_doMes,unidades)
+
+  dffinal<-cbind(dfMes[,c(1,2,3)],dfAcum[,c(1,2,3)])
+  rm(dfMes)
+   
+  # AcumResultados<-as.data.frame(AcumResultados)
+nome<-paste(unidades)
+arquivo<-paste("Compilado_","0",length(MESES),anobase,".xlsx",sep="")
+
+
+nome<-NOME_ENTIDADES[match(unidades,ENTIDADES)]
+
+
+
+ if(unidades ==100){
+  write.xlsx2(dffinal, file = arquivo,
+        sheetName = nome, append = FALSE)
+
+ }else{
+  write.xlsx2(dffinal, file = arquivo,
+        sheetName = nome, append = TRUE)
+   print(paste("Unidade:",nome))
+
+ }
+
+  } # end for externo
+# write.csv(dfagrupado,"BancoDados.csv")
+ print(paste("Arquivo Gerado em:",getwd()))
+
+ 
+
+  
+} # end function
+
+
+acumulaFP12<-function(mes,anobase){
+  #print(mes)
+  #browser()
+  acumFP<-data.frame()
+  acumFPFull<-data.frame()
+ 
+   anoanterior<-anobase-1 
+  if(mes ==1){
+  #browser()
+  vetorvertical<-seq(from=12,to=01)
+  identificadores<-paste(anoanterior, formatC(vetorvertical,width=2, flag="0"),sep="")  # identificar os meses a serem filtrados
+  
+  
+  #print(identificadores)
+  }else{
+  #browser()
+  vetorvertical<-c(seq(from=mes-1, to=1),seq(from=12, to=mes) ) 
+  identificadores<-c(paste(anobase,formatC(seq(from=mes-1, to=1),width=2, flag="0"),  sep=""),paste(anoanterior,formatC(seq(from=12, to=mes),width=2, flag="0"),sep=""))
+  print(identificadores)
+  
+  }
+  
+  c<-0
+  for(i in vetorvertical){
+    c<-c+1
+      #browser()
+    if(vetorvertical[i]<=mes){
+    vetorhorizontal_1<-c(seq(from=mes,by=-1,length.out = vetorvertical[i]))
+    vetorhorizontal<-c(vetorhorizontal_1)
+    tamanhovariavel<-i-mes
+    tam<-length(vetorhorizontal)
+    }
+    #print(tamanhovariavel)
+    #browser()
+    if((mes -length(vetorhorizontal_1))==0){
+    #browser()  
+    vetorhorizontal_2<-c(seq(from=12,by=-1,length.out = vetorvertical[i]-tam))
+    #print(vetorhorizontal_2)
+    vetorhorizontal<-c(vetorhorizontal_1,vetorhorizontal_2)  
+    #print(vetorhorizontal)
+    }
+    
+    #print(i)
+    #print(vetorhorizontal)
+    acumFP<-data.frame()
+    chave<-"off"
+    
+    
+    for(j in vetorhorizontal){
+      #browser()
+      #print(vetorhorizontal)
+      val<-identificadores[c]
+      #browser()
+      #anobase<-substring(identificadores[c],1,4)
+      anofoco<-anobase
+      if(j==12 & mes !=1){
+        #browser()
+        anofoco<-anobase-1
+        chave<-"on"
+      }else if( chave=="on"){
+        
+         anofoco<-anobase-1
+      }
+        
+      
+      
+      
+       if(j < 10){
+       nomearquivo<-paste("CAGEDEST_AJUSTES_","0",j,anofoco,sep="")  
+       }else{
+         nomearquivo<-paste("CAGEDEST_AJUSTES_",j,anofoco,sep="")
+       }
+       
+      #print(nomearquivo)
+      # if(anobase==2018){
+      #   browser()
+      # }
+      # 
+       dados<-leituraDataset(nomearquivo,"FP",anofoco)
+      # #print("Leitura")
+      # #head(dados)
+       dados2<-dados %>%filter(COMPETENCIA_MOVIMENTACAO==val)
+      #browser()
+      #print(nomearquivo)
+       dadosFPAgrupados<-datasetAgrupado(dados2)
+      
+      # #head(dados)
+      # dadosFP<-Brasil_RegionalizaDados(dados,unidades)
+      # #head(dadosFP)
+      #browser()
+      dados_tabulados<-data.frame(tabulaDados(dadosFPAgrupados))
+      acumFP<-rbind(dados_tabulados,acumFP)
+      
+      valor<-sum(acumFP$SALDO_EMPREGO)
+      
+      #browser()
+      # print(paste("Anobase",":",anofoco))
+      # print(paste("Mes",":",i))
+      # print(nomearquivo)
+      # print(val)
+      # print(valor)
+      # 
+      anofoco<-anobase
+      
+      
+      }
+    
+    
+  
+    #browser()
+  acumFPFull<-rbind(acumFP,acumFPFull)
+  print(paste("Acumulador:",sum(acumFPFull$SALDO_EMPREGO)))
+  }
+  
+  # wck=paste("acumFPFull_12","-","Anual",".xlsx",sep="")
+  # 
+  # 
+  # #write.xlsx2(acumFPFull, file = wck)
+  # write.csv(acumFPFull, file = "AcumuladoFP_12MESES.csv")
+
+  
+  
+  return(acumFPFull)
+  
+  }  # end for
+
+acumulaFP12_v2<-function(mes_interesse,mes_atual,anobase){
+  #print(mes)
+  #browser()
+  acumFP<-data.frame()
+  acumFPFull<-data.frame()
+  anoanterior<-anobase-1 
+ 
+   if(mes_interesse ==1){
+  #browser()
+  vetorvertical<-seq(from=12,to=01)
+  identificadores<-paste(anoanterior, formatC(vetorvertical,width=2, flag="0"),sep="")  # identificar os meses a serem filtrados
+
+  #print(identificadores)
+  }else{
+  #browser()
+  vetorvertical<-c(seq(from=mes_interesse-1, to=1),seq(from=12, to=mes_interesse) ) 
+  identificadores<-c(paste(anobase,formatC(seq(from=mes_interesse-1, to=1),width=2, flag="0"),  sep=""),paste(anoanterior,formatC(seq(from=12, to=mes_interesse),width=2, flag="0"),sep=""))
+  print(identificadores)
+  }
+  c<-0
+  sinalizador<-"off"
+  temp<-1
+  stop<-"off"
+  ativarVetor2<-"off"
+  for(i in vetorvertical){
+    c<-c+1
+      #browser()
+    #if(vetorvertical[i]<=mes_interesse & (mes_atual-i >=0)){
+     #if(i<=mes_interesse & sinalizador=="off" ){
+    if(i< mes_interesse & stop=="off"){
+    vetorhorizontal_1<-c(seq(from=mes_atual,by=-1,length.out = mes_atual-i))
+    vetorhorizontal<-c(vetorhorizontal_1)
+    tamanhovariavel<-i-mes_interesse
+    tam<-length(vetorhorizontal)
+     } else if (stop != "on"){
+      # sinalizador<-"on"
+       sinalizador<-"on" # sinaliza ativação do vetor que compõe o ano anterior
+       #browser()
+       vetorhorizontal_1<-c(seq(from=mes_atual,by=-1,length.out = mes_atual))
+       vetorhorizontal<-c(vetorhorizontal_1)
+       tamanhovariavel<-i-mes_interesse
+       tam<-length(vetorhorizontal)
+     }
+      
+      
+    #print(tamanhovariavel)
+    #browser()
+    #if((length(vetorhorizontal)-mes_interesse)==0){
+      
+    #if(length(vetorhorizontal)==mes_atual & stop =="false")  {
+    if(ativarVetor2=="on")  {
+      #browser()  
+    vetorhorizontal_2<-c(seq(from=12,by=-1,length.out = temp))
+    #print(vetorhorizontal_2)
+    vetorhorizontal<-c(vetorhorizontal_1,vetorhorizontal_2)  
+    print(vetorhorizontal)  
+    sinalizador<-"on"
+    temp<-temp+1
+    # if(length(vetorhorizontal==12)){
+    #   stop="true"
+    #   
+    # }
+    
+    }
+      
+      if( sinalizador=="on") {
+        ativarVetor2<-"on"
+        stop<-"on"
+      }
+    print(i)
+    print(vetorhorizontal)
+    acumFP<-data.frame()
+    chave<-"off"
+    
+    
+    for(j in vetorhorizontal){
+      #browser()
+      #print(vetorhorizovental)
+      val<-identificadores[c]
+      #browser()
+      #anobase<-substring(identificadores[c],1,4)
+      anofoco<-anobase
+      if(j==12 & mes !=1){
+        #browser()
+        anofoco<-anobase-1
+        chave<-"on"
+      }else if( chave=="on"){
+        
+         anofoco<-anobase-1
+      }
+        
+       if(j < 10){
+       nomearquivo<-paste("CAGEDEST_AJUSTES_","0",j,anofoco,sep="")  
+       }else{
+         nomearquivo<-paste("CAGEDEST_AJUSTES_",j,anofoco,sep="")
+       }
+       
+      #print(nomearquivo)
+      # if(anobase==2018){
+      #   browser()
+      # }
+      # 
+       dados<-leituraDataset(nomearquivo,"FP",anofoco)
+      # #print("Leitura")
+      # #head(dados)
+       dados2<-dados %>%filter(COMPETENCIA_MOVIMENTACAO==val)
+      #browser()
+      print(nomearquivo)
+       dadosFPAgrupados<-datasetAgrupado(dados2)
+      
+      # #head(dados)
+      # dadosFP<-Brasil_RegionalizaDados(dados,unidades)
+      # #head(dadosFP)
+      #browser()
+       dados_tabulados<-data.frame(tabulaDados(dadosFPAgrupados))
+       acumFP<-rbind(dados_tabulados,acumFP)
+      # 
+      valor<-sum(acumFP$SALDO_EMPREGO)
+      # 
+      #browser()
+      print(paste("Anobase",":",anofoco))
+      print(paste("Mes",":",i))
+      print(nomearquivo)
+      print(val)
+       print(valor)
+      # 
+      anofoco<-anobase
+      
+      
+    }
+   
+    #acumFPFull<-rbind(acumFP,acumFPFull)
+   #print(paste("Acumulador:",sum(acumFPFull$SALDO_EMPREGO))) 
+  }
+  #browser()
+   
+  
+   wck=paste("acumFPFull_12","-","Anual",".xlsx",sep="")
+  # 
+  # 
+  # #write.xlsx2(acumFPFull, file = wck)
+   write.csv(acumFPFull, file = "AcumuladoFP_12MESES.csv")
+   print("Arquivo Gerado!")
+
+  return(acumFPFull)
+  
+  }  # end for
+
+datasetAgrupadoDP_teste1<-function(dados) {
+ dados %>% select(FAIXA_EMPR_JAN,COMPETENCIA_DECLARADA,IBGE_SUBSETOR,SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(FAIXA_EMPR_JAN)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))
+
+}
+
+datasetAgrupadoDP_teste2<-function(dados) {
+ dados %>% select(FAIXA_EMPR_JAN,COMPETENCIA_DECLARADA,IBGE_SUBSETOR,SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(FAIXA_EMPR_JAN,IBGE_SUBSETOR)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))
+
+}
+
+
+
+
+
+```
+
+
+
+
+```{r }
+#------VARIÁVEIS GLOBAIS----
+anobase<-2019
+mesinicial<-1
+
+
+# O vetor abaixo contém os códigos das unidades da federação, das regiões Norte, Nordeste, Sudeste,Sul , Centro Oeste e do Brasil
+# 100 = Brasil
+# 101 = Região Norte
+# 102 = Região Nordeste
+# 103 = Sudeste
+# 104 = Sul
+# 105 = Centro Oeste
+ENTIDADES<-c(100,101,102,103,104,105,11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,31,32,33,35,41,42,43,50,51,52,53)
+
+
+# Obter descrição da entidade
+NOME_ENTIDADES<-c("Brasil","Região Norte","Região Nordeste","Região Sudeste","Região Sul","Região Centro Oeste","Rondônia","Acre","Amazonas","Roraima","Pará","Amapá","Tocantins","Maranhão","Piauí","Ceará","Rio Grande do Norte","Paraíba","Pernambuco","Alagoas","Sergipe","Bahia","Minas Gerais","Espírito Santo","Rio de Janeiro","São Paulo","Paraná","Santa Catarina","Rio Grande do Sul","Mato Grosso do Sul","Mato Grosso","Goiás","Distrito Federal")
+
+
+nome<-NOME_ENTIDADES[match(unidades,ENTIDADES)]
+
+
+#------PLANILHANDO RESULTADOS ----
+AcumResultados<-data.frame()
+
+
+#------BRANINSTORMING------
+# O loop abaixo recebe dataset DP OU FP,gera os dados DP e FP, finalizando consolidando os dados.
+
+#------ANO 2019----
+#------201902-----
+#------201903-----
+#------201904-----
+#------201905-----
+#------201906-----
+#------201907-----
+#AcumResultados<-data.frame()
+# Mês de referência
+mesreferencia<-mesinicial+6
+CriaPlanilhaUnica(mesreferencia,anobase)
+
+
+#------201908-----
+mesreferencia<-mesinicial+7
+CriaPlanilhaUnica(mesreferencia,anobase)
+
+#------2019091-----
+
+
+
+
+
+
+
+
+
+#------AGRUPANDO DATASET E CRIANDO COMPILADO DOS DADOS EM PLANILHA---------------
+datasetAgrupado<-DadosFiltradosDP %>% select(FAIXA_EMPR_JAN,COMPETENCIA_DECLARADA,IBGE_SUBSETOR,SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(FAIXA_EMPR_JAN,IBGE_SUBSETOR,UF,COMPETENCIA_DECLARADA,CLASS_SEBRAE)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))
+
+datasetAgrupado<-datasetAgrupado %>% mutate(DECLARACAO="DP")
+
+datasetAgrupado<-as.data.frame(datasetAgrupado)
+
+ write.xlsx2(datasetAgrupado, file = "BancoDados_MPE_DAMPE.xlsx",
+       sheetName = "BancoDados_MPE_DAMPE", append = FALSE)
+
+
+ 
+  
+
+#------CÓDIGOS DE TESTES/LABORATÓRIO ------------
+dadosIndustria <-dados %>% filter(IBGE_SUBSETOR %in% industria) 
+extrat<-dados%>% filter(IBGE_SUBSETOR %in% extrativa)
+
+# Paraná
+parana<-dados%>% filter(UF =="41")
+
+parana_extra<-dados%>% filter(UF =="41" & IBGE_SUBSETOR == extrativa)
+parana_extra_MPE<-parana_extra %>% filter(FAIXA_EMPR_JAN == "5")
+
+
+metalurgia<-dados %>% filter(IBGE_SUBSETOR =="3") 
+
+
+
+dadosSebrae <-dados %>% filter((IBGE_SUBSETOR %in% industria))
+
+
+# Montando dataframe compilador dos dados referente às MPE/MGE com os recortes
+# de setores e subsetores IBGE.
+
+df1<-dadosSebrae %>% filter(ClassSebrae=="MPE") %>%mutate(Saldo=sum(SALDO_MOV))                    
+SaldoDP_MGE <-DadosFiltrados %>% filter(SETOR_IBGE==SETOR,CLASS_SEBRAE=="MGE") %>% summarize(Saldo=sum(SALDOEMPREGO))
+
+
+#--CONSOLIDANDO
+SaldoMPE<-SaldoDP_MPE 
+
+SaldoMGE<-SaldoDP_MGE 
+
+
+DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
+
+AcumUFAno<-data.frame()
+
+AcumUFAno<-rbind(DF,AcumUFAno)
+row.names(AcumUFAno) <- SETOR
+
+
+
+
+
+                    #            ,
+                    # ifelse(Stimulus == "426790", "child",
+                    # ifelse(Stimulus == "426783", "adult",
+                    # ifelse(Stimulus == "426784", "adult", "no"))))) 
+
+
+dadosIndustria_MPE <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in% industria) 
+dadosExtra_MPE <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in% extrativa) dadosSIUP <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in% SIUP) 
+dadosConstr_MPE <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in% construcao)     dadosServ_MPE <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in% servicos)         dadosAgro_MPE <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in% agropecuaria)     dadosAdm_MPE <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in% adm)                     
+
+
+# SIUP<- c(14)
+
+
+# listaSetores<-list(extrativa, industria, SIUP, construcao, comercio, servicos, agropecuaria,ignorado, adm)
+  
+# Listagem dos Subsetores
+#extrativa<-c(1)
+# sub_extrativa<-c(1)
+# #industria<-c(2,3,4,5,6,7,8,9,10,11,12,13)
+# ind_minerais<-c(2)
+# ind_metalurgica<-c(3)
+# ind_mecanica<-c(4)
+# ind_eletrica<-c(5)
+# ind_transporte<-c(6)
+# ind_madeira<-c(7)
+# ind_papel<-c(8)
+# ind_borracha<-c(9)
+# ind_quimica<-c(10)
+# ind_textil<-c(11)
+# ind_calcados<-c(12)
+# ind_alimentos<-c(13)
+# #SIUP<-C(14)
+# sub_SIUP<-c(14)
+# #construcao<-c(15)
+# sub_construcao<-c(15)
+# #comercio<-c(16,17)
+# comercio_varejista<-c(16)
+# comercio_atacadista<-c(17)
+# #servicos<-c(18,19,20,21,22,23)
+# serv_credito<-c(18)
+# serv_imoveis<-c(19)
+# serv_comunicacao<-c(20)
+# serv_alojamento<-c(21)
+# serv_medico<-c(22)
+# serv_ensino<-c(23)
+# #adm<-c(24)
+# adm_publica<-c(24)
+# #agropecuaria<-c(25)
+# agricultura<-c(25)
+# #ignorado<-c(-1)
+# sub_ignorado<-c(-1)
+
+# listaSubsetores<-list(sub_extrativa,ind_minerais, ind_metalurgica,ind_mecanica,ind_eletrica,ind_transporte,ind_madeira,ind_papel,ind_borracha,ind_quimica,ind_textil,ind_calcados,ind_alimentos,sub_SIUP,sub_construcao,comercio_varejista,comercio_atacadista,serv_credito,serv_imoveis,serv_comunicacao,serv_alojamento,serv_medico,serv_ensino,adm_publica,agricultura,sub_ignorado ) 
+
+ # Rondônia	11
+ # Acre	12
+ # Amazonas	13
+ # Roraima	14
+ # Para	15
+ # Amapa	16
+ # Tocantins	17
+ # Maranhão	21
+ # Piaui	22
+ # Ceará	23
+ # Rio Grande do Norte	24
+ # Paraíba	25
+ # Pernambuco	26
+ # Alagoas	27
+ # Sergipe	28
+ # Bahia	29
+ # Minas Gerais	31
+ # Espírito Santo	32
+ # Rio de Janeiro	33
+ # São Paulo	35
+ # Paraná	41
+ # Santa Catarina	42
+ # Rio Grande do Sul	43
+ # Mato Grosso do Sul	50
+ # Mato Grosso	51
+ # Goiás	52
+ # Distrito Federal	53
+
+
+ # setoresIBGE<-c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)
+    # descricaoSetores<-c("Extrativa", "Indústria de Transformação","Ind. Prod. Min. Não Metálicos","Ind. Metalúrgica","Ind. Mecânica","Ind. Materiais Elétricos e Comunicações","Ind. Materiais de Transporte","Ind. Madeira e Mobiliários","Ind. Papel, Papelão, Editor","Ind. Borracha, Fumo, Couros","Ind. Quím., Prod. Farm. Veter","Ind. Têxtil, Vestuário","Ind. Calçados","Ind. Prod. Aliment. Bebidas","Serviços Industriais de Utilidade Pública","Construção Civil","Comércio","","","","","","")
+   
+
+
+
+
+
+
+
+
+
+```
+
+```{r}
+# # Leitura dos dados FORA DO PRAZO
+# #C:\BigData\MicrodadosCaged\FP
+# pastaC <- file.path("C:", "BigData","MicrodadosCaged","FP") # o ponto indica diretório atual 
+# setwd(pastaC)
+# 
+# #DadosMensaisFP <- read.table("CAGEDEST_AJUSTES_072019.txt",sep=";",header=TRUE)
+# DadosMensaisFP <- read.table("CAGEDEST_AJUSTES_062019.txt",sep=";",header=TRUE)
+# 
+# 
+# # Seleção das colunas: 08 colunas selecionadas
+# #  [1] "Admitidos.Desligados"    
+# #  [2] "Competência.Movimentação"
+# #  [4] "Ano.Movimentação"        
+# #  [8] "Faixa.Empr.Início.Jan"   
+# # [11] "IBGE.Subsetor"           
+# # [15] "Saldo.Mov"               
+# # [20] "UF"                      
+# # [21] "Competência.Declarada"   
+# # 
+# 
+# colunas <- c(1,2,4,8,11,15,20,21)
+# 
+# DadosMensais_FP<-DadosMensaisFP %>% select(colunas)
+# rm(DadosMensaisFP)
+# names(DadosMensais_FP)
+# 
+# colnames(DadosMensais_FP)<-c("ADMITIDOS_DESLIGADOS","COMPETENCIA_MOVIMENTACAO","ANO","FAIXA_EMPR_JAN","IBGE_SUBSETOR","SALDO_MOV","UF","COMPETENCIA_DECLARADA")
+# 
+# names(DadosMensais_FP)
+# 
+# 
+# #### Tratando dados FP ###########
+# DadosFiltrados<-tabulaDados(DadosMensais_FP)
+# 
+
+# ------------códigos de testes------------
+COMPETENCIAS<-c("201906","201905","201904","201903","201902","201901")
+COMPETENCIAS<-c("201806")
+
+df1<-DadosFiltrados %>% filter(COMPETENCIA_MOVIMENTACAO %in% COMPETENCIAS)  %>% summarize(Saldo=sum(SALDO_MOV))
+df1
+
+SaldoDP_MGE <-DadosFiltrados %>% filter(SETOR_IBGE==SETOR,CLASS_SEBRAE=="MGE") %>% summarize(Saldo=sum(SALDOEMPREGO))
+
+
+
+
+
+
+
+```
+
+
+```
