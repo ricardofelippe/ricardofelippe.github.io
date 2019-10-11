@@ -664,7 +664,7 @@ Brasil_RegionalizaDados<-function(dados,val){
     #---Agropecuária(25)----
     ValorNaFonte <-25
     
-    # SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+     SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
     # 
     
     
@@ -3565,8 +3565,7 @@ return(AcumResultados)
     AcumResultados<-data.frame()
     
 #---Agropecuária(25)----
-valorNaFonte<-seq(from=25,to=1)
-descricao<-c("Ensino","Administração Pública","Agropecuária")
+ValorNaFonte<-25
 for (i in valorNaFonte){
   SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF ==val) %>%      summarize(Saldo=sum(SALDO_MOV))
   
@@ -4052,7 +4051,6 @@ CriaPlanilhaUnica<-function(mesreferencial,anobase){
 MESES<-paste("0",seq(1:mesreferencia),sep="")
 nomearquivo_doMes<-paste("CAGEDEST_","0",length(MESES),anobase,sep="")
 microDados_doMes<-leituraDataset(nomearquivo_doMes,"DP",anobase)
-
 dfAcum<-data.frame()
 for (unidades in ENTIDADES){
   # Para cada entidade zera-se a matriz acumuladora de dados
@@ -4063,6 +4061,7 @@ for (unidades in ENTIDADES){
   dados<-leituraDataset(nomearquivo,tipo,anobase)
   #browser()
   #dadosDP_agrupados<-datasetAgrupadoDP(dados)
+  
   dadosDP<-Brasil_RegionalizaDados(dados,unidades)
   rm(dados)
   # A condição abaixo se faz necessária visto que no primeiro mês de cada ano, os dados agregados mensais e acumulados são numericamente iguais.
@@ -4100,13 +4099,21 @@ nome<-NOME_ENTIDADES[match(unidades,ENTIDADES)]
 
 
  if(unidades ==100){
+  pastaDestino<-file.path("c:", "BigData", "MicrodadosCaged", "Resultados")
+  setwd(pastaDestino)
+  print(paste("Arquivo serão gerados em:",getwd()))
+
   write.xlsx2(dffinal, file = arquivo,
         sheetName = nome, append = FALSE)
+  beep(sound = 3, expr = NULL)
+
 
  }else{
   write.xlsx2(dffinal, file = arquivo,
         sheetName = nome, append = TRUE)
    print(paste("Unidade:",nome))
+   beep(sound = 3, expr = NULL)
+
 
  }
 
@@ -4114,6 +4121,8 @@ nome<-NOME_ENTIDADES[match(unidades,ENTIDADES)]
 # write.csv(dfagrupado,"BancoDados.csv")
  print(paste("Arquivo Gerado em:",getwd()))
 
+ 
+ 
  
 
   
