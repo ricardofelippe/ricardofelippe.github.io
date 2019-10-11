@@ -5,7 +5,7 @@ date: "05/09/2019"
 output: html_document
 ---
 ## Descrição
- Script R criado para sistematiza a coleta e organização dos microdados derivados do site do PDET (ftp://ftp.mtps.gov.br/pdet/microdados/)
+ Script R de ETL dos microdados derivados do site do PDET (ftp://ftp.mtps.gov.br/pdet/microdados/)
 
 Data criação: 05/09/2019
 
@@ -13,6 +13,7 @@ Log atualizações: 05/09/2019
 
 POP: Mensalmente os microdados estarão disponíveis na página do PDET.
 Os passos seguintes devem ser observados para a correta manipulação dos microdados.
+
 Passo 1: Baixar os dados dentro do prazo(DP) disponíveis no site ftp://ftp.mtps.gov.br/pdet/microdados/CAGED/. 
 No momento presente( 09/2019) as pastas destinos estão no endereço:
 Endereço pasta destino
@@ -33,7 +34,6 @@ Passo 4: No mês a ser gerado os dados, conferir se a parametrização das vari�
 
 
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #------BIBLIOTECAS NECESSÁRIAS----
@@ -41,6 +41,7 @@ library(RSQLite)
 library(dplyr)
 library(readr)
 library(xlsx)
+library(beepr)
 
 #------CONFIGURAÇÃO VARIÁVEIS-------
 
@@ -4458,6 +4459,7 @@ CriaPlanilhaUnica(mesreferencia,anobase)
 #------201908-----
 mesreferencia<-mesinicial+7
 CriaPlanilhaUnica(mesreferencia,anobase)
+ beep(sound = 3, expr = NULL)
 
 #------2019091-----
 
@@ -4469,18 +4471,6 @@ CriaPlanilhaUnica(mesreferencia,anobase)
 
 
 
-#------AGRUPANDO DATASET E CRIANDO COMPILADO DOS DADOS EM PLANILHA---------------
-datasetAgrupado<-DadosFiltradosDP %>% select(FAIXA_EMPR_JAN,COMPETENCIA_DECLARADA,IBGE_SUBSETOR,SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(FAIXA_EMPR_JAN,IBGE_SUBSETOR,UF,COMPETENCIA_DECLARADA,CLASS_SEBRAE)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))
-
-datasetAgrupado<-datasetAgrupado %>% mutate(DECLARACAO="DP")
-
-datasetAgrupado<-as.data.frame(datasetAgrupado)
-
- write.xlsx2(datasetAgrupado, file = "BancoDados_MPE_DAMPE.xlsx",
-       sheetName = "BancoDados_MPE_DAMPE", append = FALSE)
-
-
- 
   
 
 #------CÓDIGOS DE TESTES/LABORATÓRIO ------------
@@ -4613,6 +4603,18 @@ dadosConstr_MPE <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in%
     # descricaoSetores<-c("Extrativa", "Indústria de Transformação","Ind. Prod. Min. Não Metálicos","Ind. Metalúrgica","Ind. Mecânica","Ind. Materiais Elétricos e Comunicações","Ind. Materiais de Transporte","Ind. Madeira e Mobiliários","Ind. Papel, Papelão, Editor","Ind. Borracha, Fumo, Couros","Ind. Quím., Prod. Farm. Veter","Ind. Têxtil, Vestuário","Ind. Calçados","Ind. Prod. Aliment. Bebidas","Serviços Industriais de Utilidade Pública","Construção Civil","Comércio","","","","","","")
    
 
+#------AGRUPANDO DATASET E CRIANDO COMPILADO DOS DADOS EM PLANILHA---------------
+datasetAgrupado<-DadosFiltradosDP %>% select(FAIXA_EMPR_JAN,COMPETENCIA_DECLARADA,IBGE_SUBSETOR,SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(FAIXA_EMPR_JAN,IBGE_SUBSETOR,UF,COMPETENCIA_DECLARADA,CLASS_SEBRAE)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))
+
+datasetAgrupado<-datasetAgrupado %>% mutate(DECLARACAO="DP")
+
+datasetAgrupado<-as.data.frame(datasetAgrupado)
+
+ write.xlsx2(datasetAgrupado, file = "BancoDados_MPE_DAMPE.xlsx",
+       sheetName = "BancoDados_MPE_DAMPE", append = FALSE)
+
+
+ 
 
 
 
@@ -4649,6 +4651,65 @@ dadosConstr_MPE <-dadosSebrae %>% filter(ClassSebrae=="MPE" & IBGE_SUBSETOR %in%
 # DadosMensais_FP<-DadosMensaisFP %>% select(colunas)
 # rm(DadosMensaisFP)
 # names(DadosMensais_FP)
+# 
+# colnames(DadosMensais_FP)<-c("ADMITIDOS_DESLIGADOS","COMPETENCIA_MOVIMENTACAO","ANO","FAIXA_EMPR_JAN","IBGE_SUBSETOR","SALDO_MOV","UF","COMPETENCIA_DECLARADA")
+# 
+# names(DadosMensais_FP)
+# 
+# 
+# #### Tratando dados FP ###########
+# DadosFiltrados<-tabulaDados(DadosMensais_FP)
+# 
+
+# ------------códigos de testes------------
+COMPETENCIAS<-c("201906","201905","201904","201903","201902","201901")
+COMPETENCIAS<-c("201806")
+
+df1<-DadosFiltrados %>% filter(COMPETENCIA_MOVIMENTACAO %in% COMPETENCIAS)  %>% summarize(Saldo=sum(SALDO_MOV))
+df1
+
+SaldoDP_MGE <-DadosFiltrados %>% filter(SETOR_IBGE==SETOR,CLASS_SEBRAE=="MGE") %>% summarize(Saldo=sum(SALDOEMPREGO))
+
+
+
+
+
+
+
+```
+
+ Estatísticas dos dados DP
+```{r}
+
+# # Leitura dos dados DENTRO DO PRAZO
+# #C:\BigData\MicrodadosCaged\FP
+ pastaC <- file.path("C:", "BigData","MicrodadosCaged","DP","2019") # o ponto indica diretório atual 
+ setwd(pastaC)
+# 
+DadosMensaisDP <- read.table("CAGEDEST_082019.txt",sep=";",header=TRUE)
+# DadosMensaisFP <- read.table("CAGEDEST_AJUSTES_062019.txt",sep=";",header=TRUE)
+# 
+# 
+# # Seleção das colunas: 08 colunas selecionadas
+# #  [1] "Admitidos.Desligados"    
+# #  [2] "Competência.Movimentação"
+# #  [4] "Ano.Movimentação"        
+#    [7] "CNAE.2.0.Classe"
+#    [8] "Faixa.Empr.Início.Jan"   
+# #  [11] "IBGE.Subsetor"           
+# #  [15] "Saldo.Mov"               
+# #  [20] "UF"                      
+# #  [21] "Competência.Declarada"   
+# # 
+# 
+# colunas <- c(1,2,4,8,11,15,20,21)
+
+ colunas <- c(7)
+
+
+ DadosMensais_FP<-DadosMensaisDP %>% select(colunas)
+# rm(DadosMensaisDP)
+ names(DadosMensais_FP)
 # 
 # colnames(DadosMensais_FP)<-c("ADMITIDOS_DESLIGADOS","COMPETENCIA_MOVIMENTACAO","ANO","FAIXA_EMPR_JAN","IBGE_SUBSETOR","SALDO_MOV","UF","COMPETENCIA_DECLARADA")
 # 
