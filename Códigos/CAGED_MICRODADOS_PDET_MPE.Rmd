@@ -1479,6 +1479,28 @@ datasetAgrupado<-as.data.frame(datasetAgrupado)
 
 ```
 
+
+```{r}
+#Quais foram os saldos de empregos gerados pelas MPE por UF?
+
+ EMPREGO_UF_MPE<-microDados_doMes %>% select(SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(UF,CLASS_SEBRAE)%>% filter(CLASS_SEBRAE=="MPE") %>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))%>% arrange(desc(SALDO_EMPREGO))
+R> temp
+
+
+#Quais foram os saldos de empregos gerados pelas MPE por setor econômico?
+
+
+Quais foram os saldos de empregos gerados pelas MPE nos últimos 13 meses?
+
+
+
+
+
+```
+
+
+
+
 ```{r}
 # # Leitura dos dados FORA DO PRAZO
 # #C:\BigData\MicrodadosCaged\FP
