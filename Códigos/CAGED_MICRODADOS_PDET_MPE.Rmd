@@ -1482,15 +1482,51 @@ datasetAgrupado<-as.data.frame(datasetAgrupado)
 
 ```{r}
 #Quais foram os saldos de empregos gerados pelas MPE por UF?
+mesreferencia<-8
+
+MESES<-paste("0",seq(1:mesreferencia),sep="")
+nomearquivo_doMes<-paste("CAGEDEST_","0",length(MESES),anobase,sep="")
+microDados_doMes<-FUNC_LOAD_DATA(nomearquivo_doMes,"DP",anobase)
+
 
  EMPREGO_UF_MPE<-microDados_doMes %>% select(SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(UF,CLASS_SEBRAE)%>% filter(CLASS_SEBRAE=="MPE") %>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))%>% arrange(desc(SALDO_EMPREGO))
-R> temp
+
+
+
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==11] <-  "Rondônia"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==12] <-  "Acre"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==13] <-  "Amazonas"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==14] <-  "Roraima"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==15] <-  "Pará"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==16] <-  "Amapá"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==17] <-  "Tocantins"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==21] <-  "Maranhão"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==22] <-  "Piauí"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==23] <-  "Ceará"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==24] <-  "Rio Grande do Norte"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==25] <-  "Paraíba"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==26] <-  "Pernambuco"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==27] <-  "Alagoas"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==28] <-  "Sergipe"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==29] <-  "Bahia"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==31] <-  "Minas Gerais"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==32] <-  "Espírito Santo"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==33] <-  "Rio de Janeiro"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==35] <-  "São Paulo"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==41] <-  "Paraná"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==42] <-  "Santa Catarina"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==43] <-  "Rio Grande do Sul"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==50] <-  "Mato Grosso do Sul"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==51] <-  "Mato Grosso"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==52] <-  "Goiás"
+EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==53] <-  "Distrito Federal"
+
 
 
 #Quais foram os saldos de empregos gerados pelas MPE por setor econômico?
 
 
-Quais foram os saldos de empregos gerados pelas MPE nos últimos 13 meses?
+#Quais foram os saldos de empregos gerados pelas MPE nos últimos 13 meses?
 
 
 
