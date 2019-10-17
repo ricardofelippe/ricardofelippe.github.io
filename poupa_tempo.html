@@ -264,32 +264,143 @@
       
   </div>    
       </div>
+
+  
+      </div>
+</div>
+    </div> 
+<div class="container">
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#dicasDSA"><h4><i class="fa fa-clock-o "></i> # Dicas DSA</a></h4></a>
+        </h4>    
+      </div>
+      <div id="dicasDSA" class="panel-collapse collapse">
+      <div class="panel-body">         
+       
+       
+          
+      
+      <li>como entregar o resultado do seu modelo preditivo ao cliente</li>
+        <pre>
+        ```
+           A decisão sobre como entregar o resultado ao cliente passa pelo que foi acordado com o cliente no começo do projeto. Como o cliente vai usar o resultado do seu trabalho? Essa pergunta foi respondida quando o projeto começou?
+
+Alguns cenários:
+
+Cenário 1: O cliente não tem qualquer experiência com Machine Learning, não tem equipe, não tem infraestrutura e não tem orçamento.
+
+Nesse caso, podemos acordar com o cliente de entregar as previsões do modelo em um simples arquivo csv. Agendamos o modelo para ser executado todos os dias à noite, alimentamos com os novos dados, geramos as previsões e gravamos em um arquivo. Um script Python ou R dá conta do recado aqui. Alguém no lado do cliente pega o csv e alimenta o Power BI ou qualquer outra ferramenta e gera o gráfico com as previsões. Cliente feliz, próximo projeto.
+
+Cenário 2: O cliente quer algo mais automatizado!
+
+Repetimos o que foi feito no cenário 1, mas automatizamos todo o processo com um Robô RPA, que coleta os dados da fonte, aplica um script de preparação dos dados, alimenta e executa o modelo treinado, coleta o csv com as previsões e alimenta uma ferramenta de geração de gráficos. Há o custo de aquisição da ferramenta RPA para criação do Robô. Tudo isso pode ser feito praticamente sem interação humana. Cliente feliz, próximo projeto.
+
+Cenário 3: O cliente quer as previsões em uma planilha Excel no e-mail dos gerentes todos os dias pela manhã.
+
+Repetimos o que foi feito no cenário 2, mas configuramos o Robô RPA para gerar a planilha e enviar por e-mail. Há outra forma de automatizar esse processo? Com certeza, usando programação. Mas RPA requer programação zero e com poucos cliques o Robô estará atendendo seu propósito, gerando logs de execução e sendo executado 24/7. O cliente não precisa pagar FGTS ao Robô, o Robô não tira férias, não fica doente, não leva atestado médico, não pede aumento e não fica navegando pelo Facebook enquanto o trabalho está pendente. Cliente feliz, próximo projeto.
+
+Cenário 4: O cliente tem infraestrutura local e equipe preparada e capacitada para manipular dados.
+
+Podemos entregar o modelo como um container Docker que pode ser incorporado à infra do cliente. O container Docker funcionaria como um Microsserviço. O cliente precisa ter alguém de DevOps para operacionalizar a execução do container. Cliente feliz, próximo projeto.
+
+Cenário 5: O cliente não tem infraestrutura local e muito menos equipe preparada e capacitada para manipular dados.
+
+Podemos publicar o modelo em nuvem AWS ou Azure. O consultor contrata o serviço em nuvem e cobra o custo do cliente, obviamente. O modelo pode ser entregue como uma API, por exemplo. Cliente feliz, próximo projeto.
+
+Cenário 6: O cliente que receber um Dashboard pronto e não quer ter qualquer trabalho.
+
+Podemos contratar o serviço do Power BI ou mesmo do Shiny para linguagem R e o consultor realiza todo o processo, disponibilizando e mantendo o Dashboard para o cliente. O consultor paga pela licença do software e cobra do cliente como custo total do projeto. Cliente feliz, próximo projeto.
+
+Cenário 7: O cliente quer uma aplicação web onde possa fazer as previsões em tempo real.
+
+Podemos serializar o modelo treinado e alimentar uma aplicação web (como é mostrado no curso de Machine Learning). Alguém precisa desenvolver a interface web que vai chamar o modelo e passar os dados via formulário, por exemplo! Quem vai desenvolver a interface web? Isso precisa ser definido no início do projeto e as expectativas alinhadas! Ou então, o cliente não vai ficar feliz! A aplicação web poderia ser um sistema de recomendação com base no modelo preditivo.
+
+Cenário 8: O cliente quer o Pipeline completo internamente.
+
+Construímos o Pipeline de dados, desde a captura e tratamento dos dados usando Kafka por exemplo, passando pela gravação em um Data Lake, até alimentar o modelo de Machine Learning. Entregamos o modelo fazendo previsões como um container Docker. Se vários modelos devem ser oferecidos, usamos Kubernetes para orquestração dos containers. Se o modelo deve ser reconstruído frequentemente por conta de novos dados coletados, trazemos o Spark para a conversa. Como sempre, tudo depende do que foi acordado com o cliente!
+
+Cenário 9: O cliente quer uma app para smartphone.
+
+Ok. Criamos o modelo usando tecnologias que permitam manter o modelo com o menor tamanho possível e incluímos em nossa app. Mas alguém tem que desenvolver a app para iOS e Android. Isso faz parte do custo total do projeto.
+
+Cenário 10: O cliente não sabe o que quer.
+
+Cabe ao consultor compreender as necessidades do cliente e sugerir um dos itens descritos acima ou mesmo encontrar outra alternativa. Esse trabalho adicional de consultoria deve ser cobrado do cliente! Podemos entregar o projeto não como previsões, mas como uma consultoria, indicando ao cliente que ações tomar, com base nas previsões do modelo e na análise do mercado em geral. O resultado da análise pode ser a recomendação de usar tecnologias mais avançadas como Blockchain para evitar fraudes, por exemplo, ou remanejar equipes, ou mesmo investir em um novo segmento de cliente.
+
+E esses são apenas alguns exemplos.
+
+Onde encontrar o conhecimento necessário para executar os cenários acima?
+
+Formação Cientista de Dados – oferece conhecimento para executar os cenários 1, 6, 7 e 8. E também, como criar os modelos.
+
+Formação Inteligência Artificial – oferece conhecimento para executar o cenário 9. E também, como criar os modelos.
+
+Formação Engenheiro de Dados – oferece conhecimento para executar os cenários 4, 5, 7 e 8.
+
+Formação Desenvolvedor RPA – oferece conhecimento para executar os cenários 2 e 3.
+
+Formação Desenvolvedor Microsoft – oferece conhecimento para executar os cenários 1 e 5.
+
+Formação Analista de Inteligência de Mercado – oferece conhecimento para executar o cenário 10.
+
+Formação Java – oferece conhecimento para executar os cenários 1 e 7.
+
+Formação Engenheiro Blockchain - oferece conhecimento para executar o cenário 10 e o cenário 8, dependendo as tecnologias usadas no Pipeline.
+
+Formação Análise Estatística – oferece conhecimento que suporta todas as formações anteriores.
+        ```
+            </pre>
+        </p>
+      
+
+      
+
+
+      
+  </div>    
+      </div>
+
+  
+<div id="dicasDSA" class="panel-collapse collapse">
+          
+          
+          
+      
+      
+      
+      <li>Como faz?: Para obter apenas as colunas numéricas do dataframe no R e filtrar essa colunas?</li>
+        <p>
+        Usar os comandos:
+        <pre>
+        ```
+            # Obtendo apenas as colunas numéricas
+            colunas_numericas <- sapply(df, is.numeric)
+            colunas_numericas
+
+            # Filtrando as colunas numéricas para correlação
+            data_cor <- cor(df[,colunas_numericas])
+            data_cor
+            head(data_cor)
+
+        ```
+            </pre>
+        </p>
+      
+
+      
+
+
+      
+  </div>    
+      </div>
+</div>
     </div> 
    
     
-  </div>
-</div>   
 
-    
-    
-            
-</section>
-	
-    </div>
-
-    </div>
-
-
-    
-    
-</div>
-
-    
-    
-</section>
-		</div>
-	</div>
-</div>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12 text-center center-block aw-bottom">
