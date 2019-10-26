@@ -1314,6 +1314,13 @@ mesreferencia<-mesinicial+7
 FUNC_PLANILHA.UNICA(mesreferencia,anobase)
 beep(sound = 3, expr = NULL)
  
+
+#------201909-----
+mesreferencia<-mesinicial+8
+FUNC_PLANILHA.UNICA(mesreferencia,anobase)
+beep(sound = 3, expr = NULL)
+
+
  
 #------2019091-----
 
@@ -1524,6 +1531,32 @@ EMPREGO_UF_MPE$UF[EMPREGO_UF_MPE$UF ==53] <-  "Distrito Federal"
 
 
 #Quais foram os saldos de empregos gerados pelas MPE por setor econômico?
+
+extrativa<-c(1)
+industria<-c(2,3,4,5,6,7,8,9,10,11,12,13)
+SIUP<- c(14)
+construcao<-c(15)
+
+comercio<-c(16,17)
+servicos<-c(18,19,20,21,22,23)
+agropecuaria<-c(25)
+ignorado<-c(-1)
+adm<-c(24)
+
+
+EMPREGO_SETOR_MPE<-microDados_doMes %>% mutate(SETOR_ECONOMICO =if_else(IBGE_SUBSETOR %in% SIUP, "SIUP",if_else(IBGE_SUBSETOR %in% industria,"Indústria",if_else(IBGE_SUBSETOR %in% extrativa,"Extrativa",if_else( IBGE_SUBSETOR %in% construcao,"Construção",if_else(IBGE_SUBSETOR %in% comercio,"Comércio",if_else(IBGE_SUBSETOR %in% servicos,"Serviços",if_else(IBGE_SUBSETOR %in% agropecuaria,"Agropecuaria",if_else(IBGE_SUBSETOR %in% adm,"Administração Pública","OUTRO"))))))))) %>% select(SALDO_MOV,CLASS_SEBRAE,SETOR_ECONOMICO) %>% group_by(SETOR_ECONOMICO)%>% filter(CLASS_SEBRAE=="MPE") %>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))%>% arrange(desc(SALDO_EMPREGO))
+
+
+EMPREGO_SETOR_MPE_MGE<-microDados_doMes %>% mutate(SETOR_ECONOMICO =if_else(IBGE_SUBSETOR %in% SIUP, "SIUP",if_else(IBGE_SUBSETOR %in% industria,"Indústria",if_else(IBGE_SUBSETOR %in% extrativa,"Extrativa",if_else( IBGE_SUBSETOR %in% construcao,"Construção",if_else(IBGE_SUBSETOR %in% comercio,"Comércio",if_else(IBGE_SUBSETOR %in% servicos,"Serviços",if_else(IBGE_SUBSETOR %in% agropecuaria,"Agropecuaria",if_else(IBGE_SUBSETOR %in% adm,"Administração Pública","OUTRO"))))))))) %>% select(SALDO_MOV,CLASS_SEBRAE,SETOR_ECONOMICO) %>% mutate(SETOR_ECONOMICO=as.factor(SETOR_ECONOMICO),CLASS_SEBRAE=as.factor(CLASS_SEBRAE))%>% group_by(SETOR_ECONOMICO,CLASS_SEBRAE)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))%>% arrange(desc(SALDO_EMPREGO))
+
+
+
+
+FUNC_CLASSIFICADOR_MPE_MGE <-function(dados){ dados %>% mutate(CLASS_SEBRAE = if_else(IBGE_SUBSETOR == "24","MGE",if_else(FAIXA_EMPR_JAN == "5" &  IBGE_SUBSETOR %in% industria,"MPE",if_else(FAIXA_EMPR_JAN == "5" &  IBGE_SUBSETOR %in% extrativa,"MPE",if_else(FAIXA_EMPR_JAN == "5" &  IBGE_SUBSETOR %in% construcao,"MPE",if_else(FAIXA_EMPR_JAN == "1","MPE",if_else(FAIXA_EMPR_JAN == "2","MPE",if_else(FAIXA_EMPR_JAN == "3","MPE",if_else(FAIXA_EMPR_JAN == "4","MPE","MGE")))))))))
+}
+
+
+
 
 
 #Quais foram os saldos de empregos gerados pelas MPE nos últimos 13 meses?
