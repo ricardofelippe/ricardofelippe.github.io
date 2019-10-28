@@ -132,5 +132,11 @@ rpivotTable(roll5, rows = "ano", cols = c("status"), width = "150%", height = "5
 # Escolha o gráfico e tipo de estatística desejados
 
 
+# Abaixo segue exemplo didático
+nomes_dimensoes2 = list(produto = sort(c("TV", "Geladeira")),ano = as.character(2015:2016),     status = sort(c("Em Estoque",  "Devolvido")))
+comprimento_dimensoes2 = sapply(nomes_dimensoes2, length)
+df_produtos2 = array(rep(1, prod(comprimento_dimensoes2)), 
+                     unname(comprimento_dimensoes2),
+                     nomes_dimensoes2)
 
 
