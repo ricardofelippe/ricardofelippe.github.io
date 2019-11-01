@@ -82,20 +82,28 @@ rm(dados)
 
 dadosFull<-rbind(dadosFull, MPE_Municipios_Simplesdados01a10_opc5,MPE_Municipios_Simplesdados01a10_opc7)
 
-granfpolisMunicipios<-c("AGUAS MORNAS","ALFREDO WAGNER","ANGELINA","ANITAPOLIS","ANTONIO CARLOS","BIGUACU","CANELINHA","FLORIANOPOLIS","GAROPABA","GOVERNADOR CELSO RAMOS","LEOBERTO LEAL","MAJOR GERCINO","NOVA TRENTO","PALHOCA","PAULO LOPES","RANCHO QUEIMADO","SANTO AMARO DA IMPERATRIZ","SAO BONIFACIO","SAO JOAO BATISTA","SAO JOSE","SAO PEDRO DE ALCANTARA","TIJUCAS")
-dados_Filtrados<-dadosFull %>% filter(municipio %in% granfpolisMunicipios)
+# granfpolisMunicipios<-c("AGUAS MORNAS","ALFREDO WAGNER","ANGELINA","ANITAPOLIS","ANTONIO CARLOS","BIGUACU","CANELINHA","FLORIANOPOLIS","GAROPABA","GOVERNADOR CELSO RAMOS","LEOBERTO LEAL","MAJOR GERCINO","NOVA TRENTO","PALHOCA","PAULO LOPES","RANCHO QUEIMADO","SANTO AMARO DA IMPERATRIZ","SAO BONIFACIO","SAO JOAO BATISTA","SAO JOSE","SAO PEDRO DE ALCANTARA","TIJUCAS")
+# dados_Filtrados<-dadosFull %>% filter(municipio %in% granfpolisMunicipios)
 
 
-pastaC<-"C:/BigData/CNPJ/Extracao_Municipios_Set2019"
+# Demanda EDIVAN 31/10/19
+RMC<-toupper(c("Curitiba","Almirante Tamandare","Araucaria","Balsa Nova","Bocaiuva do Sul","Campina Grande do Sul","Campo Largo","Colombo","Contenda","Mandirituba","Piraquara"))
+
+RMC_dados_Filtrados<-dadosFull %>% filter(municipio %in% RMC)
+
+
+
+pastaC<-"C:/BigData/CNPJ/Extração_Curitiba_RMC"
 
 setwd(pastaC)
 getwd()
 
 
-wck=paste("GRANFPOLIS",".csv",sep="")
+#wck=paste("GRANFPOLIS",".csv",sep="")
+wck=paste("RMC_PARTE_1",".csv",sep="")
 
 
-write.csv(dados_Filtrados, file=wck)
+write.csv(RMC_dados_Filtrados, file=wck)
 
 
 
@@ -133,7 +141,7 @@ write.csv(dados_Filtrados, file=wck)
 
 #========== Acessando base de dados Completa CNPJ_full.db (Base de dados 11 a 20) ===================
 
-pastaC<-"C:/BigData/BigData11_20"
+pastaC<-"C:/BigData/CNPJ/BigData11_20"
 
 #pastaC<-"C:/BigData"
 
@@ -211,20 +219,43 @@ dadosFull<-rbind(dadosFull, MPE_Simplesdados11a20_opc5,MPE_Simplesdados11a20_opc
 rm(dados)
 
 
-granfpolisMunicipios<-c("AGUAS MORNAS","ALFREDO WAGNER","ANGELINA","ANITAPOLIS","ANTONIO CARLOS","BIGUACU","CANELINHA","FLORIANOPOLIS","GAROPABA","GOVERNADOR CELSO RAMOS","LEOBERTO LEAL","MAJOR GERCINO","NOVA TRENTO","PALHOCA","PAULO LOPES","RANCHO QUEIMADO","SANTO AMARO DA IMPERATRIZ","SAO BONIFACIO","SAO JOAO BATISTA","SAO JOSE","SAO PEDRO DE ALCANTARA","TIJUCAS")
-dados_Filtrados<-dadosFull %>% filter(municipio %in% granfpolisMunicipios)
+# granfpolisMunicipios<-c("AGUAS MORNAS","ALFREDO WAGNER","ANGELINA","ANITAPOLIS","ANTONIO CARLOS","BIGUACU","CANELINHA","FLORIANOPOLIS","GAROPABA","GOVERNADOR CELSO RAMOS","LEOBERTO LEAL","MAJOR GERCINO","NOVA TRENTO","PALHOCA","PAULO LOPES","RANCHO QUEIMADO","SANTO AMARO DA IMPERATRIZ","SAO BONIFACIO","SAO JOAO BATISTA","SAO JOSE","SAO PEDRO DE ALCANTARA","TIJUCAS")
+# dados_Filtrados<-dadosFull %>% filter(municipio %in% granfpolisMunicipios)
+
+# Demanda EDIVAN 31/10/19
+RMC<-toupper(c("Curitiba","Almirante Tamandare","Araucaria","Balsa Nova","Bocaiuva do Sul","Campina Grande do Sul","Campo Largo","Colombo","Contenda","Mandirituba","Piraquara"))
 
 
-pastaC<-"C:/BigData/CNPJ/Extracao_Municipios_Set2019"
+# 
+# pastaC<-"C:/BigData/CNPJ/Extracao_Municipios_Set2019"
+# setwd(pastaC)
+# getwd()
+#  wck=paste("GRANFPOLIS_2",".csv",sep="")
+#  write.csv(dados_Filtrados, file=wck)
 
-setwd(pastaC)
-getwd()
-
-
- wck=paste("GRANFPOLIS_2",".csv",sep="")
-
- write.csv(dados_Filtrados, file=wck)
  
+ RMC<-toupper(c("Curitiba","Almirante Tamandare","Araucaria","Balsa Nova","Bocaiuva do Sul","Campina Grande do Sul","Campo Largo","Colombo","Contenda","Mandirituba","Piraquara"))
+ 
+ RMC_dados_Filtrados<-dadosFull %>% filter(municipio %in% RMC)
+ 
+ 
+ 
+ pastaC<-"C:/BigData/CNPJ/Extração_Curitiba_RMC"
+ 
+ setwd(pastaC)
+ getwd()
+ 
+ 
+ #wck=paste("GRANFPOLIS",".csv",sep="")
+ wck=paste("RMC_PARTE_2",".csv",sep="")
+ 
+ 
+ write.csv(RMC_dados_Filtrados, file=wck)
+ 
+ 
+ 
+ 
+  
  
 # wck=paste("MPE_Simples_cod_05_Dados11a20",".csv",sep="")
 # 

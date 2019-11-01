@@ -20,9 +20,18 @@ library(rpivotTable)
 # Produto: representa o tipo de produto
 # Ano: representa o ano em que os dados foram coletados
 # Status: representa o status de cada tipo de produto
-nomes_dimensoes = list(produto = sort(c("TV", "Geladeira", "Laptop", "Smartphone")), 
-                       ano = as.character(2015:2019), 
-                       status = sort(c("Em Estoque", "Em Preparação Para Entrega", "Em Transporte", "Devolvido")))
+# nomes_dimensoes = list(produto = sort(c("TV", "Geladeira", "Laptop", "Smartphone")), 
+#                        ano = as.character(2015:2019), 
+#                        status = sort(c("Em Estoque", "Em Preparação Para Entrega", "Em Transporte", "Devolvido")))
+
+nomes_dimensoes = list(produto = sort(c("TV", "Geladeira")),ano = as.character(2015:2016),     status = sort(c("Em Estoque",  "Devolvido")))
+comprimento_dimensoes = sapply(nomes_dimensoes, length)
+df_produtos = array(rep(1, prod(comprimento_dimensoes)), 
+                     unname(comprimento_dimensoes),
+                     nomes_dimensoes)
+
+
+
 
 # Definindo o comprimento das dimensões
 comprimento_dimensoes = sapply(nomes_dimensoes, length)
@@ -89,7 +98,9 @@ as.data.table(fatia4)
 
 # Dice (divisão das "fatias" em porções ainda menores)
 
-dice1 = cubo_prod["TV",, c("Em Estoque", "Em Preparação Para Entrega", "Em Transporte")]
+#dice1 = cubo_prod["TV",, c("Em Estoque", "Em Preparação Para Entrega", "Em Transporte")]
+dice1 = cubo_prod["TV",, c("Em Estoque")]
+
 print(dice1)
 as.data.table(dice1)
 as.data.table(dice1, na.fill = TRUE)
@@ -118,8 +129,8 @@ roll3 = rollup(cubo_prod, MARGIN = c("ano","status"), INDEX = 1:1, FUN = sum)
 format(roll3)
 
 # Pivot
-roll4 = capply(cubo_prod, c("ano","produto"), sum)
-format(roll4, dcast = TRUE, formula = ano ~ produto)
+roll4 = capply(cubo_prod, c("produto","ano"), sum)
+format(roll4, dcast = TRUE, formula = produto ~ ano)
 
 # Interface gráfica
 library(rpivotTable)
