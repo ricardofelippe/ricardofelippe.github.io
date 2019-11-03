@@ -631,10 +631,10 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
    if (val >=100){
     #----BRASIL----
      if (val==100 ){
-      for(i in seq(28,1)){
+      for(i in seq(1,28)){
         ValorNaFonte<-unlist(segmentos_codigos[i])
-        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
-        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
         DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
         row.names(DF) <- segmentos[i]
         AcumResultados<-rbind(DF,AcumResultados)
@@ -662,10 +662,10 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
       nomeRegiao<-paste("Região Norte")
       AcumResultados<-data.frame()
       
-      for(i in seq(28,1)){
+      for(i in seq(1,28)){
         ValorNaFonte<-unlist(segmentos_codigos[i])
-        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
-        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
         DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
         row.names(DF) <- segmentos[i]
         AcumResultados<-rbind(DF,AcumResultados)
@@ -687,10 +687,10 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
       vetor<-c(21,22,23,24,25,26,27,28,29)
       nomeRegiao<-paste("Região Nordeste")
       AcumResultados<-data.frame()
-      for(i in seq(28,1)){
+      for(i in seq(1,28)){
         ValorNaFonte<-unlist(segmentos_codigos[i])
-        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
-        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
         DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
         row.names(DF) <- segmentos[i]
         AcumResultados<-rbind(DF,AcumResultados)
@@ -714,10 +714,10 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
       nomeRegiao<-paste("Região Sudeste")
       AcumResultados<-data.frame()
       
-      for(i in seq(28,1)){
+      for(i in seq(1,28)){
         ValorNaFonte<-unlist(segmentos_codigos[i])
-        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
-        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in%  ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
         DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
         row.names(DF) <- segmentos[i]
         AcumResultados<-rbind(DF,AcumResultados)
@@ -739,10 +739,10 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
       nomeRegiao<-paste("Região Sul")
       AcumResultados<-data.frame()
      
-      for(i in seq(28,1)){
+      for(i in seq(1,28)){
         ValorNaFonte<-unlist(segmentos_codigos[i])
-        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
-        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
         DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
         row.names(DF) <- segmentos[i]
         AcumResultados<-rbind(DF,AcumResultados)
@@ -762,10 +762,10 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
       vetor<-c(50,51,52,53)
       nomeRegiao<-paste("Região Centro Oeste")
       AcumResultados<-data.frame()
-      for(i in seq(28,1)){
+      for(i in seq(1,28)){
         ValorNaFonte<-unlist(segmentos_codigos[i])
-        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
-        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
+        SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte, UF %in% vetor) %>% summarize(Saldo=sum(SALDO_MOV))
         DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
         row.names(DF) <- segmentos[i]
         AcumResultados<-rbind(DF,AcumResultados)
@@ -788,10 +788,10 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
     AcumResultados<-data.frame()
     
     
-    for(i in seq(28,1)){
+    for(i in seq(1,28)){
       ValorNaFonte<-unlist(segmentos_codigos[i])
-      SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
-      SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR ==ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+      SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+      SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
       DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
       row.names(DF) <- segmentos[i]
       AcumResultados<-rbind(DF,AcumResultados)
@@ -836,6 +836,12 @@ ENTIDADES<-c(100,101,102,103,104,105,11,12,13,14,15,16,17,21,22,23,24,25,26,27,2
 NOME_ENTIDADES<-c("Brasil","Região Norte","Região Nordeste","Região Sudeste","Região Sul","Região Centro Oeste","Rondônia","Acre","Amazonas","Roraima","Pará","Amapá","Tocantins","Maranhão","Piauí","Ceará","Rio Grande do Norte","Paraíba","Pernambuco","Alagoas","Sergipe","Bahia","Minas Gerais","Espírito Santo","Rio de Janeiro","São Paulo","Paraná","Santa Catarina","Rio Grande do Sul","Mato Grosso do Sul","Mato Grosso","Goiás","Distrito Federal")
 #----
 dfAcum<-data.frame()
+
+temp<-length(ENTIDADES)
+SEQ  <- seq(1,temp)
+pb   <- txtProgressBar(1, temp, style=3)
+TIME <- Sys.time()
+
 for (unidades in ENTIDADES){
   # Para cada entidade zera-se a matriz acumuladora de dados
   dfAcum<-data.frame()
@@ -865,11 +871,17 @@ for (unidades in ENTIDADES){
   dffinal<-cbind(dfMes[,c(1,2,3)],dfAcum[,c(1,2,3)])
   rm(dfMes)
   
+Sys.sleep(0.02)
+setTxtProgressBar(pb,match(unidades,ENTIDADES))
   
 nome<-paste(unidades)
 arquivo<-paste("Compilado_","0",length(MESES),anobase,".xlsx",sep="")
 
 nome<-NOME_ENTIDADES[match(unidades,ENTIDADES)]
+
+
+
+            
 
  if(unidades ==100){
   pastaDestino<-file.path("c:", "BigData", "MicrodadosCaged", "Resultados")
