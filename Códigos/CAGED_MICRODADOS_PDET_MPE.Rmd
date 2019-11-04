@@ -790,8 +790,8 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
     
     for(i in seq(1,28)){
       ValorNaFonte<-unlist(segmentos_codigos[i])
-      SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
-      SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte) %>% summarize(Saldo=sum(SALDO_MOV))
+      SaldoDP_MPE <-dados %>% filter(CLASS_SEBRAE=="MPE",IBGE_SUBSETOR %in% ValorNaFonte,UF %in% val) %>% summarize(Saldo=sum(SALDO_MOV))
+      SaldoDP_MGE <-dados %>% filter(CLASS_SEBRAE=="MGE", IBGE_SUBSETOR %in% ValorNaFonte,UF %in% val) %>% summarize(Saldo=sum(SALDO_MOV))
       DF<-data.frame("MGE"=SaldoDP_MGE$Saldo,"MPE"=SaldoDP_MPE$Saldo,"SALDO"=SaldoDP_MPE$Saldo+SaldoDP_MGE$Saldo,"MGEACUM"=0,"MPEACUM"=0,"SALDOACUM"=0)
       row.names(DF) <- segmentos[i]
       AcumResultados<-rbind(DF,AcumResultados)
