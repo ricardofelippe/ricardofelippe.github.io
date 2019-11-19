@@ -875,7 +875,10 @@ Sys.sleep(0.02)
 setTxtProgressBar(pb,match(unidades,ENTIDADES))
   
 nome<-paste(unidades)
-arquivo<-paste("Compilado_","0",length(MESES),anobase,".xlsx",sep="")
+#arquivo<-paste("Compilado_","0",length(MESES),anobase,".xlsx",sep="")
+
+arquivo<-paste("Compilado",".xlsx",sep="")
+
 
 nome<-NOME_ENTIDADES[match(unidades,ENTIDADES)]
 
@@ -1332,6 +1335,12 @@ mesreferencia<-mesinicial+8
 FUNC_PLANILHA.UNICA(mesreferencia,anobase)
 beep(sound = 3, expr = NULL)
 
+
+
+#------201910-----
+mesreferencia<-mesinicial+9
+FUNC_PLANILHA.UNICA(mesreferencia,anobase)
+beep(sound = 3, expr = NULL)
 
  
 #------2019091-----

@@ -8,23 +8,35 @@ Attribute Consolida_Dados.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 ' Consolida_Dados Macro
 '
+
 Application.ScreenUpdating = False
 
-thiswokbook.Activate
-Sheets(i + 2).Activate
+ThisWorkbook.Activate
+
+Sheets(i + 1).Activate
 
 
 
 NOME_ENTIDADES = Array("Brasil", "Região Norte", "Região Nordeste", "Região Sudeste", "Região Sul", "Região Centro Oeste", "Rondônia", "Acre", "Amazonas", "Roraima", "Pará", "Amapá", "Tocantins", "Maranhão", "Piauí", "Ceará", "Rio Grande do Norte", "Paraíba", "Pernambuco", "Alagoas", "Sergipe", "Bahia", "Minas Gerais", "Espírito Santo", "Rio de Janeiro", "São Paulo", "Paraná", "Santa Catarina", "Rio Grande do Sul", "Mato Grosso do Sul", "Mato Grosso", "Goiás", "Distrito Federal")
 
+MsgBox ("ATUALIZAR A VARIÁVEL MÊS DE REFEREÊNCIA E CRIAR PASTA DO MÊS!!")
+'MesReferencia = "Janeiro"
+'MesReferencia = "Fevereiro"
+'MesReferencia = "Maio"
+'MesReferencia = "Junho"
+'MesReferencia = "Julho"
+'MesReferencia = "Agosto"
+'MesReferencia = "Outubro"
+MesReferencia = "Setembro"
+
+ANO = "2019"
+
+
 
 
 For i = 1 To 33
-    Range("I9").Select
-    ActiveCell.FormulaR1C1 = "Figura 01: Saldo líquido de empregos gerados em Setembro/2019"
+    
 
-    Range("I25").Select
-    ActiveCell.FormulaR1C1 = "Figura 02: Saldos de empregos gerados em Setembro/2019, por porte e setor."
 
 
 
@@ -34,24 +46,42 @@ For i = 1 To 33
     Range("B2:G2").Select
     Selection.Copy
     'Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-    ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+    ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
+    
+    
+    
 
-    'Sheets(i + 2).Activate
+    'Sheets(i + 1).Activate
 
     Range("B6").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
     Application.CutCopyMode = False
+    
+    
+    ' Organiza Títulos
+    NOME = UCase(NOME_ENTIDADES(i - 1))
+    Range("a1").Value = "UF:" & NOME & "-EVOLUÇÃO DO EMPREGO POR SETOR E SUBSETOR DE ATIVIDADE ECONÔMICA"
+    Range("a2").Value = "MICRO E PEQUENAS EMPRESAS(MPE) X MÉDIAS E GRANDES EMPRESAS(MGE)"
+    Range("a3").ClearContents
+    Range("g3").ClearContents
+    
+    Range("b4").Value = "Mês/Ano* (" & MesReferencia & "/" & ANO & ") - sem ajuste"
+
+    
+    
+    Range("a6").Value = NOME_ENTIDADES(i - 1)
+
 
     'Extrativa
     Windows("Compilado.xlsx").Activate
     Sheets(i).Activate
     Range("B3:G3").Select
     Selection.Copy
-    ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+    ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
 
 '    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-'    Sheets(i + 2).Activate
+'    Sheets(i + 1).Activate
 
     Range("B8").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
@@ -63,10 +93,10 @@ For i = 1 To 33
     Sheets(i).Activate
     Range("B4:G16").Select
     Selection.Copy
-    ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+    ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
 
 '    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-'    Sheets(i + 2).Activate
+'    Sheets(i + 1).Activate
 
     Range("B10").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
@@ -79,8 +109,8 @@ For i = 1 To 33
     Range("B17:g17").Select
     Selection.Copy
 '    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-'    Sheets(i + 2).Activate
-    ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+'    Sheets(i + 1).Activate
+    ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
 
 
     Range("B24").Select
@@ -93,10 +123,10 @@ For i = 1 To 33
     Sheets(i).Activate
     Range("B18:g18").Select
     Selection.Copy
-    ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+    ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
 
 '    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-'    Sheets(i + 2).Activate
+'    Sheets(i + 1).Activate
 
     Range("B26").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
@@ -111,8 +141,8 @@ For i = 1 To 33
     Range("B19:g21").Select
     Selection.Copy
 '    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-'    Sheets(i + 2).Activate
-ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+'    Sheets(i + 1).Activate
+ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
 
 
     Range("B28").Select
@@ -127,8 +157,8 @@ ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
     Range("B22:g28").Select
     Selection.Copy
 '    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-'    Sheets(i + 2).Activate
-ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+'    Sheets(i + 1).Activate
+ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
 
 
     Range("B32").Select
@@ -143,8 +173,8 @@ ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
     Range("B29:g29").Select
     Selection.Copy
 '    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-'    Sheets(i + 2).Activate
-ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+'    Sheets(i + 1).Activate
+ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
 
     Range("B40").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
@@ -158,39 +188,21 @@ ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
     Range("B30:g30").Select
     Selection.Copy
 '    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
-'    Sheets(i + 2).Activate
-ThisWorkbook.Sheets(i + 2).Activate ' ATUALIZARRRRR
+'    Sheets(i + 1).Activate
+ThisWorkbook.Sheets(i + 1).Activate ' ATUALIZARRRRR
 
     Range("B42").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
     Application.CutCopyMode = False
 
-    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
+    'Windows("MPE_PDET_Agosto_2019.xlsm").Activate
     ThisWorkbook.Activate ' ATUALIZARRRRR
 
 
 
 
- Range("J4").Select
-    ActiveCell.FormulaR1C1 = "=R[2]C[-8]"
-    Range("J5").Select
-    ActiveCell.FormulaR1C1 = "=R[1]C[-7]"
-    Range("J6").Select
-    ActiveCell.FormulaR1C1 = "=R[34]C[-8]"
-    Range("J7").Select
-    ActiveCell.FormulaR1C1 = "=R[-1]C[-6]"
-    Range("I4").Select
-    ActiveCell.FormulaR1C1 = "=R[1]C[-7]"
-    Range("I5").Select
-    ActiveCell.FormulaR1C1 = "=RC[-6]"
-    Range("I6").Select
-    ActiveCell.FormulaR1C1 = "=Adm.Publica"
-    Range("I6").Select
-    ActiveCell.FormulaR1C1 = "Adm. Pública"
-    Range("I7").Select
-    ActiveCell.FormulaR1C1 = "=R[-2]C[-5]"
-    Range("I8").Select
+ 
 
 
 
@@ -366,11 +378,15 @@ Next i
 
 '
 
+' Ajustes
 
     
-    ActiveWorkbook.Save
-    Windows("MPE_PDET_Agosto_2019.xlsm").Activate
+    'ActiveWorkbook.Save
+    
+    MsgBox ("Dados gerados. Usar ""Salvar como"" para a identificação da planilha.")
+    
+    'Windows("MPE_PDET_Agosto_2019.xlsm").Activate
     ThisWorkbook.Activate ' ATUALIZARRRRR
 
-    Range("J38").Select
-     End Sub
+     
+   End Sub
