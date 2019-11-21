@@ -40,7 +40,6 @@
 </script>
 </head>
 <body>
-
 <div class="container">
 	<nav class="navbar navbar-default" style="margin-top:2em;">
 		<div class="container-fluid">
@@ -56,15 +55,14 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="https://ricardofelippe.github.io/index.html"><i class="fa fa-home"></i> Home</a></li>
-					<li><a href="https://ricardofelippe.github.io/poupa_tempo.html"><i class="fa fa-clock-o "></i> Poupa tempo</a></li>
-					<li><a href="https://ricardofelippe.github.io/Projetos-Ricardo Felippe.html"><i class="fa fa-university "></i> Aprender</a></li>
-                    <li><a href="https://ricardofelippe.github.io/programAki.html"><i class="fa fa-code" aria-hidden="true"></i> ProgramAki</a></li>
-                    
-                    
-                    
+					<li><a href="https://ricardofelippe.github.io/archives.html"><i class="fa fa-archive "></i> Arquivo</a></li>
+					<li><a href="https://ricardofelippe.github.io/pages/about.html"><i class="fa fa-user "></i> Sobre</a></li>
+					<li><a href="https://ricardofelippe.github.io/pages/projects.html"><i class="fa fa-code "></i> Projetos</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					  <li><a href="https://ricardofelippe.github.io/profissional.html"><i class="fa fa-building" aria-hidden="true"></i> Profissional</a>
+					<li><a href="https://ricardofelippe.github.io/categories.html"><i class="fa fa-archive"></i> Categorias</a></li>
+					<li><a href="https://ricardofelippe.github.io/tags.html"><i class="fa fa-tags"></i> Tags</a></li>
+                    <li><a href="https://ricardofelippe.github.io/linksexternos.html"><i class="fa fa-tags"></i> Links Externos</a></li>
 					<!--
                     <li><a href="https://ricardofelippe.github.io/feeds/rss.xml"><i class="fa fa-rss"></i> RSS</a></li>
                     -->
@@ -72,8 +70,6 @@
 			</div>
 		</div>
 	</nav>
-</div>    
-    
     
     
 <div class="container">
@@ -86,7 +82,7 @@
       </div>
       <div id="collapse_d3" class="panel-collapse collapse">
       <div class="panel-body">         
-      <p>Orientação para acessar os pacotes Python de carregamento dos dados de CNPJ públicos que a Receita Federal disponibiliza.</p>
+       <p>Como faz?:Para acessar os pacotes Python de carregamento dos dados de CNPJ públicos que a Receita Federal disponibiliza.</p>
          <ol>
             <li>Localize a pasta denominada:DadosPublicosCnpj (na ocasião esta pasta se localizava em: "C:\Users\ricardo.ramos\OneDrive - Ministerio do Desenvolvimento da Industria e Comercio Exterior\R-projects\DAMPE-SEMPE\DadosPublicosCnpj\Python\CNPJ-full"</li>    
              <li>Acessar prompt de comand</li>
@@ -94,7 +90,30 @@
          </ol>
         <hr>
       
-      <p>Orientação para acessar o MySql do meu PC via comando prompt </p>
+      <p>Debugar o R </p>
+        <ol>
+            <li><a href="https://www.youtube.com/watch?v=M5n_2jmdJ_8">YouTube - stop() - breathe - recover()</a></li>  
+          <li>editar o options: options(error = recover)</li>
+          <li>Iniciar a procura do erro de baixo para cima. Procurar pela linha que mais se parece com o código problema que se quer analisar.</li>    
+          <li>Escolhendo a linha, o sistema abre o lócus de todas as variáveis da função alvo.</li>    
+          <li>Com a função ls() encontro todas as variáveis no environment da função alvo.</li>
+          <li>Se digitar data, encontro os dados que estão sendo analisados.</li>
+          <li><strong>Dica</strong>Chamar funções que estão localizadas no lócus de uma função recuperada pela opção options, pode ser diferente do global environment</li>
+          <li> Resetar o options: options(erro = NULL) </li>
+        </ol>    
+        <hr>
+      
+      <li>Atualizar o Rtools </li>
+        <ol>
+            <li><a href="https://cran-r-project.org">Acessar o CRAN</a></li>  
+          <li>Acessar Download R for Windows</li>  
+          <li>Baixar o Rtools no C</li>    
+          <li>Configurar a variável de ambiente para a pasta bin do Rtools. (C:\Rtools\bin)</li>   
+          <li>Usar o comando pkgbuild::find_rtools(debug = TRUE)</li>    
+        </ol>    
+        <hr>
+      
+      <li>Para acessar o MySql do meu PC via comando prompt ?</li>
         <ol>
           <li>Verificar onde se encontra o binário(bin) no PC e entrar na pasta via comando cd.
             No caso do computador atual em uso, o Caminho do executável é:    C:\Program Files\MySQL\MySQL Server 8.0\bin </li>
@@ -104,9 +123,37 @@
           <p> Outra maneira para ativar o MYSQL80 é acessar aplicativo "Executar" e digitar "serviços". Encontrar o MYSQL80 e iniciá-lo. </p>
          </ol>    
         <hr>
-     
-          
       
+      <li>Como faz?: Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe?</li>
+        <p>
+            Usar os comandos:
+            <pre>
+             ```{r}
+            numeric.var <- sapply(churn, is.numeric) 
+            corr.matrix <- cor(churn[,numeric.var])  
+            corrplot(corr.matrix, main="\n\nGráfico de Correlação para Variáveis Numéricas", method="number")
+            ```
+            </pre>
+        </p>
+        <hr>
+      
+      <li>Como faz?: Para obter apenas as colunas numéricas do dataframe no R e filtrar essa colunas?</li>
+        <p>
+        Usar os comandos:
+        <pre>
+        ```
+            # Obtendo apenas as colunas numéricas
+            colunas_numericas <- sapply(df, is.numeric)
+            colunas_numericas
+
+            # Filtrando as colunas numéricas para correlação
+            data_cor <- cor(df[,colunas_numericas])
+            data_cor
+            head(data_cor)
+
+        ```
+            </pre>
+        </p>
       
 
       
@@ -132,34 +179,41 @@
       <div class="panel-body">         
        
         
-        <li>dplyr::ungroup()</li>
+          <li>Cálculo do Coeficiente de correlação com dataset contendo valores NA ?</li>
         <pre>
           Forget me not - dplyr::ungroup()
-          If you forget to ungroup() an operation after a group_by() it can lead to unwanted behaviour.
-          Question: What if we didn’t have to remember to ungroup after every chain?
-          My post-lunch, sugar-coma non-solution
-          Instead of using group_by(), use with_group_by() which will automatically apply an ungroup().
+If you forget to ungroup() an operation after a group_by() it can lead to unwanted behaviour.
+
+Question: What if we didn’t have to remember to ungroup after every chain?
+
+My post-lunch, sugar-coma non-solution
+Instead of using group_by(), use with_group_by() which will automatically apply an ungroup().
 
           </pre>
         <hr> 
-                
+          
+                    
+          
         <li>Cálculo do Coeficiente de correlação com dataset contendo valores NA ?</li>
         <ol>
             <li><code>cor(x, y,  method = "pearson", use = "complete.obs")</code>  </li>
             
         </ol>        
         <hr>  
-            
+        
+          
         <li>Segmentação/tabela de dados com split? </li>
         <ol>
             <li>Usando o dataset iris, podemos escolher a espécie setosa da coluna species e só analisar o atributo Sepal.Width com o comando<code>table(split(iris,iris$Species)$setosa$Sepal.Width)</code>  </li>
             
         </ol>        
         <hr>  
-                  
+                 
+        
+          
         <li>Usar gráfico interativo para explorar dataset? </li>
         <ol>
-            <li>Usar o comando <code>library(openintro)</code> conjugado com comando <code>edaPlot(dataset)</code> </li>
+            <li>Usar o comando library(openintro) conjugado com comando edaPlot(dataset) </li>
             
         </ol>        
         <hr>  
@@ -169,16 +223,16 @@
             <li><a href="https://api.github.com/repos/jangorecki/data.cube/tarball/master">Salvar o pacote direto na pasta C:\Program Files\R\R-3.6.1\library </a></li>
             
             
-            <li>Fixar a pasta library e usar o <code>comando:install.packages("jangorecki-data.cube-v0.2-102-gc8622b1.tar.gz", repos = NULL, type="source") </code></li>
+            <li>Fixar a pasta library e usar o comando:install.packages("jangorecki-data.cube-v0.2-102-gc8622b1.tar.gz", repos = NULL, type="source") </li>
             
             
             
         </ol>        
         <hr>  
           
-        <li>código para separador de milhar no R </li>
+        <li>Inserir separador de milhar no R </li>
         <ol>
-            <li><a href=""><code>formatado<- function(x )format(sum(x), big.mark=".", scientific=FALSE) </code> </a></li>  
+            <li><a href="">FORMATADO<- function(x )format(sum(x), big.mark=".", scientific=FALSE) </a></li>  
         </ol>        
         <hr>
 
@@ -206,7 +260,7 @@
         </ol>    
         <hr>
       
-      <li>Orientação para instalar o ggflags </li>
+      <li>Instalar o ggflags ?</li>
         <ol>
           <li>Baixar o pacote no endereço: https://codeload.github.com/rensa/ggflags/legacy.tar.gz/master</li>
          <p> Caso não mais disponível, o pacote se encontra na pasta atual lib na pasta do R(28/09/2019) </p>
@@ -224,7 +278,7 @@
           
           
       
-      <li>Orientação para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe</li>
+      <li>Como faz?: Para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe?</li>
         <p>
             Usar os comandos:
             <pre>
@@ -237,7 +291,7 @@
         </p>
         <hr>
       
-      <li>Orientação para obter apenas as colunas numéricas do dataframe no R e filtrar essa colunas</li>
+      <li>Como faz?: Para obter apenas as colunas numéricas do dataframe no R e filtrar essa colunas?</li>
         <p>
         Usar os comandos:
         <pre>
@@ -254,39 +308,6 @@
         ```
             </pre>
         </p>
-      
-           
-     <li>Orientação para gerar um gráfico no R que reflita as correlações entre as variáveis no meu dataframe.</li>
-        <p>
-            Usar os comandos:
-            <pre>
-             ```{r}
-            numeric.var <- sapply(churn, is.numeric) 
-            corr.matrix <- cor(churn[,numeric.var])  
-            corrplot(corr.matrix, main="\n\nGráfico de Correlação para Variáveis Numéricas", method="number")
-            ```
-            </pre>
-        </p>
-        <hr>
-      
-      <li>Orientação para obter apenas as colunas numéricas do dataframe no R e filtrar essa colunas</li>
-        <p>
-        Usar os comandos:
-        <pre>
-        ```
-            # Obtendo apenas as colunas numéricas
-            colunas_numericas <- sapply(df, is.numeric)
-            colunas_numericas
-
-            # Filtrando as colunas numéricas para correlação
-            data_cor <- cor(df[,colunas_numericas])
-            data_cor
-            head(data_cor)
-
-        ```
-            </pre>
-        </p>
-      
       
 
       
