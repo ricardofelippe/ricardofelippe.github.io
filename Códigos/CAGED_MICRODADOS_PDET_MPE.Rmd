@@ -82,6 +82,7 @@ FUNC_LOAD_DATA<-function(nomearquivo,tipo,anobase){
 #Descrição: realiza-se a leitura dos microdados DP ou FP. A diferenciação se dará pelo argumento "tipo" da função. 
 pastaC <- file.path("C:", "BigData","MicrodadosCaged",tipo,anobase) # o ponto indica diretório atual 
 setwd(pastaC)
+#browser()
 microdados<-nomearquivo
 microdados<-paste(microdados,".txt",sep="")
 
@@ -138,7 +139,7 @@ return(DadosFiltrados)
 
 # Função que consolida os valores segmentados do dataset
 FUNC_GROUPBY<-function(dados,tipo){
-  browser()
+  #browser()
   if (tipo=="DP"){
     dados %>% select(FAIXA_EMPR_JAN,COMPETENCIA_DECLARADA,IBGE_SUBSETOR,SALDO_MOV,CLASS_SEBRAE,UF) %>% group_by(FAIXA_EMPR_JAN,IBGE_SUBSETOR,UF,COMPETENCIA_DECLARADA,CLASS_SEBRAE)%>% summarize(SALDO_EMPREGO=sum(SALDO_MOV))
   }
@@ -147,8 +148,6 @@ FUNC_GROUPBY<-function(dados,tipo){
   }
   
 }
-
-
 
 
 acumulaFP_NPeriodos<-function(vetor_interesse=c(),mes_referencia="",consulta_padrao="ON"){
@@ -817,8 +816,22 @@ FUNC_BRASIL_UF_MPE<-function(dados,val){
 # Função que consolida os dados de emprego em Planilha única Excel dos dados referentes a todas as entidades de interesse
 FUNC_PLANILHA.UNICA<-function(mesreferencial,anobase){
 #browser()
-MESES<-paste("0",seq(1:mesreferencia),sep="")
-nomearquivo_doMes<-paste("CAGEDEST_","0",length(MESES),anobase,sep="")
+# verdadeiro<-  paste("0",seq(1:mesreferencial),sep="")
+# falso<-c(paste("0",seq(1:9),sep=""),seq(from=10,to=mesreferencial))
+# MESES<-ifelse(nchar(mesreferencial)==1,c(verdadeiro),c(falso))
+
+a <- seq(from=1,to=mesreferencial,by=1)
+MESES<-sprintf("%02d", a)
+
+nomearquivo_doMes<-ifelse(nchar(mesreferencial)==1,paste("CAGEDEST_","0",length(MESES),anobase,sep=""),paste("CAGEDEST_",length(MESES),anobase,sep=""))
+
+print(nomearquivo_doMes)
+#browser()
+
+
+
+
+#nomearquivo_doMes<-paste("CAGEDEST_","0",length(MESES),anobase,sep="")
 microDados_doMes<-FUNC_LOAD_DATA(nomearquivo_doMes,"DP",anobase)
 
 #----
@@ -848,6 +861,8 @@ for (unidades in ENTIDADES){
   for (j in MESES){
   tipo<-"DP"
   nomearquivo<-paste("CAGEDEST_",j,anobase,sep="")
+  print(nomearquivo)
+  
   dados<-FUNC_LOAD_DATA(nomearquivo,tipo,anobase)
   #browser()
   #dadosDP_agrupados<-datasetAgrupadoDP(dados)
@@ -942,8 +957,18 @@ acumulaFP<-function(mes,unidades,anobase){
       # tipo<-"FP"
       # val<-paste(anobase,"0",i,sep="")
       #print(val)
-      nomearquivo<-paste("CAGEDEST_AJUSTES_","0",j,anobase,sep="")
-      #print(nomearquivo)
+      # nomearquivo<-ifelse(nchar(mes)==1,paste("CAGEDEST_AJUSTES_","0",length(MESES),anobase,sep=""),paste("CAGEDEST_AJUSTES_",length(MESES),anobase,sep=""))
+      # 
+      
+      nomearquivo<-sprintf("CAGEDEST_AJUSTES_%02d", j)
+      nomearquivo<-paste(nomearquivo,anobase,sep="")
+
+
+      #nomearquivo<-paste("CAGEDEST_AJUSTES_","0",j,anobase,sep="")
+      browser()
+      print(nomearquivo)
+      
+      
       dados<-FUNC_LOAD_DATA(nomearquivo,tipo,anobase)
       #print("Leitura")
       #head(dados)
@@ -1513,7 +1538,13 @@ datasetAgrupado<-as.data.frame(datasetAgrupado)
 mesreferencia<-8
 
 MESES<-paste("0",seq(1:mesreferencia),sep="")
+
+nomearquivo_doMes<-ifelse(nchar(mes)==1,paste("CAGEDEST_","0",length(MESES),anobase,sep=""),paste("CAGEDEST_",length(MESES),anobase,sep=""))
+
+
 nomearquivo_doMes<-paste("CAGEDEST_","0",length(MESES),anobase,sep="")
+
+
 microDados_doMes<-FUNC_LOAD_DATA(nomearquivo_doMes,"DP",anobase)
 
 
